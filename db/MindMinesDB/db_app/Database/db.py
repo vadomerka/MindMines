@@ -2,21 +2,22 @@ import os
 from typing import Annotated
 
 from fastapi import Depends
-from sqlmodel import Session, SQLModel, create_engine
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from db_app.core.base import Base
 
 # Use environment variable for database URL, fallback to SQLite for tests
 database_url = os.getenv("DATABASE_URL", "sqlite:///./test.db")
 engine = create_engine(database_url)
-SQLModel.metadata.create_all(engine)
+Session = sessionmaker(engine)
 
 
 def init():
-    # SQLModel.metadata.drop_all(engine)
-    SQLModel.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
 
 
 def get_session():
-    with Session(engine) as session:
+    with Session() as session:
         yield session
 
 

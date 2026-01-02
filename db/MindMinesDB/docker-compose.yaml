@@ -1,9 +1,11 @@
 services:
   db_app:
-    build: ./db_app/
+    build: .
     ports:
       - "8000:8000"
     environment:
       - DEBUG=False
-  db:
-    build: ./db_app/database/
+    volumes:
+      - .:/app
+#  db:
+#    build: ./db_app/
