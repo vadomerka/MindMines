@@ -1,0 +1,9 @@
+services:
+  db_app:
+    build: ./db_app/
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+  db:
+    build: ./db_app/database/
