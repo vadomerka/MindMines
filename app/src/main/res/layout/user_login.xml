@@ -3,4 +3,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/login_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_header_text"
+            style="@style/title_text"/>
+
+        <EditText
+            android:id="@+id/login_email_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_header"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:hint="@string/login_email_input_hint"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:minWidth="250dp" />
+
+        <EditText
+            android:id="@+id/login_password_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_email_input"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:hint="@string/login_password_input_hint"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:minWidth="250dp"/>
+             />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_button_text"
+            android:layout_below="@+id/login_password_input"/>
+
+    </RelativeLayout>
 </RelativeLayout>

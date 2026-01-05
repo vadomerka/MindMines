@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MindMines</string>
+    <string name="login_header_text">Вход в аккаунт</string>
+    <string name="login_button_text">Войти</string>
+    <string name="login_email_input_hint">Введите email</string>
+    <string name="login_password_input_hint">Введите пароль</string>
 </resources>
