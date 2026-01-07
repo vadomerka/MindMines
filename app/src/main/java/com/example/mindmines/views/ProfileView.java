@@ -1,26 +1,22 @@
 package com.example.mindmines.views;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.services.auth.AuthManager;
 
-public class HabitView extends AppCompatActivity {
-    private static final String SHARED_PREFS = "shared_prefs";
+public class ProfileView extends AppCompatActivity {
     private AuthManager auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.user_profile);
         auth = new AuthManager(getApplicationContext());
 
         Button btn = findViewById(R.id.logout_btn);
@@ -31,8 +27,8 @@ public class HabitView extends AppCompatActivity {
 
     private void logout() {
         auth.logout();
-        Intent myIntent = new Intent(HabitView.this, LoginView.class);
-        HabitView.this.startActivity(myIntent);
+        Intent myIntent = new Intent(ProfileView.this, LoginView.class);
+        ProfileView.this.startActivity(myIntent);
         finish();
     }
 

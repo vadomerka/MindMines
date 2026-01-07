@@ -16,4 +16,8 @@
     <style name="header2_text" parent="standard_text">
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="collapsed_description" parent="standard_text">
+        <item name="android:alpha">0.5</item>
+    </style>
 </resources>

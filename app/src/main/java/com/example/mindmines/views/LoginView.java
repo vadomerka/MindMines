@@ -1,24 +1,14 @@
 package com.example.mindmines.views;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.security.crypto.MasterKey;
-import androidx.security.crypto.MasterKeys;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.services.auth.AuthManager;
-
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.KeyGenerator;
 
 public class LoginView extends AppCompatActivity {
     protected AuthManager authManager;
@@ -47,7 +37,7 @@ public class LoginView extends AppCompatActivity {
             // TODO: add server check.
             authManager.saveUserData(email, password);
 
-            Intent myIntent = new Intent(LoginView.this, HabitView.class);
+            Intent myIntent = new Intent(LoginView.this, HabitsView.class);
             LoginView.this.startActivity(myIntent);
             finish();
         }
@@ -57,7 +47,7 @@ public class LoginView extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (authManager.isUserLoggedIn()) {
-            Intent myIntent = new Intent(LoginView.this, HabitView.class);
+            Intent myIntent = new Intent(LoginView.this, HabitsView.class);
             LoginView.this.startActivity(myIntent);
             finish();
         }

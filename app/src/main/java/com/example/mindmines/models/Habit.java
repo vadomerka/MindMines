@@ -44,4 +44,41 @@ public class Habit {
         this.penalty_number = penalty_number;
         this.streak_number = streak_number;
     }
+
+    public Integer getHabitId() {
+        return habit_id;
+    }
+    public Integer getUserId() {
+        return user_id;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public OffsetDateTime getCreationDate() {
+        return creation_date;
+    }
+    public Float getCheckingFrequency() {
+        return checking_frequency;
+    }
+    public Integer getPriority() {
+        return priority;
+    }
+    public Integer getDifficulty() {
+        return difficulty;
+    }
+    public String getType() {
+        return type;
+    }
+    public OffsetDateTime getLastChecked() {
+        return last_checked;
+    }
+    public Integer getPenaltyNumber() {
+        return penalty_number;
+    }
+    public Integer getStreakNumber() {
+        return streak_number;
+    }
 }

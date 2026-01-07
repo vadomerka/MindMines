@@ -7,4 +7,6 @@
     <string name="register_page_button_text">Зарегестрироваться</string>
     <string name="default_hello_world_text">default Hello World!</string>
     <string name="logout_btn_text">Logout</string>
+    <string name="habit_change_btn_text">Изменить</string>
+    <string name="habit_check_btn_text">Выполнить</string>
 </resources>

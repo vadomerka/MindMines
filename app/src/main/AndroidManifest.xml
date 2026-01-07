@@ -13,10 +13,13 @@
         android:theme="@style/Theme.MindMines"
         tools:targetApi="31">
         <activity
+            android:name=".views.HabitCreateActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.LoginView"
             android:exported="false" />
         <activity
-            android:name=".views.HabitView"
+            android:name=".views.HabitsView"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

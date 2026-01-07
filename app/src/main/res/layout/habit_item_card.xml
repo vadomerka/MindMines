@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+            <TextView
+                android:id="@+id/habit_title_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/header2_text"
+                android:text="@string/default_hello_world_text"/>
+
+
+        <!--                android:layout_alignParentTop="true"-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/habit_desc_card_view"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/collapsed_description"-->
+<!--                android:layout_below="@+id/habit_title_card_view"-->
+<!--                android:text="@string/default_hello_world_text"/>-->
+<!--        </RelativeLayout>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/habit_card_change_btn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/habit_change_btn_text"/>-->
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/habit_card_check_btn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="MindMinesDefaultButtonStyle"-->
+<!--            android:text="@string/habit_check_btn_text"/>-->
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
