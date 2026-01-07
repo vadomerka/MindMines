@@ -4,4 +4,7 @@
     <string name="login_button_text">Войти</string>
     <string name="login_email_input_hint">Введите email</string>
     <string name="login_password_input_hint">Введите пароль</string>
+    <string name="register_page_button_text">Зарегестрироваться</string>
+    <string name="default_hello_world_text">default Hello World!</string>
+    <string name="logout_btn_text">Logout</string>
 </resources>

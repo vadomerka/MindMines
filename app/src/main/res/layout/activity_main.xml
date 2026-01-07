@@ -4,28 +4,22 @@
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/default_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="reminder" />
-    <Spinner
-        android:id="@+id/dates"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/times" />
-    <Spinner
-        android:id="@id/times"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_alignParentRight="true" />
+        android:text="@string/default_hello_world_text"
+        android:layout_centerInParent="true"
+        android:textSize="30sp"
+        android:layout_margin="40dp"
+        />
+
     <Button
-        android:layout_width="96dp"
+        android:id="@+id/logout_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/times"
-        android:layout_alignParentRight="true"
-        android:text="done" />
+        android:text="@string/logout_btn_text"
+        android:layout_below="@id/default_text"
+        android:layout_centerInParent="true"
+        />
 </RelativeLayout>
