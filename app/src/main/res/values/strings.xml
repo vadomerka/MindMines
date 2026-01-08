@@ -9,4 +9,5 @@
     <string name="logout_btn_text">Logout</string>
     <string name="habit_change_btn_text">Изменить</string>
     <string name="habit_check_btn_text">Выполнить</string>
+    <string name="habit_view_title_text">Ваши привычки:</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.mindmines.views;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,15 +24,16 @@ public class HabitsView extends AppCompatActivity {
         setContentView(R.layout.habits_view);
 
         RecyclerView listView = findViewById(R.id.habits_list_view);
-        listView.setLayoutManager(new LinearLayoutManager(this));
+        listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        List<String> itemList = loadItemList();
+        List<Habit> itemList = loadItemList();
         CardAdapter cardAdapter = new CardAdapter(itemList);
         listView.setAdapter(cardAdapter);
     }
 
-    private List<String> loadItemList() {
+    private List<Habit> loadItemList() {
         // TODO: implement sort and filters.
-        return HabitRepository.getAll().stream().map(Habit::getTitle).collect(Collectors.toList());
+        // TODO: load only current user habits
+        return HabitRepository.getAll();
     }
 }

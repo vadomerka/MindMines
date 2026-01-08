@@ -1,5 +1,6 @@
 package com.example.mindmines.views;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,9 @@ import com.example.mindmines.models.Habit;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
+    private final List<Habit> items;
 
-//    private final List<Habit> items;
-    private final List<String> items;
-
-    public CardAdapter(List<String> items) {
+    public CardAdapter(List<Habit> items) {
         this.items = items;
     }
 
@@ -35,10 +34,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
         System.out.println(position);
-//        Habit h = items.get(position);
-        String h = items.get(position);
-        holder.titleTextView.setText(h);
-//        holder.descTextView.setText(h.getDescription());
+        Habit h = items.get(position);
+        holder.titleTextView.setText(h.getTitle());
+        holder.descTextView.setText(h.getDescription());
     }
 
     @Override
@@ -48,16 +46,16 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     static class CardViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
-//        TextView descTextView;
-//        Button changeBtn;
-//        Button checkBtn;
+        TextView descTextView;
+        Button changeBtn;
+        Button checkBtn;
 
         CardViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.habit_title_card_view);
-//            descTextView = itemView.findViewById(R.id.habit_desc_card_view);
-//            changeBtn = itemView.findViewById(R.id.habit_card_change_btn);
-//            checkBtn = itemView.findViewById(R.id.habit_card_check_btn);
+            descTextView = itemView.findViewById(R.id.habit_desc_card_view);
+            changeBtn = itemView.findViewById(R.id.habit_card_change_btn);
+            checkBtn = itemView.findViewById(R.id.habit_card_check_btn);
         }
     }
 }
