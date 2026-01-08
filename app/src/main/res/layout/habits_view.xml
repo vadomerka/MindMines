@@ -8,7 +8,8 @@
         android:layout_height="wrap_content"
         android:text="@string/habit_view_title_text"
         style="@style/title_text"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/habits_list_view"

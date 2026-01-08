@@ -44,9 +44,8 @@
             android:id="@+id/habit_card_check_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/MindMinesDefaultButtonStyle"
-            android:text="@string/habit_check_btn_text"
-            />
+            style="@style/UncheckedHabitButton"
+            android:text="@string/habit_check_btn_text"/>
 
 <!--        <ImageView-->
 <!--            android:id="@+id/imageView2"-->

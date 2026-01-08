@@ -5,11 +5,16 @@
         <item name="android:textColor">#000000</item>
     </style>
 
-    <style name="MindMinesDefaultButtonStyle">
+    <style name="UncheckedHabitButton">
         <item name="backgroundTint">@color/habit_unchecked_btn_color</item>
         <item name="android:textColor">@color/habit_unchecked_btn_text_color</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:minWidth">120dp</item>
         <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="CheckedHabitButton" parent="UncheckedHabitButton">
+        <item name="backgroundTint">@color/habit_checked_btn_color</item>
+        <item name="android:textColor">@color/habit_checked_btn_text_color</item>
     </style>
 </resources>

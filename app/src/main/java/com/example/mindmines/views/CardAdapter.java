@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.Habit;
+import com.example.mindmines.services.HabitCheckerService;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         Habit h = items.get(position);
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
+        holder.checkBtn.setOnClickListener(v -> HabitCheckerService.buttonCheck((Button) v));
     }
 
     @Override
