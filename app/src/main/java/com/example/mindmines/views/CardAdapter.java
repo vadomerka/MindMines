@@ -28,17 +28,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.habit_item_card, parent, false);
-        System.out.println("onCreateViewHolder");
         return new CardViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-        System.out.println(position);
         Habit h = items.get(position);
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
         holder.checkBtn.setOnClickListener(v -> HabitCheckerService.buttonCheck((Button) v));
+        holder.checkBtn.setTag(h);
+        HabitCheckerService.buttonUpdate(holder.checkBtn);
     }
 
     @Override

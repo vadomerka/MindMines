@@ -35,4 +35,9 @@ public class HabitRepository {
         Optional<Habit> res = array.stream().filter(i -> i.getHabitId() == itemId).findFirst();
         return res.orElse(null);
     }
+
+    public static void update(Habit item) {
+        Habit found = get(item.getHabitId());
+        array.set(array.indexOf(found), item);
+    }
 }

@@ -13,7 +13,7 @@ public class Habit {
     private final Integer priority;
     private final Integer difficulty;
     private final String type;
-    private final OffsetDateTime last_checked;
+    private OffsetDateTime last_checked;
     private final Integer penalty_number;
     private final Integer streak_number;
 
@@ -74,6 +74,9 @@ public class Habit {
     }
     public OffsetDateTime getLastChecked() {
         return last_checked;
+    }
+    public void setLastChecked(OffsetDateTime value) {
+        last_checked = value;
     }
     public Integer getPenaltyNumber() {
         return penalty_number;
