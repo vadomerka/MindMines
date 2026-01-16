@@ -1,6 +1,7 @@
 package com.example.mindmines.services.converters;
 
 import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.enums.HabitType;
 import com.google.gson.Gson;
 
 public class JsonConverter {
@@ -20,7 +21,7 @@ public class JsonConverter {
                 1.0F,
                 1,
                 1,
-                "type 1",
+                HabitType.GOOD,
                 null,
                 1,
                 1

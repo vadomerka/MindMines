@@ -7,8 +7,10 @@ import com.example.mindmines.R;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.services.repositories.HabitRepository;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.Period;
+import java.time.temporal.TemporalAmount;
 
 public class HabitCheckerService {
     public static void buttonCheck(Button btn) {
@@ -35,8 +37,7 @@ public class HabitCheckerService {
         OffsetDateTime n = OffsetDateTime.now();
         OffsetDateTime lc = h.getLastChecked();
         if (lc == null) lc = OffsetDateTime.MIN;
-        Period interval = Period.of(0, 0, (int) Math.floor(h.getCheckingFrequency()));
-        Log.d("Button update", String.format("lc: %s, lc+p: %s", lc, lc.plus(interval)));
-        return lc.plus(interval).isBefore(n);
+        float d = h.getCheckingFrequency();
+        return TimeIntervalService.plusFloat(lc, d).isBefore(n);
     }
 }

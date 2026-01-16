@@ -10,4 +10,17 @@
     <string name="habit_change_btn_text">Изменить</string>
     <string name="habit_check_btn_text">Выполнить</string>
     <string name="habit_view_title_text">Ваши привычки:</string>
+    <string name="return_to_previous_activity">Вернуться</string>
+    <string name="habit_change_title">Изменение привычки</string>
+    <string name="save_changes_button_text">Сохранить изменения</string>
+    <string name="save_habit_button_text">Сохранить</string>
+    <string name="add_habit_button_text">Добавить привычку</string>
+    <string name="default_change_title">Введите название</string>
+    <string name="edit_habit_title_hint_text">Введите название</string>
+    <string name="edit_habit_desc_hint_text">Введите описание</string>
+    <string name="edit_habit_frequency_hint_text">Время между проверками: </string>
+    <string name="edit_habit_priority_hint_text">Введите приоритет</string>
+    <string name="edit_habit_difficulty_hint_text">Введите сложность</string>
+    <string name="edit_habit_type_hint_text">Тип привычки: полезная / вредная</string>
+    <string name="default_number_text">100</string>
 </resources>

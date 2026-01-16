@@ -1,6 +1,7 @@
 package com.example.mindmines.services.repositories;
 
 import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.enums.HabitType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,9 @@ public class HabitRepository {
     public static void init() {
         array = new ArrayList<Habit>() {
             {
-                add(new Habit(1, 1, "title", "desc", null, 1.0F, 1, 1, "type", null, 0, 0));
-                add(new Habit(2, 1, "title2", "desc2", null, 1.0F, 1, 1, "type", null, 0, 0));
-                add(new Habit(3, 1, "title3", "desc3", null, 1.0F, 1, 1, "type", null, 0, 0));
+                add(new Habit(1, 1, "title", "desc", null, 0.002F, 1, 1, HabitType.GOOD, null, 0, 0));
+                add(new Habit(2, 1, "title2", "desc2", null, 1.0F, 1, 1, HabitType.GOOD, null, 0, 0));
+                add(new Habit(3, 1, "title3", "desc3", null, 1.0F, 1, 1, HabitType.GOOD, null, 0, 0));
             }
         };
     }

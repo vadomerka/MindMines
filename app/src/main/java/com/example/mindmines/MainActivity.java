@@ -7,8 +7,8 @@ import android.os.Bundle;
 
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.views.HabitsView;
-import com.example.mindmines.views.LoginView;
+import com.example.mindmines.views.habit.HabitsView;
+import com.example.mindmines.views.user.LoginView;
 
 public class MainActivity extends AppCompatActivity {
 

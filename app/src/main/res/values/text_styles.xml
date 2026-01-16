@@ -7,6 +7,7 @@
 
     <style name="title_text" parent="standard_text">
         <item name="android:textSize">30sp</item>
+        <item name="android:layout_margin">30dp</item>
     </style>
 
     <style name="header1_text" parent="standard_text">
@@ -15,6 +16,7 @@
 
     <style name="header2_text" parent="standard_text">
         <item name="android:textSize">15sp</item>
+        <item name="android:layout_margin">20dp</item>
     </style>
 
     <style name="collapsed_description" parent="standard_text">

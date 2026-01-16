@@ -1,21 +1,23 @@
 package com.example.mindmines.models;
 
+import com.example.mindmines.models.enums.HabitType;
+
 import java.time.OffsetDateTime;
 import java.util.Date;
 
 public class Habit {
     private final Integer habit_id;
     private final Integer user_id;
-    private final String title;
-    private final String description;
+    private String title;
+    private String description;
     private final OffsetDateTime creation_date;
-    private final Float checking_frequency;
-    private final Integer priority;
-    private final Integer difficulty;
-    private final String type;
+    private Float checking_frequency;
+    private Integer priority;
+    private Integer difficulty;
+    private HabitType type;
     private OffsetDateTime last_checked;
-    private final Integer penalty_number;
-    private final Integer streak_number;
+    private Integer penalty_number;
+    private Integer streak_number;
 
     public Habit(
         Integer habit_id,
@@ -26,7 +28,7 @@ public class Habit {
         Float checking_frequency,
         Integer priority,
         Integer difficulty,
-        String type,
+        HabitType type,
         OffsetDateTime last_checked,
         Integer penalty_number,
         Integer streak_number
@@ -54,8 +56,14 @@ public class Habit {
     public String getTitle() {
         return title;
     }
+    public void setTitle(String value) {
+        title = value;
+    }
     public String getDescription() {
         return description;
+    }
+    public void setDescription(String value) {
+        description = value;
     }
     public OffsetDateTime getCreationDate() {
         return creation_date;
@@ -63,15 +71,21 @@ public class Habit {
     public Float getCheckingFrequency() {
         return checking_frequency;
     }
+    public void setCheckingFrequency(Float value) {
+        checking_frequency = value;
+    }
     public Integer getPriority() {
         return priority;
     }
-    public Integer getDifficulty() {
-        return difficulty;
+    public void setPriority(Integer value) {
+        priority = value;
     }
-    public String getType() {
+    public Integer getDifficulty() { return difficulty; }
+    public void setDifficulty(Integer value) { difficulty = value; }
+    public HabitType getType() {
         return type;
     }
+    public void setType(HabitType value) { type = value; }
     public OffsetDateTime getLastChecked() {
         return last_checked;
     }

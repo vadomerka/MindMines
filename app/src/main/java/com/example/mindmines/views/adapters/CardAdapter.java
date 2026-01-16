@@ -1,6 +1,5 @@
-package com.example.mindmines.views;
+package com.example.mindmines.views.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,19 +7,23 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.services.HabitCheckerService;
+import com.example.mindmines.views.habit.HabitsView;
 
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
     private final List<Habit> items;
+    private final HabitsView activity;
 
-    public CardAdapter(List<Habit> items) {
+    public CardAdapter(List<Habit> items, HabitsView activity) {
         this.items = items;
+        this.activity = activity;
     }
 
     @NonNull
@@ -38,6 +41,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.descTextView.setText(h.getDescription());
         holder.checkBtn.setOnClickListener(v -> HabitCheckerService.buttonCheck((Button) v));
         holder.checkBtn.setTag(h);
+        holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getHabitId()));
+
         HabitCheckerService.buttonUpdate(holder.checkBtn);
     }
 

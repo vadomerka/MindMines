@@ -1,4 +1,4 @@
-package com.example.mindmines.views;
+package com.example.mindmines.views.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.example.mindmines.R;
 import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.views.habit.HabitsView;
 
 public class LoginView extends AppCompatActivity {
     protected AuthManager authManager;

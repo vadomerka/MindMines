@@ -1,4 +1,4 @@
-package com.example.mindmines.views;
+package com.example.mindmines.views.user;
 
 import android.content.Intent;
 import android.os.Bundle;

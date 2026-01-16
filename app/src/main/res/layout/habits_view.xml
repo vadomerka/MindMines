@@ -14,8 +14,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/habits_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/habit_view_title">
-
     </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/add_habit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/habits_list_view"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text="@string/add_habit_button_text"/>
 </RelativeLayout>
