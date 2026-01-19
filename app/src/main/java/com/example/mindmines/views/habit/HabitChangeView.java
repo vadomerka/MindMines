@@ -59,14 +59,12 @@ public class HabitChangeView extends AppCompatActivity {
         hId = intent.getIntExtra("id", 0);
 
         initInputs();
+        loadPrevValues();
 
         Button rn = findViewById(R.id.save_habit_changes);
-        rn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveChanges();
-                returnToHabitsView();
-            }
+        rn.setOnClickListener(v -> {
+            saveChanges();
+            returnToHabitsView();
         });
     }
 
@@ -76,19 +74,11 @@ public class HabitChangeView extends AppCompatActivity {
         editPriority = findViewById(R.id.edit_priority);
         editDifficulty = findViewById(R.id.edit_difficulty);
         editType = findViewById(R.id.edit_type);
-
-        Habit h = HabitRepository.get(hId);
-        editTitle.setText(h.getTitle());
-        editDesc.setText(h.getDescription());
-
         editFrequencyDisplay = findViewById(R.id.edit_checking_frequency_number_display);
         editFrequencyPeriodSpinner = findViewById(R.id.edit_checking_frequency_period_type_spinner);
         editFrequencyNumberSlider = findViewById(R.id.edit_checking_frequency_number_slider);
 
-        int id = floatFreqToPosition(h.getCheckingFrequency());
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, PERIODS);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, PERIODS);
         editFrequencyPeriodSpinner.setAdapter(adapter);
         editFrequencyPeriodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -99,28 +89,37 @@ public class HabitChangeView extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                updateSelected(id);
+                updateSelected(0);
             }
         });
-        editFrequencyPeriodSpinner.setSelection(id);
-
         editFrequencyNumberSlider.addOnChangeListener((slider, value, fromUser) -> {
             editFrequencyDisplay.setText(intToString(floatToInt(value)));
         });
+    }
 
-        float prevValue = id == 0 ? 1f : h.getCheckingFrequency() / PERIOD_COEF[id];
-        editFrequencyNumberSlider.setValue(prevValue);
-        editFrequencyDisplay.setText(intToString(floatToInt(prevValue)));
-
+    private void loadPrevValues() {
+        Habit h = HabitRepository.get(hId);
+        editTitle.setText(h.getTitle());
+        editDesc.setText(h.getDescription());
         editPriority.setText(intToString(h.getPriority()));
         editDifficulty.setText(intToString(h.getDifficulty()));
         editType.setChecked(h.getType() != HabitType.GOOD);
+
+        int pos = floatFreqToPosition(h.getCheckingFrequency());
+        editFrequencyPeriodSpinner.setSelection(pos);
+
+        float prevValue = pos == 0 ? 1f : h.getCheckingFrequency() / PERIOD_COEF[pos];
+        updateSelected(pos, prevValue);
+        editFrequencyDisplay.setText(intToString(floatToInt(prevValue)));
     }
 
     private void updateSelected(int id) {
+        updateSelected(id, editFrequencyNumberSlider.getValue());
+    }
+
+    private void updateSelected(int id, float value) {
         editFrequencyNumberSlider.setValueTo(MAX_PERIOD_NUM[id]);
-        float prev = editFrequencyNumberSlider.getValue();
-        editFrequencyNumberSlider.setValue(Math.max(Math.min(prev, MAX_PERIOD_NUM[id]), 1));
+        editFrequencyNumberSlider.setValue(Math.max(Math.min(value, MAX_PERIOD_NUM[id]), 1));
     }
 
     private int floatFreqToPosition(float freq) {
