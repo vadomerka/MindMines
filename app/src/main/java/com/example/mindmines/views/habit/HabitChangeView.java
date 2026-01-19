@@ -85,11 +85,7 @@ public class HabitChangeView extends AppCompatActivity {
         editFrequencyPeriodSpinner = findViewById(R.id.edit_checking_frequency_period_type_spinner);
         editFrequencyNumberSlider = findViewById(R.id.edit_checking_frequency_number_slider);
 
-        // TODO: ?????
         int id = floatFreqToPosition(h.getCheckingFrequency());
-        editFrequencyPeriodSpinner.setSelection(id);
-        editFrequencyPeriodSpinner.setSelected(true);
-        long idd = editFrequencyPeriodSpinner.getSelectedItemId();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, PERIODS);
@@ -106,10 +102,15 @@ public class HabitChangeView extends AppCompatActivity {
                 updateSelected(id);
             }
         });
+        editFrequencyPeriodSpinner.setSelection(id);
 
         editFrequencyNumberSlider.addOnChangeListener((slider, value, fromUser) -> {
             editFrequencyDisplay.setText(intToString(floatToInt(value)));
         });
+
+        float prevValue = id == 0 ? 1f : h.getCheckingFrequency() / PERIOD_COEF[id];
+        editFrequencyNumberSlider.setValue(prevValue);
+        editFrequencyDisplay.setText(intToString(floatToInt(prevValue)));
 
         editPriority.setText(intToString(h.getPriority()));
         editDifficulty.setText(intToString(h.getDifficulty()));
@@ -143,7 +144,8 @@ public class HabitChangeView extends AppCompatActivity {
         if (editType.isChecked()) hType = HabitType.BAD;
 
         float frequencyValue = Float.parseFloat(editFrequencyDisplay.getText().toString());
-        float freqCoef = PERIOD_COEF[(int) editFrequencyPeriodSpinner.getSelectedItemId()];
+        int id = (int) editFrequencyPeriodSpinner.getSelectedItemId();
+        float freqCoef = PERIOD_COEF[id];
 
         HabitAdderService.change(hId, title, desc, frequencyValue * freqCoef, priority, difficulty, hType);
     }
