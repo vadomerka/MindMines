@@ -14,90 +14,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.mindmines.R;
+import com.example.mindmines.controllers.HabitController;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.HabitAdderService;
 import static com.example.mindmines.services.TimeIntervalService.*;
+
+import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
 import com.google.android.material.slider.Slider;
 
 import static com.example.mindmines.services.utils.UIUtils.*;
 
-public class HabitChangeView extends AppCompatActivity {
-    private static final String[] PERIODS = new String[]{"часов", "дней", "недель", "месяцев"};
-    private static final float[] MAX_PERIOD_NUM = new float[]{
-            24f,
-            7f,
-            4f,
-            12f};
-    private static final float[] PERIOD_COEF = new float[]{
-            1f / 24f,
-            1f,
-            7f,
-            30f};
-
-    private int hId;
-
-    private EditText editTitle;
-    private EditText editDesc;
-    private EditText editPriority;
-    private EditText editDifficulty;
-    private SwitchCompat editType;
-
-
-    private TextView editFrequencyDisplay;
-    private Spinner editFrequencyPeriodSpinner;
-    private Slider editFrequencyNumberSlider;
-
-
+public class HabitChangeView extends HabitAddView {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.habit_change);
-
-        Intent intent = getIntent();
-        hId = intent.getIntExtra("id", 0);
-
-        initInputs();
-        loadPrevValues();
-
-        Button rn = findViewById(R.id.save_habit_changes);
-        rn.setOnClickListener(v -> {
-            saveChanges();
-            returnToHabitsView();
-        });
-    }
-
-    private void initInputs() {
-        editTitle = findViewById(R.id.edit_title);
-        editDesc = findViewById(R.id.edit_desc);
-        editPriority = findViewById(R.id.edit_priority);
-        editDifficulty = findViewById(R.id.edit_difficulty);
-        editType = findViewById(R.id.edit_type);
-        editFrequencyDisplay = findViewById(R.id.edit_checking_frequency_number_display);
-        editFrequencyPeriodSpinner = findViewById(R.id.edit_checking_frequency_period_type_spinner);
-        editFrequencyNumberSlider = findViewById(R.id.edit_checking_frequency_number_slider);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, PERIODS);
-        editFrequencyPeriodSpinner.setAdapter(adapter);
-        editFrequencyPeriodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (id >= PERIODS.length) return;
-                updateSelected((int) id);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                updateSelected(0);
-            }
-        });
-        editFrequencyNumberSlider.addOnChangeListener((slider, value, fromUser) -> {
-            editFrequencyDisplay.setText(intToString(floatToInt(value)));
-        });
-    }
-
-    private void loadPrevValues() {
+    protected void loadDefaultValues() {
         Habit h = HabitRepository.get(hId);
         editTitle.setText(h.getTitle());
         editDesc.setText(h.getDescription());
@@ -108,33 +39,14 @@ public class HabitChangeView extends AppCompatActivity {
         int pos = floatFreqToPosition(h.getCheckingFrequency());
         editFrequencyPeriodSpinner.setSelection(pos);
 
-        float prevValue = pos == 0 ? 1f : h.getCheckingFrequency() / PERIOD_COEF[pos];
+        float prevValue = h.getCheckingFrequency() == 0 ? 1f :
+                h.getCheckingFrequency() / PERIOD_COEF[pos];
         updateSelected(pos, prevValue);
         editFrequencyDisplay.setText(intToString(floatToInt(prevValue)));
     }
 
-    private void updateSelected(int id) {
-        updateSelected(id, editFrequencyNumberSlider.getValue());
-    }
-
-    private void updateSelected(int id, float value) {
-        editFrequencyNumberSlider.setValueTo(MAX_PERIOD_NUM[id]);
-        editFrequencyNumberSlider.setValue(Math.max(Math.min(value, MAX_PERIOD_NUM[id]), 1));
-    }
-
-    private int floatFreqToPosition(float freq) {
-        int[] checks = new int[] {getMonths(freq), getWeeks(freq), getDays(freq), getHours(freq)};
-        int pos = 0;
-        for (int i = 0; i < checks.length; i++) {
-            if (checks[i] > 0) {
-                pos = checks.length - i - 1;
-                break;
-            }
-        }
-        return pos;
-    }
-
-    private void saveChanges() {
+    @Override
+    protected void saveChanges() {
         String title = editTitle.getText().toString();
         String desc = editDesc.getText().toString();
         Integer priority = Integer.parseInt(editPriority.getText().toString());
@@ -149,7 +61,8 @@ public class HabitChangeView extends AppCompatActivity {
         HabitAdderService.change(hId, title, desc, frequencyValue * freqCoef, priority, difficulty, hType);
     }
 
-    private void returnToHabitsView() {
+    @Override
+    protected void returnToHabitsView() {
         Intent myIntent = new Intent(HabitChangeView.this, HabitsView.class);
         HabitChangeView.this.startActivity(myIntent);
         finish();

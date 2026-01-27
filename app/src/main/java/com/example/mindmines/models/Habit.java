@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 import java.util.Date;
 
 public class Habit {
-    private final Integer habit_id;
+    private Integer habit_id;
     private final Integer user_id;
     private String title;
     private String description;
@@ -50,6 +50,7 @@ public class Habit {
     public Integer getHabitId() {
         return habit_id;
     }
+    public void setHabitId(Integer value) { habit_id = value; }
     public Integer getUserId() {
         return user_id;
     }

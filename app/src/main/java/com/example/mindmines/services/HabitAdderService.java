@@ -5,10 +5,8 @@ import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
 
 public class HabitAdderService {
-    public static void add(
-            String text
-    ) {
-
+    public static void add(Habit h) {
+        HabitRepository.add(h);
     }
 
     public static void change(

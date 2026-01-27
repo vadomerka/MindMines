@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mindmines.R;
+import com.example.mindmines.controllers.UserController;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.views.habit.HabitsView;
 
@@ -36,7 +38,8 @@ public class LoginView extends AppCompatActivity {
         if (!email.isEmpty() && !password.isEmpty())
         {
             // TODO: add server check.
-            authManager.saveUserData(email, password);
+            Pair<String, Integer> res = UserController.getAuthData(email, password);
+            authManager.saveUserData(res.first, res.second.toString());
 
             Intent myIntent = new Intent(LoginView.this, HabitsView.class);
             LoginView.this.startActivity(myIntent);

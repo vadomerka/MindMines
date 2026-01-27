@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/header2_text"
-                android:layout_alignParentTop="true"
+                android:layout_margin="0dp"
                 android:text="@string/default_hello_world_text"/>
             <TextView
                 android:id="@+id/habit_desc_card_view"
@@ -46,14 +46,6 @@
             android:layout_height="wrap_content"
             style="@style/UncheckedHabitButton"
             android:text="@string/habit_check_btn_text"/>
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            app:srcCompat="@drawable/pencil_svgrepo_com" />-->
-
 
     </LinearLayout>
 

@@ -22,5 +22,5 @@
     <string name="edit_habit_priority_hint_text">Введите приоритет</string>
     <string name="edit_habit_difficulty_hint_text">Введите сложность</string>
     <string name="edit_habit_type_hint_text">Тип привычки: полезная / вредная</string>
-    <string name="default_number_text">100</string>
+    <string name="default_number_text">1</string>
 </resources>

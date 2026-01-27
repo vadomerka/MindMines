@@ -33,12 +33,7 @@ public class HabitsView extends AppCompatActivity {
         listView.setAdapter(cardAdapter);
 
         Button add_btn = findViewById(R.id.add_habit_button);
-        add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openHabitAddView();
-            }
-        });
+        add_btn.setOnClickListener(v -> openHabitAddView());
     }
 
     private List<Habit> loadItemList() {
