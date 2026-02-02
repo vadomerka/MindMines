@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         }
         MainActivity.this.startActivity(myIntent);
         finish();
+
+        // TODO: добавить уведомления https://www.geeksforgeeks.org/android/schedule-notifications-in-android/
     }
 }
 
