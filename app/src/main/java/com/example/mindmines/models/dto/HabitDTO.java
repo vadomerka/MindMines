@@ -13,6 +13,7 @@ public class HabitDTO {
     private Integer priority;
     private Integer difficulty;
     private HabitType type;
+    private OffsetDateTime accTime;
 
     public HabitDTO(
             Integer user_id,

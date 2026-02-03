@@ -20,7 +20,7 @@
         android:layout_below="@id/habit_change_title"
         android:orientation="vertical"
         android:layout_marginBottom="10dp">
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:inputType="text"
             style="@style/habit_edit_text"
             android:autofillHints=""/>
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,8 +64,8 @@
                 android:layout_weight="1"
                 android:layout_marginVertical="20dp"
                 android:spinnerMode="dropdown"/>
-
         </LinearLayout>
+
         <com.google.android.material.slider.Slider
             android:id="@+id/edit_checking_frequency_number_slider"
             style="?android:attr/progressBarStyleHorizontal"
@@ -75,6 +75,41 @@
             android:valueTo="7"
             android:stepSize="1"
             android:layout_margin="20dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp"
+            >
+            <TextView
+                android:id="@+id/habit_time_of_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habit_time_of_day_text"/>
+            <CheckBox
+                android:id="@+id/check_habit_precision"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timePickerBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                android:layout_gravity="center"
+                android:scaleY="1"
+                android:scaleX="1"/>
+        </LinearLayout>
+
         <EditText
             android:id="@+id/edit_priority"
             android:layout_width="match_parent"
@@ -99,6 +134,8 @@
             android:text="@string/edit_habit_type_hint_text"
             android:checked="false"
             style="@style/habit_edit_text" />
+
+
 
     </LinearLayout>
 

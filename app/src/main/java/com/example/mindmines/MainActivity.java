@@ -2,6 +2,8 @@ package com.example.mindmines;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,6 +29,20 @@ public class MainActivity extends AppCompatActivity {
         finish();
 
         // TODO: добавить уведомления https://www.geeksforgeeks.org/android/schedule-notifications-in-android/
+        createNotificationChannel();
+    }
+
+    protected void createNotificationChannel() {
+        String channelId = "habit_channel";
+        String channelName = "Уведомления о привычках";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+        channel.setDescription("Канал для уведомления о скором выполнении привычек.");
+
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        if (manager != null) {
+            manager.createNotificationChannel(channel);
+        }
     }
 }
 

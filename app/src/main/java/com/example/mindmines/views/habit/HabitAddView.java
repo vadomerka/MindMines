@@ -7,30 +7,57 @@ import static com.example.mindmines.services.TimeIntervalService.getWeeks;
 import static com.example.mindmines.services.utils.UIUtils.floatToInt;
 import static com.example.mindmines.services.utils.UIUtils.intToString;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.mindmines.R;
 import com.example.mindmines.controllers.HabitController;
 import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.NotifiBroadcastReciever;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
 import com.google.android.material.slider.Slider;
+
+import java.time.OffsetDateTime;
+import java.util.Calendar;
+import java.util.Locale;
+import android.Manifest;
 
 public class HabitAddView extends AppCompatActivity {
     protected static final String[] PERIODS = new String[]{"часов", "дней", "недель", "месяцев"};
@@ -54,6 +81,9 @@ public class HabitAddView extends AppCompatActivity {
     protected EditText editDifficulty;
     protected SwitchCompat editType;
 
+    protected CheckBox checkHabitPrecision;
+    protected LinearLayout timePickerBox;
+    protected TimePicker timePicker;
 
     protected TextView editFrequencyDisplay;
     protected Spinner editFrequencyPeriodSpinner;
@@ -91,6 +121,9 @@ public class HabitAddView extends AppCompatActivity {
         editFrequencyDisplay = findViewById(R.id.edit_checking_frequency_number_display);
         editFrequencyPeriodSpinner = findViewById(R.id.edit_checking_frequency_period_type_spinner);
         editFrequencyNumberSlider = findViewById(R.id.edit_checking_frequency_number_slider);
+        checkHabitPrecision = findViewById(R.id.check_habit_precision);
+        timePickerBox = findViewById(R.id.timePickerBox);
+        timePicker = findViewById(R.id.timePicker);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, PERIODS);
         editFrequencyPeriodSpinner.setAdapter(adapter);
@@ -108,6 +141,14 @@ public class HabitAddView extends AppCompatActivity {
         });
         editFrequencyNumberSlider.addOnChangeListener((slider, value, fromUser) ->
                 editFrequencyDisplay.setText(intToString(floatToInt(value))));
+
+        checkHabitPrecision.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (buttonView.isChecked()) {
+                timePickerBox.setVisibility(View.VISIBLE);
+            } else {
+                timePickerBox.setVisibility(View.GONE);
+            }
+        });
     }
 
     protected void loadDefaultValues() {
@@ -174,8 +215,86 @@ public class HabitAddView extends AppCompatActivity {
         int id = (int) editFrequencyPeriodSpinner.getSelectedItemId();
         float freqCoef = PERIOD_COEF[id];
 
+        scheduleNotificationInOneMinute();
+
         HabitController.add(HabitFactory.createDTO(uId, title, desc,
                 frequencyValue * freqCoef, priority, difficulty, hType));
+    }
+
+    private void scheduleNotificationInOneMinute() {
+        // 1. Проверяем разрешение на уведомления (для Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
+                return; // Ждём ответа в onRequestPermissionsResult
+            }
+        }
+
+        // 2. Создаём уведомление
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "habit_channel")
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("Тестовое уведомление")
+                .setContentText("Прошла 1 минута!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        Notification notification = builder.build();
+
+        // 3. Отправляем через 60 секунд
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(1, notification); // ID=1 для этого уведомления
+        }, 60_000); // 60 секунд = 60 000 мс
+    }
+
+//    protected void setNotification() {
+//        Context applicationContext = getApplicationContext();
+//        Intent intent = new Intent(applicationContext, NotifiBroadcastReciever.class);
+//
+//        // Extract title and message from user input
+//        String title = "notification title";
+//        String message = "notification text";
+//
+//        // Add title and message as extras to the intent
+//        intent.putExtra("title", title);
+//        intent.putExtra("text", message);
+//
+//        // Create a PendingIntent for the broadcast
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+//                applicationContext,
+//                1,
+//                intent,
+//                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+//        );
+//
+//        // Get the AlarmManager service
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//
+//        // Get the selected time and schedule the notification
+//        long time = getTime();
+//        try {
+//            System.out.println(time);
+//            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+//        } catch (SecurityException e) {
+//            System.out.println("Permission for notifications denied");
+//            System.out.println(e);
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//                intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+//            }
+//            intent.setData(Uri.fromParts("package", applicationContext.getPackageName(), null));
+//            applicationContext.startActivity(intent);
+//        }
+//    }
+
+    protected long getTime() {
+        Calendar c = Calendar.getInstance();
+        // TODO: заменить на данные пользователя.
+        OffsetDateTime tNow = OffsetDateTime.now();
+        c.set(tNow.getYear(), tNow.getMonthValue(), tNow.getDayOfMonth(), tNow.getHour(), tNow.getMinute() + 1);
+        return c.getTimeInMillis();
     }
 
     protected void returnToHabitsView() {
