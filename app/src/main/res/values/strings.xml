@@ -23,5 +23,5 @@
     <string name="edit_habit_difficulty_hint_text">Введите сложность</string>
     <string name="edit_habit_type_hint_text">Тип привычки: полезная / вредная</string>
     <string name="default_number_text">1</string>
-    <string name="habit_time_of_day_text">Добавить точное время проверки</string>
+    <string name="habit_time_of_day_text">Добавить точные напоминания</string>
 </resources>

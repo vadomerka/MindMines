@@ -12,6 +12,7 @@ public class Habit {
     private String description;
     private final OffsetDateTime creation_date;
     private Float checking_frequency;
+    private Boolean time_accurate;
     private Integer priority;
     private Integer difficulty;
     private HabitType type;
@@ -26,6 +27,7 @@ public class Habit {
         String description,
         OffsetDateTime creation_date,
         Float checking_frequency,
+        Boolean time_accurate,
         Integer priority,
         Integer difficulty,
         HabitType type,
@@ -39,6 +41,7 @@ public class Habit {
         this.description = description;
         this.creation_date = creation_date;
         this.checking_frequency = checking_frequency;
+        this.time_accurate = time_accurate;
         this.priority = priority;
         this.difficulty = difficulty;
         this.type = type;
@@ -74,6 +77,12 @@ public class Habit {
     }
     public void setCheckingFrequency(Float value) {
         checking_frequency = value;
+    }
+    public Boolean getTimeAccurate() {
+        return time_accurate;
+    }
+    public void setTimeAccurate(Boolean value) {
+        time_accurate = value;
     }
     public Integer getPriority() {
         return priority;

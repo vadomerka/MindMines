@@ -7,10 +7,10 @@ import static com.example.mindmines.services.TimeIntervalService.getWeeks;
 import static com.example.mindmines.services.utils.UIUtils.floatToInt;
 import static com.example.mindmines.services.utils.UIUtils.intToString;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -51,6 +51,7 @@ import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
+import com.example.mindmines.services.notifications.HabitNotificationService;
 import com.example.mindmines.services.repositories.HabitRepository;
 import com.google.android.material.slider.Slider;
 
@@ -215,79 +216,12 @@ public class HabitAddView extends AppCompatActivity {
         int id = (int) editFrequencyPeriodSpinner.getSelectedItemId();
         float freqCoef = PERIOD_COEF[id];
 
-        scheduleNotificationInOneMinute();
+        Habit h = HabitController.add(HabitFactory.createDTO(uId, title, desc,
+                frequencyValue * freqCoef, true, priority, difficulty, hType));
 
-        HabitController.add(HabitFactory.createDTO(uId, title, desc,
-                frequencyValue * freqCoef, priority, difficulty, hType));
+        HabitNotificationService.scheduleDailyAlarm(this, h);
+
     }
-
-    private void scheduleNotificationInOneMinute() {
-        // 1. Проверяем разрешение на уведомления (для Android 13+)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
-                return; // Ждём ответа в onRequestPermissionsResult
-            }
-        }
-
-        // 2. Создаём уведомление
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "habit_channel")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle("Тестовое уведомление")
-                .setContentText("Прошла 1 минута!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
-
-        Notification notification = builder.build();
-
-        // 3. Отправляем через 60 секунд
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(1, notification); // ID=1 для этого уведомления
-        }, 60_000); // 60 секунд = 60 000 мс
-    }
-
-//    protected void setNotification() {
-//        Context applicationContext = getApplicationContext();
-//        Intent intent = new Intent(applicationContext, NotifiBroadcastReciever.class);
-//
-//        // Extract title and message from user input
-//        String title = "notification title";
-//        String message = "notification text";
-//
-//        // Add title and message as extras to the intent
-//        intent.putExtra("title", title);
-//        intent.putExtra("text", message);
-//
-//        // Create a PendingIntent for the broadcast
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-//                applicationContext,
-//                1,
-//                intent,
-//                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
-//        );
-//
-//        // Get the AlarmManager service
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//
-//        // Get the selected time and schedule the notification
-//        long time = getTime();
-//        try {
-//            System.out.println(time);
-//            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-//        } catch (SecurityException e) {
-//            System.out.println("Permission for notifications denied");
-//            System.out.println(e);
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//                intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-//            }
-//            intent.setData(Uri.fromParts("package", applicationContext.getPackageName(), null));
-//            applicationContext.startActivity(intent);
-//        }
-//    }
 
     protected long getTime() {
         Calendar c = Calendar.getInstance();
