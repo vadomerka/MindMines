@@ -34,15 +34,15 @@ public class HabitChangeView extends HabitAddView {
         editDesc.setText(h.getDescription());
         editPriority.setText(intToString(h.getPriority()));
         editDifficulty.setText(intToString(h.getDifficulty()));
-        editType.setChecked(h.getType() != HabitType.GOOD);
+        editType.setChecked(h.getType() != HabitType.GOOD_INTERVAL);
 
-        int pos = floatFreqToPosition(h.getCheckingFrequency());
-        editFrequencyPeriodSpinner.setSelection(pos);
+//        int pos = floatFreqToPosition(h.getCheckingFrequency());
+//        editFrequencyPeriodSpinner.setSelection(pos);
 
-        float prevValue = h.getCheckingFrequency() == 0 ? 1f :
-                h.getCheckingFrequency() / PERIOD_COEF[pos];
-        updateSelected(pos, prevValue);
-        editFrequencyDisplay.setText(intToString(floatToInt(prevValue)));
+//        float prevValue = h.getCheckingFrequency() == 0 ? 1f :
+//                h.getCheckingFrequency() / PERIOD_COEF[pos];
+//        updateSelected(pos, prevValue);
+//        editFrequencyDisplay.setText(intToString(floatToInt(prevValue)));
     }
 
     @Override
@@ -51,14 +51,14 @@ public class HabitChangeView extends HabitAddView {
         String desc = editDesc.getText().toString();
         Integer priority = Integer.parseInt(editPriority.getText().toString());
         Integer difficulty = Integer.parseInt(editDifficulty.getText().toString());
-        HabitType hType = HabitType.GOOD;
+        HabitType hType = HabitType.GOOD_INTERVAL;
         if (editType.isChecked()) hType = HabitType.BAD;
 
         float frequencyValue = Float.parseFloat(editFrequencyDisplay.getText().toString());
         int id = (int) editFrequencyPeriodSpinner.getSelectedItemId();
-        float freqCoef = PERIOD_COEF[id];
+//        float freqCoef = PERIOD_COEF[id];
 
-        HabitAdderService.change(hId, title, desc, frequencyValue * freqCoef, priority, difficulty, hType);
+//        HabitAdderService.change(hId, title, desc, frequencyValue * freqCoef, priority, difficulty, hType);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class HabitAdderService {
 
         h.setTitle(title);
         h.setDescription(desc);
-        h.setCheckingFrequency(frequency);
+//        h.setCheckingFrequency(frequency);
         h.setPriority(priority);
         h.setDifficulty(difficulty);
         h.setType(type);

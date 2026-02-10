@@ -7,29 +7,45 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.dto.HabitDTO;
+import com.example.mindmines.models.enums.HabitType;
+import com.example.mindmines.services.MidnightCheckerReceiver;
 import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.views.habit.HabitInterval;
+import com.example.mindmines.views.habit.HabitTimeUnit;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.user.LoginView;
 
+import java.time.OffsetDateTime;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: change to loading from server.
-        HabitRepository.init();
+        if (DEBUG) {
+            test();
+        } else {
 
-        Intent myIntent = new Intent(MainActivity.this, HabitsView.class);
-        if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
-            myIntent = new Intent(MainActivity.this, LoginView.class);
+            // TODO: change to loading from server.
+            HabitRepository.init();
+
+            createNotificationChannel();
+            MidnightCheckerReceiver.ensureScheduled(getApplicationContext());
+
+            Intent myIntent = new Intent(MainActivity.this, HabitsView.class);
+            if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
+                myIntent = new Intent(MainActivity.this, LoginView.class);
+            }
+            MainActivity.this.startActivity(myIntent);
+            finish();
         }
-        MainActivity.this.startActivity(myIntent);
-        finish();
-
-        // TODO: добавить уведомления https://www.geeksforgeeks.org/android/schedule-notifications-in-android/
-        createNotificationChannel();
     }
 
     protected void createNotificationChannel() {
@@ -43,6 +59,23 @@ public class MainActivity extends AppCompatActivity {
         if (manager != null) {
             manager.createNotificationChannel(channel);
         }
+    }
+
+    public static void test() {
+        HabitDTO dto = HabitFactory.createDTO(
+                1,
+                "",
+                "",
+                1f,
+                true,
+                1,
+                1,
+                HabitType.GOOD_INTERVAL,
+                new HabitInterval(3, HabitTimeUnit.HOUR)
+        );
+        System.out.println(OffsetDateTime.now());
+        Habit h = HabitFactory.createFromDTO(dto);
+        System.out.println(h.getNextDeadlineAt());
     }
 }
 

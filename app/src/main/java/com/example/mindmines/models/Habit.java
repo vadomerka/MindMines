@@ -1,111 +1,143 @@
 package com.example.mindmines.models;
 
 import com.example.mindmines.models.enums.HabitType;
+import com.example.mindmines.views.habit.HabitInterval;
 
 import java.time.OffsetDateTime;
-import java.util.Date;
 
 public class Habit {
-    private Integer habit_id;
-    private final Integer user_id;
+    private final Integer habitId;
+    private final Integer userId;
+    private HabitType type;
+
     private String title;
     private String description;
-    private final OffsetDateTime creation_date;
-    private Float checking_frequency;
-    private Boolean time_accurate;
     private Integer priority;
     private Integer difficulty;
-    private HabitType type;
-    private OffsetDateTime last_checked;
-    private Integer penalty_number;
-    private Integer streak_number;
+    private Integer penaltyNumber;
+    private Integer streakNumber;
+
+    private final OffsetDateTime creationDate;
+    private OffsetDateTime lastCompletedAt;
+    private OffsetDateTime nextDeadlineAt;
+    private HabitInterval interval;
 
     public Habit(
-        Integer habit_id,
-        Integer user_id,
-        String title,
-        String description,
-        OffsetDateTime creation_date,
-        Float checking_frequency,
-        Boolean time_accurate,
-        Integer priority,
-        Integer difficulty,
-        HabitType type,
-        OffsetDateTime last_checked,
-        Integer penalty_number,
-        Integer streak_number
+            Integer habitId,
+            Integer userId,
+            HabitType type,
+
+            String title,
+            String description,
+            Integer priority,
+            Integer difficulty,
+            Integer penaltyNumber,
+            Integer streakNumber,
+
+            OffsetDateTime creationDate,
+            OffsetDateTime lastCompletedAt,
+            OffsetDateTime nextDeadlineAt,
+            HabitInterval interval
     ) {
-        this.habit_id = habit_id;
-        this.user_id = user_id;
+        this.habitId = habitId;
+        this.userId = userId;
+        this.type = type;
+
         this.title = title;
         this.description = description;
-        this.creation_date = creation_date;
-        this.checking_frequency = checking_frequency;
-        this.time_accurate = time_accurate;
         this.priority = priority;
         this.difficulty = difficulty;
-        this.type = type;
-        this.last_checked = last_checked;
-        this.penalty_number = penalty_number;
-        this.streak_number = streak_number;
+        this.penaltyNumber = penaltyNumber;
+        this.streakNumber = streakNumber;
+
+        this.creationDate = creationDate;
+        this.lastCompletedAt = lastCompletedAt;
+        this.nextDeadlineAt = nextDeadlineAt;
+        this.interval = interval;
     }
 
     public Integer getHabitId() {
-        return habit_id;
+        return habitId;
     }
-    public void setHabitId(Integer value) { habit_id = value; }
+
     public Integer getUserId() {
-        return user_id;
+        return userId;
     }
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String value) {
-        title = value;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String value) {
-        description = value;
-    }
-    public OffsetDateTime getCreationDate() {
-        return creation_date;
-    }
-    public Float getCheckingFrequency() {
-        return checking_frequency;
-    }
-    public void setCheckingFrequency(Float value) {
-        checking_frequency = value;
-    }
-    public Boolean getTimeAccurate() {
-        return time_accurate;
-    }
-    public void setTimeAccurate(Boolean value) {
-        time_accurate = value;
-    }
-    public Integer getPriority() {
-        return priority;
-    }
-    public void setPriority(Integer value) {
-        priority = value;
-    }
-    public Integer getDifficulty() { return difficulty; }
-    public void setDifficulty(Integer value) { difficulty = value; }
-    public HabitType getType() {
-        return type;
-    }
+
+    public String getTitle() { return title; }
+
+    public HabitType getType() { return type; }
+
     public void setType(HabitType value) { type = value; }
-    public OffsetDateTime getLastChecked() {
-        return last_checked;
+
+
+    public void setTitle(String value) { title = value; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String value) { description = value; }
+
+    public Integer getPriority() { return priority; }
+
+    public void setPriority(Integer value) { priority = value; }
+
+    public Integer getDifficulty() { return difficulty; }
+
+    public void setDifficulty(Integer value) { difficulty = value; }
+
+    public Integer getPenaltyNumber() { return penaltyNumber; }
+
+    public void setPenaltyNumber(Integer value) { penaltyNumber = value; }
+
+    public Integer getStreakNumber() { return streakNumber; }
+
+    public void setStreakNumber(Integer value) { streakNumber = value; }
+
+
+
+    public OffsetDateTime getCreationDate() { return creationDate; }
+
+    public OffsetDateTime getLastCompletedAt() { return lastCompletedAt; }
+
+    public void setLastCompletedAt(OffsetDateTime value) { lastCompletedAt = value; }
+
+    public OffsetDateTime getNextDeadlineAt() { return nextDeadlineAt; }
+
+    public void setNextDeadlineAt(OffsetDateTime value) { nextDeadlineAt = value; }
+
+    public HabitInterval getInterval() { return interval; }
+
+    public OffsetDateTime getPeriodStart() {
+        OffsetDateTime start = nextDeadlineAt;
+        if (interval == null) throw new NullPointerException();
+
+        switch (interval.getTimeUnit()) {
+            case DAY:
+                start = nextDeadlineAt.minusDays(interval.getNumber());
+                break;
+            case WEEK:
+                start = nextDeadlineAt.minusWeeks(interval.getNumber());
+                break;
+            case MONTH:
+                start = nextDeadlineAt.minusMonths(interval.getNumber());
+                break;
+        };
+        return start;
     }
-    public void setLastChecked(OffsetDateTime value) {
-        last_checked = value;
-    }
-    public Integer getPenaltyNumber() {
-        return penalty_number;
-    }
-    public Integer getStreakNumber() {
-        return streak_number;
+
+    public OffsetDateTime getNextNextDeadline() {
+        OffsetDateTime end = nextDeadlineAt;
+        switch (interval.getTimeUnit()) {
+            case DAY:
+                end = nextDeadlineAt.minusDays(interval.getNumber());
+                break;
+            case WEEK:
+                end = nextDeadlineAt.minusWeeks(interval.getNumber());
+                break;
+            case MONTH:
+                end = nextDeadlineAt.minusMonths(interval.getNumber());
+                break;
+        };
+        return end;
     }
 }

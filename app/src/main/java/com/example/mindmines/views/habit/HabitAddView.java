@@ -67,11 +67,6 @@ public class HabitAddView extends AppCompatActivity {
             7f,
             4f,
             12f};
-    protected static final float[] PERIOD_COEF = new float[]{
-            1f / 24f,
-            1f,
-            7f,
-            30f};
 
     protected int hId;
     protected int uId;
@@ -158,12 +153,12 @@ public class HabitAddView extends AppCompatActivity {
         editDesc.setHint(h.getDescription());
         editPriority.setText(intToString(h.getPriority()));
         editDifficulty.setText(intToString(h.getDifficulty()));
-        editType.setChecked(h.getType() != HabitType.GOOD);
+        editType.setChecked(h.getType() != HabitType.GOOD_INTERVAL);
 
         int pos = floatFreqToPosition(h.getCheckingFrequency());
         editFrequencyPeriodSpinner.setSelection(pos);
 
-        float prevValue = pos == 0 ? 1f : h.getCheckingFrequency() / PERIOD_COEF[pos];
+        float prevValue = pos == 0 ? 1f : h.getCheckingFrequency(); // / PERIOD_COEF[pos];
         updateSelected(pos, prevValue);
         editFrequencyDisplay.setText(intToString(floatToInt(prevValue)));
     }
@@ -209,26 +204,20 @@ public class HabitAddView extends AppCompatActivity {
         String desc = editDesc.getText().toString();
         Integer priority = Integer.parseInt(editPriority.getText().toString());
         Integer difficulty = Integer.parseInt(editDifficulty.getText().toString());
-        HabitType hType = HabitType.GOOD;
+        HabitType hType = HabitType.GOOD_INTERVAL;
         if (editType.isChecked()) hType = HabitType.BAD;
 
         float frequencyValue = Float.parseFloat(editFrequencyDisplay.getText().toString());
         int id = (int) editFrequencyPeriodSpinner.getSelectedItemId();
-        float freqCoef = PERIOD_COEF[id];
+        float freqCoef = 1; // PERIOD_COEF[id];
+
+        HabitInterval interval = new HabitInterval(3, HabitTimeUnit.MONTH);
 
         Habit h = HabitController.add(HabitFactory.createDTO(uId, title, desc,
-                frequencyValue * freqCoef, true, priority, difficulty, hType));
+                frequencyValue * freqCoef, true, priority, difficulty, hType, interval));
 
         HabitNotificationService.scheduleDailyAlarm(this, h);
 
-    }
-
-    protected long getTime() {
-        Calendar c = Calendar.getInstance();
-        // TODO: заменить на данные пользователя.
-        OffsetDateTime tNow = OffsetDateTime.now();
-        c.set(tNow.getYear(), tNow.getMonthValue(), tNow.getDayOfMonth(), tNow.getHour(), tNow.getMinute() + 1);
-        return c.getTimeInMillis();
     }
 
     protected void returnToHabitsView() {

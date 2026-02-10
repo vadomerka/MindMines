@@ -39,7 +39,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         Habit h = items.get(position);
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
-        holder.checkBtn.setOnClickListener(v -> HabitCheckerService.buttonCheck((Button) v));
+        holder.checkBtn.setOnClickListener(v -> HabitCheckerService.buttonCheck((Button) v));  // buttonUpdate
         holder.checkBtn.setTag(h);
         holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getHabitId()));
 

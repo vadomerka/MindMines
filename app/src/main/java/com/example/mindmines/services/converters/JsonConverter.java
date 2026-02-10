@@ -15,16 +15,17 @@ public class JsonConverter {
         Habit habit = new Habit(
                 1,
                 1,
+                HabitType.GOOD_INTERVAL,
                 "title",
                 "desc",
+                1,
+                1,
+                1,
+                1,
                 null,
-                1.0F,
-                1,
-                1,
-                HabitType.GOOD,
                 null,
-                1,
-                1
+                null,
+                null
         );
         return toJson(habit);
     }

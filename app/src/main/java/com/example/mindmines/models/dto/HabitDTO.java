@@ -1,6 +1,7 @@
 package com.example.mindmines.models.dto;
 
 import com.example.mindmines.models.enums.HabitType;
+import com.example.mindmines.views.habit.HabitInterval;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
@@ -15,6 +16,7 @@ public class HabitDTO {
     private Integer difficulty;
     private HabitType type;
     private OffsetDateTime accTime;
+    private HabitInterval interval;
 
     public HabitDTO(
             Integer user_id,
@@ -24,7 +26,8 @@ public class HabitDTO {
             Boolean timeAccurate,
             Integer priority,
             Integer difficulty,
-            HabitType type
+            HabitType type,
+            HabitInterval interval
     ) {
         this.user_id = user_id;
         this.title = title;
@@ -34,6 +37,7 @@ public class HabitDTO {
         this.priority = priority;
         this.difficulty = difficulty;
         this.type = type;
+        this.interval = interval;
     }
 
     public Integer getUserId() {
@@ -98,6 +102,14 @@ public class HabitDTO {
 
     public void setType(HabitType value) {
         type = value;
+    }
+
+    public HabitInterval getInterval() {
+        return interval;
+    }
+
+    public void setInterval(HabitInterval value) {
+        interval = value;
     }
 }
 
