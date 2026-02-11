@@ -29,27 +29,34 @@ public class HabitFactory {
     public static OffsetDateTime getNewNextDeadline(OffsetDateTime now, HabitInterval interval) {
         OffsetDateTime res = now;
         switch (interval.getTimeUnit()) {
+            // Сложно отслеживать мягкое начало (+ 1), легче отслеживать неотмеченные привычки.
+            case MINUTE:
+                res = res
+                        .plusMinutes(interval.getNumber())
+                        .withSecond(0)
+                        .minusSeconds(1);
+                break;
             case HOUR:
                 res = res
-                        .plusHours(interval.getNumber() + 1)
+                        .plusHours(interval.getNumber())
                         .withMinute(0).withSecond(0)
                         .minusSeconds(1);
                 break;
             case DAY:
                 res = res
-                        .plusDays(interval.getNumber() + 1)
+                        .plusDays(interval.getNumber())
                         .withHour(0).withMinute(0).withSecond(0)
                         .minusMinutes(1);
                 break;
             case WEEK:
-                res = res.plusDays(7L * (interval.getNumber() + 1))
+                res = res.plusDays(7L * (interval.getNumber()))
                         .minusDays(res.getDayOfWeek().getValue() - 1)
                         .withHour(0).withMinute(0).withSecond(0)
                         .minusMinutes(1);
                 break;
             case MONTH:
                 res = res
-                        .plusMonths(interval.getNumber() + 1)
+                        .plusMonths(interval.getNumber())
                         .withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0)
                         .minusMinutes(1);
                 break;

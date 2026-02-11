@@ -6,9 +6,10 @@
     <string name="login_password_input_hint">Введите пароль</string>
     <string name="register_page_button_text">Зарегестрироваться</string>
     <string name="default_hello_world_text">default Hello World!</string>
+    <string name="default_number_text">1</string>
     <string name="logout_btn_text">Logout</string>
-    <string name="habit_change_btn_text">Изменить</string>
-    <string name="habit_check_btn_text">Выполнить</string>
+    <string name="habit_change_btn_text">✏️</string>
+    <string name="habit_check_btn_text">✔️</string>
     <string name="habit_view_title_text">Ваши привычки:</string>
     <string name="return_to_previous_activity">Вернуться</string>
     <string name="habit_change_title">Изменение привычки</string>
@@ -22,6 +23,6 @@
     <string name="edit_habit_priority_hint_text">Введите приоритет</string>
     <string name="edit_habit_difficulty_hint_text">Введите сложность</string>
     <string name="edit_habit_type_hint_text">Тип привычки: полезная / вредная</string>
-    <string name="default_number_text">1</string>
     <string name="habit_time_of_day_text">Добавить точные напоминания</string>
+    <string name="update_button_text">Update</string>
 </resources>

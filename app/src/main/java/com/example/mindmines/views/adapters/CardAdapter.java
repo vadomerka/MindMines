@@ -1,5 +1,6 @@
 package com.example.mindmines.views.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,13 @@ import com.example.mindmines.models.Habit;
 import com.example.mindmines.services.HabitCheckerService;
 import com.example.mindmines.views.habit.HabitsView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
     private final List<Habit> items;
     private final HabitsView activity;
+    private List<CardViewHolder> cardViews = new ArrayList<>();
 
     public CardAdapter(List<Habit> items, HabitsView activity) {
         this.items = items;
@@ -34,16 +37,29 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         return new CardViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
         Habit h = items.get(position);
+
+        holder.hId = h.getHabitId();
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
         holder.checkBtn.setOnClickListener(v -> HabitCheckerService.buttonCheck((Button) v));  // buttonUpdate
         holder.checkBtn.setTag(h);
         holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getHabitId()));
 
+        holder.streakTextView.setText(h.getStreakNumber().toString());
+        holder.penaltyTextView.setText(h.getPenaltyNumber().toString());
+
         HabitCheckerService.buttonUpdate(holder.checkBtn);
+        cardViews.add(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull CardViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+//        System.out.println(holder.titleTextView.getText().toString());
     }
 
     @Override
@@ -51,18 +67,26 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         return items.size();
     }
 
-    static class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView;
-        TextView descTextView;
-        Button changeBtn;
-        Button checkBtn;
+    public List<CardViewHolder> getCardViews() { return cardViews; }
+
+    public static class CardViewHolder extends RecyclerView.ViewHolder {
+        public int hId = 0;
+        public TextView titleTextView;
+        public TextView descTextView;
+        public Button changeBtn;
+        public Button checkBtn;
+        public TextView streakTextView;
+        public TextView penaltyTextView;
 
         CardViewHolder(View itemView) {
             super(itemView);
+
             titleTextView = itemView.findViewById(R.id.habit_title_card_view);
             descTextView = itemView.findViewById(R.id.habit_desc_card_view);
             changeBtn = itemView.findViewById(R.id.habit_card_change_btn);
             checkBtn = itemView.findViewById(R.id.habit_card_check_btn);
+            streakTextView = itemView.findViewById(R.id.habit_streak_textView);
+            penaltyTextView = itemView.findViewById(R.id.habit_penalty_textView);
         }
     }
 }

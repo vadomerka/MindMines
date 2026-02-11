@@ -36,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
             // TODO: change to loading from server.
             HabitRepository.init();
 
+            // Notifications init
             createNotificationChannel();
             MidnightCheckerReceiver.ensureScheduled(getApplicationContext());
+
 
             Intent myIntent = new Intent(MainActivity.this, HabitsView.class);
             if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {

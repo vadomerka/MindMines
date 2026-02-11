@@ -8,11 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_gravity="center">
+        android:gravity="center_vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        >
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/habit_title_card_view"
@@ -37,15 +40,31 @@
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:text="@string/habit_change_btn_text"
-            android:drawable="@drawable/pencil_svgrepo_com">
-
-        </Button>
+            style="@style/UncheckedHabitButton"
+        />
+        <!--android:drawable="@drawable/pencil_svgrepo_com"-->
+        
         <Button
             android:id="@+id/habit_card_check_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/UncheckedHabitButton"
+            style="@style/SmallButton"
             android:text="@string/habit_check_btn_text"/>
+        
+        <TextView
+            android:id="@+id/habit_streak_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_number_text"
+            android:layout_margin="10dp"
+            />
+
+        <TextView
+            android:id="@+id/habit_penalty_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/default_number_text"
+            />
 
     </LinearLayout>
 

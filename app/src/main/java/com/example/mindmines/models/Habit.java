@@ -112,6 +112,12 @@ public class Habit {
         if (interval == null) throw new NullPointerException();
 
         switch (interval.getTimeUnit()) {
+            case MINUTE:
+                start = nextDeadlineAt.minusMinutes(interval.getNumber());
+                break;
+            case HOUR:
+                start = nextDeadlineAt.minusHours(interval.getNumber());
+                break;
             case DAY:
                 start = nextDeadlineAt.minusDays(interval.getNumber());
                 break;
@@ -128,14 +134,20 @@ public class Habit {
     public OffsetDateTime getNextNextDeadline() {
         OffsetDateTime end = nextDeadlineAt;
         switch (interval.getTimeUnit()) {
+            case MINUTE:
+                end = nextDeadlineAt.plusMinutes(interval.getNumber());
+                break;
+            case HOUR:
+                end = nextDeadlineAt.plusHours(interval.getNumber());
+                break;
             case DAY:
-                end = nextDeadlineAt.minusDays(interval.getNumber());
+                end = nextDeadlineAt.plusDays(interval.getNumber());
                 break;
             case WEEK:
-                end = nextDeadlineAt.minusWeeks(interval.getNumber());
+                end = nextDeadlineAt.plusWeeks(interval.getNumber());
                 break;
             case MONTH:
-                end = nextDeadlineAt.minusMonths(interval.getNumber());
+                end = nextDeadlineAt.plusMonths(interval.getNumber());
                 break;
         };
         return end;

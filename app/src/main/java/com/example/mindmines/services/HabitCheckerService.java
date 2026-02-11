@@ -1,10 +1,15 @@
 package com.example.mindmines.services;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Button;
 
+import androidx.annotation.ColorInt;
+import androidx.core.content.ContextCompat;
+
 import com.example.mindmines.R;
 import com.example.mindmines.models.Habit;
+import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
 import com.example.mindmines.views.habit.HabitInterval;
 
@@ -19,8 +24,12 @@ public class HabitCheckerService {
         Habit h = (Habit) btn.getTag();
         if (isHabitUnchecked(h))  {
             btn.setTextAppearance(R.style.UncheckedHabitButton);
+            btn.setBackgroundColor(Color.RED);
+//            btn.setBackgroundResource(R.color.habit_unchecked_btn_color);
         } else {
             btn.setTextAppearance(R.style.CheckedHabitButton);
+            btn.setBackgroundColor(Color.GREEN);
+//            btn.setBackgroundResource(R.color.habit_checked_btn_color);
         }
         HabitRepository.update(h);
     }
@@ -38,11 +47,15 @@ public class HabitCheckerService {
             OffsetDateTime last = h.getLastCompletedAt();
             OffsetDateTime n = OffsetDateTime.now();
             OffsetDateTime ded = h.getNextDeadlineAt();
+            if (ded == null) {
+                // Debug, null deadlines should not be created.
+                ded = HabitFactory.getNewNextDeadline(OffsetDateTime.now(), h.getInterval());
+                h.setNextDeadlineAt(ded);
+            }
             OffsetDateTime s = h.getPeriodStart();
             if (last == null) return true;
-            if (ded.isBefore(n)) {
-                return true;
-            }
+            // Если привычка отмечена в текущем периоде и дд не прошел.
+            if (ded.isBefore(n)) return true;
             return !s.isBefore(last);
         } catch (NullPointerException e) {
             return true;

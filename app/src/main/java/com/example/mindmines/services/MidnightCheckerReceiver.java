@@ -24,7 +24,6 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
 
         final PendingResult pendingResult = goAsync();
 
-        // 2. Запускаем проверку в фоновом потоке
         executor.execute(() -> {
             try {
                 checkHabits(context);
@@ -43,7 +42,6 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager == null) return;
 
-        // Время следующей полуночи
         long triggerAt = LocalDateTime.now()
                 .plusDays(1)
                 .withHour(0)
