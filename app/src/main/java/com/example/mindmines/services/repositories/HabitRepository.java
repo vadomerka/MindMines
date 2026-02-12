@@ -2,6 +2,7 @@ package com.example.mindmines.services.repositories;
 
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.models.enums.HabitType;
+import com.example.mindmines.views.HabitObserver;
 import com.example.mindmines.views.habit.HabitInterval;
 import com.example.mindmines.views.habit.HabitTimeUnit;
 
@@ -11,8 +12,10 @@ import java.util.Optional;
 
 public class HabitRepository {
     private static List<Habit> array;
+    private static List<HabitObserver> observers;
 
     public static void init() {
+        observers = new ArrayList<>();
         array = new ArrayList<Habit>() {
             {
                 add(new Habit(1, 1, HabitType.GOOD_INTERVAL,"title", "desc", 1,1, 1, 3,  null, null, null, new HabitInterval(1, HabitTimeUnit.MINUTE)));
@@ -20,6 +23,14 @@ public class HabitRepository {
                 add(new Habit(3, 1, HabitType.GOOD_INTERVAL,"title3", "desc3", 1,1, 3, 1,  null, null, null, new HabitInterval(3, HabitTimeUnit.MINUTE)));
             }
         };
+    }
+
+    public static void subscribe(HabitObserver o) {
+        observers.add(o);
+    }
+
+    public static void unsubscribe(HabitObserver o) {
+        observers.remove(o);
     }
 
     public static List<Habit> getAll() {
@@ -42,5 +53,9 @@ public class HabitRepository {
     public static void update(Habit item) {
         Habit found = get(item.getHabitId());
         array.set(array.indexOf(found), item);
+
+        for (HabitObserver o: observers) {
+            o.updateHabits();
+        }
     }
 }

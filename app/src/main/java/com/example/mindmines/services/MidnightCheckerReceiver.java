@@ -35,14 +35,12 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
     }
 
     private void checkHabits(Context context) {
+        System.out.println("checkHabits");
         HabitCheckerService.checkAllHabits();
     }
 
-    private void scheduleNextCheck(Context context) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager == null) return;
-
-        long triggerAt = LocalDateTime.now()
+    private long getNextDayStart() {
+        return LocalDateTime.now()
                 .plusDays(1)
                 .withHour(0)
                 .withMinute(0)
@@ -51,6 +49,27 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli();
+    }
+
+    private long getNextMinuteStart() {
+        return LocalDateTime.now()
+                .plusMinutes(1)
+                .withSecond(0)
+                .withNano(0)
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli();
+    }
+
+    public static long nowMillis() {
+        return LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
+    private void scheduleNextCheck(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager == null) return;
+
+        long triggerAt = getNextMinuteStart();
 
         Intent intent = new Intent(context, MidnightCheckerReceiver.class);
         intent.setAction(ACTION_CHECK);

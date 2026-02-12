@@ -18,9 +18,12 @@
         android:theme="@style/Theme.MindMines"
         tools:targetApi="31">
         <receiver
-            android:name=".models.NotifiBroadcastReciever"
-            android:enabled="true"
-            android:exported="true"></receiver>
+            android:name=".services.MidnightCheckerReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.mindmines.MIDNIGHT_CHECK" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".views.habit.HabitChangeView"
