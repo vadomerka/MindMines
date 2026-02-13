@@ -38,10 +38,10 @@ public class HabitCheckerService {
         OffsetDateTime n = OffsetDateTime.now();
         OffsetDateTime ded = h.getNextDeadlineAt();
         OffsetDateTime s = h.getPeriodStart();
+        if (n.isBefore(ded)) return 1;  // deadline did not pass yet
         if (last == null) return 0;
         // Если привычка отмечена в текущем периоде и период прошел.
         if (s.isAfter(last)) return 0;  // not checked
-        if (n.isBefore(ded)) return 1;  // is checked, not was
         return 2;
     }
 
