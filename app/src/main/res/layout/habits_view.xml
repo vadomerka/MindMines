@@ -27,12 +27,4 @@
         android:layout_margin="20dp"
         android:text="@string/add_habit_button_text"/>
 
-    <Button
-        android:id="@+id/update_page_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/update_button_text"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        />
 </RelativeLayout>

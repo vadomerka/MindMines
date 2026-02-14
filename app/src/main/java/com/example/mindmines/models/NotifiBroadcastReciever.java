@@ -2,23 +2,17 @@ package com.example.mindmines.models;
 
 import android.Manifest;
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.mindmines.MainActivity;
-import com.example.mindmines.R;
 import com.example.mindmines.services.notifications.HabitNotificationService;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.views.habit.HabitAddView;
 
 public class NotifiBroadcastReciever extends BroadcastReceiver {
     private static final String CHANNEL_ID = "habit_channel";

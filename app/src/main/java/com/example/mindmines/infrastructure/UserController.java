@@ -1,4 +1,4 @@
-package com.example.mindmines.controllers;
+package com.example.mindmines.infrastructure;
 
 import android.util.Pair;
 

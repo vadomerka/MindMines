@@ -1,19 +1,24 @@
-package com.example.mindmines.controllers;
+package com.example.mindmines.infrastructure;
 
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.requests.HabitRequestSender;
-import com.example.mindmines.services.HabitAdderService;
+import com.example.mindmines.services.HabitManagerService;
 
-public class HabitController {
+public class HabitManager {
     public static Habit add(HabitDTO hDTO) {
         try {
             Habit result = HabitRequestSender.add(hDTO);
-            HabitAdderService.add(result);
+            HabitManagerService.add(result);
             return result;
         } catch (Exception e) {
             System.out.println("Произошла ошибка при добавлении привычки.");
         }
         return null;
+    }
+
+    public static void update(Habit h) {
+        // TODO: здесь можно сделать сохранение изменений на сервере.
+        HabitManagerService.update(h);
     }
 }

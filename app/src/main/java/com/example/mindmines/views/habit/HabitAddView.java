@@ -10,33 +10,14 @@ import static com.example.mindmines.services.utils.UIUtils.intToString;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -44,21 +25,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.mindmines.R;
-import com.example.mindmines.controllers.HabitController;
+import com.example.mindmines.infrastructure.HabitManager;
 import com.example.mindmines.models.Habit;
-import com.example.mindmines.models.NotifiBroadcastReciever;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.notifications.HabitNotificationService;
-import com.example.mindmines.services.repositories.HabitRepository;
 import com.google.android.material.slider.Slider;
-
-import java.time.OffsetDateTime;
-import java.util.Calendar;
-import java.util.Locale;
-import android.Manifest;
 
 public class HabitAddView extends AppCompatActivity {
     protected static final String[] PERIODS = new String[]{"часов", "дней", "недель", "месяцев"};
@@ -213,7 +187,7 @@ public class HabitAddView extends AppCompatActivity {
 
         HabitInterval interval = new HabitInterval(3, HabitTimeUnit.MONTH);
 
-        Habit h = HabitController.add(HabitFactory.createDTO(uId, title, desc,
+        Habit h = HabitManager.add(HabitFactory.createDTO(uId, title, desc,
                 frequencyValue * freqCoef, true, priority, difficulty, hType, interval));
 
         HabitNotificationService.scheduleDailyAlarm(this, h);

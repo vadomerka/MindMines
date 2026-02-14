@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mindmines.R;
-import com.example.mindmines.controllers.UserController;
+import com.example.mindmines.infrastructure.UserController;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.views.habit.HabitsView;
 

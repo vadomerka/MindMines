@@ -2,10 +2,15 @@ package com.example.mindmines;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.models.dto.HabitDTO;
@@ -40,13 +45,25 @@ public class MainActivity extends AppCompatActivity {
             createNotificationChannel();
             MidnightCheckerReceiver.ensureScheduled(getApplicationContext());
 
+            AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !am.canScheduleExactAlarms()) {
+                Log.w("MainActivity", "Точное время НЕ разрешено! Открываем настройки...");
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
+            }
+
+//            Intent intent = new Intent();
+//            intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+//            intent.setData(Uri.parse("package:" + getPackageName()));
+//            startActivity(intent);
 
             Intent myIntent = new Intent(MainActivity.this, HabitsView.class);
             if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
                 myIntent = new Intent(MainActivity.this, LoginView.class);
             }
             MainActivity.this.startActivity(myIntent);
-            finish();
+//            finish();
         }
     }
 

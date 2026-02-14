@@ -4,7 +4,7 @@ import com.example.mindmines.models.Habit;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
 
-public class HabitAdderService {
+public class HabitManagerService {
     public static void add(Habit h) {
         HabitRepository.add(h);
     }
@@ -27,6 +27,10 @@ public class HabitAdderService {
         h.setDifficulty(difficulty);
         h.setType(type);
 
+        HabitRepository.update(h);
+    }
+
+    public static void update(Habit h) {
         HabitRepository.update(h);
     }
 }

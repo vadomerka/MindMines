@@ -5,6 +5,7 @@ import android.widget.Button;
 
 
 import com.example.mindmines.R;
+import com.example.mindmines.infrastructure.HabitManager;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
@@ -85,7 +86,7 @@ public class HabitCheckerService {
                 default:
                     break;
             }
-            HabitRepository.update(h);
+            HabitManager.update(h);
         }
     }
 }

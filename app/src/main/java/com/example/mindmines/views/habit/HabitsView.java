@@ -1,9 +1,9 @@
 package com.example.mindmines.views.habit;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,7 @@ import com.example.mindmines.services.repositories.HabitRepository;
 import com.example.mindmines.views.HabitObserver;
 import com.example.mindmines.views.adapters.CardAdapter;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public class HabitsView extends AppCompatActivity implements HabitObserver {
@@ -37,9 +38,6 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
         listAdapter = new CardAdapter(itemList, this);
         listView.setAdapter(listAdapter);
 
-        Button updateBtn = findViewById(R.id.update_page_btn);
-        updateBtn.setOnClickListener((v) -> updateHabits());
-
         Button add_btn = findViewById(R.id.add_habit_button);
         add_btn.setOnClickListener(v -> openHabitAddView());
     }
@@ -48,6 +46,7 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
     protected void onResume() {
         super.onResume();
         HabitRepository.subscribe(this);
+        updateHabits();
     }
 
     @Override
@@ -64,8 +63,8 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
 
     @SuppressLint("SetTextI18n")
     public void updateHabits() {
+        Log.d("MidnightChecker", ">>> updateHabits" + OffsetDateTime.now());
         runOnUiThread(() -> {
-            System.out.println("updateHabits");
             List<CardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
             if (cards == null) return;
             for (CardAdapter.CardViewHolder card: cards) {
