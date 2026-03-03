@@ -37,6 +37,9 @@ dependencies {
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
 
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+
     implementation("com.google.code.gson:gson:2.13.2")
     implementation("androidx.security:security-crypto:1.1.0")
 

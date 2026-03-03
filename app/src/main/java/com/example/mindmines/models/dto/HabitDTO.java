@@ -1,10 +1,9 @@
 package com.example.mindmines.models.dto;
 
 import com.example.mindmines.models.enums.HabitType;
-import com.example.mindmines.views.habit.HabitInterval;
+import com.example.mindmines.models.HabitInterval;
 
 import java.time.OffsetDateTime;
-import java.util.Date;
 
 public class HabitDTO {
     private Integer user_id;

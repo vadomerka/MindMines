@@ -1,7 +1,6 @@
 package com.example.mindmines.models;
 
 import com.example.mindmines.models.enums.HabitType;
-import com.example.mindmines.views.habit.HabitInterval;
 
 import java.time.OffsetDateTime;
 
@@ -127,7 +126,7 @@ public class Habit {
             case MONTH:
                 start = nextDeadlineAt.minusMonths(interval.getNumber());
                 break;
-        };
+        }
         return start;
     }
 
@@ -149,7 +148,7 @@ public class Habit {
             case MONTH:
                 end = nextDeadlineAt.plusMonths(interval.getNumber());
                 break;
-        };
+        }
         return end;
     }
 }

@@ -27,6 +27,8 @@ import android.widget.TimePicker;
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitManager;
 import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.HabitInterval;
+import com.example.mindmines.models.HabitTimeUnit;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.auth.AuthManager;

@@ -1,4 +1,4 @@
-package com.example.mindmines.views.habit;
+package com.example.mindmines.models;
 
 public class HabitInterval {
     private final int number;

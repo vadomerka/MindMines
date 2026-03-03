@@ -6,10 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +20,6 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, ">>> СРАБОТАЛ БУДИЛЬНИК в " + OffsetDateTime.now().toInstant().toEpochMilli());
         if (!ACTION_CHECK.equals(intent.getAction())) return;
 
         final PendingResult pendingResult = goAsync();
@@ -40,7 +37,7 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
     }
 
     private void checkHabits(Context context) {
-        HabitCheckerService.checkAllHabits();
+        HabitCheckerService.checkAllHabits(context);
     }
 
     private long getNextDayStart() {
@@ -90,7 +87,6 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
                 triggerAt,
                 pendingIntent
         );
-//        Log.d(TAG, ">>> Следующий будильник: " + triggerAt);
     }
 
     public static void ensureScheduled(Context context) {
@@ -107,7 +103,6 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
         );
 
         if (pendingIntent == null) {
-            Log.d(TAG, ">>> Будильник не найден — ставим новый");
             new MidnightCheckerReceiver().scheduleNextCheck(context);
         }
     }

@@ -3,7 +3,6 @@ package com.example.mindmines.views.habit;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
+import com.example.mindmines.db.HabitDataSynchronizer;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.services.HabitCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
@@ -18,18 +18,20 @@ import com.example.mindmines.services.repositories.HabitRepository;
 import com.example.mindmines.views.HabitObserver;
 import com.example.mindmines.views.adapters.CardAdapter;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 public class HabitsView extends AppCompatActivity implements HabitObserver {
     private AuthManager auth;
     private RecyclerView listView;
     private CardAdapter listAdapter;
+    private HabitDataSynchronizer dbSync;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.habits_view);
+
+        dbSync = new HabitDataSynchronizer(this);
 
         listView = findViewById(R.id.habits_list_view);
         listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -53,17 +55,25 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
     protected void onPause() {
         super.onPause();
         HabitRepository.unsubscribe(this);
+        dbSync.saveFromRepository();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dbSync.saveFromRepository();
     }
 
     private List<Habit> loadItemList() {
         // TODO: implement sort and filters.
         // TODO: load only current user habits
+
+        dbSync.loadIntoRepository();
         return HabitRepository.getAll();
     }
 
     @SuppressLint("SetTextI18n")
     public void updateHabits() {
-        Log.d("MidnightChecker", ">>> updateHabits" + OffsetDateTime.now());
         runOnUiThread(() -> {
             List<CardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
             if (cards == null) return;
@@ -82,7 +92,7 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
         Intent myIntent = new Intent(HabitsView.this, HabitChangeView.class);
         myIntent.putExtra("id", hId);
         HabitsView.this.startActivity(myIntent);
-        finish(); // Добавить onActivityResult для сохранения результатов?
+        finish();
     }
 
     public void openHabitAddView() {

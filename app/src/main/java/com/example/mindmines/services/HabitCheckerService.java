@@ -1,10 +1,12 @@
 package com.example.mindmines.services;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.widget.Button;
 
 
 import com.example.mindmines.R;
+import com.example.mindmines.db.HabitDataSynchronizer;
 import com.example.mindmines.infrastructure.HabitManager;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.services.factories.HabitFactory;
@@ -62,7 +64,7 @@ public class HabitCheckerService {
         return !s.isBefore(last);
     }
 
-    public static void checkAllHabits() {
+    public static void checkAllHabits(Context context) {
         List<Habit> hl = HabitRepository.getAll();
         for (Habit h: hl) {
             switch (h.getType()) {
@@ -71,15 +73,16 @@ public class HabitCheckerService {
                 case GOOD_TASKS:
                     break;
                 case GOOD_INTERVAL:
-                    int whu = wasHabitUnchecked(h);
-                    if (whu == 0) {
-                        h.setStreakNumber(0);
-                        h.setPenaltyNumber(h.getPenaltyNumber() + 1);
-                    } else if (whu == 2){
-                        h.setStreakNumber(h.getStreakNumber() + 1);
-                        h.setPenaltyNumber(0);
-                    }
-                    if (h.getNextDeadlineAt().isBefore(OffsetDateTime.now())) {
+                    while (h.getNextDeadlineAt().isBefore(OffsetDateTime.now())) {
+                        int whu = wasHabitUnchecked(h);
+                        if (whu == 0) {
+                            h.setStreakNumber(0);
+                            h.setPenaltyNumber(h.getPenaltyNumber() + 1);
+                        } else if (whu == 2){
+                            h.setStreakNumber(h.getStreakNumber() + 1);
+                            h.setPenaltyNumber(0);
+                        }
+
                         h.setNextDeadlineAt(h.getNextNextDeadline());
                     }
                     break;
@@ -88,5 +91,7 @@ public class HabitCheckerService {
             }
             HabitManager.update(h);
         }
+        HabitDataSynchronizer dbSync = new HabitDataSynchronizer(context);
+        dbSync.saveFromRepository();
     }
 }

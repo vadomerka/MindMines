@@ -1,10 +1,12 @@
 package com.example.mindmines.services.factories;
 
+import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.HabitTimeUnit;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.views.habit.HabitInterval;
+import com.example.mindmines.models.HabitInterval;
 
 import java.time.OffsetDateTime;
 import java.util.OptionalInt;
@@ -24,6 +26,35 @@ public class HabitFactory {
                 difficulty,
                 hType,
                 interval);
+    }
+
+    public static HabitDTO createDTO(Integer userId) {
+        return new HabitDTO(userId,
+                "Название привычки",
+                "Описание привычки",
+                1.0f / 24,
+                true,
+                1,
+                1,
+                HabitType.GOOD_INTERVAL,
+                null);
+    }
+
+    public static Habit createFromDTO(HabitDTO dto) {
+        return new Habit(
+                ++localId,
+                dto.getUserId(),
+                dto.getType(),
+                dto.getTitle(),
+                dto.getDescription(),
+                dto.getPriority(),
+                dto.getDifficulty(),
+                0,
+                0,
+                OffsetDateTime.now(),
+                null,
+                getNewNextDeadline(OffsetDateTime.now(), dto.getInterval()),
+                dto.getInterval());
     }
 
     public static OffsetDateTime getNewNextDeadline(OffsetDateTime now, HabitInterval interval) {
@@ -64,32 +95,67 @@ public class HabitFactory {
         return res;
     }
 
-    public static HabitDTO createDTO(Integer userId) {
-        return new HabitDTO(userId,
-                "Название привычки",
-                "Описание привычки",
-                1.0f / 24,
-                true,
-                1,
-                1,
-                HabitType.GOOD_INTERVAL,
-                null);
+    public static Habit createFromEntity(HabitEntity e) {
+        return new Habit(
+                e.habitId,
+                e.userId,
+                habitTypeFromString(e.type),
+                e.title,
+                e.description,
+                e.priority,
+                e.difficulty,
+                e.penaltyNumber,
+                e.streakNumber,
+                e.creationDate,
+                e.lastCompletedAt,
+                e.nextDeadlineAt,
+                new HabitInterval(e.intervalNumber, intervalUnitFromString(e.intervalUnit)));
     }
 
-    public static Habit createFromDTO(HabitDTO dto) {
-        return new Habit(
-                ++localId,
-                dto.getUserId(),
-                dto.getType(),
-                dto.getTitle(),
-                dto.getDescription(),
-                dto.getPriority(),
-                dto.getDifficulty(),
-                0,
-                0,
-                OffsetDateTime.now(),
-                null,
-                getNewNextDeadline(OffsetDateTime.now(), dto.getInterval()),
-                dto.getInterval());
+    public static HabitType habitTypeFromString(String type) {
+        switch (type.toUpperCase()) {
+            case "GOOD_GOAL_COUNT":
+                return HabitType.GOOD_GOAL_COUNT;
+            case "GOOD_TASKS":
+                return HabitType.GOOD_TASKS;
+            case "GOOD_INTERVAL":
+                return HabitType.GOOD_INTERVAL;
+            default:
+                return HabitType.BAD;
+        }
+    }
+
+    public static HabitTimeUnit intervalUnitFromString(String type) {
+        switch (type.toUpperCase()) {
+            case "MINUTE":
+                return HabitTimeUnit.MINUTE;
+            case "HOUR":
+                return HabitTimeUnit.HOUR;
+            case "DAY":
+                return HabitTimeUnit.DAY;
+            case "WEEK":
+                return HabitTimeUnit.WEEK;
+            default:
+                return HabitTimeUnit.MONTH;
+        }
+    }
+
+    public static HabitEntity createEntity(Habit h) {
+        return new HabitEntity(
+                h.getHabitId(),
+                h.getUserId(),
+                h.getType().toString(),
+                h.getTitle(),
+                h.getDescription(),
+                h.getPriority(),
+                h.getDifficulty(),
+                h.getPenaltyNumber(),
+                h.getStreakNumber(),
+                h.getCreationDate(),
+                h.getLastCompletedAt(),
+                h.getNextDeadlineAt(),
+                h.getInterval().getNumber(),
+                h.getInterval().getTimeUnit().toString()
+        );
     }
 }

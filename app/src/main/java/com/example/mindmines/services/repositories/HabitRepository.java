@@ -3,8 +3,8 @@ package com.example.mindmines.services.repositories;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.views.HabitObserver;
-import com.example.mindmines.views.habit.HabitInterval;
-import com.example.mindmines.views.habit.HabitTimeUnit;
+import com.example.mindmines.models.HabitInterval;
+import com.example.mindmines.models.HabitTimeUnit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,11 @@ public class HabitRepository {
         return array;
     }
 
+    public static void setAll(List<Habit> narr) {
+        array = narr;
+        updateObservers();
+    }
+
     public static void add(Habit item) {
         array.add(item);
     }
@@ -53,7 +58,10 @@ public class HabitRepository {
     public static void update(Habit item) {
         Habit found = get(item.getHabitId());
         array.set(array.indexOf(found), item);
+        updateObservers();
+    }
 
+    public static void updateObservers() {
         for (HabitObserver o: observers) {
             o.updateHabits();
         }

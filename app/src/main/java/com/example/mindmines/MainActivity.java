@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.example.mindmines.db.HabitDataSynchronizer;
+import com.example.mindmines.db.HabitDatabase;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.models.enums.HabitType;
@@ -19,8 +21,8 @@ import com.example.mindmines.services.MidnightCheckerReceiver;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.views.habit.HabitInterval;
-import com.example.mindmines.views.habit.HabitTimeUnit;
+import com.example.mindmines.models.HabitInterval;
+import com.example.mindmines.models.HabitTimeUnit;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.user.LoginView;
 
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (DEBUG) {
-            test();
+            test2();
         } else {
 
             // TODO: change to loading from server.
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void test() {
+    public static void test1() {
         HabitDTO dto = HabitFactory.createDTO(
                 1,
                 "",
@@ -95,6 +97,20 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(OffsetDateTime.now());
         Habit h = HabitFactory.createFromDTO(dto);
         System.out.println(h.getNextDeadlineAt());
+    }
+
+    public void test2() {
+        HabitRepository.init();
+
+        String tag = "DEBUG main";
+        Log.d(tag, "db init");
+        HabitDatabase db = HabitDatabase.getInstance(this);
+        Log.d(tag, "data sync init");
+        HabitDataSynchronizer sync = new HabitDataSynchronizer(this);
+        Log.d(tag, "saveFromRepository");
+        sync.saveFromRepository();
+        Log.d(tag, "loadIntoRepository");
+        sync.loadIntoRepository();
     }
 }
 
