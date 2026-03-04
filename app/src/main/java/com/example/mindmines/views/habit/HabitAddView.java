@@ -185,7 +185,7 @@ public class HabitAddView extends AppCompatActivity {
 
         float frequencyValue = Float.parseFloat(editFrequencyDisplay.getText().toString());
         int id = (int) editFrequencyPeriodSpinner.getSelectedItemId();
-        float freqCoef = 1; // PERIOD_COEF[id];
+        float freqCoef = 1;
 
         HabitInterval interval = new HabitInterval(3, HabitTimeUnit.MONTH);
 

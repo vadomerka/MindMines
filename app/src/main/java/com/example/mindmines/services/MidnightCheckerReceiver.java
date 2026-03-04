@@ -6,6 +6,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
+
+import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
+import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,7 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MidnightCheckerReceiver extends BroadcastReceiver {
-    private static final String TAG = "MidnightChecker";
+    private static final String TAG = "Debug data sync";
     private static final String ACTION_CHECK = "com.example.mindmines.MIDNIGHT_CHECK";
     private static final int REQUEST_CODE = 2000;
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -36,8 +40,8 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
         )).start();
     }
 
-    private void checkHabits(Context context) {
-        HabitCheckerService.checkAllHabits(context);
+    private static void checkHabits(Context context) {
+        HabitSyncCheckerService.checkAllHabits(context);
     }
 
     private long getNextDayStart() {
@@ -90,6 +94,10 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
     }
 
     public static void ensureScheduled(Context context) {
+        Log.d(TAG, "ensureScheduled: scheduled");
+
+        checkHabits(context);
+
         Intent intent = new Intent(context, MidnightCheckerReceiver.class);
         intent.setAction(ACTION_CHECK);
 

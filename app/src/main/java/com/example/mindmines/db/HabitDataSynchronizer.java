@@ -1,6 +1,7 @@
 package com.example.mindmines.db;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.Habit;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HabitDataSynchronizer {
+    private static final String TAG = "Debug data sync";
     private final HabitDao dao;
 
     public HabitDataSynchronizer(Context context) {
@@ -19,7 +21,7 @@ public class HabitDataSynchronizer {
     }
 
     public void loadIntoRepository() {
-//        Log.d(TAG, "loadIntoRepository: loaded");
+        Log.d(TAG, "loadIntoRepository: loaded");
         List<HabitEntity> entities = dao.getAll();
         List<Habit> habits = new ArrayList<>();
 

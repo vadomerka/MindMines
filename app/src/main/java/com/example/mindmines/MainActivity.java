@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
             // TODO: change to loading from server.
             HabitRepository.init();
+            HabitDataSynchronizer dbSync = new HabitDataSynchronizer(this);
+            dbSync.loadIntoRepository();
 
             // Notifications init
             createNotificationChannel();

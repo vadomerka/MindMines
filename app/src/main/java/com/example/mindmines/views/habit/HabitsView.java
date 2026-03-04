@@ -3,6 +3,7 @@ package com.example.mindmines.views.habit;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mindmines.R;
 import com.example.mindmines.db.HabitDataSynchronizer;
 import com.example.mindmines.models.Habit;
-import com.example.mindmines.services.HabitCheckerService;
+import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.HabitRepository;
 import com.example.mindmines.views.HabitObserver;
@@ -21,6 +22,8 @@ import com.example.mindmines.views.adapters.CardAdapter;
 import java.util.List;
 
 public class HabitsView extends AppCompatActivity implements HabitObserver {
+    private static final String TAG = "Debug data sync";
+
     private AuthManager auth;
     private RecyclerView listView;
     private CardAdapter listAdapter;
@@ -74,6 +77,7 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
 
     @SuppressLint("SetTextI18n")
     public void updateHabits() {
+        Log.d(TAG, "updateHabits: updating");
         runOnUiThread(() -> {
             List<CardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
             if (cards == null) return;
@@ -83,7 +87,7 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
                 card.streakTextView.setText(h.getStreakNumber().toString());
                 card.penaltyTextView.setText(h.getPenaltyNumber().toString());
 
-                HabitCheckerService.buttonUpdate(card.checkBtn);
+                HabitCurrentCheckerService.buttonUpdate(card.checkBtn);
             }
         });
     }

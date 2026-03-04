@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.Habit;
-import com.example.mindmines.services.HabitCheckerService;
+import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.views.habit.HabitsView;
 
 import java.util.ArrayList;
@@ -44,14 +44,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.hId = h.getHabitId();
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
-        holder.checkBtn.setOnClickListener(v -> HabitCheckerService.buttonCheck((Button) v));  // buttonUpdate
+        holder.checkBtn.setOnClickListener(v -> HabitCurrentCheckerService.buttonCheck((Button) v));  // buttonUpdate
         holder.checkBtn.setTag(h);
         holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getHabitId()));
 
         holder.streakTextView.setText(h.getStreakNumber().toString());
         holder.penaltyTextView.setText(h.getPenaltyNumber().toString());
 
-        HabitCheckerService.buttonUpdate(holder.checkBtn);
+        HabitCurrentCheckerService.buttonUpdate(holder.checkBtn);
         cardViews.add(holder);
     }
 

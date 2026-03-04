@@ -1,5 +1,7 @@
 package com.example.mindmines.services.repositories;
 
+import android.util.Log;
+
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.views.HabitObserver;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class HabitRepository {
+    private static final String TAG = "Debug data sync";
     private static List<Habit> array;
     private static List<HabitObserver> observers;
 
