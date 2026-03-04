@@ -1,4 +1,5 @@
 package com.example.mindmines.models;
 
-public class User {
+public class UserStatus {
+
 }

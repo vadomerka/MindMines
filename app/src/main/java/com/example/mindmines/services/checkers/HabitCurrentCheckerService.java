@@ -1,19 +1,15 @@
 package com.example.mindmines.services.checkers;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.widget.Button;
 
 
 import com.example.mindmines.R;
-import com.example.mindmines.db.HabitDataSynchronizer;
 import com.example.mindmines.infrastructure.HabitManager;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.services.factories.HabitFactory;
-import com.example.mindmines.services.repositories.HabitRepository;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 
 
 // Класс для изменений привычек на основе состояния в текущий момент.
@@ -34,7 +30,7 @@ public class HabitCurrentCheckerService {
         return !s.isBefore(last);
     }
 
-    public static void buttonUpdate(Button btn) {
+    public static void buttonViewUpdate(Button btn) {
         Habit h = (Habit) btn.getTag();
         if (isHabitUnchecked(h))  {
             btn.setTextAppearance(R.style.UncheckedHabitButton);
@@ -45,11 +41,13 @@ public class HabitCurrentCheckerService {
         }
     }
 
-    public static void buttonCheck(Button btn) {
+    public static void buttonStatusCheck(Button btn) {
         Habit h = (Habit) btn.getTag();
         if (isHabitUnchecked(h)) {
             h.setLastCompletedAt(OffsetDateTime.now());
         }
-        buttonUpdate(btn);
+        buttonViewUpdate(btn);
+
+        HabitManager.update(h);
     }
 }

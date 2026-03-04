@@ -44,14 +44,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         holder.hId = h.getHabitId();
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
-        holder.checkBtn.setOnClickListener(v -> HabitCurrentCheckerService.buttonCheck((Button) v));  // buttonUpdate
+        holder.checkBtn.setOnClickListener(v -> HabitCurrentCheckerService.buttonStatusCheck((Button) v));  // buttonUpdate
         holder.checkBtn.setTag(h);
         holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getHabitId()));
 
         holder.streakTextView.setText(h.getStreakNumber().toString());
         holder.penaltyTextView.setText(h.getPenaltyNumber().toString());
 
-        HabitCurrentCheckerService.buttonUpdate(holder.checkBtn);
+        HabitCurrentCheckerService.buttonViewUpdate(holder.checkBtn);
         cardViews.add(holder);
     }
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
-import com.example.mindmines.db.HabitDataSynchronizer;
+import com.example.mindmines.db.datasync.HabitDataSynchronizer;
 import com.example.mindmines.models.Habit;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
@@ -27,14 +27,14 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
     private AuthManager auth;
     private RecyclerView listView;
     private CardAdapter listAdapter;
-    private HabitDataSynchronizer dbSync;
+//    private HabitDataSynchronizer dbSync;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.habits_view);
 
-        dbSync = new HabitDataSynchronizer(this);
+//        dbSync = new HabitDataSynchronizer(this);
 
         listView = findViewById(R.id.habits_list_view);
         listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -48,30 +48,23 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        Log.d(TAG, "onStart: 1");
+        super.onStart();
         HabitRepository.subscribe(this);
         updateHabits();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        HabitRepository.unsubscribe(this);
-        dbSync.saveFromRepository();
-    }
-
-    @Override
     protected void onStop() {
+        Log.d(TAG, "onStop: 1");
         super.onStop();
-        dbSync.saveFromRepository();
+        HabitRepository.unsubscribe(this);
     }
 
     private List<Habit> loadItemList() {
         // TODO: implement sort and filters.
         // TODO: load only current user habits
-
-        dbSync.loadIntoRepository();
         return HabitRepository.getAll();
     }
 
@@ -87,7 +80,7 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
                 card.streakTextView.setText(h.getStreakNumber().toString());
                 card.penaltyTextView.setText(h.getPenaltyNumber().toString());
 
-                HabitCurrentCheckerService.buttonUpdate(card.checkBtn);
+                HabitCurrentCheckerService.buttonViewUpdate(card.checkBtn);
             }
         });
     }

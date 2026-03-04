@@ -1,4 +1,4 @@
-package com.example.mindmines.services;
+package com.example.mindmines.services.timers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
-import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 
 import java.time.LocalDateTime;
@@ -16,7 +15,7 @@ import java.time.ZoneId;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MidnightCheckerReceiver extends BroadcastReceiver {
+public class HabitStatusCheckerTimer extends BroadcastReceiver {
     private static final String TAG = "Debug data sync";
     private static final String ACTION_CHECK = "com.example.mindmines.MIDNIGHT_CHECK";
     private static final int REQUEST_CODE = 2000;
@@ -41,7 +40,7 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
     }
 
     private static void checkHabits(Context context) {
-        HabitSyncCheckerService.checkAllHabits(context);
+        HabitSyncCheckerService.allHabitsCheck(context);
     }
 
     private long getNextDayStart() {
@@ -76,7 +75,7 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
 
         long triggerAt = getNextMinuteStart();
 
-        Intent intent = new Intent(context, MidnightCheckerReceiver.class);
+        Intent intent = new Intent(context, HabitStatusCheckerTimer.class);
         intent.setAction(ACTION_CHECK);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -98,7 +97,7 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
 
         checkHabits(context);
 
-        Intent intent = new Intent(context, MidnightCheckerReceiver.class);
+        Intent intent = new Intent(context, HabitStatusCheckerTimer.class);
         intent.setAction(ACTION_CHECK);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -111,7 +110,7 @@ public class MidnightCheckerReceiver extends BroadcastReceiver {
         );
 
         if (pendingIntent == null) {
-            new MidnightCheckerReceiver().scheduleNextCheck(context);
+            new HabitStatusCheckerTimer().scheduleNextCheck(context);
         }
     }
 }
