@@ -1,12 +1,10 @@
 package com.example.mindmines.services.repositories;
 
-import android.util.Log;
-
-import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.views.HabitObserver;
-import com.example.mindmines.models.HabitInterval;
-import com.example.mindmines.models.HabitTimeUnit;
+import com.example.mindmines.models.habits.HabitInterval;
+import com.example.mindmines.models.habits.HabitTimeUnit;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;

@@ -4,7 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.mindmines.infrastructure.HabitManager;
-import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.models.enums.HabitButtonStatus;
 import com.example.mindmines.services.repositories.HabitRepository;
 
 import java.time.OffsetDateTime;
@@ -52,6 +53,9 @@ public class HabitSyncCheckerService {
                             h.setPenaltyNumber(0);
                             break;
                     }
+
+
+
                     // Вычисление следующего дедлайна.
                     h.setNextDeadlineAt(h.getNextNextDeadline());
                 }

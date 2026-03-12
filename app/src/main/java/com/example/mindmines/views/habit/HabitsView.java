@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
-import com.example.mindmines.db.datasync.HabitDataSynchronizer;
-import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.HabitRepository;
@@ -27,14 +26,11 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
     private AuthManager auth;
     private RecyclerView listView;
     private CardAdapter listAdapter;
-//    private HabitDataSynchronizer dbSync;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.habits_view);
-
-//        dbSync = new HabitDataSynchronizer(this);
 
         listView = findViewById(R.id.habits_list_view);
         listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

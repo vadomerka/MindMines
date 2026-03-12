@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.views.habit.HabitsView;
 

@@ -1,7 +1,7 @@
 package com.example.mindmines.models.dto;
 
 import com.example.mindmines.models.enums.HabitType;
-import com.example.mindmines.models.HabitInterval;
+import com.example.mindmines.models.habits.HabitInterval;
 
 import java.time.OffsetDateTime;
 

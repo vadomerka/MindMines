@@ -6,6 +6,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.example.mindmines.db.dao.HabitDao;
 import com.example.mindmines.db.entities.HabitEntity;
 
 @Database(entities = {HabitEntity.class}, version = 1, exportSchema = false)

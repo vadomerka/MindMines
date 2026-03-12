@@ -3,10 +3,10 @@ package com.example.mindmines.db.datasync;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.mindmines.db.HabitDao;
+import com.example.mindmines.db.dao.HabitDao;
 import com.example.mindmines.db.HabitDatabase;
 import com.example.mindmines.db.entities.HabitEntity;
-import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
 
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HabitDataSynchronizer implements DataSynchronizer {
-    private static final String TAG = "Debug data sync";
     private final HabitDao dao;
 
     public HabitDataSynchronizer(Context context) {
@@ -23,7 +22,6 @@ public class HabitDataSynchronizer implements DataSynchronizer {
     }
 
     public void loadFromDB() {
-        Log.d(TAG, "loadIntoRepository: loaded");
         List<HabitEntity> entities = dao.getAll();
         List<Habit> habits = new ArrayList<>();
 
@@ -35,7 +33,6 @@ public class HabitDataSynchronizer implements DataSynchronizer {
     }
 
     public void saveToDB() {
-//        Log.d(TAG, "saveFromRepository: saved");
         List<Habit> habits = HabitRepository.getAll();
         List<HabitEntity> entities = new ArrayList<>();
 

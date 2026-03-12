@@ -15,7 +15,7 @@ import android.util.Log;
 import com.example.mindmines.db.datasync.DataSynchronizerManager;
 import com.example.mindmines.db.datasync.HabitDataSynchronizer;
 import com.example.mindmines.db.HabitDatabase;
-import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.timers.DataBackupTimer;
@@ -23,13 +23,12 @@ import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.models.HabitInterval;
-import com.example.mindmines.models.HabitTimeUnit;
+import com.example.mindmines.models.habits.HabitInterval;
+import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.user.LoginView;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug start finish";
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
             // TODO: change to loading from server.
             HabitRepository.init();
-            dbSync = new DataSynchronizerManager(this);
+            dbSync = DataSynchronizerManager.getInstance(this);
             dbSync.loadFromDB();
 
             // Notifications init

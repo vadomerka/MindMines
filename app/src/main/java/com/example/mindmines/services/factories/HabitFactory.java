@@ -1,12 +1,12 @@
 package com.example.mindmines.services.factories;
 
 import com.example.mindmines.db.entities.HabitEntity;
-import com.example.mindmines.models.Habit;
-import com.example.mindmines.models.HabitTimeUnit;
+import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.models.HabitInterval;
+import com.example.mindmines.models.habits.HabitInterval;
 
 import java.time.OffsetDateTime;
 import java.util.OptionalInt;

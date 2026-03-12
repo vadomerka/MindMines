@@ -1,4 +1,4 @@
-package com.example.mindmines.models;
+package com.example.mindmines.models.habits;
 
 public enum HabitTimeUnit {
     MINUTE,

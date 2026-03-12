@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.notifications.HabitNotificationService;
 import com.example.mindmines.services.repositories.HabitRepository;
 

@@ -41,8 +41,7 @@ public class DataBackupTimer extends BroadcastReceiver {
     }
 
     private static void saveData(Context context) {
-//        Log.d(TAG, "saveData: savingData");
-        new DataSynchronizerManager(context).saveToDB();
+        DataSynchronizerManager.getInstance(context).saveToDB();
     }
 
     private long getNextDayStart() {

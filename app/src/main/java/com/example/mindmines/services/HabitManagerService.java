@@ -1,6 +1,6 @@
 package com.example.mindmines.services;
 
-import com.example.mindmines.models.Habit;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
 

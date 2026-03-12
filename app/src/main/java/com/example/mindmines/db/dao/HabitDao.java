@@ -1,4 +1,4 @@
-package com.example.mindmines.db;
+package com.example.mindmines.db.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

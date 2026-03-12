@@ -1,4 +1,4 @@
-package com.example.mindmines.services.checkers;
+package com.example.mindmines.models.enums;
 
 public enum HabitButtonStatus {
     CHECKED,
