@@ -5,32 +5,39 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
+import com.example.mindmines.models.UserStatus;
 import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.services.UserStatusManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.views.HabitObserver;
+import com.example.mindmines.views.observers.HabitObserver;
 import com.example.mindmines.views.adapters.CardAdapter;
+import com.example.mindmines.views.observers.UserStatusObserver;
 
 import java.util.List;
 
-public class HabitsView extends AppCompatActivity implements HabitObserver {
+public class HabitsView extends AppCompatActivity implements HabitObserver, UserStatusObserver {
     private static final String TAG = "Debug data sync";
 
     private AuthManager auth;
     private RecyclerView listView;
     private CardAdapter listAdapter;
+    private TextView levelView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.habits_view);
+
+        levelView = findViewById(R.id.userStatus_view);
 
         listView = findViewById(R.id.habits_list_view);
         listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -48,7 +55,9 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
         Log.d(TAG, "onStart: 1");
         super.onStart();
         HabitRepository.subscribe(this);
+        UserStatusManager.subscribe(this);
         updateHabits();
+        updateUserStatus();
     }
 
     @Override
@@ -56,6 +65,7 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
         Log.d(TAG, "onStop: 1");
         super.onStop();
         HabitRepository.unsubscribe(this);
+        UserStatusManager.unsubscribe(this);
     }
 
     private List<Habit> loadItemList() {
@@ -78,6 +88,16 @@ public class HabitsView extends AppCompatActivity implements HabitObserver {
 
                 HabitCurrentCheckerService.buttonViewUpdate(card.checkBtn);
             }
+        });
+    }
+
+    @SuppressLint("DefaultLocale")
+    public void updateUserStatus() {
+        Log.d(TAG, "updateInfo: updating");
+        runOnUiThread(() -> {
+            UserStatus status = UserStatusManager.getStatus();
+            levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",
+                    status.getLevel(), status.getExperience(), status.getMaxExperience()));
         });
     }
 

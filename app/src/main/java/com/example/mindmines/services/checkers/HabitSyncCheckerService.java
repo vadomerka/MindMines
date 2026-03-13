@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.mindmines.infrastructure.HabitManager;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.enums.HabitButtonStatus;
+import com.example.mindmines.services.UserStatusManager;
 import com.example.mindmines.services.repositories.HabitRepository;
 
 import java.time.OffsetDateTime;
@@ -47,14 +48,14 @@ public class HabitSyncCheckerService {
                         case NOT_CHECKED:
                             h.setStreakNumber(0);
                             h.setPenaltyNumber(h.getPenaltyNumber() + 1);
+                            UserStatusManager.gain(h);
                             break;
                         case CHECKED:
                             h.setStreakNumber(h.getStreakNumber() + 1);
                             h.setPenaltyNumber(0);
+                            UserStatusManager.gain(h);
                             break;
                     }
-
-
 
                     // Вычисление следующего дедлайна.
                     h.setNextDeadlineAt(h.getNextNextDeadline());

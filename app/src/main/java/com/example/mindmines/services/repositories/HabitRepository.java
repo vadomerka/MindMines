@@ -2,7 +2,7 @@ package com.example.mindmines.services.repositories;
 
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.enums.HabitType;
-import com.example.mindmines.views.HabitObserver;
+import com.example.mindmines.views.observers.HabitObserver;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 

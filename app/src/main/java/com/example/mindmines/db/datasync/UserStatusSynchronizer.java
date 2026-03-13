@@ -16,11 +16,12 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 import com.example.mindmines.models.UserStatus;
 import com.example.mindmines.services.UserStatusManager;
+import com.example.mindmines.views.observers.UserStatusObserver;
 import com.google.common.util.concurrent.MoreExecutors;
 
 import java.util.concurrent.Executor;
 
-public class UserStatusSynchronizer implements DataSynchronizer {
+public class UserStatusSynchronizer implements DataSynchronizer, UserStatusObserver {
     private final String TAG = "Debug UserStatusSynchronizer";
     private final RxDataStore<Preferences> dataStore;
     private final Executor executor = MoreExecutors.directExecutor();
@@ -71,6 +72,7 @@ public class UserStatusSynchronizer implements DataSynchronizer {
 
     public void saveToDB() {
         UserStatus newStatus = UserStatusManager.getStatus();
+        Log.d(TAG, "save start");
         this.save(newStatus).subscribe(new SingleObserver<Preferences>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {}
@@ -94,5 +96,10 @@ public class UserStatusSynchronizer implements DataSynchronizer {
             mutablePreferences.set(MAX_EXPERIENCE, status.getMaxExperience());
             return Single.just(mutablePreferences);
         });
+    }
+
+    @Override
+    public void updateUserStatus() {
+        saveToDB();
     }
 }

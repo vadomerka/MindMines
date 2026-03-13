@@ -79,9 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         Log.d(TAG, "onDestroy");
         dbSync.saveToDB();
+
+        super.onDestroy();
     }
 
     protected void createNotificationChannel() {
