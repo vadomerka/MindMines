@@ -25,5 +25,8 @@
     <string name="edit_habit_type_hint_text">Тип привычки: полезная / вредная</string>
     <string name="habit_time_of_day_text">Добавить точные напоминания</string>
     <string name="update_button_text">Update</string>
-    <string name="userStatus_view_text">Опыт:</string>
+    <string name="userStatus_view_text">Уровень:</string>
+    <string name="profile_button_text">Профиль</string>
+    <string name="_1">1</string>
+    <string name="home_button_desc">home_button</string>
 </resources>

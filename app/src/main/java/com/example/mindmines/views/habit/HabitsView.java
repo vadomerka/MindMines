@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,28 +17,26 @@ import com.example.mindmines.services.UserStatusManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.views.BaseActivity;
 import com.example.mindmines.views.observers.HabitObserver;
 import com.example.mindmines.views.adapters.CardAdapter;
 import com.example.mindmines.views.observers.UserStatusObserver;
 
 import java.util.List;
 
-public class HabitsView extends AppCompatActivity implements HabitObserver, UserStatusObserver {
+public class HabitsView extends BaseActivity implements HabitObserver, UserStatusObserver {
     private static final String TAG = "Debug data sync";
 
     private AuthManager auth;
-    private RecyclerView listView;
     private CardAdapter listAdapter;
     private TextView levelView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.habits_view);
-
         levelView = findViewById(R.id.userStatus_view);
 
-        listView = findViewById(R.id.habits_list_view);
+        RecyclerView listView = findViewById(R.id.habits_list_view);
         listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         List<Habit> itemList = loadItemList();
@@ -48,6 +45,11 @@ public class HabitsView extends AppCompatActivity implements HabitObserver, User
 
         Button add_btn = findViewById(R.id.add_habit_button);
         add_btn.setOnClickListener(v -> openHabitAddView());
+    }
+
+    @Override
+    protected int getContentLayoutId() {
+        return R.layout.habits_view;
     }
 
     @Override
