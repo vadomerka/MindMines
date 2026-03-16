@@ -45,6 +45,9 @@
             android:name=".views.user.LoginView"
             android:exported="false" />
         <activity
+            android:name=".views.user.ProfileView"
+            android:exported="false" />
+        <activity
             android:name=".views.habit.HabitsView"
             android:exported="false" />
         <activity

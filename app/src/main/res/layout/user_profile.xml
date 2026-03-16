@@ -5,21 +5,68 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
     <TextView
-        android:id="@+id/default_text"
+        android:id="@+id/user_info_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_hello_world_text"
-        android:layout_centerInParent="true"
-        android:textSize="30sp"
-        android:layout_margin="40dp"
+        style="@style/title_text"
         />
 
-    <Button
+    <LinearLayout
+        android:id="@+id/user_info_lines_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/user_info_view">
+        <LinearLayout
+            android:id="@+id/user_level_line"
+            style="@style/InfoLinearLayout">
+            <TextView
+                android:id="@+id/user_level_text_view"
+                android:text="@string/user_level_view_text"
+                style="@style/InfoTextView"/>
+            <TextView
+                android:id="@+id/user_level_value_view"
+                android:text="@string/default_number_text"
+                style="@style/InfoValueView"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_exp_line"
+            style="@style/InfoLinearLayout">
+            <TextView
+                android:id="@+id/user_exp_text_view"
+                android:text="@string/user_exp_view_text"
+                style="@style/InfoTextView"/>
+            <TextView
+                android:id="@+id/user_exp_value_view"
+                android:text="@string/default_number_text"
+                style="@style/InfoValueView"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_exp_until_level_line"
+            style="@style/InfoLinearLayout">
+            <TextView
+                android:id="@+id/user_exp_until_level_text_view"
+                android:text="@string/user_exp_until_view_text"
+                style="@style/InfoTextView"/>
+            <TextView
+                android:id="@+id/user_exp_until_level_value_view"
+                android:text="@string/default_number_text"
+                style="@style/InfoValueView"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/logout_btn_text"
-        android:layout_below="@id/default_text"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/user_info_lines_view"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/design_default_color_error"
         />
 </RelativeLayout>

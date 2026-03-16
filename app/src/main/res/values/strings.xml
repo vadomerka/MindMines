@@ -29,4 +29,7 @@
     <string name="profile_button_text">Профиль</string>
     <string name="_1">1</string>
     <string name="home_button_desc">home_button</string>
+    <string name="user_level_view_text">Текущий уровень:</string>
+    <string name="user_exp_view_text">Количество опыта:</string>
+    <string name="user_exp_until_view_text">До следующего уровня:</string>
 </resources>

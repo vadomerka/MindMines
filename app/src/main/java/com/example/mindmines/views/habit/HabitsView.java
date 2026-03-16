@@ -1,17 +1,16 @@
 package com.example.mindmines.views.habit;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.UserStatus;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.UserStatusManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
@@ -20,21 +19,17 @@ import com.example.mindmines.services.repositories.HabitRepository;
 import com.example.mindmines.views.BaseActivity;
 import com.example.mindmines.views.observers.HabitObserver;
 import com.example.mindmines.views.adapters.CardAdapter;
-import com.example.mindmines.views.observers.UserStatusObserver;
 
 import java.util.List;
 
-public class HabitsView extends BaseActivity implements HabitObserver, UserStatusObserver {
+public class HabitsView extends BaseActivity implements HabitObserver {
     private static final String TAG = "Debug data sync";
 
     private AuthManager auth;
     private CardAdapter listAdapter;
-    private TextView levelView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        levelView = findViewById(R.id.userStatus_view);
 
         RecyclerView listView = findViewById(R.id.habits_list_view);
         listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -50,6 +45,11 @@ public class HabitsView extends BaseActivity implements HabitObserver, UserStatu
     @Override
     protected int getContentLayoutId() {
         return R.layout.habits_view;
+    }
+
+    @Override
+    protected Context getCurrentContext() {
+        return HabitsView.this;
     }
 
     @Override
@@ -90,16 +90,6 @@ public class HabitsView extends BaseActivity implements HabitObserver, UserStatu
 
                 HabitCurrentCheckerService.buttonViewUpdate(card.checkBtn);
             }
-        });
-    }
-
-    @SuppressLint("DefaultLocale")
-    public void updateUserStatus() {
-        Log.d(TAG, "updateInfo: updating");
-        runOnUiThread(() -> {
-            UserStatus status = UserStatusManager.getStatus();
-            levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",
-                    status.getLevel(), status.getExperience(), status.getMaxExperience()));
         });
     }
 
