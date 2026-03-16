@@ -21,8 +21,12 @@ public class ProfileView extends BaseActivity {
 
         auth = new AuthManager(getApplicationContext());
 
+        TextView tv = findViewById(R.id.navigation_title_view);
+        tv.setText("Ваш профиль:");
         Button btn = findViewById(R.id.logout_btn);
         btn.setOnClickListener(v -> logout());
+        Button navButton = findViewById(R.id.bottom_navigation_bar1);
+        navButton.setEnabled(false);
 
         updateUserStatus();
     }

@@ -40,6 +40,8 @@ public class HabitsView extends BaseActivity implements HabitObserver {
 
         Button add_btn = findViewById(R.id.add_habit_button);
         add_btn.setOnClickListener(v -> openHabitAddView());
+        Button navButton = findViewById(R.id.bottom_navigation_bar3);
+        navButton.setEnabled(false);
     }
 
     @Override

@@ -9,10 +9,10 @@
     android:gravity="center_vertical">
 
     <TextView
-        android:id="@+id/userStatus_view"
+        android:id="@+id/navigation_title_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/userStatus_view_text"
+        android:text="@string/default_hello_world_text"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:padding="10dp"

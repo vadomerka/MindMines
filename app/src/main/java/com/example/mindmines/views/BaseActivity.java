@@ -45,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
     protected abstract Context getCurrentContext();
 
     private void initNavigation() {
-        levelView = findViewById(R.id.userStatus_view);
+        levelView = findViewById(R.id.navigation_title_view);
 
         findViewById(R.id.bottom_navigation_bar1).setOnClickListener(v -> openView(ProfileView.class));
 //        findViewById(R.id.bottom_navigation_bar2).setOnClickListener(v -> openView(AiChatView.class));
