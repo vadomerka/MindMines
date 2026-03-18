@@ -15,6 +15,7 @@ import com.example.mindmines.models.UserStatus;
 import com.example.mindmines.services.UserStatusManager;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.observers.UserStatusObserver;
+import com.example.mindmines.views.user.FriendsView;
 import com.example.mindmines.views.user.ProfileView;
 
 public abstract class BaseActivity extends AppCompatActivity implements UserStatusObserver {
@@ -51,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
 //        findViewById(R.id.bottom_navigation_bar2).setOnClickListener(v -> openView(AiChatView.class));
         findViewById(R.id.bottom_navigation_bar3).setOnClickListener(v -> openView(HabitsView.class));
 //        findViewById(R.id.bottom_navigation_bar4).setOnClickListener(v -> openView(ExpeditionsView.class));
-//        findViewById(R.id.bottom_navigation_bar5).setOnClickListener(v -> openView(FriendsView.class));
+        findViewById(R.id.bottom_navigation_bar5).setOnClickListener(v -> openView(FriendsView.class));
     }
 
     public void openView(Class<?> activity) {

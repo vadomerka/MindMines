@@ -32,4 +32,8 @@
     <string name="user_level_view_text">Текущий уровень:</string>
     <string name="user_exp_view_text">Количество опыта:</string>
     <string name="user_exp_until_view_text">До следующего уровня:</string>
+    <string name="leader_board_title_text">Таблица лидеров:</string>
+    <string name="rank_column_name">№</string>
+    <string name="usernames_column_name">Имена игроков</string>
+    <string name="level_column_name">Уровень</string>
 </resources>

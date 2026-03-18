@@ -18,12 +18,12 @@ import com.example.mindmines.views.habit.HabitsView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
+public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.CardViewHolder> {
     private final List<Habit> items;
     private final HabitsView activity;
     private List<CardViewHolder> cardViews = new ArrayList<>();
 
-    public CardAdapter(List<Habit> items, HabitsView activity) {
+    public HabitCardAdapter(List<Habit> items, HabitsView activity) {
         this.items = items;
         this.activity = activity;
     }

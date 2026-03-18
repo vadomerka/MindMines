@@ -18,7 +18,7 @@ import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.HabitRepository;
 import com.example.mindmines.views.BaseActivity;
 import com.example.mindmines.views.observers.HabitObserver;
-import com.example.mindmines.views.adapters.CardAdapter;
+import com.example.mindmines.views.adapters.HabitCardAdapter;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class HabitsView extends BaseActivity implements HabitObserver {
     private static final String TAG = "Debug data sync";
 
     private AuthManager auth;
-    private CardAdapter listAdapter;
+    private HabitCardAdapter listAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class HabitsView extends BaseActivity implements HabitObserver {
         listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         List<Habit> itemList = loadItemList();
-        listAdapter = new CardAdapter(itemList, this);
+        listAdapter = new HabitCardAdapter(itemList, this);
         listView.setAdapter(listAdapter);
 
         Button add_btn = findViewById(R.id.add_habit_button);
@@ -82,9 +82,9 @@ public class HabitsView extends BaseActivity implements HabitObserver {
     public void updateHabits() {
         Log.d(TAG, "updateHabits: updating");
         runOnUiThread(() -> {
-            List<CardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
+            List<HabitCardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
             if (cards == null) return;
-            for (CardAdapter.CardViewHolder card: cards) {
+            for (HabitCardAdapter.CardViewHolder card: cards) {
                 Habit h = HabitRepository.get(card.hId);
 
                 card.streakTextView.setText(h.getStreakNumber().toString());
