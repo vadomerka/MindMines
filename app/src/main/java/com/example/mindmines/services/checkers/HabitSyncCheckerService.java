@@ -6,7 +6,7 @@ import android.util.Log;
 import com.example.mindmines.infrastructure.HabitManager;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.enums.HabitButtonStatus;
-import com.example.mindmines.services.UserStatusManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.repositories.HabitRepository;
 
 import java.time.OffsetDateTime;
@@ -77,6 +77,7 @@ public class HabitSyncCheckerService {
         for (Habit h: hl) {
             habitStatusCheck(h);
         }
+        UserStatusManager.updateObservers();
 
         Log.d(TAG, String.format("checkAllHabits: checked - maxWhile: %d", maxWhile));
     }

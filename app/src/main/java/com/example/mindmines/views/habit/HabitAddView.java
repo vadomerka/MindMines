@@ -1,9 +1,9 @@
 package com.example.mindmines.views.habit;
 
-import static com.example.mindmines.services.TimeIntervalService.getDays;
-import static com.example.mindmines.services.TimeIntervalService.getHours;
-import static com.example.mindmines.services.TimeIntervalService.getMonths;
-import static com.example.mindmines.services.TimeIntervalService.getWeeks;
+import static com.example.mindmines.services.timers.TimeIntervalService.getDays;
+import static com.example.mindmines.services.timers.TimeIntervalService.getHours;
+import static com.example.mindmines.services.timers.TimeIntervalService.getMonths;
+import static com.example.mindmines.services.timers.TimeIntervalService.getWeeks;
 import static com.example.mindmines.services.utils.UIUtils.floatToInt;
 import static com.example.mindmines.services.utils.UIUtils.intToString;
 

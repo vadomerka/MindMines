@@ -1,4 +1,4 @@
-package com.example.mindmines.services;
+package com.example.mindmines.services.timers;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;

@@ -1,4 +1,4 @@
-package com.example.mindmines.services;
+package com.example.mindmines.services.managers;
 
 import android.util.Log;
 
@@ -22,17 +22,32 @@ public class UserStatusManager {
     }
 
     public static void gain(Habit h) {
-        Long baseChange = 10L;
-        Long streakExp = baseChange * h.getStreakNumber() * h.getPriority() * h.getDifficulty();
-        Long penaltyExp = baseChange * h.getPenaltyNumber() * h.getPriority() / h.getDifficulty();
+        // Формула получения опыта.
+        long baseChange = 10L;
+        long streakExp = baseChange * h.getStreakNumber() * h.getPriority() * h.getDifficulty();
+        // Добавляет штраф, только если
+        long penaltyExp = baseChange * h.getPriority() / h.getDifficulty();
+        if (h.getPenaltyNumber() == 0) { penaltyExp = 0L; }
         Long change = streakExp - penaltyExp;
-        status.setExperience(status.getExperience() + change);
+        Long res = status.getExperience() + change;
+        gainLevel(res, status);
         Log.d("Debug UserStatusManager", String.format("streak: %s; penalty: %s", streakExp, penaltyExp));
-
-        updateObservers();
     }
 
-    private static void updateObservers() {
+    private static void gainLevel(Long exp, UserStatus status) {
+        Long maxExp = status.getMaxExperience();
+        if (exp < 0) {
+            status.setExperience(0L);
+        } else if (exp > maxExp) {
+            if (status.getLevel() >= 30) { status.setLevel(30); }
+            else { status.setLevel(status.getLevel() + 1); }
+            status.setExperience(exp - maxExp);
+        } else {
+            status.setExperience(exp);
+        }
+    }
+
+    public static void updateObservers() {
         for (UserStatusObserver observer: observers) {
             observer.updateUserStatus();
         }

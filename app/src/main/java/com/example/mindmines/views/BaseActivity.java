@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.UserStatus;
-import com.example.mindmines.services.UserStatusManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.observers.UserStatusObserver;
 import com.example.mindmines.views.user.FriendsView;

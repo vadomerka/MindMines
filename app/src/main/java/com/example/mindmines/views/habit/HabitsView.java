@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.services.UserStatusManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.HabitRepository;

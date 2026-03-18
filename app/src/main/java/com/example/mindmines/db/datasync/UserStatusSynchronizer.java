@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 import com.example.mindmines.models.UserStatus;
-import com.example.mindmines.services.UserStatusManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.views.observers.UserStatusObserver;
 import com.google.common.util.concurrent.MoreExecutors;
 

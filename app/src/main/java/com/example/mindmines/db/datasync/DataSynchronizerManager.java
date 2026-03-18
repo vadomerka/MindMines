@@ -3,7 +3,7 @@ package com.example.mindmines.db.datasync;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.mindmines.services.UserStatusManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 
 import java.util.ArrayList;
 import java.util.List;

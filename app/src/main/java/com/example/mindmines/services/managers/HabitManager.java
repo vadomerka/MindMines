@@ -1,10 +1,10 @@
-package com.example.mindmines.services;
+package com.example.mindmines.services.managers;
 
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.enums.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
 
-public class HabitManagerService {
+public class HabitManager {
     public static void add(Habit h) {
         HabitRepository.add(h);
     }
