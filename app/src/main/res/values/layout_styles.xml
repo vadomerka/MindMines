@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="InfoLinearLayout">
+    <style name="SpreadLinearLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_below">@id/user_info_view</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:gravity">end</item>
         <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="SpreadLinearLayoutItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+
+    <style name="InfoLinearLayout" parent="SpreadLinearLayout">
+        <item name="android:layout_below">@id/user_info_view</item>
+        <item name="android:gravity">end</item>
     </style>
 
     <style name="InfoTextView" parent="header1_text">
@@ -16,7 +25,7 @@
     </style>
 
     <style name="InfoValueView" parent="header1_text">
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">end</item>

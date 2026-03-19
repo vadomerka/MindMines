@@ -3,7 +3,7 @@ package com.example.mindmines.services.checkers;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.mindmines.infrastructure.HabitManager;
+import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.enums.HabitButtonStatus;
 import com.example.mindmines.services.managers.UserStatusManager;
@@ -14,7 +14,7 @@ import java.util.List;
 
 
 // Класс для изменений привычек на основе состояния в прошлом.
-public class HabitSyncCheckerService {
+public class HabitSyncCheckerService extends BasicChecker {
     private static final String TAG = "Debug data sync";
     private static Integer maxWhile = 0;
 
@@ -25,6 +25,7 @@ public class HabitSyncCheckerService {
         OffsetDateTime s = h.getPeriodStart();
         // Период еще не кончился, проверять рано.
         if (n.isBefore(ded)) return HabitButtonStatus.TOO_EARLY_TO_CHECK;
+        if (ALWAYS_CHECKED) return HabitButtonStatus.CHECKED;
         if (last == null) return HabitButtonStatus.NOT_CHECKED;
         // Если привычка отмечена до периода.
         if (last.isBefore(s)) return HabitButtonStatus.NOT_CHECKED;
@@ -66,7 +67,7 @@ public class HabitSyncCheckerService {
                 break;
         }
 
-        HabitManager.update(h);
+        HabitController.update(h);
     }
 
     // Метод обновляет стрики и пенальтии привычек по таймеру MidnightChecker

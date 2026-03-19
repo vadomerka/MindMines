@@ -31,4 +31,10 @@
         <item name="android:layout_weight">1</item>
         <item name="android:paddingTop">12dp</item>
     </style>
+
+    <style name="DebugToolButton" parent="SpreadLinearLayoutItem">
+        <item name="android:layout_height">58dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingHorizontal">0dp</item>
+    </style>
 </resources>

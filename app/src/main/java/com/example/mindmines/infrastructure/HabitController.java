@@ -4,7 +4,7 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.dto.HabitDTO;
 import com.example.mindmines.requests.HabitRequestSender;
 
-public class HabitManager {
+public class HabitController {
     public static Habit add(HabitDTO hDTO) {
         try {
             Habit result = HabitRequestSender.add(hDTO);

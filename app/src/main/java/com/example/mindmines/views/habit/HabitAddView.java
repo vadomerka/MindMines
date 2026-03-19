@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.mindmines.R;
-import com.example.mindmines.infrastructure.HabitManager;
+import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
@@ -189,7 +189,7 @@ public class HabitAddView extends AppCompatActivity {
 
         HabitInterval interval = new HabitInterval(3, HabitTimeUnit.MONTH);
 
-        Habit h = HabitManager.add(HabitFactory.createDTO(uId, title, desc,
+        Habit h = HabitController.add(HabitFactory.createDTO(uId, title, desc,
                 frequencyValue * freqCoef, true, priority, difficulty, hType, interval));
 
         HabitNotificationService.scheduleDailyAlarm(this, h);

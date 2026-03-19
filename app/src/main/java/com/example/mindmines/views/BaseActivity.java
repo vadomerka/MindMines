@@ -4,14 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.UserStatus;
+import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
+import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.observers.UserStatusObserver;
@@ -34,6 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
 
     @SuppressLint("DefaultLocale")
     public void updateUserStatus() {
+        Log.d("Debug BasicActivity updateUserStatus", "updateUserStatus: ");
         runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getStatus();
             levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",
@@ -59,5 +66,20 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
         Intent myIntent = new Intent(getCurrentContext(), activity);
         getCurrentContext().startActivity(myIntent);
         finish();
+    }
+
+    protected void loadDebugTools() {
+        LinearLayout layout = findViewById(R.id.top_navigation_debugTools_layout);
+        layout.setVisibility(View.VISIBLE);
+
+        Button updBut = findViewById(R.id.update_nextDeadline_button);
+        updBut.setOnClickListener(v -> HabitSyncCheckerService.allHabitsCheck(this));
+        Button resetBut = findViewById(R.id.reset_userStatus_button);
+        resetBut.setOnClickListener(v -> UserStatusManager.resetStatus());
+        CheckBox autoCheck = findViewById(R.id.autoCheck_button);
+        autoCheck.setOnClickListener(v -> {
+            HabitCurrentCheckerService.setDebug(v.isEnabled());
+            HabitSyncCheckerService.setDebug(v.isEnabled());
+        });
     }
 }
