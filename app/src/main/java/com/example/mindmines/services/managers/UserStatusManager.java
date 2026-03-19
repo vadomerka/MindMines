@@ -45,17 +45,19 @@ public class UserStatusManager {
         Long maxExp = status.getMaxExperience();
         if (exp < 0) {
             status.setExperience(0L);
-        } else if (exp > maxExp) {
-            if (level >= 30) { status.setLevel(30); }
-            else {
-                status.setLevel(level + 1);
-                Long res = (long)(baseMaxExpChange * level * maxExpKoef);
-                status.setMaxExperience(res);
-            }
-            status.setExperience(exp - maxExp);
-        } else {
-            status.setExperience(exp);
+            return;
         }
+        while (exp > maxExp) {
+            exp -= maxExp;
+            status.setExperience(exp);
+            if (level >= 30) { level = 30; }
+            else {
+                level++;
+                maxExp = (long)(baseMaxExpChange * level * maxExpKoef);
+            }
+        }
+        status.setMaxExperience(maxExp);
+        status.setLevel(level);
     }
 
     public static void updateObservers() {
