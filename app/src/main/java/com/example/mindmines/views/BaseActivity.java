@@ -77,9 +77,11 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
         Button resetBut = findViewById(R.id.reset_userStatus_button);
         resetBut.setOnClickListener(v -> UserStatusManager.resetStatus());
         CheckBox autoCheck = findViewById(R.id.autoCheck_button);
+        autoCheck.setChecked(HabitCurrentCheckerService.getDebug());
         autoCheck.setOnClickListener(v -> {
-            HabitCurrentCheckerService.setDebug(v.isEnabled());
-            HabitSyncCheckerService.setDebug(v.isEnabled());
+            boolean prev = ((CheckBox)v).isChecked();
+            HabitCurrentCheckerService.setDebug(prev);
+            HabitSyncCheckerService.setDebug(prev);
         });
     }
 }
