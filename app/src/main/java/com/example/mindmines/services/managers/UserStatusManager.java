@@ -26,38 +26,8 @@ public class UserStatusManager {
     }
 
     public static void gain(Habit h) {
-        // Формула получения опыта.
-        long baseExpChange = 10L;
-        long streakExp = baseExpChange * h.getStreakNumber() * h.getPriority() * h.getDifficulty();
-        // Добавляет штраф, только если
-        long penaltyExp = baseExpChange * h.getPriority() / h.getDifficulty();
-        if (h.getPenaltyNumber() == 0) { penaltyExp = 0L; }
-        Long change = streakExp - penaltyExp;
-        Long res = status.getExperience() + change;
-        gainLevel(res, status);
-        Log.d("Debug UserStatusManager", String.format("streak: %s; penalty: %s", streakExp, penaltyExp));
-    }
-
-    private static void gainLevel(Long exp, UserStatus status) {
-        int baseMaxExpChange = 10;
-        double maxExpKoef = 1.25;
-        Integer level = status.getLevel();
-        Long maxExp = status.getMaxExperience();
-        if (exp < 0) {
-            status.setExperience(0L);
-            return;
-        }
-        while (exp > maxExp) {
-            exp -= maxExp;
-            status.setExperience(exp);
-            if (level >= 30) { level = 30; }
-            else {
-                level++;
-                maxExp = (long)(baseMaxExpChange * level * maxExpKoef);
-            }
-        }
-        status.setMaxExperience(maxExp);
-        status.setLevel(level);
+        Long newExp = ExpManager.gainExp(status, h);
+        ExpManager.gainLevel(status, newExp);
     }
 
     public static void updateObservers() {

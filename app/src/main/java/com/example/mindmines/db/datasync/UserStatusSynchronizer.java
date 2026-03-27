@@ -35,6 +35,9 @@ public class UserStatusSynchronizer implements DataSynchronizer, UserStatusObser
     private static final Preferences.Key<Long> MAX_EXPERIENCE =
             PreferencesKeys.longKey("max_experience");
 
+    private static final Preferences.Key<Long> COINS=
+            PreferencesKeys.longKey("coins");
+
     public UserStatusSynchronizer(Context context) {
         dataStore = new RxPreferenceDataStoreBuilder(context, "user_status").build();
     }
@@ -59,14 +62,16 @@ public class UserStatusSynchronizer implements DataSynchronizer, UserStatusObser
     }
 
     public Single<UserStatus> load() {
+        UserStatus defaultStatus = new UserStatus();
         return dataStore.data().firstOrError()
                 .map(prefs -> {
                     // Извлекаем значения по ключам, или используем значения по умолчанию
-                    int userId = prefs.get(USER_ID) != null ? prefs.get(USER_ID) : 0;
-                    int level = prefs.get(LEVEL) != null ? prefs.get(LEVEL) : 0;
-                    long exp = prefs.get(EXPERIENCE) != null ? prefs.get(EXPERIENCE) : 0L;
-                    long maxExp = prefs.get(MAX_EXPERIENCE) != null ? prefs.get(MAX_EXPERIENCE) : 1L;
-                    return new UserStatus(userId, level, exp, maxExp);
+                    int userId = prefs.get(USER_ID) != null ? prefs.get(USER_ID) : defaultStatus.getUserId();
+                    int level = prefs.get(LEVEL) != null ? prefs.get(LEVEL) : defaultStatus.getLevel();
+                    long exp = prefs.get(EXPERIENCE) != null ? prefs.get(EXPERIENCE) : defaultStatus.getExperience();
+                    long maxExp = prefs.get(MAX_EXPERIENCE) != null ? prefs.get(MAX_EXPERIENCE) : defaultStatus.getMaxExperience();
+                    long coins = prefs.get(COINS) != null ? prefs.get(COINS) : defaultStatus.getCoins();
+                    return new UserStatus(userId, level, exp, maxExp, coins);
                 });
     }
 
@@ -94,6 +99,7 @@ public class UserStatusSynchronizer implements DataSynchronizer, UserStatusObser
             mutablePreferences.set(LEVEL, status.getLevel());
             mutablePreferences.set(EXPERIENCE, status.getExperience());
             mutablePreferences.set(MAX_EXPERIENCE, status.getMaxExperience());
+            mutablePreferences.set(COINS, status.getCoins());
             return Single.just(mutablePreferences);
         });
     }
