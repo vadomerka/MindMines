@@ -9,6 +9,7 @@ public class ExpManager {
     private static final long baseExpForHabit = 10L;
     private static final long baseMaxExpChange = 10;
     private static final double maxExpChangeKoef = 1.5;
+    private static final int maxLevel = 30;
 
     public static long getBaseMaxExpChange() { return baseMaxExpChange; }
 
@@ -34,12 +35,13 @@ public class ExpManager {
         while (exp > maxExp) {
             exp -= maxExp;
             status.setExperience(exp);
-            if (level >= 30) { level = 30; }
+            if (level >= maxLevel) { level = maxLevel; }
             else {
                 level++;
                 maxExp = (long)(baseMaxExpChange * level * maxExpChangeKoef);
             }
         }
+        status.setExperience(exp);
         status.setMaxExperience(maxExp);
         status.setLevel(level);
     }

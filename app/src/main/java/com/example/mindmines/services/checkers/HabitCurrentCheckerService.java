@@ -8,6 +8,7 @@ import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.factories.HabitFactory;
+import com.example.mindmines.services.managers.UserStatusManager;
 
 import java.time.OffsetDateTime;
 
@@ -45,11 +46,22 @@ public class HabitCurrentCheckerService extends BasicChecker {
 
     public static void buttonStatusCheck(Button btn) {
         Habit h = (Habit) btn.getTag();
+        // Если пользователь нажал кнопку, и привычка не была отмечена -> отмечаем.
         if (isHabitUnchecked(h)) {
-            h.setLastCompletedAt(OffsetDateTime.now());
+            checkHabit(h);
         }
         buttonViewUpdate(btn);
 
         HabitController.update(h);
+    }
+
+    private static void checkHabit(Habit h) {
+        h.setLastCompletedAt(OffsetDateTime.now());
+
+        h.setStreakNumber(h.getStreakNumber() + 1);
+        h.setPenaltyNumber(0);
+        UserStatusManager.gain(h);
+        HabitController.update(h);
+        UserStatusManager.updateObservers();
     }
 }

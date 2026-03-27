@@ -52,9 +52,12 @@ public class HabitSyncCheckerService extends BasicChecker {
                             UserStatusManager.gain(h);
                             break;
                         case CHECKED:
-                            h.setStreakNumber(h.getStreakNumber() + 1);
-                            h.setPenaltyNumber(0);
-                            UserStatusManager.gain(h);
+                            // Обновление статуса перенесено в момент нажатия кнопки отметки привычки.
+                            if (ALWAYS_CHECKED) {
+                                h.setStreakNumber(h.getStreakNumber() + 1);
+                                h.setPenaltyNumber(0);
+                                UserStatusManager.gain(h);
+                            }
                             break;
                     }
 
