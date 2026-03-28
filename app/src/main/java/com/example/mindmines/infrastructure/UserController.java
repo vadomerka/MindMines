@@ -2,7 +2,7 @@ package com.example.mindmines.infrastructure;
 
 import android.util.Pair;
 
-import com.example.mindmines.models.dto.UserDTO;
+import com.example.mindmines.models.user.User;
 import com.example.mindmines.requests.UserRequestSender;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class UserController {
         return UserRequestSender.getAuth(email, password);
     }
 
-    public static List<UserDTO> getFriends(String userId) {
+    public static List<User> getFriends(String userId) {
         return UserRequestSender.getFriends(userId);
     }
 }

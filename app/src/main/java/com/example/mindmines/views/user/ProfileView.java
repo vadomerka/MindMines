@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.UserStatus;
+import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.views.BaseActivity;

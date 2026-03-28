@@ -1,7 +1,7 @@
 package com.example.mindmines.requests;
 
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.dto.HabitDTO;
+import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.services.factories.HabitFactory;
 
 public class HabitRequestSender {

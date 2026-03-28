@@ -1,7 +1,7 @@
 package com.example.mindmines.infrastructure;
 
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.dto.HabitDTO;
+import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.requests.HabitRequestSender;
 import com.example.mindmines.services.managers.HabitManager;
 

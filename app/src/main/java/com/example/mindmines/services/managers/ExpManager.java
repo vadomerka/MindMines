@@ -2,7 +2,7 @@ package com.example.mindmines.services.managers;
 
 import android.util.Log;
 
-import com.example.mindmines.models.UserStatus;
+import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
 
 public class ExpManager {

@@ -2,7 +2,7 @@ package com.example.mindmines.requests;
 
 import android.util.Pair;
 
-import com.example.mindmines.models.dto.UserDTO;
+import com.example.mindmines.models.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,12 @@ public class UserRequestSender {
         return new Pair<>(tmpToken, userId);
     }
 
-    public static List<UserDTO> getFriends(String userId) {
+    public static List<User> getFriends(String userId) {
         // TODO: заменить на настоящую отправку данных серверу.
-        List<UserDTO> arr = new ArrayList<>();
-        arr.add(new UserDTO(1, "friend 1", 3));
-        arr.add(new UserDTO(2, "friend 2", 2));
-        arr.add(new UserDTO(3, "friend 3", 1));
+        List<User> arr = new ArrayList<>();
+        arr.add(new User(1, "friend 1", 3));
+        arr.add(new User(2, "friend 2", 2));
+        arr.add(new User(3, "friend 3", 1));
         return arr;
     }
 }

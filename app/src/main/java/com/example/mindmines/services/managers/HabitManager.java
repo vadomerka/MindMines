@@ -1,7 +1,7 @@
 package com.example.mindmines.services.managers;
 
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.enums.HabitType;
+import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
 
 public class HabitManager {

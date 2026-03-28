@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.enums.HabitButtonStatus;
+import com.example.mindmines.models.habits.HabitButtonStatus;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.repositories.HabitRepository;
 

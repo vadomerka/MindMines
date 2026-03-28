@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.UserController;
-import com.example.mindmines.models.dto.UserDTO;
+import com.example.mindmines.models.user.User;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.views.BaseActivity;
-import com.example.mindmines.views.adapters.HabitCardAdapter;
 import com.example.mindmines.views.adapters.UserCardAdapter;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class FriendsView extends BaseActivity {
 
         RecyclerView listView = findViewById(R.id.item_list_view);
         listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        List<UserDTO> itemList = loadFriends();
+        List<User> itemList = loadFriends();
         UserCardAdapter listAdapter = new UserCardAdapter(itemList, this);
         listView.setAdapter(listAdapter);
 
@@ -44,7 +43,7 @@ public class FriendsView extends BaseActivity {
     @Override
     protected Context getCurrentContext() { return FriendsView.this; }
 
-    public List<UserDTO> loadFriends() {
+    public List<User> loadFriends() {
         return UserController.getFriends(auth.getUserId());
     }
 }

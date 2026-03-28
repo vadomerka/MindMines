@@ -3,7 +3,7 @@ package com.example.mindmines.views.habit;
 import android.content.Intent;
 
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.enums.HabitType;
+import com.example.mindmines.models.habits.HabitType;
 
 import com.example.mindmines.services.repositories.HabitRepository;
 

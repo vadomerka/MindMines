@@ -1,7 +1,5 @@
 package com.example.mindmines.models.habits;
 
-import com.example.mindmines.models.enums.HabitType;
-
 import java.time.OffsetDateTime;
 
 public class Habit {

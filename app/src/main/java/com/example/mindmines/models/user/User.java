@@ -1,11 +1,11 @@
-package com.example.mindmines.models.dto;
+package com.example.mindmines.models.user;
 
-public class UserDTO {
+public class User {
     public Integer userID;
     public String name;
     public Integer level;
 
-    public UserDTO(Integer userID, String name, Integer level) {
+    public User(Integer userID, String name, Integer level) {
         this.userID = userID;
         this.name = name;
         this.level = level;

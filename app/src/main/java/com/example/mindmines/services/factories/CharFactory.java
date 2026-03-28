@@ -1,17 +1,17 @@
 package com.example.mindmines.services.factories;
 
 import com.example.mindmines.db.entities.HabitEntity;
-import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitInterval;
+import com.example.mindmines.models.habits.HabitTimeUnit;
+import com.example.mindmines.services.repositories.HabitRepository;
 
 import java.time.OffsetDateTime;
 import java.util.OptionalInt;
 
-public class HabitFactory {
+public class CharFactory {
     private static final OptionalInt rm = HabitRepository.getAll() != null ? HabitRepository.getAll().stream().mapToInt(Habit::getHabitId).max() : OptionalInt.of(0);
     private static int localId = rm.isPresent() ? rm.getAsInt() : 0;
 

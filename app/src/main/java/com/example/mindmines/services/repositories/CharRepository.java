@@ -1,17 +1,17 @@
 package com.example.mindmines.services.repositories;
 
-import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.views.observers.HabitObserver;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
+import com.example.mindmines.views.observers.HabitObserver;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class HabitRepository {
+public class CharRepository {
     private static final String TAG = "Debug data sync";
     private static List<Habit> array;
     private static List<HabitObserver> observers;

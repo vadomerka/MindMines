@@ -1,12 +1,11 @@
-package com.example.mindmines.models;
+package com.example.mindmines.models.user;
 
+import com.example.mindmines.models.ExpStatus;
 import com.example.mindmines.services.managers.ExpManager;
 
-public class UserStatus {
-    private Integer userId;
-    private Integer level;
-    private Long experience;
-    private Long maxExperience;
+public class UserStatus extends ExpStatus {
+    private final Integer userId;
+
     private Long coins;
 
     public UserStatus() {
@@ -32,18 +31,6 @@ public class UserStatus {
     }
 
     public Integer getUserId() { return this.userId; }
-
-    public Integer getLevel() { return this.level; }
-
-    public void setLevel(Integer value) { this.level = value; }
-
-    public Long getExperience() { return this.experience; }
-
-    public void setExperience(Long value) { this.experience = value; }
-
-    public Long getMaxExperience() { return this.maxExperience; }
-
-    public void setMaxExperience(Long value) { this.maxExperience = value; }
 
     public Long getCoins() { return this.coins; }
 

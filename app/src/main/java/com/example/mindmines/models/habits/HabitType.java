@@ -1,4 +1,4 @@
-package com.example.mindmines.models.enums;
+package com.example.mindmines.models.habits;
 
 public enum HabitType {
     GOOD_GOAL_COUNT,
