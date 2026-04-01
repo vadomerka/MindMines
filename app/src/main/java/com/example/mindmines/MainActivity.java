@@ -18,6 +18,7 @@ import com.example.mindmines.db.HabitDatabase;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
+import com.example.mindmines.services.repositories.CharRepository;
 import com.example.mindmines.services.timers.DataBackupTimer;
 import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
 import com.example.mindmines.services.auth.AuthManager;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
             // TODO: change to loading from server.
             HabitRepository.init();
+            CharRepository.init();
             dbSync = DataSynchronizerManager.getInstance(this);
             dbSync.loadFromDB();
 

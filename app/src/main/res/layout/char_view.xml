@@ -9,10 +9,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         style="@style/SpreadCenterHorizontalLayout">
 
         <TextView
-            android:id="@+id/character_name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/character_name_text_view"
@@ -20,7 +20,7 @@
             />
 
         <TextView
-            android:id="@+id/character_name_value_view"
+            android:id="@+id/name_value_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/header1_text"
@@ -35,6 +35,7 @@
         app:iconSize="125dp"
         app:cornerRadius="20dp"
         style="@style/CharacterButton"
+        android:enabled="true"
         android:layout_margin="10dp"/>
 
     <LinearLayout

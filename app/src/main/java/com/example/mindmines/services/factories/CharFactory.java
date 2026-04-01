@@ -1,11 +1,14 @@
 package com.example.mindmines.services.factories;
 
+import com.example.mindmines.R;
 import com.example.mindmines.models.game.Char;
 import com.example.mindmines.models.game.CharStats;
 import com.example.mindmines.models.game.CharStatus;
 import com.example.mindmines.models.game.equipment.CharEquipment;
+import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.repositories.CharRepository;
 
+import java.util.List;
 import java.util.OptionalInt;
 import java.util.Random;
 
@@ -17,15 +20,23 @@ public class CharFactory {
     private static final int baseValue = 10;
 
     public static Char generate() {
-        return generate(0);
+        return generate(0, String.valueOf(R.drawable.h1));
     }
 
-    public static Char generate(int level) {
+    public static Char generate(int level, String image) {
         int atk = rnd.nextInt(variation) + baseValue * level;
         int defence = rnd.nextInt(variation) + baseValue * level;
         int speed = rnd.nextInt(variation) + baseValue * level;
         return new Char(localId++, "Char " + localId,
                 new CharStats(atk, defence, speed),
-                new CharStatus(), new CharEquipment());
+                new CharStatus(), new CharEquipment(), image);
+    }
+
+    public static Char generate(int level, String image, Equipment[] equipment) {
+        Char ch = generate(level, image);
+        for (Equipment eq: equipment) {
+            ch.equip(eq);
+        }
+        return ch;
     }
 }

@@ -52,9 +52,9 @@ public class ProfileView extends BaseActivity {
         profileTitle.setText(email);
 
         UserStatus status = UserStatusManager.getStatus();
-        TextView levelValue = findViewById(R.id.user_level_value_view);
-        TextView expValue = findViewById(R.id.user_exp_value_view);
-        TextView expUntilValue = findViewById(R.id.user_exp_until_level_value_view);
+        TextView levelValue = findViewById(R.id.level_value_view);
+        TextView expValue = findViewById(R.id.exp_value_view);
+        TextView expUntilValue = findViewById(R.id.exp_until_next_value_view);
         levelValue.setText(status.getLevel().toString());
         expValue.setText(status.getExperience().toString());
         expUntilValue.setText(String.valueOf(status.getMaxExperience() - status.getExperience()));

@@ -1,5 +1,6 @@
 package com.example.mindmines.models.game;
 
+import com.example.mindmines.R;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.game.equipment.types.Equipment;
@@ -10,6 +11,7 @@ public class Char {
     private CharStats stats;
     private CharStatus status;
     private CharEquipment equipment;
+    private String image;
 
     public Char() {
         this.charId = 1;
@@ -17,15 +19,17 @@ public class Char {
         this.stats = new CharStats();
         this.status = new CharStatus();
         this.equipment = new CharEquipment();
+        this.image = String.valueOf(R.drawable.h1);
     }
 
     public Char(Integer charId, String name, CharStats stats,
-                CharStatus status, CharEquipment equipment) {
+                CharStatus status, CharEquipment equipment, String image) {
         this.charId = charId;
         this.name = name;
         this.stats = stats;
         this.status = status;
         this.equipment = equipment;
+        this.image = image;
     }
 
     public Integer getCharId() {
@@ -97,4 +101,8 @@ public class Char {
         }
         stats.sub(subStats);
     }
+
+    public String getImage() { return this.image; }
+
+    public void setImage(String image) { this.image = image; }
 }

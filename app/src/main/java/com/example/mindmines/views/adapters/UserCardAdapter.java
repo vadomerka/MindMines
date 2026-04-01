@@ -66,8 +66,8 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.UserCa
             super(itemView);
 
             rankView = itemView.findViewById(R.id.user_rank_value_view);
-            nameView = itemView.findViewById(R.id.user_name_value_view);
-            levelView = itemView.findViewById(R.id.user_level_value_view);
+            nameView = itemView.findViewById(R.id.name_value_view);
+            levelView = itemView.findViewById(R.id.level_value_view);
         }
     }
 }

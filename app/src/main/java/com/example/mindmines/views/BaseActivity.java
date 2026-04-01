@@ -60,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
         findViewById(R.id.bottom_navigation_bar1).setOnClickListener(v -> openView(ProfileView.class));
 //        findViewById(R.id.bottom_navigation_bar2).setOnClickListener(v -> openView(AiChatView.class));
         findViewById(R.id.bottom_navigation_bar3).setOnClickListener(v -> openView(HabitsView.class));
-        findViewById(R.id.bottom_navigation_bar4).setOnClickListener(v -> openView(CharView.class));
+        findViewById(R.id.bottom_navigation_bar4).setOnClickListener(v -> openView(PartyView.class));
         findViewById(R.id.bottom_navigation_bar5).setOnClickListener(v -> openView(FriendsView.class));
     }
 

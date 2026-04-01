@@ -44,4 +44,5 @@
     <string name="speed_view_text">Очки скорости</string>
     <string name="char_stats_view_button">Статистика</string>
     <string name="char_equip_view_button">Экипировка</string>
+    <string name="default_party_name_text">Название команды</string>
 </resources>
