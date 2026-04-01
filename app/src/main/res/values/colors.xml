@@ -8,4 +8,6 @@
     <color name="habit_checked_btn_color">#373737</color>
     <color name="habit_checked_btn_text_color">#FFFFFF</color>
     <color name="purple_background_color">#6750A4</color>
+    <color name="active_tab_color">#6200EE</color>
+    <color name="inactive_tab_color">#9E9E9E</color>
 </resources>

@@ -54,6 +54,15 @@
             android:name=".views.user.FriendsView"
             android:exported="false" />
         <activity
+            android:name=".views.game.PartyView"
+            android:exported="false" />
+        <activity
+            android:name=".views.game.CharView"
+            android:exported="false" />
+        <activity
+            android:name=".views.game.ShopView"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

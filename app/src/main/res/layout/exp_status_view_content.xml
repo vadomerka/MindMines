@@ -22,6 +22,7 @@
             android:text="@string/user_exp_view_text" />
 
         <TextView
+            android:id="@+id/user_exp_value_view"
             style="@style/InfoValueView"
             android:text="@string/default_number_text" />
     </LinearLayout>

@@ -60,8 +60,8 @@ public class HabitsView extends BaseActivity implements HabitObserver {
 
     @Override
     protected void onStart() {
-        Log.d(TAG, "onStart: 1");
         super.onStart();
+        Log.d(TAG, "onStart: 1");
         HabitRepository.subscribe(this);
         UserStatusManager.subscribe(this);
         updateHabits();
@@ -71,9 +71,9 @@ public class HabitsView extends BaseActivity implements HabitObserver {
     @Override
     protected void onStop() {
         Log.d(TAG, "onStop: 1");
-        super.onStop();
         HabitRepository.unsubscribe(this);
         UserStatusManager.unsubscribe(this);
+        super.onStop();
     }
 
     private List<Habit> loadItemList() {
