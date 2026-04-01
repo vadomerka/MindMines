@@ -37,4 +37,11 @@
     <string name="usernames_column_name">Имена игроков</string>
     <string name="level_column_name">Уровень</string>
     <string name="begin_expedition_text">Начать экспедицию</string>
+    <string name="your_character_party_text">Ваша команда</string>
+    <string name="character_name_text_view">Персонаж: </string>
+    <string name="attack_view_text">Очки атаки</string>
+    <string name="defence_view_text">Очки защиты</string>
+    <string name="speed_view_text">Очки скорости</string>
+    <string name="char_stats_view_button">Статистика</string>
+    <string name="char_equip_view_button">Экипировка</string>
 </resources>

@@ -11,12 +11,24 @@
         <item name="cornerRadius">8dp</item>
     </style>
 
-    <style name="CharacterButton">
-        <item name="android:layout_height">150dp</item>
-        <item name="android:layout_width">150dp</item>
-        <item name="android:layout_marginHorizontal">10dp</item>
 
+    <style name="CharacterButton">
+        <item name="android:layout_height">@dimen/character_button_size</item>
+        <item name="android:layout_width">@dimen/character_button_size</item>
+        <item name="android:layout_marginHorizontal">10dp</item>
     </style>
+
+    <style name="EquipmentButton">
+        <item name="android:layout_height">@dimen/equipment_button_size</item>
+        <item name="android:layout_width">@dimen/equipment_button_size</item>
+        <item name="android:layout_marginHorizontal">10dp</item>
+    </style>
+
+    <dimen name="equipment_icon_size">100dp</dimen>
+    <dimen name="equipment_button_size">125dp</dimen>
+    <dimen name="character_icon_size">125dp</dimen>
+    <dimen name="character_button_size">150dp</dimen>
+
 
     <style name="UncheckedHabitButton" parent="SmallButton">
         <item name="backgroundTint">@color/habit_unchecked_btn_color</item>

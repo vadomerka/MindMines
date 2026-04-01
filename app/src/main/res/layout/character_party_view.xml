@@ -12,7 +12,7 @@
         android:gravity="center">
 
         <TextView
-            android:text="@string/default_hello_world_text"
+            android:text="@string/your_character_party_text"
             style="@style/title_text"
             />
 
@@ -26,7 +26,7 @@
                     android:id="@+id/open_character_btn1"
                     app:icon="@drawable/h1"
                     app:iconGravity="top"
-                    app:iconSize="125dp"
+                    app:iconSize="@dimen/character_icon_size"
                     app:cornerRadius="20dp"
                     style="@style/CharacterButton"/>
 
@@ -34,7 +34,7 @@
                     android:id="@+id/open_character_btn2"
                     app:icon="@drawable/h2"
                     app:iconGravity="top"
-                    app:iconSize="125dp"
+                    app:iconSize="@dimen/character_icon_size"
                     app:cornerRadius="20dp"
                     style="@style/CharacterButton"/>
 
@@ -46,7 +46,7 @@
                     android:id="@+id/open_character_btn3"
                     app:icon="@drawable/h3"
                     app:iconGravity="top"
-                    app:iconSize="125dp"
+                    app:iconSize="@dimen/character_icon_size"
                     app:cornerRadius="20dp"
                     style="@style/CharacterButton"/>
 
@@ -54,7 +54,7 @@
                     android:id="@+id/open_character_btn4"
                     app:icon="@drawable/h4"
                     app:iconGravity="top"
-                    app:iconSize="125dp"
+                    app:iconSize="@dimen/character_icon_size"
                     app:cornerRadius="20dp"
                     style="@style/CharacterButton"/>
 

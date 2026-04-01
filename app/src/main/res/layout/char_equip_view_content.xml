@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/char_equipment_view"
+    style="@style/SpreadCenterVerticalLayout">
+
+    <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_equipment_btn1"
+            app:icon="@drawable/equip1_left_hand"
+            app:iconGravity="top"
+            app:iconSize="@dimen/equipment_icon_size"
+            app:cornerRadius="20dp"
+            style="@style/EquipmentButton"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_equipment_btn2"
+            app:icon="@drawable/equip2_right_hand"
+            app:iconGravity="top"
+            app:iconSize="@dimen/equipment_icon_size"
+            app:cornerRadius="20dp"
+            style="@style/EquipmentButton"/>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_equipment_btn3"
+            app:icon="@drawable/equip3_body"
+            app:iconGravity="top"
+            app:iconSize="@dimen/equipment_icon_size"
+            app:cornerRadius="20dp"
+            style="@style/EquipmentButton"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_equipment_btn4"
+            app:icon="@drawable/equip4_legs"
+            app:iconGravity="top"
+            app:iconSize="@dimen/equipment_icon_size"
+            app:cornerRadius="20dp"
+            style="@style/EquipmentButton"/>
+
+    </LinearLayout>
+</LinearLayout>

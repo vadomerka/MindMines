@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/char_stats_view"
+    style="@style/SpreadCenterVerticalLayout">
+
+    <include layout="@layout/exp_status_view_content"/>
+
+    <LinearLayout
+        style="@style/SpreadEndHorizontalLayout">
+        <TextView
+            android:text="@string/attack_view_text"
+            style="@style/InfoTextView"/>
+        <TextView
+            android:id="@+id/user_attack_value_view"
+            android:text="@string/default_number_text"
+            style="@style/InfoValueView"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/SpreadEndHorizontalLayout">
+        <TextView
+            android:text="@string/defence_view_text"
+            style="@style/InfoTextView"/>
+        <TextView
+            android:id="@+id/user_defence_value_view"
+            android:text="@string/default_number_text"
+            style="@style/InfoValueView"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/SpreadEndHorizontalLayout">
+        <TextView
+            android:text="@string/speed_view_text"
+            style="@style/InfoTextView"/>
+        <TextView
+            android:id="@+id/user_speed_value_view"
+            android:text="@string/default_number_text"
+            style="@style/InfoValueView"/>
+    </LinearLayout>
+
+</LinearLayout>

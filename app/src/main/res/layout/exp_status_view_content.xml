@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SpreadCenterVerticalLayout"
+    android:padding="0dp">
+
+    <LinearLayout style="@style/SpreadEndHorizontalLayout">
+
+        <TextView
+            style="@style/InfoTextView"
+            android:text="@string/user_level_view_text" />
+
+        <TextView
+            android:id="@+id/user_level_value_view"
+            style="@style/InfoValueView"
+            android:text="@string/default_number_text" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpreadEndHorizontalLayout">
+
+        <TextView
+            style="@style/InfoTextView"
+            android:text="@string/user_exp_view_text" />
+
+        <TextView
+            style="@style/InfoValueView"
+            android:text="@string/default_number_text" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpreadEndHorizontalLayout">
+
+        <TextView
+            style="@style/InfoTextView"
+            android:text="@string/user_exp_until_view_text" />
+
+        <TextView
+            android:id="@+id/user_exp_until_level_value_view"
+            style="@style/InfoValueView"
+            android:text="@string/default_number_text" />
+    </LinearLayout>
+</LinearLayout>

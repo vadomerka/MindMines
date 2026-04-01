@@ -14,10 +14,7 @@
     </style>
 
 
-    <style name="SpreadCenterLinearLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">8dp</item>
+    <style name="SpreadCenterLinearLayout" parent="SpreadLinearLayout">
         <item name="android:gravity">center</item>
     </style>
 
@@ -25,13 +22,16 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
+    <style name="SpreadCenterHorizontalItem" parent="SpreadLinearLayoutItem">
+        <item name="android:layout_width">0dp</item>
+    </style>
+
     <style name="SpreadCenterVerticalLayout" parent="SpreadCenterLinearLayout">
         <item name="android:orientation">vertical</item>
     </style>
 
 
-    <style name="InfoLinearLayout" parent="SpreadLinearLayout">
-        <item name="android:layout_below">@id/user_info_view</item>
+    <style name="SpreadEndHorizontalLayout" parent="SpreadCenterLinearLayout">
         <item name="android:gravity">end</item>
     </style>
 
