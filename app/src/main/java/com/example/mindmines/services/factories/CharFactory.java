@@ -1,161 +1,31 @@
 package com.example.mindmines.services.factories;
 
-import com.example.mindmines.db.entities.HabitEntity;
-import com.example.mindmines.models.habits.HabitDTO;
-import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.habits.HabitInterval;
-import com.example.mindmines.models.habits.HabitTimeUnit;
-import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.models.game.Char;
+import com.example.mindmines.models.game.CharStats;
+import com.example.mindmines.models.game.CharStatus;
+import com.example.mindmines.models.game.equipment.CharEquipment;
+import com.example.mindmines.services.repositories.CharRepository;
 
-import java.time.OffsetDateTime;
 import java.util.OptionalInt;
+import java.util.Random;
 
 public class CharFactory {
-    private static final OptionalInt rm = HabitRepository.getAll() != null ? HabitRepository.getAll().stream().mapToInt(Habit::getHabitId).max() : OptionalInt.of(0);
+    private static final OptionalInt rm = CharRepository.getAll() != null ? CharRepository.getAll().stream().mapToInt(Char::getCharId).max() : OptionalInt.of(0);
     private static int localId = rm.isPresent() ? rm.getAsInt() : 0;
+    private static final Random rnd = new Random();
+    private static final int variation = 5;
+    private static final int baseValue = 10;
 
-    public static HabitDTO createDTO(Integer userId, String title, String desc, Float frequency, Boolean timeAccurate,
-                                     Integer priority, Integer difficulty, HabitType hType, HabitInterval interval) {
-        return new HabitDTO(userId,
-                title,
-                desc,
-                frequency,
-                timeAccurate,
-                priority,
-                difficulty,
-                hType,
-                interval);
+    public static Char generate() {
+        return generate(0);
     }
 
-    public static HabitDTO createDTO(Integer userId) {
-        return new HabitDTO(userId,
-                "Название привычки",
-                "Описание привычки",
-                1.0f / 24,
-                true,
-                1,
-                1,
-                HabitType.GOOD_INTERVAL,
-                null);
-    }
-
-    public static Habit createFromDTO(HabitDTO dto) {
-        return new Habit(
-                ++localId,
-                dto.getUserId(),
-                dto.getType(),
-                dto.getTitle(),
-                dto.getDescription(),
-                dto.getPriority(),
-                dto.getDifficulty(),
-                0,
-                0,
-                OffsetDateTime.now(),
-                null,
-                getNewNextDeadline(OffsetDateTime.now(), dto.getInterval()),
-                dto.getInterval());
-    }
-
-    public static OffsetDateTime getNewNextDeadline(OffsetDateTime now, HabitInterval interval) {
-        OffsetDateTime res = now;
-        switch (interval.getTimeUnit()) {
-            // Сложно отслеживать мягкое начало (+ 1), легче отслеживать неотмеченные привычки.
-            case MINUTE:
-                res = res
-                        .plusMinutes(interval.getNumber())
-                        .withSecond(0)
-                        .minusSeconds(1);
-                break;
-            case HOUR:
-                res = res
-                        .plusHours(interval.getNumber())
-                        .withMinute(0).withSecond(0)
-                        .minusSeconds(1);
-                break;
-            case DAY:
-                res = res
-                        .plusDays(interval.getNumber())
-                        .withHour(0).withMinute(0).withSecond(0)
-                        .minusMinutes(1);
-                break;
-            case WEEK:
-                res = res.plusDays(7L * (interval.getNumber()))
-                        .minusDays(res.getDayOfWeek().getValue() - 1)
-                        .withHour(0).withMinute(0).withSecond(0)
-                        .minusMinutes(1);
-                break;
-            case MONTH:
-                res = res
-                        .plusMonths(interval.getNumber())
-                        .withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0)
-                        .minusMinutes(1);
-                break;
-        }
-        return res;
-    }
-
-    public static Habit createFromEntity(HabitEntity e) {
-        return new Habit(
-                e.habitId,
-                e.userId,
-                habitTypeFromString(e.type),
-                e.title,
-                e.description,
-                e.priority,
-                e.difficulty,
-                e.penaltyNumber,
-                e.streakNumber,
-                e.creationDate,
-                e.lastCompletedAt,
-                e.nextDeadlineAt,
-                new HabitInterval(e.intervalNumber, intervalUnitFromString(e.intervalUnit)));
-    }
-
-    public static HabitType habitTypeFromString(String type) {
-        switch (type.toUpperCase()) {
-            case "GOOD_GOAL_COUNT":
-                return HabitType.GOOD_GOAL_COUNT;
-            case "GOOD_TASKS":
-                return HabitType.GOOD_TASKS;
-            case "GOOD_INTERVAL":
-                return HabitType.GOOD_INTERVAL;
-            default:
-                return HabitType.BAD;
-        }
-    }
-
-    public static HabitTimeUnit intervalUnitFromString(String type) {
-        switch (type.toUpperCase()) {
-            case "MINUTE":
-                return HabitTimeUnit.MINUTE;
-            case "HOUR":
-                return HabitTimeUnit.HOUR;
-            case "DAY":
-                return HabitTimeUnit.DAY;
-            case "WEEK":
-                return HabitTimeUnit.WEEK;
-            default:
-                return HabitTimeUnit.MONTH;
-        }
-    }
-
-    public static HabitEntity createEntity(Habit h) {
-        return new HabitEntity(
-                h.getHabitId(),
-                h.getUserId(),
-                h.getType().toString(),
-                h.getTitle(),
-                h.getDescription(),
-                h.getPriority(),
-                h.getDifficulty(),
-                h.getPenaltyNumber(),
-                h.getStreakNumber(),
-                h.getCreationDate(),
-                h.getLastCompletedAt(),
-                h.getNextDeadlineAt(),
-                h.getInterval().getNumber(),
-                h.getInterval().getTimeUnit().toString()
-        );
+    public static Char generate(int level) {
+        int atk = rnd.nextInt(variation) + baseValue * level;
+        int defence = rnd.nextInt(variation) + baseValue * level;
+        int speed = rnd.nextInt(variation) + baseValue * level;
+        return new Char(localId++, "Char " + localId,
+                new CharStats(atk, defence, speed),
+                new CharStatus(), new CharEquipment());
     }
 }

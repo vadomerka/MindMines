@@ -1,10 +1,8 @@
 package com.example.mindmines.services.repositories;
 
-import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.habits.HabitInterval;
-import com.example.mindmines.models.habits.HabitTimeUnit;
-import com.example.mindmines.views.observers.HabitObserver;
+import com.example.mindmines.models.game.Char;
+import com.example.mindmines.services.factories.CharFactory;
+import com.example.mindmines.views.observers.CharObserver;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -13,60 +11,60 @@ import java.util.Optional;
 
 public class CharRepository {
     private static final String TAG = "Debug data sync";
-    private static List<Habit> array;
-    private static List<HabitObserver> observers;
+    private static List<Char> array;
+    private static List<CharObserver> observers;
 
     public static void init() {
         observers = new ArrayList<>();
         OffsetDateTime n = OffsetDateTime.now();
-        array = new ArrayList<Habit>() {
+        array = new ArrayList<Char>() {
             {
-                add(new Habit(1, 1, HabitType.GOOD_INTERVAL,"title", "desc", 1,1, 1, 3, n, n, n, new HabitInterval(1, HabitTimeUnit.MINUTE)));
-                add(new Habit(2, 1, HabitType.GOOD_INTERVAL,"title2", "desc2", 1,1, 2, 2,  n, n, n, new HabitInterval(2, HabitTimeUnit.MINUTE)));
-                add(new Habit(3, 1, HabitType.GOOD_INTERVAL,"title3", "desc3", 1,1, 3, 1,  n, n, n, new HabitInterval(3, HabitTimeUnit.MINUTE)));
+                add(CharFactory.generate(1));
+                add(CharFactory.generate(2));
+                add(CharFactory.generate(3));
             }
         };
     }
 
-    public static void subscribe(HabitObserver o) {
+    public static void subscribe(CharObserver o) {
         observers.add(o);
     }
 
-    public static void unsubscribe(HabitObserver o) {
+    public static void unsubscribe(CharObserver o) {
         observers.remove(o);
     }
 
-    public static List<Habit> getAll() {
+    public static List<Char> getAll() {
         return array;
     }
 
-    public static void setAll(List<Habit> narr) {
-        array = narr;
+    public static void setAll(List<Char> arr) {
+        array = arr;
         updateObservers();
     }
 
-    public static void add(Habit item) {
+    public static void add(Char item) {
         array.add(item);
     }
 
-    public static void remove(Habit item) {
+    public static void remove(Char item) {
         array.remove(item);
     }
 
-    public static Habit get(int itemId) {
-        Optional<Habit> res = array.stream().filter(i -> i.getHabitId() == itemId).findFirst();
+    public static Char get(int itemId) {
+        Optional<Char> res = array.stream().filter(i -> i.getCharId() == itemId).findFirst();
         return res.orElse(null);
     }
 
-    public static void update(Habit item) {
-        Habit found = get(item.getHabitId());
+    public static void update(Char item) {
+        Char found = get(item.getCharId());
         array.set(array.indexOf(found), item);
         updateObservers();
     }
 
     public static void updateObservers() {
-        for (HabitObserver o: observers) {
-            o.updateHabits();
+        for (CharObserver o: observers) {
+            o.updateChars();
         }
     }
 }

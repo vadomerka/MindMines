@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/party_vertical_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:text="@string/default_hello_world_text"
+            style="@style/title_text"
+            />
+
+        <LinearLayout
+            android:id="@+id/character_list"
+            style="@style/SpreadCenterVerticalLayout">
+
+            <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/open_character_btn1"
+                    app:icon="@drawable/h1"
+                    app:iconGravity="top"
+                    app:iconSize="125dp"
+                    app:cornerRadius="20dp"
+                    style="@style/CharacterButton"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/open_character_btn2"
+                    app:icon="@drawable/h2"
+                    app:iconGravity="top"
+                    app:iconSize="125dp"
+                    app:cornerRadius="20dp"
+                    style="@style/CharacterButton"/>
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/open_character_btn3"
+                    app:icon="@drawable/h3"
+                    app:iconGravity="top"
+                    app:iconSize="125dp"
+                    app:cornerRadius="20dp"
+                    style="@style/CharacterButton"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/open_character_btn4"
+                    app:icon="@drawable/h4"
+                    app:iconGravity="top"
+                    app:iconSize="125dp"
+                    app:cornerRadius="20dp"
+                    style="@style/CharacterButton"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:text="@string/begin_expedition_text"/>
+    </LinearLayout>
+
+</RelativeLayout>

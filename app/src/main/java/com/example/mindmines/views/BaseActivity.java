@@ -19,6 +19,7 @@ import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
+import com.example.mindmines.views.game.PartyView;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.observers.UserStatusObserver;
 import com.example.mindmines.views.user.FriendsView;
@@ -58,7 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
         findViewById(R.id.bottom_navigation_bar1).setOnClickListener(v -> openView(ProfileView.class));
 //        findViewById(R.id.bottom_navigation_bar2).setOnClickListener(v -> openView(AiChatView.class));
         findViewById(R.id.bottom_navigation_bar3).setOnClickListener(v -> openView(HabitsView.class));
-//        findViewById(R.id.bottom_navigation_bar4).setOnClickListener(v -> openView(ExpeditionsView.class));
+        findViewById(R.id.bottom_navigation_bar4).setOnClickListener(v -> openView(PartyView.class));
         findViewById(R.id.bottom_navigation_bar5).setOnClickListener(v -> openView(FriendsView.class));
     }
 
