@@ -29,6 +29,7 @@ public class DataSynchronizerManager {
 
     public void loadFromDB() {
         for (int i = 0; i < synchronizers.size(); i++) {
+
             synchronizers.get(i).loadFromDB();
         }
     }

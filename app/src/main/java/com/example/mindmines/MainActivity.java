@@ -12,9 +12,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.datasync.DataSynchronizerManager;
 import com.example.mindmines.db.datasync.HabitDataSynchronizer;
-import com.example.mindmines.db.HabitDatabase;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         String tag = "DEBUG main";
         Log.d(tag, "db init");
-        HabitDatabase db = HabitDatabase.getInstance(this);
+        MindMinesDatabase db = MindMinesDatabase.getInstance(this);
         Log.d(tag, "data sync init");
         HabitDataSynchronizer sync = new HabitDataSynchronizer(this);
         Log.d(tag, "saveFromRepository");

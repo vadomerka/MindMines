@@ -1,10 +1,9 @@
 package com.example.mindmines.db.datasync;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.mindmines.db.dao.HabitDao;
-import com.example.mindmines.db.HabitDatabase;
+import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.factories.HabitFactory;
@@ -17,7 +16,7 @@ public class HabitDataSynchronizer implements DataSynchronizer {
     private final HabitDao dao;
 
     public HabitDataSynchronizer(Context context) {
-        HabitDatabase db = HabitDatabase.getInstance(context);
+        MindMinesDatabase db = MindMinesDatabase.getInstance(context);
         this.dao = db.habitDao();
     }
 
