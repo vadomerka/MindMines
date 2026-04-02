@@ -21,7 +21,7 @@ public class HabitDataSynchronizer implements DataSynchronizer {
     }
 
     public void loadFromDB() {
-        List<HabitEntity> entities = dao.getAll();
+        List<HabitEntity> entities = dao.getAll().blockingGet();
         List<Habit> habits = new ArrayList<>();
 
         for (HabitEntity e : entities) {
