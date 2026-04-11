@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/SpreadCenterVerticalLayout">
+    style="@style/SpreadCenterVerticalLayout"
+    android:gravity="center_horizontal">
     <TextView
         android:id="@+id/user_info_view"
         style="@style/title_text"
