@@ -21,6 +21,8 @@ public class HabitStatusCheckerTimer extends BroadcastReceiver {
     private static final int REQUEST_CODE = 2000;
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
+    public static final String timeInterval = "minute";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!ACTION_CHECK.equals(intent.getAction())) return;
@@ -73,7 +75,12 @@ public class HabitStatusCheckerTimer extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager == null) return;
 
-        long triggerAt = getNextMinuteStart();
+        long triggerAt;
+        if (timeInterval == "day") {
+            triggerAt = getNextDayStart();
+        } else {
+            triggerAt = getNextMinuteStart();
+        }
 
         Intent intent = new Intent(context, HabitStatusCheckerTimer.class);
         intent.setAction(ACTION_CHECK);

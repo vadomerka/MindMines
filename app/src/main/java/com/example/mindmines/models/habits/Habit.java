@@ -128,23 +128,24 @@ public class Habit {
         return start;
     }
 
-    public OffsetDateTime getNextNextDeadline() {
+    public OffsetDateTime getNextNextDeadline(int forward) {
         OffsetDateTime end = nextDeadlineAt;
+        int plusNum = interval.getNumber() * forward;
         switch (interval.getTimeUnit()) {
             case MINUTE:
-                end = nextDeadlineAt.plusMinutes(interval.getNumber());
+                end = nextDeadlineAt.plusMinutes(plusNum);
                 break;
             case HOUR:
-                end = nextDeadlineAt.plusHours(interval.getNumber());
+                end = nextDeadlineAt.plusHours(plusNum);
                 break;
             case DAY:
-                end = nextDeadlineAt.plusDays(interval.getNumber());
+                end = nextDeadlineAt.plusDays(plusNum);
                 break;
             case WEEK:
-                end = nextDeadlineAt.plusWeeks(interval.getNumber());
+                end = nextDeadlineAt.plusWeeks(plusNum);
                 break;
             case MONTH:
-                end = nextDeadlineAt.plusMonths(interval.getNumber());
+                end = nextDeadlineAt.plusMonths(plusNum);
                 break;
         }
         return end;
