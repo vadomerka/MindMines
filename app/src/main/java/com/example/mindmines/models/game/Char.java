@@ -5,8 +5,10 @@ import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 
-public class Char {
-    private final Integer charId;
+import java.io.Serializable;
+
+public class Char implements Serializable {
+    private Integer charId;
     private String name;
     private CharStats stats;
     private CharStatus status;
@@ -35,6 +37,8 @@ public class Char {
     public Integer getCharId() {
         return charId;
     }
+
+    public void setCharId(Integer charId) { this.charId = charId; }
 
     public String getName() {
         return name;
@@ -102,7 +106,11 @@ public class Char {
         stats.sub(subStats);
     }
 
-    public String getImage() { return this.image; }
+    public String getImage() {
+        return this.image;
+    }
 
-    public void setImage(String image) { this.image = image; }
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

@@ -1,12 +1,14 @@
 package com.example.mindmines.services.factories;
 
 import com.example.mindmines.R;
+import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.models.game.Char;
 import com.example.mindmines.models.game.CharStats;
 import com.example.mindmines.models.game.CharStatus;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.repositories.CharRepository;
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.OptionalInt;
@@ -38,5 +40,17 @@ public class CharFactory {
             ch.equip(eq);
         }
         return ch;
+    }
+
+    public static Char createFromEntity(CharEntity entity) {
+        Gson g = new Gson();
+        Char ch = g.fromJson(entity.charJson, Char.class);
+        ch.setCharId(entity.charId);
+        return ch;
+    }
+
+    public static CharEntity createEntity(Char ch) {
+        Gson g = new Gson();
+        return new CharEntity(ch.getCharId(), g.toJson(ch));
     }
 }

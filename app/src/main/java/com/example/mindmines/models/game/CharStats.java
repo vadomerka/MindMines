@@ -1,6 +1,8 @@
 package com.example.mindmines.models.game;
 
-public class CharStats {
+import java.io.Serializable;
+
+public class CharStats implements Serializable {
     private Integer attack;
     private Integer defence;
     private Integer speed;

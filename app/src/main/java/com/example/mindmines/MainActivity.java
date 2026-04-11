@@ -15,9 +15,16 @@ import android.util.Log;
 import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.datasync.DataSynchronizerManager;
 import com.example.mindmines.db.datasync.HabitDataSynchronizer;
+import com.example.mindmines.models.game.Char;
+import com.example.mindmines.models.game.equipment.CharEquipment;
+import com.example.mindmines.models.game.equipment.types.BodyArmor;
+import com.example.mindmines.models.game.equipment.types.LegArmor;
+import com.example.mindmines.models.game.equipment.types.Shield;
+import com.example.mindmines.models.game.equipment.types.Sword;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
+import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.repositories.CharRepository;
 import com.example.mindmines.services.timers.DataBackupTimer;
 import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
@@ -28,6 +35,7 @@ import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.user.LoginView;
+import com.google.gson.Gson;
 
 import java.time.OffsetDateTime;
 
@@ -42,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
 
         if (DEBUG) {
-            test2();
+//            test3();
         } else {
 
             // TODO: change to loading from server.
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             CharRepository.init();
             dbSync = DataSynchronizerManager.getInstance(this);
             dbSync.loadFromDB();
+            CharRepository.init();
 
             // Notifications init
             createNotificationChannel();
@@ -129,6 +138,15 @@ public class MainActivity extends AppCompatActivity {
         sync.saveToDB();
         Log.d(tag, "loadIntoRepository");
         sync.loadFromDB();
+    }
+
+    public void test3() {
+        Char ch = CharFactory.generate();
+        ch.setEquipment(new CharEquipment(new Sword(), new Shield(), new BodyArmor(), new LegArmor()));
+        Gson g = new Gson();
+        String j1 = g.toJson(ch);
+        Char ch2 = g.fromJson(j1, Char.class);
+        System.out.println("finish");
     }
 }
 

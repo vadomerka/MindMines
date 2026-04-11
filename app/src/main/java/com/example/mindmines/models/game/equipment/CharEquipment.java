@@ -2,13 +2,21 @@ package com.example.mindmines.models.game.equipment;
 
 import com.example.mindmines.models.game.equipment.types.Equipment;
 
-public class CharEquipment {
+import java.io.Serializable;
+
+public class CharEquipment implements Serializable {
     private Equipment leftHand;
     private Equipment rightHand;
     private Equipment body;
     private Equipment legs;
 
     public CharEquipment() {}
+    public CharEquipment(Equipment leftHand, Equipment rightHand, Equipment body, Equipment legs) {
+        this.leftHand = leftHand;
+        this.rightHand = rightHand;
+        this.body = body;
+        this.legs = legs;
+    }
 
     public Equipment getLeftHand() {
         return leftHand;

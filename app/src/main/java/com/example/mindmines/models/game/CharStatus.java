@@ -2,7 +2,9 @@ package com.example.mindmines.models.game;
 
 import com.example.mindmines.models.ExpStatus;
 
-public class CharStatus extends ExpStatus {
+import java.io.Serializable;
+
+public class CharStatus extends ExpStatus implements Serializable {
     private Integer hp;
 
     public CharStatus() {

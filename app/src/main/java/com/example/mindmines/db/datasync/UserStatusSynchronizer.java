@@ -35,7 +35,7 @@ public class UserStatusSynchronizer implements DataSynchronizer, UserStatusObser
     private static final Preferences.Key<Long> MAX_EXPERIENCE =
             PreferencesKeys.longKey("max_experience");
 
-    private static final Preferences.Key<Long> COINS=
+    private static final Preferences.Key<Long> COINS =
             PreferencesKeys.longKey("coins");
 
     public UserStatusSynchronizer(Context context) {

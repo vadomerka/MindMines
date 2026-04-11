@@ -15,6 +15,7 @@ public class DataSynchronizerManager {
 
     private DataSynchronizerManager(Context context) {
         synchronizers.add(new HabitDataSynchronizer(context));
+        synchronizers.add(new CharDataSynchronizer(context));
         UserStatusSynchronizer uss = new UserStatusSynchronizer(context);
         synchronizers.add(uss);
         UserStatusManager.subscribe(uss);

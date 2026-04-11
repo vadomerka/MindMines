@@ -1,6 +1,7 @@
 package com.example.mindmines.db.entities;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -20,7 +21,7 @@ public class CharEntity {
     }
 
     public CharEntity(
-            Integer charId,
+            @NonNull Integer charId,
             String charJson
     ) {
         this.charId = charId;
