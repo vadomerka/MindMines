@@ -16,14 +16,14 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 public interface HabitDao {
     @Query("SELECT * FROM habits ORDER BY habitId ASC")
-    Single<List<HabitEntity>> getAll();
+    List<HabitEntity> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertAll(List<HabitEntity> habits);
+    void insertAll(List<HabitEntity> habits);
 
     @Update
-    Completable update(HabitEntity habit);
+    void update(HabitEntity habit);
 
     @Query("DELETE FROM habits")
-    Completable deleteAll();
+    void deleteAll();
 }

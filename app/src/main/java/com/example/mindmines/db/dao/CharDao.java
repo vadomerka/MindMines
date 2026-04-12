@@ -16,14 +16,14 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 public interface CharDao {
     @Query("SELECT * FROM characters ORDER BY charId ASC")
-    Single<List<CharEntity>> getAll();
+    List<CharEntity> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertAll(List<CharEntity> characters);
+    void insertAll(List<CharEntity> characters);
 
     @Update
-    Completable update(CharEntity character);
+    void update(CharEntity character);
 
     @Query("DELETE FROM characters")
-    Completable deleteAll();
+    void deleteAll();
 }

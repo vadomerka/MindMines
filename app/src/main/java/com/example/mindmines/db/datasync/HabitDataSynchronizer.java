@@ -21,7 +21,7 @@ public class HabitDataSynchronizer implements DataSynchronizer {
     }
 
     public void loadFromDB() {
-        List<HabitEntity> entities = dao.getAll().blockingGet();
+        List<HabitEntity> entities = dao.getAll();
         List<Habit> habits = new ArrayList<>();
 
         for (HabitEntity e : entities) {
@@ -32,17 +32,14 @@ public class HabitDataSynchronizer implements DataSynchronizer {
     }
 
     public void saveToDB() {
-        List<Habit> habits = HabitRepository.getAll(); // size = 3
+        List<Habit> habits = HabitRepository.getAll();
         List<HabitEntity> entities = new ArrayList<>();
 
         for (Habit h : habits) {
             entities.add(HabitFactory.createEntity(h));
         }
 
-//        List<HabitEntity> entities1 = dao.getAll().blockingGet(); // size = 3
-        dao.deleteAll().blockingAwait();
-//        List<HabitEntity> entities2 = dao.getAll().blockingGet(); // size = 3
-        dao.insertAll(entities).blockingAwait();
-//        List<HabitEntity> entities3 = dao.getAll().blockingGet(); // size = 3
+        dao.deleteAll();
+        dao.insertAll(entities);
     }
 }

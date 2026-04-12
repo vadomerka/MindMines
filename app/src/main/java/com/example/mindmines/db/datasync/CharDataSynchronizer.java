@@ -27,16 +27,14 @@ public class CharDataSynchronizer implements DataSynchronizer {
     }
 
     public void loadFromDB() {
-        List<CharEntity> entities = dao.getAll().blockingGet();
+        List<CharEntity> entities = dao.getAll();
         List<Char> chars = new ArrayList<>();
 
         for (CharEntity e : entities) {
             chars.add(CharFactory.createFromEntity(e));
         }
 
-        List<Char> chars1 = CharRepository.getAll();
         CharRepository.setAll(chars);
-        Log.d(TAG, "loadFromDB");
     }
 
     public void saveToDB() {
@@ -47,11 +45,7 @@ public class CharDataSynchronizer implements DataSynchronizer {
             entities.add(CharFactory.createEntity(c));
         }
 
-//        List<CharEntity> entities1 = dao.getAll().blockingGet(); // size = 0
-        dao.deleteAll().blockingAwait();
-//        List<CharEntity> entities2 = dao.getAll().blockingGet();
-        dao.insertAll(entities).blockingAwait();
-//        List<CharEntity> entities3 = dao.getAll().blockingGet();
-        Log.d(TAG, "saveToDB");
+        dao.deleteAll();
+        dao.insertAll(entities);
     }
 }
