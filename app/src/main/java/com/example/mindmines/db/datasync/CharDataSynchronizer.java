@@ -34,8 +34,9 @@ public class CharDataSynchronizer implements DataSynchronizer {
             chars.add(CharFactory.createFromEntity(e));
         }
 
+        List<Char> chars1 = CharRepository.getAll();
         CharRepository.setAll(chars);
-        Log.d(TAG, String.format("loadFromDB"));
+        Log.d(TAG, "loadFromDB");
     }
 
     public void saveToDB() {
@@ -46,8 +47,11 @@ public class CharDataSynchronizer implements DataSynchronizer {
             entities.add(CharFactory.createEntity(c));
         }
 
-        dao.deleteAll();
-        dao.insertAll(entities);
-        Log.d(TAG, String.format("saveToDB"));
+//        List<CharEntity> entities1 = dao.getAll().blockingGet(); // size = 0
+        dao.deleteAll().blockingAwait();
+//        List<CharEntity> entities2 = dao.getAll().blockingGet();
+        dao.insertAll(entities).blockingAwait();
+//        List<CharEntity> entities3 = dao.getAll().blockingGet();
+        Log.d(TAG, "saveToDB");
     }
 }

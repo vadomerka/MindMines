@@ -32,14 +32,17 @@ public class HabitDataSynchronizer implements DataSynchronizer {
     }
 
     public void saveToDB() {
-        List<Habit> habits = HabitRepository.getAll();
+        List<Habit> habits = HabitRepository.getAll(); // size = 3
         List<HabitEntity> entities = new ArrayList<>();
 
         for (Habit h : habits) {
             entities.add(HabitFactory.createEntity(h));
         }
 
-        dao.deleteAll();
-        dao.insertAll(entities);
+//        List<HabitEntity> entities1 = dao.getAll().blockingGet(); // size = 3
+        dao.deleteAll().blockingAwait();
+//        List<HabitEntity> entities2 = dao.getAll().blockingGet(); // size = 3
+        dao.insertAll(entities).blockingAwait();
+//        List<HabitEntity> entities3 = dao.getAll().blockingGet(); // size = 3
     }
 }

@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.example.mindmines.db.MindMinesDatabase;
+import com.example.mindmines.db.datasync.CharDataSynchronizer;
 import com.example.mindmines.db.datasync.DataSynchronizerManager;
 import com.example.mindmines.db.datasync.HabitDataSynchronizer;
 import com.example.mindmines.models.game.Char;
@@ -38,6 +39,7 @@ import com.example.mindmines.views.user.LoginView;
 import com.google.gson.Gson;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug start finish";
@@ -50,15 +52,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
 
         if (DEBUG) {
-//            test3();
+            test4();
         } else {
-
             // TODO: change to loading from server.
             HabitRepository.init();
             CharRepository.init();
             dbSync = DataSynchronizerManager.getInstance(this);
             dbSync.loadFromDB();
-            CharRepository.init();
+//            CharRepository.init();
 
             // Notifications init
             createNotificationChannel();
@@ -147,6 +148,18 @@ public class MainActivity extends AppCompatActivity {
         String j1 = g.toJson(ch);
         Char ch2 = g.fromJson(j1, Char.class);
         System.out.println("finish");
+    }
+
+    public void test4() {
+        CharRepository.init();
+        List<Char> chars1 = CharRepository.getAll();
+        System.out.println(chars1.size());
+        CharDataSynchronizer dSync = new CharDataSynchronizer(this);
+        dSync.saveToDB();
+
+        dSync.loadFromDB();
+        List<Char> chars2 = CharRepository.getAll();
+        System.out.println(chars2.size());
     }
 }
 
