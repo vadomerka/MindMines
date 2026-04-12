@@ -52,14 +52,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
 
         if (DEBUG) {
-            test4();
         } else {
             // TODO: change to loading from server.
             HabitRepository.init();
             CharRepository.init();
             dbSync = DataSynchronizerManager.getInstance(this);
             dbSync.loadFromDB();
-//            CharRepository.init();
 
             // Notifications init
             createNotificationChannel();

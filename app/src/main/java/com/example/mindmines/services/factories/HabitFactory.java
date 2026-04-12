@@ -12,11 +12,14 @@ import java.time.OffsetDateTime;
 import java.util.OptionalInt;
 
 public class HabitFactory {
-    private static final OptionalInt rm = HabitRepository.getAll() != null ? HabitRepository.getAll().stream().mapToInt(Habit::getHabitId).max() : OptionalInt.of(0);
+    private static final OptionalInt rm = HabitRepository.getAll() != null
+            ? HabitRepository.getAll().stream().mapToInt(Habit::getHabitId).max()
+            : OptionalInt.of(0);
     private static int localId = rm.isPresent() ? rm.getAsInt() : 0;
 
-    public static HabitDTO createDTO(Integer userId, String title, String desc, Float frequency, Boolean timeAccurate,
-                                     Integer priority, Integer difficulty, HabitType hType, HabitInterval interval) {
+    public static HabitDTO createDTO(Integer userId, String title, String desc, Float frequency,
+                                     Boolean timeAccurate, Integer priority, Integer difficulty,
+                                     HabitType hType, HabitInterval interval) {
         return new HabitDTO(userId,
                 title,
                 desc,

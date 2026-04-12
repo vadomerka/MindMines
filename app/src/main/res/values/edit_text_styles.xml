@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="habit_edit_text" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
-        <item name="android:layout_margin">20dp</item>
-    </style>
-</resources>

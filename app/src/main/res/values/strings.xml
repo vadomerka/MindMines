@@ -12,13 +12,13 @@
     <string name="habit_check_btn_text">✔️</string>
     <string name="habit_view_title_text">Ваши привычки:</string>
     <string name="return_to_previous_activity">Вернуться</string>
-    <string name="habit_change_title">Изменение привычки</string>
-    <string name="save_changes_button_text">Сохранить изменения</string>
+    <string name="habit_add_title">Изменение привычки</string>
+    <string name="save_button_text">Сохранить</string>
     <string name="save_habit_button_text">Сохранить</string>
     <string name="add_habit_button_text">Добавить привычку</string>
     <string name="default_change_title">Введите название</string>
-    <string name="edit_habit_title_hint_text">Введите название</string>
-    <string name="edit_habit_desc_hint_text">Введите описание</string>
+    <string name="edit_habit_title_hint_text">Введите название привычки</string>
+    <string name="edit_habit_desc_hint_text">Введите описание привычки</string>
     <string name="edit_habit_frequency_hint_text">Время между проверками: </string>
     <string name="edit_habit_priority_hint_text">Введите приоритет</string>
     <string name="edit_habit_difficulty_hint_text">Введите сложность</string>
@@ -45,4 +45,8 @@
     <string name="char_stats_view_button">Статистика</string>
     <string name="char_equip_view_button">Экипировка</string>
     <string name="default_party_name_text">Название команды</string>
+    <string name="good_habit_button_text">Полезная</string>
+    <string name="bad_habit_button_text">Вредная</string>
+    <string name="habit_difficulty_text_view">Сложность</string>
+    <string name="habit_priority_text_view">Приоритет</string>
 </resources>

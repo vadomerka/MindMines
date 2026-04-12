@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="HabitEditTextView" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="StandardSlider" parent="Widget.Material3.Slider">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:value">1</item>
+        <item name="android:valueFrom">1</item>
+        <item name="android:valueTo">10</item>
+    </style>
+</resources>

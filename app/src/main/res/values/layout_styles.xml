@@ -35,6 +35,10 @@
         <item name="android:gravity">end</item>
     </style>
 
+    <style name="SpreadStartVerticalLayout" parent="SpreadCenterVerticalLayout">
+        <item name="android:gravity">start</item>
+    </style>
+
     <style name="InfoTextView" parent="header1_text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

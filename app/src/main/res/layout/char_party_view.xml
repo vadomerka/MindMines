@@ -73,12 +73,13 @@
 
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            android:text="@string/begin_expedition_text"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginTop="20dp"
-            android:text="@string/begin_expedition_text"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            />
     </LinearLayout>
 
 </RelativeLayout>

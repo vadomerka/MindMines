@@ -46,6 +46,8 @@ public class CharView extends BaseActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     protected void loadCharData() {
         MaterialButton charBtn = findViewById(R.id.character_portrait_view);
+        //                               2131165428
+        Integer od = R.drawable.h1;
         charBtn.setIcon(getDrawable(Integer.parseInt(ch.getImage())));
 
         TextView statTv0 = findViewById(R.id.name_value_view);

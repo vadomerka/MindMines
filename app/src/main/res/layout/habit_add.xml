@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         style="@style/title_text"
-        android:text="@string/habit_change_title"/>
+        android:text="@string/default_hello_world_text"/>
 
     <LinearLayout
         android:id="@+id/habit_change_inputs"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_habit_title_hint_text"
             android:inputType="text"
-            style="@style/habit_edit_text"
+            style="@style/HabitEditTextView"
             android:autofillHints=""/>
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_desc"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_habit_desc_hint_text"
             android:inputType="textLongMessage"
-            style="@style/habit_edit_text"
+            style="@style/HabitEditTextView"
             android:autofillHints=""/>
         <LinearLayout
             android:id="@+id/edit_checking_frequency"
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_habit_priority_hint_text"
             android:inputType="number"
-            style="@style/habit_edit_text"
+            style="@style/HabitEditTextView"
             android:autofillHints=""/>
         <EditText
             android:id="@+id/edit_difficulty"
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/edit_habit_difficulty_hint_text"
             android:inputType="number"
-            style="@style/habit_edit_text"
+            style="@style/HabitEditTextView"
             android:autofillHints=""/>
 
         <androidx.appcompat.widget.SwitchCompat
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:text="@string/edit_habit_type_hint_text"
             android:checked="false"
-            style="@style/habit_edit_text" />
+            style="@style/HabitEditTextView" />
 
 
 
@@ -143,7 +143,7 @@
         android:id="@+id/save_habit_changes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save_changes_button_text"
+        android:text="@string/default_hello_world_text"
         android:layout_below="@+id/habit_change_inputs"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"/>
