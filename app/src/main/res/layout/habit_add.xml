@@ -1,150 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SpreadCenterVerticalLayout">
 
     <TextView
-        android:id="@+id/habit_change_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/habit_add_title"
         style="@style/title_text"
-        android:text="@string/default_hello_world_text"/>
+        android:text="@string/habit_add_title" />
 
     <LinearLayout
-        android:id="@+id/habit_change_inputs"
+        style="@style/SpreadCenterHorizontalLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/habit_change_title"
-        android:orientation="vertical"
-        android:layout_marginBottom="10dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/edit_habit_title_hint_text"
-            android:inputType="text"
-            style="@style/HabitEditTextView"
-            android:autofillHints=""/>
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/edit_habit_desc_hint_text"
-            android:inputType="textLongMessage"
-            style="@style/HabitEditTextView"
-            android:autofillHints=""/>
-        <LinearLayout
-            android:id="@+id/edit_checking_frequency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
-            <TextView
-                android:id="@+id/edit_checking_frequency_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_habit_frequency_hint_text"
-                style="@style/header2_text"
-                android:layout_marginEnd="5dp"/>
-            <TextView
-                android:id="@+id/edit_checking_frequency_number_display"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="20dp"
-                android:text="@string/default_number_text"
-                style="@style/header2_text"/>
+        android:layout_marginTop="10dp">
 
-            <Spinner
-                android:id="@+id/edit_checking_frequency_period_type_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginVertical="20dp"
-                android:spinnerMode="dropdown"/>
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/good_type_habit_button"
+            style="@style/SpreadCenterHorizontalItem"
+            android:text="@string/good_habit_button_text" />
 
-        <com.google.android.material.slider.Slider
-            android:id="@+id/edit_checking_frequency_number_slider"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:valueFrom="1"
-            android:valueTo="7"
-            android:stepSize="1"
-            android:layout_margin="20dp"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="20dp"
-            >
-            <TextView
-                android:id="@+id/habit_time_of_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/habit_time_of_day_text"/>
-            <CheckBox
-                android:id="@+id/check_habit_precision"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/timePickerBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:visibility="gone">
-            <TimePicker
-                android:id="@+id/timePicker"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:timePickerMode="spinner"
-                android:layout_gravity="center"
-                android:scaleY="1"
-                android:scaleX="1"/>
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/edit_priority"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/edit_habit_priority_hint_text"
-            android:inputType="number"
-            style="@style/HabitEditTextView"
-            android:autofillHints=""/>
-        <EditText
-            android:id="@+id/edit_difficulty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/edit_habit_difficulty_hint_text"
-            android:inputType="number"
-            style="@style/HabitEditTextView"
-            android:autofillHints=""/>
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/edit_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_habit_type_hint_text"
-            android:checked="false"
-            style="@style/HabitEditTextView" />
-
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bad_type_habit_button"
+            style="@style/SpreadCenterHorizontalItem"
+            android:text="@string/bad_habit_button_text" />
 
     </LinearLayout>
 
+    <LinearLayout style="@style/SpreadStartVerticalLayout">
+
+        <EditText
+            style="@style/HabitEditTextView"
+            android:hint="@string/edit_habit_title_hint_text"
+            android:textSize="20sp" />
+
+        <EditText
+            style="@style/HabitEditTextView"
+            android:hint="@string/edit_habit_desc_hint_text"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+
+        <LinearLayout style="@style/SpreadCenterHorizontalItem">
+            <LinearLayout style="@style/SpreadCenterVerticalLayout">
+                <TextView
+                    style="@style/header2_text"
+                    android:text="@string/habit_difficulty_text_view" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/habit_difficulty_value_slider"
+                    style="@style/StandardSlider"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/SpreadCenterHorizontalItem">
+            <LinearLayout style="@style/SpreadCenterVerticalLayout">
+                <TextView
+                    style="@style/header2_text"
+                    android:text="@string/habit_priority_text_view" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/habit_priority_value_slider"
+                    style="@style/StandardSlider"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+        <LinearLayout
+            style="@style/SpreadCenterHorizontalItem"
+            android:layout_weight="2">
+            <com.google.android.material.slider.Slider
+                style="@style/StandardSlider"
+                android:id="@+id/habit_interval_number_value"/>
+        </LinearLayout>
+        <LinearLayout style="@style/SpreadCenterHorizontalItem">
+
+        </LinearLayout>
+    </LinearLayout>
+
     <Button
-        android:id="@+id/save_habit_changes"
+        android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/default_hello_world_text"
-        android:layout_below="@+id/habit_change_inputs"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"/>
-</RelativeLayout>
+        android:layout_margin="20dp"
+        android:text="@string/save_button_text" />
+</LinearLayout>
