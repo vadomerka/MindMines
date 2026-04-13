@@ -50,4 +50,7 @@
     <string name="habit_difficulty_text_view">Сложность</string>
     <string name="habit_priority_text_view">Приоритет</string>
     <string name="interval_configure_text">Настройте интервал:</string>
+    <string name="choose_habit_type_text">Выберете тип привычки:</string>
+    <string name="goal_text">Цель:</string>
+    <string name="tasks_view_text">Задачи:</string>
 </resources>
