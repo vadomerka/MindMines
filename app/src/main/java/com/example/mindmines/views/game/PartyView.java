@@ -9,8 +9,6 @@ import com.example.mindmines.R;
 import com.example.mindmines.models.game.Char;
 import com.example.mindmines.services.repositories.CharRepository;
 import com.example.mindmines.views.BaseActivity;
-import com.example.mindmines.views.habit.HabitChangeView;
-import com.example.mindmines.views.habit.HabitsView;
 
 import java.util.ArrayList;
 import java.util.List;

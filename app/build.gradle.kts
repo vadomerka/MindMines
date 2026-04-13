@@ -25,6 +25,11 @@ android {
             )
         }
     }
+    
+    buildFeatures {
+        dataBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -49,6 +54,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+//    implementation("com.github.AigeStudio:WheelPicker:594180c")
+    implementation("com.github.vikramezhil:WheelPicker:1.0.3")
 
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
@@ -58,8 +65,8 @@ dependencies {
     implementation("androidx.security:security-crypto:1.1.0")
 
     implementation("androidx.datastore:datastore-preferences:1.1.0")
-    implementation("com.google.guava:guava:32.0.1-android")
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.1.1")
+    implementation("com.google.guava:guava:32.0.1-android")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")

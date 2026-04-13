@@ -9,7 +9,7 @@ import com.example.mindmines.services.repositories.HabitRepository;
 
 import static com.example.mindmines.services.utils.UIUtils.*;
 
-public class HabitChangeView extends HabitAddView {
+public class HabitChangeView1 extends HabitAddView1 {
     @Override
     protected void loadDefaultValues() {
         Habit h = HabitRepository.get(hId);
@@ -46,8 +46,8 @@ public class HabitChangeView extends HabitAddView {
 
     @Override
     protected void returnToHabitsView() {
-        Intent myIntent = new Intent(HabitChangeView.this, HabitsView.class);
-        HabitChangeView.this.startActivity(myIntent);
+        Intent myIntent = new Intent(HabitChangeView1.this, HabitsView.class);
+        HabitChangeView1.this.startActivity(myIntent);
         finish();
     }
 }

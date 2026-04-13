@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
@@ -100,7 +98,7 @@ public class HabitsView extends BaseActivity implements HabitObserver {
     }
 
     public void openHabitChangeView(int hId) {
-        Intent myIntent = new Intent(HabitsView.this, HabitChangeView.class);
+        Intent myIntent = new Intent(HabitsView.this, HabitChangeView1.class);
         myIntent.putExtra("id", hId);
         HabitsView.this.startActivity(myIntent);
         finish();

@@ -12,5 +12,6 @@
         <item name="android:value">1</item>
         <item name="android:valueFrom">1</item>
         <item name="android:valueTo">10</item>
+        <item name="android:stepSize">1</item>
     </style>
 </resources>

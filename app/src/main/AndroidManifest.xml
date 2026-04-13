@@ -36,7 +36,7 @@
         </receiver>
 
         <activity
-            android:name=".views.habit.HabitChangeView"
+            android:name=".views.habit.HabitChangeView1"
             android:exported="false" />
         <activity
             android:name=".views.habit.HabitAddView"

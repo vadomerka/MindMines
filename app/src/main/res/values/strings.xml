@@ -12,7 +12,7 @@
     <string name="habit_check_btn_text">✔️</string>
     <string name="habit_view_title_text">Ваши привычки:</string>
     <string name="return_to_previous_activity">Вернуться</string>
-    <string name="habit_add_title">Изменение привычки</string>
+    <string name="habit_add_title">Создание привычки</string>
     <string name="save_button_text">Сохранить</string>
     <string name="save_habit_button_text">Сохранить</string>
     <string name="add_habit_button_text">Добавить привычку</string>
@@ -49,4 +49,5 @@
     <string name="bad_habit_button_text">Вредная</string>
     <string name="habit_difficulty_text_view">Сложность</string>
     <string name="habit_priority_text_view">Приоритет</string>
+    <string name="interval_configure_text">Настройте интервал:</string>
 </resources>
