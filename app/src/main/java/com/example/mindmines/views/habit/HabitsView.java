@@ -23,7 +23,7 @@ import com.example.mindmines.views.adapters.HabitCardAdapter;
 import java.util.List;
 
 public class HabitsView extends BaseActivity implements HabitObserver {
-    private static final String TAG = "Debug data sync";
+    private static final String TAG = "Debug HabitsView";
 
     private AuthManager auth;
     private HabitCardAdapter listAdapter;
@@ -82,7 +82,7 @@ public class HabitsView extends BaseActivity implements HabitObserver {
 
     @SuppressLint("SetTextI18n")
     public void updateHabits() {
-        Log.d(TAG, "updateHabits: updating");
+        Log.d(TAG, "updateHabits: updating view");
         runOnUiThread(() -> {
             List<HabitCardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
             if (cards == null) return;

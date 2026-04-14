@@ -130,10 +130,10 @@ public class HabitAddView1 extends AppCompatActivity {
         editDifficulty.setText(intToString(h.getDifficulty()));
         editType.setChecked(h.getType() != HabitType.GOOD_INTERVAL);
 
-        int pos = floatFreqToPosition(h.getCheckingFrequency());
+        int pos = floatFreqToPosition(0); // h.getCheckingFrequency()
         editFrequencyPeriodSpinner.setSelection(pos);
 
-        float prevValue = pos == 0 ? 1f : h.getCheckingFrequency(); // / PERIOD_COEF[pos];
+        float prevValue = pos == 0 ? 1f : 0; // h.getCheckingFrequency(); / PERIOD_COEF[pos];
         updateSelected(pos, prevValue);
         editFrequencyDisplay.setText(intToString(floatToInt(prevValue)));
     }
@@ -188,8 +188,7 @@ public class HabitAddView1 extends AppCompatActivity {
 
         HabitInterval interval = new HabitInterval(3, HabitTimeUnit.MONTH);
 
-        Habit h = HabitController.add(HabitFactory.createDTO(uId, title, desc,
-                frequencyValue * freqCoef, true, priority, difficulty, hType, interval));
+        Habit h = HabitController.add(HabitFactory.createDTO(uId, title, desc, true, priority, difficulty, hType, interval));
 
         HabitNotificationService.scheduleDailyAlarm(this, h);
 

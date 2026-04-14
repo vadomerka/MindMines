@@ -22,23 +22,16 @@ import com.example.mindmines.models.game.equipment.types.BodyArmor;
 import com.example.mindmines.models.game.equipment.types.LegArmor;
 import com.example.mindmines.models.game.equipment.types.Shield;
 import com.example.mindmines.models.game.equipment.types.Sword;
-import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.habits.HabitDTO;
-import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.repositories.CharRepository;
 import com.example.mindmines.services.timers.DataBackupTimer;
 import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
 import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.models.habits.HabitInterval;
-import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.user.LoginView;
 import com.google.gson.Gson;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -106,23 +99,6 @@ public class MainActivity extends AppCompatActivity {
         if (manager != null) {
             manager.createNotificationChannel(channel);
         }
-    }
-
-    public static void test1() {
-        HabitDTO dto = HabitFactory.createDTO(
-                1,
-                "",
-                "",
-                1f,
-                true,
-                1,
-                1,
-                HabitType.GOOD_INTERVAL,
-                new HabitInterval(3, HabitTimeUnit.HOUR)
-        );
-        System.out.println(OffsetDateTime.now());
-        Habit h = HabitFactory.createFromDTO(dto);
-        System.out.println(h.getNextDeadlineAt());
     }
 
     public void test2() {

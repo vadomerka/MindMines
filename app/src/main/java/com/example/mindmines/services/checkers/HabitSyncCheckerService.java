@@ -1,7 +1,6 @@
 package com.example.mindmines.services.checkers;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
@@ -9,11 +8,9 @@ import com.example.mindmines.models.habits.HabitButtonStatus;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.repositories.HabitRepository;
-import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 
@@ -71,6 +68,14 @@ public class HabitSyncCheckerService extends BasicChecker {
                         UserStatusManager.gain(h);
                         // Вычисление следующего дедлайна.
                         h.setNextDeadlineAt(h.getNextNextDeadline((int) missed));
+                    }
+
+                    // Если после быстрого подсчета осталось несколько недосчитанных интервалов.
+                    while (h.getNextDeadlineAt().isBefore(OffsetDateTime.now())) {
+                        h.setStreakNumber(0);
+                        h.setPenaltyNumber(h.getPenaltyNumber() + 1);
+                        UserStatusManager.gain(h);
+                        h.setNextDeadlineAt(h.getNextNextDeadline(1));
                     }
                 }
                 break;

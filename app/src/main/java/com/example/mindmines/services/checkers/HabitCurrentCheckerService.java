@@ -16,6 +16,7 @@ import java.time.OffsetDateTime;
 // Класс для изменений привычек на основе состояния в текущий момент.
 public class HabitCurrentCheckerService extends BasicChecker {
     private static Boolean isHabitUnchecked(Habit h) {
+        String title = h.getTitle();
         OffsetDateTime last = h.getLastCompletedAt();
         OffsetDateTime n = OffsetDateTime.now();
         OffsetDateTime ded = h.getNextDeadlineAt();
@@ -60,8 +61,9 @@ public class HabitCurrentCheckerService extends BasicChecker {
 
         h.setStreakNumber(h.getStreakNumber() + 1);
         h.setPenaltyNumber(0);
-        UserStatusManager.gain(h);
         HabitController.update(h);
+
+        UserStatusManager.gain(h);
         UserStatusManager.updateObservers();
     }
 }
