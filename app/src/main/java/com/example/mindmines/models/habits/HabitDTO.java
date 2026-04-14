@@ -6,7 +6,6 @@ public class HabitDTO {
     private Integer user_id;
     private String title;
     private String description;
-    private Float checking_frequency;
     private Boolean timeAccurate;
     private Integer priority;
     private Integer difficulty;
@@ -18,7 +17,6 @@ public class HabitDTO {
             Integer user_id,
             String title,
             String description,
-            Float checking_frequency,
             Boolean timeAccurate,
             Integer priority,
             Integer difficulty,
@@ -28,7 +26,6 @@ public class HabitDTO {
         this.user_id = user_id;
         this.title = title;
         this.description = description;
-        this.checking_frequency = checking_frequency;
         this.timeAccurate = timeAccurate;
         this.priority = priority;
         this.difficulty = difficulty;
@@ -58,14 +55,6 @@ public class HabitDTO {
 
     public void setDescription(String value) {
         description = value;
-    }
-
-    public Float getCheckingFrequency() {
-        return checking_frequency;
-    }
-
-    public void setCheckingFrequency(Float value) {
-        checking_frequency = value;
     }
 
     public Boolean getTimeAccurate() {

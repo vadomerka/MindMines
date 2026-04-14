@@ -104,6 +104,8 @@ public class Habit {
 
     public HabitInterval getInterval() { return interval; }
 
+    public void setInterval(HabitInterval value) { interval = value; }
+
     public OffsetDateTime getPeriodStart() {
         OffsetDateTime start = nextDeadlineAt;
         if (interval == null) throw new NullPointerException();

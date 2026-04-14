@@ -17,13 +17,12 @@ public class HabitFactory {
             : OptionalInt.of(0);
     private static int localId = rm.isPresent() ? rm.getAsInt() : 0;
 
-    public static HabitDTO createDTO(Integer userId, String title, String desc, Float frequency,
+    public static HabitDTO createDTO(Integer userId, String title, String desc,
                                      Boolean timeAccurate, Integer priority, Integer difficulty,
                                      HabitType hType, HabitInterval interval) {
         return new HabitDTO(userId,
                 title,
                 desc,
-                frequency,
                 timeAccurate,
                 priority,
                 difficulty,
@@ -35,7 +34,6 @@ public class HabitFactory {
         return new HabitDTO(userId,
                 "Название привычки",
                 "Описание привычки",
-                1.0f / 24,
                 true,
                 1,
                 1,
@@ -112,7 +110,7 @@ public class HabitFactory {
                 e.creationDate,
                 e.lastCompletedAt,
                 e.nextDeadlineAt,
-                new HabitInterval(e.intervalNumber, intervalUnitFromString(e.intervalUnit)));
+                createHabitInterval(e.intervalNumber, e.intervalUnit));
     }
 
     public static HabitType habitTypeFromString(String type) {
@@ -128,15 +126,23 @@ public class HabitFactory {
         }
     }
 
+    public static HabitInterval createHabitInterval(Integer num, String unit) {
+        return new HabitInterval(num, intervalUnitFromString(unit));
+    }
+
     public static HabitTimeUnit intervalUnitFromString(String type) {
         switch (type.toUpperCase()) {
             case "MINUTE":
+            case "МИНУТА":
                 return HabitTimeUnit.MINUTE;
             case "HOUR":
+            case "ЧАС":
                 return HabitTimeUnit.HOUR;
             case "DAY":
+            case "ДНИ":
                 return HabitTimeUnit.DAY;
             case "WEEK":
+            case "НЕДЕЛИ":
                 return HabitTimeUnit.WEEK;
             default:
                 return HabitTimeUnit.MONTH;

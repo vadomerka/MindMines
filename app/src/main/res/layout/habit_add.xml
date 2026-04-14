@@ -28,11 +28,13 @@
     <LinearLayout style="@style/SpreadStartVerticalLayout">
 
         <EditText
+            android:id="@+id/habit_title_value_edit"
             style="@style/HabitEditTextView"
             android:hint="@string/edit_habit_title_hint_text"
             android:textSize="20sp"/>
 
         <EditText
+            android:id="@+id/habit_desc_value_edit"
             style="@style/HabitEditTextView"
             android:hint="@string/edit_habit_desc_hint_text"
             android:textSize="15sp"
@@ -108,6 +110,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/habit_type_edit_layout"
         style="@style/SpreadCenterVerticalLayout">
 
         <TextView
