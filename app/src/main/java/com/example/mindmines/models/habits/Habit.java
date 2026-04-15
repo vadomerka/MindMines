@@ -135,19 +135,19 @@ public class Habit {
         int plusNum = interval.getNumber() * forward;
         switch (interval.getTimeUnit()) {
             case MINUTE:
-                end = nextDeadlineAt.plusMinutes(plusNum);
+                end = nextDeadlineAt.plusMinutes(plusNum).withSecond(59);
                 break;
             case HOUR:
-                end = nextDeadlineAt.plusHours(plusNum);
+                end = nextDeadlineAt.plusHours(plusNum).withMinute(59).withSecond(59);
                 break;
             case DAY:
-                end = nextDeadlineAt.plusDays(plusNum);
+                end = nextDeadlineAt.plusDays(plusNum).withHour(23).withMinute(59).withSecond(59);
                 break;
             case WEEK:
-                end = nextDeadlineAt.plusWeeks(plusNum);
+                end = nextDeadlineAt.plusWeeks(plusNum).withHour(23).withMinute(59).withSecond(59);
                 break;
             case MONTH:
-                end = nextDeadlineAt.plusMonths(plusNum);
+                end = nextDeadlineAt.plusMonths(plusNum).withHour(23).withMinute(59).withSecond(59);
                 break;
         }
         return end;

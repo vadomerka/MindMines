@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
     style="@style/SpreadCenterVerticalLayout">
 
     <TextView
@@ -135,50 +136,50 @@
                 app:wheelPickerScaleDownEnabled="true"
                 app:wheelPickerInfiniteScrolling="true"/>
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/count_type_habit_layout"
-        android:visibility="gone"
-        style="@style/SpreadCenterHorizontalLayout">
         <LinearLayout
-            style="@style/SpreadCenterHorizontalItem"
-            android:gravity="end"
-            android:layout_marginEnd="40dp">
+            android:id="@+id/count_type_habit_layout"
+            android:visibility="gone"
+            style="@style/SpreadCenterHorizontalLayout">
+            <LinearLayout
+                style="@style/SpreadCenterHorizontalItem"
+                android:gravity="end"
+                android:layout_marginEnd="40dp">
+                <TextView
+                    style="@style/header1_text"
+                    android:text="@string/goal_text"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/SpreadCenterHorizontalItem"
+                android:gravity="start"
+                android:layout_marginStart="40dp">
+                <NumberPicker
+                    android:id="@+id/count_type_habit_count_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="75dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/task_type_habit_layout"
+            android:visibility="gone"
+            style="@style/SpreadCenterVerticalLayout">
             <TextView
                 style="@style/header1_text"
-                android:text="@string/goal_text"/>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/SpreadCenterHorizontalItem"
-            android:gravity="start"
-            android:layout_marginStart="40dp">
-            <NumberPicker
-                android:id="@+id/count_type_habit_count_value"
+                android:text="@string/tasks_view_text"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/task_type_habit_tasks_view"
                 android:layout_width="wrap_content"
-                android:layout_height="75dp"/>
+                android:layout_height="wrap_content"
+                android:padding="8dp"/>
+            <com.google.android.material.button.MaterialButton
+                style="@style/NavButton"
+                android:id="@+id/add_habit_task_button"
+                app:icon="@drawable/ic_add"
+                app:iconSize="30dp"
+                app:iconGravity="top"/>
+
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/task_type_habit_layout"
-        android:visibility="gone"
-        style="@style/SpreadCenterVerticalLayout">
-        <TextView
-            style="@style/header1_text"
-            android:text="@string/tasks_view_text"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/task_type_habit_tasks_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"/>
-        <com.google.android.material.button.MaterialButton
-            style="@style/NavButton"
-            android:id="@+id/add_habit_task_button"
-            app:icon="@drawable/ic_add"
-            app:iconSize="30dp"
-            app:iconGravity="top"/>
-
     </LinearLayout>
 
     <Button

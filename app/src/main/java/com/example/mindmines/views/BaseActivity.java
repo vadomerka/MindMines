@@ -81,7 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
         CheckBox autoCheck = findViewById(R.id.autoCheck_button);
         autoCheck.setChecked(HabitCurrentCheckerService.getDebug());
         autoCheck.setOnClickListener(v -> {
-            boolean prev = ((CheckBox)v).isChecked();
+            boolean prev = autoCheck.isChecked();
             HabitCurrentCheckerService.setDebug(prev);
             HabitSyncCheckerService.setDebug(prev);
         });

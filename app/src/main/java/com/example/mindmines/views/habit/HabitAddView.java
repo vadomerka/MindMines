@@ -1,6 +1,7 @@
 package com.example.mindmines.views.habit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Slide;
 import android.view.View;
@@ -59,6 +60,7 @@ public class HabitAddView extends BaseActivity {
         initSliders();
         initTypeButtons();
         initWheelPickers();
+        initSaveButton();
     }
 
     protected void initForm() {
@@ -139,7 +141,7 @@ public class HabitAddView extends BaseActivity {
         HabitType hType;
         if (isBadType) hType = HabitType.BAD;
         else {
-            HabitType[] types = new HabitType[] {HabitType.GOOD_INTERVAL, HabitType.GOOD_GOAL_COUNT, HabitType.GOOD_TASKS};
+            HabitType[] types = new HabitType[] {HabitType.GOOD_GOAL_COUNT, HabitType.GOOD_INTERVAL, HabitType.GOOD_TASKS};
             hType = types[htPicker.getCurrentSelectedItemPosition()];
         }
         HabitInterval interval = HabitFactory.createHabitInterval(
@@ -156,5 +158,9 @@ public class HabitAddView extends BaseActivity {
                 interval
         );
         HabitController.add(habitData);
+
+        Intent myIntent = new Intent(HabitAddView.this, HabitsView.class);
+        HabitAddView.this.startActivity(myIntent);
+        finish();
     }
 }
