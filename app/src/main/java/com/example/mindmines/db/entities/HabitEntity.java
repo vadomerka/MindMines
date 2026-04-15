@@ -20,6 +20,8 @@ public class HabitEntity {
     public String title;
     @ColumnInfo(name = "description")
     public String description;
+    @ColumnInfo(name = "goalCount")
+    public Integer goalCount;
     @ColumnInfo(name = "priority")
     public Integer priority;
     @ColumnInfo(name = "difficulty")
@@ -49,6 +51,7 @@ public class HabitEntity {
             String type,
             String title,
             String description,
+            Integer goalCount,
             Integer priority,
             Integer difficulty,
             Integer penaltyNumber,
@@ -65,6 +68,7 @@ public class HabitEntity {
 
         this.title = title;
         this.description = description;
+        this.goalCount = goalCount;
         this.priority = priority;
         this.difficulty = difficulty;
         this.penaltyNumber = penaltyNumber;

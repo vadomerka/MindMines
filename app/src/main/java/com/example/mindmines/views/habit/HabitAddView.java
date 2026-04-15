@@ -81,7 +81,7 @@ public class HabitAddView extends BaseActivity {
         Button goodThb = findViewById(R.id.good_type_habit_button);
         Button badThb = findViewById(R.id.bad_type_habit_button);
         LinearLayout htEl = findViewById(R.id.habit_type_edit_layout);
-        goodThb.setEnabled(true);
+        goodThb.setEnabled(false);
         badThb.setEnabled(true);
         goodThb.setOnClickListener(v -> {
             isBadType = false;
@@ -101,7 +101,7 @@ public class HabitAddView extends BaseActivity {
         itPicker = findViewById(R.id.habit_interval_type_value);
         htPicker = findViewById(R.id.habit_type_value);
         itPicker.setItems(new ArrayList<String>()
-        {{ add ("Дни"); add ("Недели"); add ("Месяцы"); }});
+        {{ add ("Минуты"); add ("Дни"); add ("Недели"); add ("Месяцы"); }});
         htPicker.setItems(new ArrayList<String>()
         {{ add ("Количественная"); add ("Интервальная"); add ("Подзадачи"); }});
         LinearLayout countThl = findViewById(R.id.count_type_habit_layout);
@@ -134,7 +134,7 @@ public class HabitAddView extends BaseActivity {
         Integer userId = Integer.valueOf(new AuthManager(getCurrentContext()).getUserId());
         String title = tEdit.getText().toString();
         String desc = dEdit.getText().toString();
-        Integer goalCount = cnPicker.getValue();
+
         Boolean timeAccurate = false;
         Integer priority = (int) pSlider.getValue();
         Integer difficulty = (int) dSlider.getValue();
@@ -144,6 +144,8 @@ public class HabitAddView extends BaseActivity {
             HabitType[] types = new HabitType[] {HabitType.GOOD_GOAL_COUNT, HabitType.GOOD_INTERVAL, HabitType.GOOD_TASKS};
             hType = types[htPicker.getCurrentSelectedItemPosition()];
         }
+        Integer goalCount = hType == HabitType.GOOD_GOAL_COUNT ? cnPicker.getValue() : 1;
+
         HabitInterval interval = HabitFactory.createHabitInterval(
                 (int) iSlider.getValue(), itPicker.getCurrentSelectedItem());
 
@@ -151,6 +153,7 @@ public class HabitAddView extends BaseActivity {
                 userId,
                 title,
                 desc,
+                goalCount,
                 timeAccurate,
                 priority,
                 difficulty,

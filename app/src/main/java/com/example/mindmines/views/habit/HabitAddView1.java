@@ -188,7 +188,7 @@ public class HabitAddView1 extends AppCompatActivity {
 
         HabitInterval interval = new HabitInterval(3, HabitTimeUnit.MONTH);
 
-        Habit h = HabitController.add(HabitFactory.createDTO(uId, title, desc, true, priority, difficulty, hType, interval));
+        Habit h = HabitController.add(HabitFactory.createDTO(uId, title, desc, 1, true, priority, difficulty, hType, interval));
 
         HabitNotificationService.scheduleDailyAlarm(this, h);
 

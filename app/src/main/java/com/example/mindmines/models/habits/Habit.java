@@ -9,6 +9,7 @@ public class Habit {
 
     private String title;
     private String description;
+    private Integer goalCount;
     private Integer priority;
     private Integer difficulty;
     private Integer penaltyNumber;
@@ -26,6 +27,7 @@ public class Habit {
 
             String title,
             String description,
+            Integer goalCount,
             Integer priority,
             Integer difficulty,
             Integer penaltyNumber,
@@ -42,6 +44,7 @@ public class Habit {
 
         this.title = title;
         this.description = description;
+        this.goalCount = goalCount;
         this.priority = priority;
         this.difficulty = difficulty;
         this.penaltyNumber = penaltyNumber;
@@ -73,6 +76,14 @@ public class Habit {
     public String getDescription() { return description; }
 
     public void setDescription(String value) { description = value; }
+
+    public Integer getGoalCount() {
+        return goalCount;
+    }
+
+    public void setGoalCount(Integer value) {
+        goalCount = value;
+    }
 
     public Integer getPriority() { return priority; }
 

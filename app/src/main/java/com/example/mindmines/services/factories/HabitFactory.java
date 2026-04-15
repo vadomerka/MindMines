@@ -19,12 +19,13 @@ public class HabitFactory {
         return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }
 
-    public static HabitDTO createDTO(Integer userId, String title, String desc,
+    public static HabitDTO createDTO(Integer userId, String title, String desc, Integer goalCount,
                                      Boolean timeAccurate, Integer priority, Integer difficulty,
                                      HabitType hType, HabitInterval interval) {
         return new HabitDTO(userId,
                 title,
                 desc,
+                goalCount,
                 timeAccurate,
                 priority,
                 difficulty,
@@ -36,6 +37,7 @@ public class HabitFactory {
         return new HabitDTO(userId,
                 "Название привычки",
                 "Описание привычки",
+                1,
                 true,
                 1,
                 1,
@@ -50,6 +52,7 @@ public class HabitFactory {
                 dto.getType(),
                 dto.getTitle(),
                 dto.getDescription(),
+                dto.getGoalCount(),
                 dto.getPriority(),
                 dto.getDifficulty(),
                 0,
@@ -105,6 +108,7 @@ public class HabitFactory {
                 habitTypeFromString(e.type),
                 e.title,
                 e.description,
+                e.goalCount,
                 e.priority,
                 e.difficulty,
                 e.penaltyNumber,
@@ -135,10 +139,10 @@ public class HabitFactory {
     public static HabitTimeUnit intervalUnitFromString(String type) {
         switch (type.toUpperCase()) {
             case "MINUTE":
-            case "МИНУТА":
+            case "МИНУТЫ":
                 return HabitTimeUnit.MINUTE;
             case "HOUR":
-            case "ЧАС":
+            case "ЧАСЫ":
                 return HabitTimeUnit.HOUR;
             case "DAY":
             case "ДНИ":
@@ -158,6 +162,7 @@ public class HabitFactory {
                 h.getType().toString(),
                 h.getTitle(),
                 h.getDescription(),
+                h.getGoalCount(),
                 h.getPriority(),
                 h.getDifficulty(),
                 h.getPenaltyNumber(),
