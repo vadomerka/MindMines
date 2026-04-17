@@ -98,7 +98,7 @@ public class HabitsView extends BaseActivity implements HabitObserver {
     }
 
     public void openHabitChangeView(int hId) {
-        Intent myIntent = new Intent(HabitsView.this, HabitChangeView1.class);
+        Intent myIntent = new Intent(HabitsView.this, HabitChangeView.class);
         myIntent.putExtra("id", hId);
         HabitsView.this.startActivity(myIntent);
         finish();

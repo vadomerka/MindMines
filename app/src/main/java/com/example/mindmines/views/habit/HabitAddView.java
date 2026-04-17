@@ -30,9 +30,11 @@ import java.util.ArrayList;
 public class HabitAddView extends BaseActivity {
     protected WheelPicker itPicker;
     protected WheelPicker htPicker;
-    protected boolean isBadType = false;
+    protected boolean isBadType;
     protected EditText tEdit;
     protected EditText dEdit;
+    protected Button goodThb;
+    protected Button badThb;
     protected Slider dSlider;
     protected Slider pSlider;
     protected Slider iSlider;
@@ -43,6 +45,7 @@ public class HabitAddView extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         initUI();
+        loadValues();
     }
 
     @Override
@@ -63,6 +66,16 @@ public class HabitAddView extends BaseActivity {
         initSaveButton();
     }
 
+    protected void loadValues() {
+        cnPicker.setMinValue(1);
+        cnPicker.setMaxValue(10);
+        isBadType = false;
+        goodThb.setEnabled(false);
+        badThb.setEnabled(true);
+        itPicker.setSelectedItemPosition(0);
+        htPicker.setSelectedItemPosition(1);
+    }
+
     protected void initForm() {
         tEdit = findViewById(R.id.habit_title_value_edit);
         dEdit = findViewById(R.id.habit_desc_value_edit);
@@ -73,16 +86,12 @@ public class HabitAddView extends BaseActivity {
         pSlider = findViewById(R.id.habit_priority_value_slider);
         iSlider = findViewById(R.id.habit_interval_number_value);
         cnPicker = findViewById(R.id.count_type_habit_count_value);
-        cnPicker.setMinValue(1);
-        cnPicker.setMaxValue(10);
     }
 
     protected void initTypeButtons() {
-        Button goodThb = findViewById(R.id.good_type_habit_button);
-        Button badThb = findViewById(R.id.bad_type_habit_button);
+        goodThb = findViewById(R.id.good_type_habit_button);
+        badThb = findViewById(R.id.bad_type_habit_button);
         LinearLayout htEl = findViewById(R.id.habit_type_edit_layout);
-        goodThb.setEnabled(false);
-        badThb.setEnabled(true);
         goodThb.setOnClickListener(v -> {
             isBadType = false;
             htEl.setVisibility(View.VISIBLE);
@@ -130,7 +139,7 @@ public class HabitAddView extends BaseActivity {
         saveButton.setOnClickListener(v -> saveHabit());
     }
 
-    protected void saveHabit() {
+    protected HabitDTO saveDto() {
         Integer userId = Integer.valueOf(new AuthManager(getCurrentContext()).getUserId());
         String title = tEdit.getText().toString();
         String desc = dEdit.getText().toString();
@@ -149,19 +158,17 @@ public class HabitAddView extends BaseActivity {
         HabitInterval interval = HabitFactory.createHabitInterval(
                 (int) iSlider.getValue(), itPicker.getCurrentSelectedItem());
 
-        HabitDTO habitData = HabitFactory.createDTO(
-                userId,
-                title,
-                desc,
-                goalCount,
-                timeAccurate,
-                priority,
-                difficulty,
-                hType,
-                interval
-        );
-        HabitController.add(habitData);
+        return HabitFactory.createDTO(userId, title, desc, goalCount, timeAccurate,
+                                      priority, difficulty, hType, interval);
+    }
 
+    protected void saveHabit() {
+        HabitDTO habitData = saveDto();
+        HabitController.add(habitData);
+        exit();
+    }
+
+    protected void exit() {
         Intent myIntent = new Intent(HabitAddView.this, HabitsView.class);
         HabitAddView.this.startActivity(myIntent);
         finish();
