@@ -5,8 +5,13 @@ import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.services.factories.HabitFactory;
 
 public class HabitRequestSender {
-    public static Habit add(HabitDTO h) {
+    public static Habit post(HabitDTO h) {
         // TODO: заменить на настоящую отправку данных серверу.
         return HabitFactory.createFromDTO(h);
+    }
+
+    public static Habit put(Integer hId, HabitDTO h) {
+        // TODO: заменить на настоящую отправку данных серверу.
+        return HabitFactory.createFromDTO(hId, h);
     }
 }

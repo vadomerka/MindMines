@@ -63,6 +63,12 @@ public class HabitFactory {
                 dto.getInterval());
     }
 
+    public static Habit createFromDTO(Integer hId, HabitDTO dto) {
+        Habit res = createFromDTO(dto);
+        res.setHabitId(hId);
+        return res;
+    }
+
     public static OffsetDateTime getNewNextDeadline(OffsetDateTime now, HabitInterval interval) {
         OffsetDateTime res = now;
         switch (interval.getTimeUnit()) {

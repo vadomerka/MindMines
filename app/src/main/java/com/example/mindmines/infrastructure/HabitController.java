@@ -8,7 +8,7 @@ import com.example.mindmines.services.managers.HabitManager;
 public class HabitController {
     public static Habit add(HabitDTO hDTO) {
         try {
-            Habit result = HabitRequestSender.add(hDTO);
+            Habit result = HabitRequestSender.post(hDTO);
             HabitManager.add(result);
             return result;
         } catch (Exception e) {
@@ -17,8 +17,18 @@ public class HabitController {
         return null;
     }
 
+    public static Habit change(Integer habitId, HabitDTO hDTO) {
+        try {
+            Habit result = HabitRequestSender.put(habitId, hDTO);
+            HabitManager.update(result);
+            return result;
+        } catch (Exception e) {
+            System.out.println("Произошла ошибка при изменении привычки.");
+        }
+        return null;
+    }
+
     public static void update(Habit h) {
-        // TODO: здесь можно сделать сохранение изменений на сервере.
         HabitManager.update(h);
     }
 }

@@ -3,7 +3,7 @@ package com.example.mindmines.models.habits;
 import java.time.OffsetDateTime;
 
 public class Habit {
-    private final Integer habitId;
+    private Integer habitId;
     private final Integer userId;
     private HabitType type;
 
@@ -59,6 +59,7 @@ public class Habit {
     public Integer getHabitId() {
         return habitId;
     }
+    public void setHabitId(Integer value) { habitId = value; }
 
     public Integer getUserId() {
         return userId;

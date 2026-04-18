@@ -3,13 +3,11 @@ package com.example.mindmines.views.habit;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Slide;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -20,6 +18,7 @@ import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
+import com.example.mindmines.services.notifications.HabitNotificationService;
 import com.example.mindmines.views.BaseActivity;
 import com.github.vikramezhil.wheelpicker.props.OnWheelPickerListener;
 import com.github.vikramezhil.wheelpicker.view.WheelPicker;
@@ -28,6 +27,9 @@ import com.google.android.material.slider.Slider;
 import java.util.ArrayList;
 
 public class HabitAddView extends BaseActivity {
+    protected Integer habitId;
+    protected Integer userId;
+
     protected WheelPicker itPicker;
     protected WheelPicker htPicker;
     protected boolean isBadType;
@@ -38,7 +40,7 @@ public class HabitAddView extends BaseActivity {
     protected Slider dSlider;
     protected Slider pSlider;
     protected Slider iSlider;
-    protected NumberPicker cnPicker;
+    protected NumberPicker gcPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class HabitAddView extends BaseActivity {
     }
 
     protected void initUI() {
+        initVars();
         initForm();
         initSliders();
         initTypeButtons();
@@ -66,9 +69,15 @@ public class HabitAddView extends BaseActivity {
         initSaveButton();
     }
 
+    protected void initVars() {
+        Intent intent = getIntent();
+        habitId = intent.getIntExtra("id", 0);
+        userId = Integer.valueOf(new AuthManager(getCurrentContext()).getUserId());
+    }
+
     protected void loadValues() {
-        cnPicker.setMinValue(1);
-        cnPicker.setMaxValue(10);
+        gcPicker.setMinValue(1);
+        gcPicker.setMaxValue(10);
         isBadType = false;
         goodThb.setEnabled(false);
         badThb.setEnabled(true);
@@ -85,7 +94,7 @@ public class HabitAddView extends BaseActivity {
         dSlider = findViewById(R.id.habit_difficulty_value_slider);
         pSlider = findViewById(R.id.habit_priority_value_slider);
         iSlider = findViewById(R.id.habit_interval_number_value);
-        cnPicker = findViewById(R.id.count_type_habit_count_value);
+        gcPicker = findViewById(R.id.count_type_habit_count_value);
     }
 
     protected void initTypeButtons() {
@@ -140,7 +149,6 @@ public class HabitAddView extends BaseActivity {
     }
 
     protected HabitDTO saveDto() {
-        Integer userId = Integer.valueOf(new AuthManager(getCurrentContext()).getUserId());
         String title = tEdit.getText().toString();
         String desc = dEdit.getText().toString();
 
@@ -153,7 +161,7 @@ public class HabitAddView extends BaseActivity {
             HabitType[] types = new HabitType[] {HabitType.GOOD_GOAL_COUNT, HabitType.GOOD_INTERVAL, HabitType.GOOD_TASKS};
             hType = types[htPicker.getCurrentSelectedItemPosition()];
         }
-        Integer goalCount = hType == HabitType.GOOD_GOAL_COUNT ? cnPicker.getValue() : 1;
+        Integer goalCount = hType == HabitType.GOOD_GOAL_COUNT ? gcPicker.getValue() : 1;
 
         HabitInterval interval = HabitFactory.createHabitInterval(
                 (int) iSlider.getValue(), itPicker.getCurrentSelectedItem());
@@ -164,7 +172,11 @@ public class HabitAddView extends BaseActivity {
 
     protected void saveHabit() {
         HabitDTO habitData = saveDto();
+
+        // TODO: check data
+
         HabitController.add(habitData);
+        //        HabitNotificationService.scheduleDailyAlarm(this, h);
         exit();
     }
 
