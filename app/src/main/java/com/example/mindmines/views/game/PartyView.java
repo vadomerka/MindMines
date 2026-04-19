@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.characters.Char;
-import com.example.mindmines.services.repositories.CharRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseActivity;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class PartyView extends BaseActivity {
         Button charBtn3 = findViewById(R.id.open_character_btn3);
         Button charBtn4 = findViewById(R.id.open_character_btn4);
         List<Button> btnArr = new ArrayList<Button>() { {add(charBtn1); add(charBtn2); add(charBtn3); add(charBtn4); }};
-        List<Char> chars = CharRepository.getAll();
+        List<Char> chars = RepositoryService.getCharRepository().getAll();
         for (int i = 0; i < chars.size(); i++) {
             int finalI = i;
             btnArr.get(i).setEnabled(true);

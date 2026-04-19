@@ -30,7 +30,7 @@ public class UserStatusManager {
 
     public static void updateObservers() {
         for (UserStatusObserver observer: observers) {
-            observer.updateUserStatus();
+            observer.update(new ArrayList<>());
         }
     }
 

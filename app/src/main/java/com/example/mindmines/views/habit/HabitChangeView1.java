@@ -6,13 +6,16 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitType;
 
 import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 import static com.example.mindmines.services.utils.UIUtils.*;
 
 public class HabitChangeView1 extends HabitAddView1 {
     @Override
     protected void loadDefaultValues() {
-        Habit h = HabitRepository.get(hId);
+        HabitRepository rep = RepositoryService.getHabitRepository();
+
+        Habit h = rep.get(hId);
         editTitle.setText(h.getTitle());
         editDesc.setText(h.getDescription());
         editPriority.setText(intToString(h.getPriority()));

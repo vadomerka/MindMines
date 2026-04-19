@@ -10,20 +10,14 @@ import com.example.mindmines.models.game.equipment.types.Sword;
 import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.views.observers.CharObserver;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-public class CharRepository {
-    private static final String TAG = "Debug data sync";
-    private static final int MAX_CHARACTERS = 4;
-    private static List<Char> array;
-    private static List<CharObserver> observers;
+public class CharRepository extends LocalRepository<Char, CharObserver> {
+    protected final int MAX_CHARACTERS = 4;
 
-    public static void init() {
-        observers = new ArrayList<>();
-        OffsetDateTime n = OffsetDateTime.now();
+    @Override
+    public void initArray() {
         array = new ArrayList<Char>() {
             {
                 add(CharFactory.generate(1, String.valueOf(R.drawable.h1),
@@ -36,44 +30,21 @@ public class CharRepository {
         };
     }
 
-    public static void subscribe(CharObserver o) {
-        observers.add(o);
-    }
-
-    public static void unsubscribe(CharObserver o) {
-        observers.remove(o);
-    }
-
-    public static void updateObservers() {
-        for (CharObserver o: observers) {
-            o.updateChars();
-        }
-    }
-
-    public static List<Char> getAll() {
-        return array;
-    }
-
-    public static void setAll(List<Char> arr) {
-        array = arr;
-        updateObservers();
-    }
-
-    public static void add(Char item) {
+    @Override
+    public void add(Char item) {
         if (array.size() == MAX_CHARACTERS) return;
         array.add(item);
     }
 
-    public static void remove(Char item) {
-        array.remove(item);
-    }
-
-    public static Char get(int itemId) {
+    @Override
+    public Char get(Object obj) {
+        int itemId = (int) obj;
         Optional<Char> res = array.stream().filter(i -> i.getCharId() == itemId).findFirst();
         return res.orElse(null);
     }
 
-    public static void update(Char item) {
+    @Override
+    public void update(Char item) {
         Char found = get(item.getCharId());
         array.set(array.indexOf(found), item);
         updateObservers();

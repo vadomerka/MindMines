@@ -7,14 +7,16 @@ import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
 import com.example.mindmines.models.habits.HabitInterval;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.OffsetDateTime;
 import java.util.OptionalInt;
 
 public class HabitFactory {
     private static int getId() {
-        OptionalInt rm = HabitRepository.getAll() != null
-                ? HabitRepository.getAll().stream().mapToInt(Habit::getHabitId).max()
+        HabitRepository rep = RepositoryService.getHabitRepository();
+        OptionalInt rm = rep.getAll() != null
+                ? rep.getAll().stream().mapToInt(Habit::getHabitId).max()
                 : OptionalInt.of(0);
         return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }

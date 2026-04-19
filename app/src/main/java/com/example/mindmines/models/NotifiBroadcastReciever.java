@@ -13,7 +13,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.notifications.HabitNotificationService;
-import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 public class NotifiBroadcastReciever extends BroadcastReceiver {
     private static final String CHANNEL_ID = "habit_channel";
@@ -22,7 +22,7 @@ public class NotifiBroadcastReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Habit h = HabitRepository.get(intent.getIntExtra("habitId", -1));
+        Habit h = RepositoryService.getHabitRepository().get(intent.getIntExtra("habitId", -1));
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)

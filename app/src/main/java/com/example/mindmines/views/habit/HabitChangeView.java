@@ -9,6 +9,7 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 public class HabitChangeView extends HabitAddView {
     @Override
@@ -23,7 +24,8 @@ public class HabitChangeView extends HabitAddView {
 
     @Override
     protected void loadValues() {
-        Habit h = HabitRepository.get(habitId);
+        HabitRepository rep = RepositoryService.getHabitRepository();
+        Habit h = rep.get(habitId);
 
         hFormLoad(h);
         hIntervalLoad(h);

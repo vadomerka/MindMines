@@ -7,7 +7,7 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitButtonStatus;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.services.managers.UserStatusManager;
-import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -16,8 +16,6 @@ import java.util.List;
 
 // Класс для изменений привычек на основе состояния в прошлом.
 public class HabitSyncCheckerService extends BasicChecker {
-    private static final String TAG = "Debug data sync";
-
     private static HabitButtonStatus wasHabitUnchecked(Habit h) {
         OffsetDateTime last = h.getLastCompletedAt();
         OffsetDateTime n = OffsetDateTime.now();
@@ -88,7 +86,7 @@ public class HabitSyncCheckerService extends BasicChecker {
 
     // Метод обновляет стрики и пенальтии привычек по таймеру MidnightChecker
     public static void allHabitsCheck(Context context) {
-        List<Habit> hl = HabitRepository.getAll();
+        List<Habit> hl = RepositoryService.getHabitRepository().getAll();
         for (Habit h: hl) {
             habitStatusCheck(h);
         }

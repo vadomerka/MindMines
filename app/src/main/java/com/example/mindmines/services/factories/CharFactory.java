@@ -8,17 +8,24 @@ import com.example.mindmines.models.game.characters.CharStatus;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.repositories.CharRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 import com.google.gson.Gson;
 
 import java.util.OptionalInt;
 import java.util.Random;
 
 public class CharFactory {
-    private static final OptionalInt rm = CharRepository.getAll() != null ? CharRepository.getAll().stream().mapToInt(Char::getCharId).max() : OptionalInt.of(0);
-    private static int localId = rm.isPresent() ? rm.getAsInt() : 0;
     private static final Random rnd = new Random();
     private static final int variation = 5;
     private static final int baseValue = 10;
+
+    private static int getId() {
+        CharRepository rep = RepositoryService.getCharRepository();
+        OptionalInt rm = rep.getAll() != null
+                ? rep.getAll().stream().mapToInt(Char::getCharId).max()
+                : OptionalInt.of(0);
+        return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
+    }
 
     public static Char generate() {
         return generate(0, String.valueOf(R.drawable.h1));
@@ -28,7 +35,7 @@ public class CharFactory {
         int atk = rnd.nextInt(variation) + baseValue * level;
         int defence = rnd.nextInt(variation) + baseValue * level;
         int speed = rnd.nextInt(variation) + baseValue * level;
-        return new Char(localId++, "Char " + localId,
+        return new Char(getId(), "Char " + getId(),
                 new CharStats(atk, defence, speed),
                 new CharStatus(), new CharEquipment(), image);
     }

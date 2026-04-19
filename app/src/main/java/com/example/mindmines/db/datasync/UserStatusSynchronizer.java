@@ -19,6 +19,7 @@ import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.views.observers.UserStatusObserver;
 import com.google.common.util.concurrent.MoreExecutors;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 
 public class UserStatusSynchronizer implements DataSynchronizer, UserStatusObserver {
@@ -105,7 +106,7 @@ public class UserStatusSynchronizer implements DataSynchronizer, UserStatusObser
     }
 
     @Override
-    public void updateUserStatus() {
+    public void update(List<UserStatus> upd) {
         saveToDB();
     }
 }

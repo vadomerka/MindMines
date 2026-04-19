@@ -1,5 +1,9 @@
 package com.example.mindmines.views.observers;
 
-public interface HabitObserver {
-    void updateHabits();
+import com.example.mindmines.models.habits.Habit;
+
+import java.util.List;
+
+public interface HabitObserver extends RepositoryObserver<Habit> {
+    void update(List<Habit> upd);
 }

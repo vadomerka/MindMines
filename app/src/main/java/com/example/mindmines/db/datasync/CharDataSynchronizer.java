@@ -7,13 +7,12 @@ import com.example.mindmines.db.dao.CharDao;
 import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.services.factories.CharFactory;
-import com.example.mindmines.services.repositories.CharRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CharDataSynchronizer implements DataSynchronizer {
-    private final String TAG = "Debug CharDataSynchronizer";
     private final CharDao dao;
 
     public CharDataSynchronizer(Context context) {
@@ -29,11 +28,11 @@ public class CharDataSynchronizer implements DataSynchronizer {
             chars.add(CharFactory.createFromEntity(e));
         }
 
-        CharRepository.setAll(chars);
+        RepositoryService.getCharRepository().setAll(chars);
     }
 
     public void saveToDB() {
-        List<Char> chars = CharRepository.getAll();
+        List<Char> chars = RepositoryService.getCharRepository().getAll();
         List<CharEntity> entities = new ArrayList<>();
 
         for (Char c : chars) {

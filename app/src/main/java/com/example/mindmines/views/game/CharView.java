@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.CharEquipment;
-import com.example.mindmines.services.repositories.CharRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseActivity;
 import com.google.android.material.button.MaterialButton;
 
@@ -24,7 +24,7 @@ public class CharView extends BaseActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         int chId = intent.getIntExtra("id", 0);
-        ch = CharRepository.get(chId);
+        ch = RepositoryService.getCharRepository().get(chId);
 
         LinearLayout statsView = findViewById(R.id.char_stats_view);
         LinearLayout equipView = findViewById(R.id.char_equipment_view);

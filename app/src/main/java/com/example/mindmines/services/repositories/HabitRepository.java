@@ -8,16 +8,11 @@ import com.example.mindmines.models.habits.HabitTimeUnit;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-public class HabitRepository {
-    private static final String TAG = "Debug data sync";
-    private static List<Habit> array;
-    private static List<HabitObserver> observers;
-
-    public static void init() {
-        observers = new ArrayList<>();
+public class HabitRepository extends LocalRepository<Habit, HabitObserver> {
+    @Override
+    public void initArray() {
         OffsetDateTime n = OffsetDateTime.now();
         array = new ArrayList<Habit>() {
             {
@@ -28,45 +23,14 @@ public class HabitRepository {
         };
     }
 
-    public static void subscribe(HabitObserver o) {
-        observers.add(o);
-    }
-
-    public static void unsubscribe(HabitObserver o) {
-        observers.remove(o);
-    }
-
-    public static List<Habit> getAll() {
-        return array;
-    }
-
-    public static void setAll(List<Habit> narr) {
-        array = narr;
-        updateObservers();
-    }
-
-    public static void add(Habit item) {
-        array.add(item);
-    }
-
-    public static void remove(Habit item) {
-        array.remove(item);
-    }
-
-    public static Habit get(int itemId) {
-        Optional<Habit> res = array.stream().filter(i -> i.getHabitId() == itemId).findFirst();
+    public Habit get(Object id) {
+        Optional<Habit> res = array.stream().filter(i -> i.getHabitId() == (int) id).findFirst();
         return res.orElse(null);
     }
 
-    public static void update(Habit item) {
+    public void update(Habit item) {
         Habit found = get(item.getHabitId());
         array.set(array.indexOf(found), item);
         updateObservers();
-    }
-
-    public static void updateObservers() {
-        for (HabitObserver o: observers) {
-            o.updateHabits();
-        }
     }
 }

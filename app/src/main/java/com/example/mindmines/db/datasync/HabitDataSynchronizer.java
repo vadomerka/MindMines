@@ -7,7 +7,7 @@ import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.factories.HabitFactory;
-import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,11 @@ public class HabitDataSynchronizer implements DataSynchronizer {
             habits.add(HabitFactory.createFromEntity(e));
         }
 
-        HabitRepository.setAll(habits);
+        RepositoryService.getHabitRepository().setAll(habits);
     }
 
     public void saveToDB() {
-        List<Habit> habits = HabitRepository.getAll();
+        List<Habit> habits = RepositoryService.getHabitRepository().getAll();
         List<HabitEntity> entities = new ArrayList<>();
 
         for (Habit h : habits) {

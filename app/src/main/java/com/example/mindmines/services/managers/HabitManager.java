@@ -3,10 +3,12 @@ package com.example.mindmines.services.managers;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 public class HabitManager {
     public static void add(Habit h) {
-        HabitRepository.add(h);
+        HabitRepository rep = RepositoryService.getHabitRepository();
+        rep.add(h);
     }
 
     public static void change(
@@ -18,19 +20,21 @@ public class HabitManager {
             Integer difficulty,
             HabitType type
     ) {
-        Habit h = HabitRepository.get(hId);
+        HabitRepository rep = RepositoryService.getHabitRepository();
+
+        Habit h = rep.get(hId);
 
         h.setTitle(title);
         h.setDescription(desc);
-//        h.setCheckingFrequency(frequency);
         h.setPriority(priority);
         h.setDifficulty(difficulty);
         h.setType(type);
 
-        HabitRepository.update(h);
+        rep.update(h);
     }
 
     public static void update(Habit h) {
-        HabitRepository.update(h);
+        HabitRepository rep = RepositoryService.getHabitRepository();
+        rep.update(h);
     }
 }

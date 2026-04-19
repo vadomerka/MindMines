@@ -19,15 +19,18 @@ import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
-import com.example.mindmines.views.game.CharView;
 import com.example.mindmines.views.game.PartyView;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.observers.UserStatusObserver;
 import com.example.mindmines.views.user.FriendsView;
 import com.example.mindmines.views.user.ProfileView;
 
-public abstract class BaseActivity extends AppCompatActivity implements UserStatusObserver {
+import java.util.List;
+
+public abstract class BaseActivity extends AppCompatActivity {
     protected TextView levelView;
+    protected final UserStatusObserver usProxy = this::updateUserStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity implements UserStat
     }
 
     @SuppressLint("DefaultLocale")
-    public void updateUserStatus() {
+    public void updateUserStatus(List<UserStatus> upd) {
         Log.d("Debug BasicActivity updateUserStatus", "updateUserStatus: ");
         runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getStatus();
