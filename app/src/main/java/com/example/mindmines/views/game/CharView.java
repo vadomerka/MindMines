@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.game.Char;
+import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.services.repositories.CharRepository;
 import com.example.mindmines.views.BaseActivity;

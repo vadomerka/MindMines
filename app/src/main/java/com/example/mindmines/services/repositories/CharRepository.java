@@ -1,7 +1,7 @@
 package com.example.mindmines.services.repositories;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.game.Char;
+import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.types.BodyArmor;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.models.game.equipment.types.LegArmor;

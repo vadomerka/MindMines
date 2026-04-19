@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.game.Char;
+import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.services.repositories.CharRepository;
 import com.example.mindmines.views.BaseActivity;
 

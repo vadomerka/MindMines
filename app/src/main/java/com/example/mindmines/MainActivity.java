@@ -16,7 +16,7 @@ import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.datasync.CharDataSynchronizer;
 import com.example.mindmines.db.datasync.DataSynchronizerManager;
 import com.example.mindmines.db.datasync.HabitDataSynchronizer;
-import com.example.mindmines.models.game.Char;
+import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.types.BodyArmor;
 import com.example.mindmines.models.game.equipment.types.LegArmor;

@@ -2,15 +2,14 @@ package com.example.mindmines.services.factories;
 
 import com.example.mindmines.R;
 import com.example.mindmines.db.entities.CharEntity;
-import com.example.mindmines.models.game.Char;
-import com.example.mindmines.models.game.CharStats;
-import com.example.mindmines.models.game.CharStatus;
+import com.example.mindmines.models.game.characters.Char;
+import com.example.mindmines.models.game.characters.CharStats;
+import com.example.mindmines.models.game.characters.CharStatus;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.repositories.CharRepository;
 import com.google.gson.Gson;
 
-import java.util.List;
 import java.util.OptionalInt;
 import java.util.Random;
 

@@ -1,7 +1,7 @@
 package com.example.mindmines.models.game.equipment.types;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.game.CharStats;
+import com.example.mindmines.models.game.characters.CharStats;
 import com.example.mindmines.models.game.equipment.SlotType;
 
 public class Sword extends Equipment {

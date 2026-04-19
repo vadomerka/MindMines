@@ -1,18 +1,13 @@
 package com.example.mindmines.db.datasync;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.dao.CharDao;
 import com.example.mindmines.db.entities.CharEntity;
-import com.example.mindmines.db.entities.HabitEntity;
-import com.example.mindmines.models.game.Char;
-import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.services.factories.CharFactory;
-import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.CharRepository;
-import com.example.mindmines.services.repositories.HabitRepository;
 
 import java.util.ArrayList;
 import java.util.List;
