@@ -19,6 +19,7 @@ public class DataSynchronizerManager {
         UserStatusSynchronizer uss = new UserStatusSynchronizer(context);
         synchronizers.add(uss);
         UserStatusManager.subscribe(uss);
+        synchronizers.add(new ExpeditionDataSynchronizer(context));
     }
 
     public static DataSynchronizerManager getInstance(Context context) {
@@ -30,7 +31,6 @@ public class DataSynchronizerManager {
 
     public void loadFromDB() {
         for (int i = 0; i < synchronizers.size(); i++) {
-
             synchronizers.get(i).loadFromDB();
         }
     }

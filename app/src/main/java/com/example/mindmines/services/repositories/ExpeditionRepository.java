@@ -11,13 +11,7 @@ import java.util.Optional;
 public class ExpeditionRepository extends LocalRepository<Expedition, ExpeditionObserver> {
     @Override
     public void initArray() {
-        array = new ArrayList<Expedition>() {
-            {
-                add(ExpeditionFactory.generate(1, String.valueOf(R.drawable.expedition_1)));
-                add(ExpeditionFactory.generate(2, String.valueOf(R.drawable.expedition_1)));
-                add(ExpeditionFactory.generate(3, String.valueOf(R.drawable.expedition_1)));
-            }
-        };
+        array = new ArrayList<>();
     }
 
     @Override
