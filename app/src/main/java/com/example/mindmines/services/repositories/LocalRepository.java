@@ -2,35 +2,18 @@ package com.example.mindmines.services.repositories;
 
 import com.example.mindmines.views.observers.RepositoryObserver;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class LocalRepository<T, TObserver extends RepositoryObserver<T>> {
+public abstract class LocalRepository<T> {
     protected List<T> array;
-    protected List<TObserver> observers;
 
     public void init() {
-        observers = new ArrayList<>();
         initArray();
     }
 
     public void initArray() {}
-
-    public void subscribe(TObserver o) {
-        observers.add(o);
-    }
-
-    public void unsubscribe(TObserver o) {
-        observers.remove(o);
-    }
-
-    public void updateObservers() {
-        for (TObserver o: observers) {
-            o.update(new ArrayList<>());
-        }
-    }
 
     public List<T> getAll() {
         return array;
@@ -38,7 +21,6 @@ public abstract class LocalRepository<T, TObserver extends RepositoryObserver<T>
 
     public void setAll(List<T> arr) {
         array = arr;
-        updateObservers();
     }
 
     public void add(T item) {
@@ -57,6 +39,5 @@ public abstract class LocalRepository<T, TObserver extends RepositoryObserver<T>
     public void update(T item) {
         T found = get(item);
         array.set(array.indexOf(found), item);
-        updateObservers();
     }
 }

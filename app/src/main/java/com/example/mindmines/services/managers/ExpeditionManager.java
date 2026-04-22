@@ -23,4 +23,9 @@ public class ExpeditionManager {
     public static boolean isEnded(Expedition ex) {
         return OffsetDateTime.now().isAfter(ex.getFinish());
     }
+
+    public static Expedition add(Expedition ex) {
+        rep.add(ex);
+        return ex;
+    }
 }

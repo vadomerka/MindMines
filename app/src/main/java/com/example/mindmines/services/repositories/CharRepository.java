@@ -13,7 +13,7 @@ import com.example.mindmines.views.observers.CharObserver;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class CharRepository extends LocalRepository<Char, CharObserver> {
+public class CharRepository extends LocalObservedRepository<Char, CharObserver> {
     protected final int MAX_CHARACTERS = 4;
 
     @Override

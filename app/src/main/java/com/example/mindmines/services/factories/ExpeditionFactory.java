@@ -6,6 +6,7 @@ import com.example.mindmines.models.game.Expedition;
 import com.example.mindmines.services.repositories.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.OptionalInt;
 import java.util.Random;
@@ -23,17 +24,17 @@ public class ExpeditionFactory {
     }
 
     public static Expedition generate() {
-        return generate(0, String.valueOf(R.drawable.h1));
+        return create(0, "Expedition 33", String.valueOf(R.drawable.h1), Duration.ofMinutes(5));
     }
 
-    public static Expedition generate(int level, String image) {
+    public static Expedition create(int level, String name, String image, Duration duration) {
         return new Expedition(
                 getId(),
-                "Expedition" + getId(),
+                name,
                 image,
                 level,
                 OffsetDateTime.now(),
-                null,
+                OffsetDateTime.now().plus(duration),
                 false
         );
     }

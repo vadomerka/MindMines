@@ -1,14 +1,12 @@
 package com.example.mindmines.services.repositories;
 
-import com.example.mindmines.R;
 import com.example.mindmines.models.game.Expedition;
-import com.example.mindmines.services.factories.ExpeditionFactory;
 import com.example.mindmines.views.observers.ExpeditionObserver;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class ExpeditionRepository extends LocalRepository<Expedition, ExpeditionObserver> {
+public class ExpeditionRepository extends LocalObservedRepository<Expedition, ExpeditionObserver> {
     @Override
     public void initArray() {
         array = new ArrayList<>();
