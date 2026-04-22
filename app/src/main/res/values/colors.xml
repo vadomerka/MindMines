@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="green">#11FF00</color>
     <color name="habit_unchecked_btn_color">#B6B6B6</color>
     <color name="habit_unchecked_btn_text_color">#000000</color>
     <color name="habit_checked_btn_color">#373737</color>
