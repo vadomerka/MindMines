@@ -4,9 +4,12 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.mindmines.db.entities.CharEntity;
+import com.example.mindmines.db.entities.ExpeditionEntity;
+import com.example.mindmines.db.entities.crossref.CharWithExpeditions;
 
 import java.util.List;
 
@@ -26,4 +29,18 @@ public interface CharDao {
 
     @Query("DELETE FROM characters")
     void deleteAll();
+
+
+    @Transaction
+    @Query("SELECT * FROM characters WHERE charId = :charId")
+    CharWithExpeditions getCharWithExpeditions(int charId);
+
+    @Query("SELECT e.* FROM expeditions e " +
+            "INNER JOIN expedition_char_cross_ref ref ON e.expeditionId = ref.expeditionId " +
+            "WHERE ref.charId = :charId")
+    List<ExpeditionEntity> getExpeditionsForCharacter(int charId);
+
+    @Transaction
+    @Query("SELECT * FROM characters")
+    List<CharWithExpeditions> getAllCharsWithExpeditions();
 }

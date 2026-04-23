@@ -5,12 +5,14 @@ public class RepositoryService {
     private static HabitRepository hRep = null;
     private static ExpeditionRepository eRep = null;
     private static ExpeditionLocationRepository elRep = null;
+    private static ExpeditionCharRepository cheRep = null;
 
     public static void initAll() {
         getCharRepository().init();
         getHabitRepository().init();
         getExpeditionRepository().init();
         getExpeditionLocationRepository().init();
+        getExpeditionCharRepository().init();
     }
 
     public static CharRepository getCharRepository() {
@@ -31,5 +33,10 @@ public class RepositoryService {
     public static ExpeditionLocationRepository getExpeditionLocationRepository() {
         if (elRep == null) elRep = new ExpeditionLocationRepository();
         return elRep;
+    }
+
+    public static ExpeditionCharRepository getExpeditionCharRepository() {
+        if (cheRep == null) cheRep = new ExpeditionCharRepository();
+        return cheRep;
     }
 }

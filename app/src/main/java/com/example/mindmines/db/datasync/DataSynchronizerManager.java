@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataSynchronizerManager {
-    private static final String TAG = "Debug data sync";
     private final List<DataSynchronizer> synchronizers = new ArrayList<>();
     private static DataSynchronizerManager instance = null;
 
@@ -20,6 +19,7 @@ public class DataSynchronizerManager {
         synchronizers.add(uss);
         UserStatusManager.subscribe(uss);
         synchronizers.add(new ExpeditionDataSynchronizer(context));
+        synchronizers.add(new ExpeditionCharDataSynchronizer(context));
     }
 
     public static DataSynchronizerManager getInstance(Context context) {
@@ -37,7 +37,6 @@ public class DataSynchronizerManager {
 
     public void saveToDB() {
         for (int i = 0; i < synchronizers.size(); i++) {
-            Log.d(TAG, String.format("saveToDB: %d", i));
             synchronizers.get(i).saveToDB();
         }
     }

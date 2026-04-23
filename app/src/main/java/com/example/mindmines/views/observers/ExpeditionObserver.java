@@ -1,6 +1,6 @@
 package com.example.mindmines.views.observers;
 
-import com.example.mindmines.models.game.Expedition;
+import com.example.mindmines.models.game.expeditions.Expedition;
 
 import java.util.List;
 

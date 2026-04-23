@@ -117,9 +117,10 @@ public class HabitAddView extends BaseActivity {
 
     protected void initWheelPickers() {
         itPicker = findViewById(R.id.habit_interval_type_value);
-        htPicker = findViewById(R.id.habit_type_value);
         itPicker.setItems(new ArrayList<String>()
         {{ add ("Минуты"); add ("Дни"); add ("Недели"); add ("Месяцы"); }});
+
+        htPicker = findViewById(R.id.habit_type_value);
         htPicker.setItems(new ArrayList<String>()
         {{ add ("Количественная"); add ("Интервальная"); add ("Подзадачи"); }});
         LinearLayout countThl = findViewById(R.id.count_type_habit_layout);

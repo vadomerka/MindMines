@@ -1,9 +1,10 @@
-package com.example.mindmines.models.game;
+package com.example.mindmines.models.game.expeditions;
 
 import java.time.OffsetDateTime;
 
 public class Expedition {
     private Integer expeditionId;
+    private Integer userId;
     private String title;
     private String type;
     private Integer level;

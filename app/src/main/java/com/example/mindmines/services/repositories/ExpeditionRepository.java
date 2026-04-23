@@ -1,6 +1,6 @@
 package com.example.mindmines.services.repositories;
 
-import com.example.mindmines.models.game.Expedition;
+import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.views.observers.ExpeditionObserver;
 
 import java.util.ArrayList;

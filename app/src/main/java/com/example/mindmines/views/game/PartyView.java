@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.widget.Button;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.game.Expedition;
+import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.services.managers.ExpeditionManager;
 import com.example.mindmines.services.repositories.ExpeditionRepository;

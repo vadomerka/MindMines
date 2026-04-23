@@ -1,4 +1,4 @@
-package com.example.mindmines.models.game;
+package com.example.mindmines.models.game.expeditions;
 
 public class ExpeditionLocation {
     private String id;

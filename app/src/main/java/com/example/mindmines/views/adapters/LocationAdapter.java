@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.game.ExpeditionLocation;
+import com.example.mindmines.models.game.expeditions.ExpeditionLocation;
 
 import java.util.List;
 

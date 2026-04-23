@@ -5,7 +5,7 @@ import android.content.Context;
 import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.dao.ExpeditionDao;
 import com.example.mindmines.db.entities.ExpeditionEntity;
-import com.example.mindmines.models.game.Expedition;
+import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.services.factories.ExpeditionFactory;
 import com.example.mindmines.services.repositories.RepositoryService;
 

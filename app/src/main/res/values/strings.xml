@@ -53,4 +53,6 @@
     <string name="choose_habit_type_text">Выберете тип привычки:</string>
     <string name="goal_text">Цель:</string>
     <string name="tasks_view_text">Задачи:</string>
+    <string name="default_time_text">1 час</string>
+    <string name="create_expedition_button_text">Отправить экспедицию</string>
 </resources>
