@@ -12,7 +12,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/expedition_1" />
+        android:src="@drawable/expedition_2" />
 
     <TextView
         android:id="@+id/location_name"

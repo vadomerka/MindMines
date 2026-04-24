@@ -54,7 +54,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-//    implementation("com.github.AigeStudio:WheelPicker:594180c")
     implementation("com.github.vikramezhil:WheelPicker:1.0.3")
 
     implementation("androidx.room:room-runtime:2.6.1")

@@ -51,6 +51,9 @@ public class ExpeditionView {
 
     private List<MaterialButton> presetButtons;
     private LinearLayout customDurationLayout;
+    private Slider durationSlider;
+
+    private Duration selectedDuration;
 
 
     public ExpeditionView(Context context, LayoutInflater layoutInflater) {
@@ -107,11 +110,11 @@ public class ExpeditionView {
         LinearLayout presetButtonsLayout = dialogView.findViewById(R.id.duration_presets_layout);
         presetButtons = new ArrayList<>();
         Duration[] presets = {Duration.ofMinutes(5), Duration.ofMinutes(30), Duration.ofHours(1)};
-        for (Duration preset: presets) {
+        for (Duration duration: presets) {
             MaterialButton presetButton = new MaterialButton(context, null, R.style.TimeOutlineButton);
             presetButton.setId(View.generateViewId());
-            presetButton.setText(ViewsUtils.parsePresetDuration(preset));
-            presetButton.setOnClickListener(v -> selectPreset(preset, presetButton));
+            presetButton.setText(ViewsUtils.parsePresetDuration(duration));
+            presetButton.setOnClickListener(v -> selectPreset(duration, presetButton));
 
             presetButtons.add(presetButton);
             presetButtonsLayout.addView(presetButton);
@@ -119,8 +122,7 @@ public class ExpeditionView {
     }
 
     private void loadDurationSlider() {
-        LinearLayout customDurationLayout = dialogView.findViewById(R.id.custom_duration_layout);
-        Slider durationSlider = dialogView.findViewById(R.id.duration_value_slider);
+        durationSlider = dialogView.findViewById(R.id.duration_value_slider);
         durationSlider.setValueFrom(1);
         durationSlider.setValueTo(60);
     }
@@ -133,46 +135,28 @@ public class ExpeditionView {
     }
 
     private void selectPreset(Duration duration, MaterialButton activeButton) {
-        // Сбросить все кнопки к стандартному состоянию
         resetPresetButtonsStyle();
-        // Подсветить активную
+        selectedDuration = duration;
         activeButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,
                 R.color.purple_background_color)));
         activeButton.setTextColor(ContextCompat.getColor(context, android.R.color.white));
-        // Скрыть ручной ввод
         customDurationLayout.setVisibility(View.GONE);
     }
 
     private void resetPresetButtonsStyle() {
-
-        for (MaterialButton btn : buttons) {
+        for (MaterialButton btn : presetButtons) {
             btn.setBackgroundTintList(null);
-            btn.setTextColor(ContextCompat.getColor(context, android.R.color.black)); // или ваш цвет текста
-            btn.setStrokeColorResource(R.color.purple_200);
+            btn.setTextColor(ContextCompat.getColor(context, android.R.color.black));
+            btn.setStrokeColorResource(R.color.white);
         }
     }
 
-    private Duration getSelectedDuration() {
-        if (customDurationLayout.getVisibility() == View.VISIBLE) {
-            int value = (int) durationSlider.getValue();
-            String unit = durationUnitPicker.getSelectedItem();
-            switch (unit) {
-                case "Минуты": return Duration.ofMinutes(value);
-                case "Часы":   return Duration.ofHours(value);
-                case "Дни":    return Duration.ofDays(value);
-                case "Недели": return Duration.ofDays(value * 7L);
-                default:       return Duration.ofMinutes(value);
-            }
-        }
-        return selectedDuration;
-    }
-
-    private void createNewExpedition(ExpeditionLocation expeditionLocation, Duration duration) {
+    private void createNewExpedition(ExpeditionLocation expeditionLocation) {
         ExpeditionManager.add(ExpeditionFactory.create(
                 1,
                 expeditionLocation.getName(),
                 expeditionLocation.getImage(),
-                duration
+                selectedDuration
         ));
     }
 
@@ -201,7 +185,7 @@ public class ExpeditionView {
         // Устанавливаем данные
         locationTitle.setText(ex.getTitle());
         // TODO: установить фото в зависимости от типа локации, пока заглушка
-        locationImage.setImageResource(R.drawable.expedition_1);
+        locationImage.setImageResource(R.drawable.expedition_2);
     }
 
     private void startTimer(Expedition ex) {

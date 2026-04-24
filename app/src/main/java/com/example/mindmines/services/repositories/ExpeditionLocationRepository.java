@@ -11,8 +11,8 @@ public class ExpeditionLocationRepository extends LocalRepository<ExpeditionLoca
     @Override
     public void initArray() {
         array = new ArrayList<>();
-        array.add(new ExpeditionLocation("exp1", "Дефолтная локация", String.valueOf(R.drawable.expedition_1)));
-        array.add(new ExpeditionLocation("exp2", "Вторая локация", String.valueOf(R.drawable.expedition_2)));
+        array.add(new ExpeditionLocation("exp1", "Дефолтная локация", String.valueOf(R.drawable.expedition_2)));
+        array.add(new ExpeditionLocation("exp2", "Вторая локация", String.valueOf(R.drawable.expedition_1)));
         array.add(new ExpeditionLocation("exp3", "Неоткрытая локация", String.valueOf(R.drawable.expedition_3)));
     }
 
