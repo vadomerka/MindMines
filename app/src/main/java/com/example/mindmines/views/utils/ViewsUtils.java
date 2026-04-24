@@ -20,10 +20,28 @@ public class ViewsUtils {
         return String.format("%f", d);
     }
 
-    public static String getDayWord(long days) {
-        if (days % 10 == 1 && days % 100 != 11) return "день";
-        if (days % 10 >= 2 && days % 10 <= 4 && (days % 100 < 10 || days % 100 >= 20)) return "дня";
+    public static String getDayWord(long time) {
+        if (time % 10 == 1 && time % 100 != 11) return "день";
+        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20)) return "дня";
         return "дней";
+    }
+
+    public static String getWeekWord(long time) {
+        if (time % 10 == 1 && time % 100 != 11) return "неделя";
+        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20)) return "недели";
+        return "неделей";
+    }
+
+    public static String getHourWord(long time) {
+        if (time % 10 == 1 && time % 100 != 11) return "час";
+        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20)) return "часа";
+        return "часов";
+    }
+
+    public static String getMinuteWord(long time) {
+        if (time % 10 == 1 && time % 100 != 11) return "минута";
+        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20)) return "минуты";
+        return "минут";
     }
 
     public static String parseDuration(Duration duration) {
@@ -38,5 +56,15 @@ public class ViewsUtils {
             timeText = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
         }
         return timeText;
+    }
+
+    public static String parsePresetDuration(Duration duration) {
+        long days = duration.toDays();
+        if (days > 0) { return days + " " + getDayWord(days); }
+        long hours = duration.toHours();
+        if (hours > 0) { return days + " " + getHourWord(hours); }
+        long minutes = duration.toMinutes() - hours * 60;
+        if (minutes > 0) { return days + " " + getMinuteWord(minutes); }
+        return "0 минут";
     }
 }

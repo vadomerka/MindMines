@@ -49,6 +49,9 @@ public class ExpeditionView {
     private TextView timerText;
     private Button backButton;
 
+    private List<MaterialButton> presetButtons;
+    private LinearLayout customDurationLayout;
+
 
     public ExpeditionView(Context context, LayoutInflater layoutInflater) {
         this.context = context;
@@ -64,7 +67,8 @@ public class ExpeditionView {
     public void startExpedition() {
         buildDialog(R.layout.expedition_create_dialog);
         loadLocationsAdapter();
-        loadDurationControls();
+        loadPresetButtons();
+        loadCustomDurationLayout();
 
         AlertDialog dialog = builder.create();
 
@@ -92,30 +96,40 @@ public class ExpeditionView {
         recyclerView.setAdapter(adapter);
     }
 
-    private void loadDurationControls() {
-        MaterialButton preset1Min = dialogView.findViewById(R.id.preset_1min);
-        MaterialButton preset1Hour = dialogView.findViewById(R.id.preset_1hour);
-        MaterialButton preset1Day = dialogView.findViewById(R.id.preset_1day);
-        MaterialButton presetCustom = dialogView.findViewById(R.id.preset_custom);
+    private void loadCustomDurationLayout() {
+        customDurationLayout = dialogView.findViewById(R.id.custom_duration_layout);
+        customDurationLayout.setVisibility(View.GONE);
+        loadDurationSlider();
+        loadUnitPicker();
+    }
+
+    private void loadPresetButtons() {
+        LinearLayout presetButtonsLayout = dialogView.findViewById(R.id.duration_presets_layout);
+        presetButtons = new ArrayList<>();
+        Duration[] presets = {Duration.ofMinutes(5), Duration.ofMinutes(30), Duration.ofHours(1)};
+        for (Duration preset: presets) {
+            MaterialButton presetButton = new MaterialButton(context, null, R.style.TimeOutlineButton);
+            presetButton.setId(View.generateViewId());
+            presetButton.setText(ViewsUtils.parsePresetDuration(preset));
+            presetButton.setOnClickListener(v -> selectPreset(preset, presetButton));
+
+            presetButtons.add(presetButton);
+            presetButtonsLayout.addView(presetButton);
+        }
+    }
+
+    private void loadDurationSlider() {
         LinearLayout customDurationLayout = dialogView.findViewById(R.id.custom_duration_layout);
         Slider durationSlider = dialogView.findViewById(R.id.duration_value_slider);
-        WheelPicker durationUnitPicker = dialogView.findViewById(R.id.duration_unit_picker);
-
-        // Настройка колеса выбора единиц
-        ArrayList<String> units = new ArrayList<>(Arrays.asList("Минуты", "Часы", "Дни", "Недели"));
-        durationUnitPicker.setItems(units);
-        durationUnitPicker.setSelectedItem("Минуты"); // по умолчанию минуты
-
-        // Слайдер: 1–60
         durationSlider.setValueFrom(1);
         durationSlider.setValueTo(60);
-        durationSlider.setValue(1);
+    }
 
-        // Обработчики
-        preset1Min.setOnClickListener(v -> selectPreset(Duration.ofMinutes(1), preset1Min));
-        preset1Hour.setOnClickListener(v -> selectPreset(Duration.ofHours(1), preset1Hour));
-        preset1Day.setOnClickListener(v -> selectPreset(Duration.ofDays(1), preset1Day));
-        presetCustom.setOnClickListener(v -> showCustomDuration());
+    private void loadUnitPicker() {
+        WheelPicker durationUnitPicker = dialogView.findViewById(R.id.duration_unit_picker);
+        ArrayList<String> units = new ArrayList<>(Arrays.asList("Минуты", "Часы", "Дни", "Недели"));
+        durationUnitPicker.setItems(units);
+        durationUnitPicker.setSelectedItem("Минуты");
     }
 
     private void selectPreset(Duration duration, MaterialButton activeButton) {
@@ -130,7 +144,7 @@ public class ExpeditionView {
     }
 
     private void resetPresetButtonsStyle() {
-        MaterialButton[] buttons = {preset1Min, preset1Hour, preset1Day, presetCustom};
+
         for (MaterialButton btn : buttons) {
             btn.setBackgroundTintList(null);
             btn.setTextColor(ContextCompat.getColor(context, android.R.color.black)); // или ваш цвет текста

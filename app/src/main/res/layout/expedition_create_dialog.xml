@@ -32,26 +32,25 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/preset_1min"
-            style="@style/TimeOutlineButton"
-            android:text="@string/default_time_text"
-            />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/preset_1min"-->
+<!--            style="@style/TimeOutlineButton"-->
+<!--            android:text="@string/default_time_text"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/preset_1hour"
-            style="@style/TimeOutlineButton"
-            android:text="@string/default_time_text"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/preset_1hour"-->
+<!--            style="@style/TimeOutlineButton"-->
+<!--            android:text="@string/default_time_text"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/preset_1day"
-            style="@style/TimeOutlineButton"
-            android:text="@string/default_time_text"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/preset_1day"-->
+<!--            style="@style/TimeOutlineButton"-->
+<!--            android:text="@string/default_time_text"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/preset_custom"
-            style="@style/TimeOutlineButton"
-            android:text="@string/default_time_text"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/preset_custom"-->
+<!--            style="@style/TimeOutlineButton"-->
+<!--            android:text="@string/default_time_text"/>-->
     </LinearLayout>
 
     <LinearLayout
