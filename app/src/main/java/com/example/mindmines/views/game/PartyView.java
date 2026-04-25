@@ -6,12 +6,19 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.game.characters.Char;
+import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
+import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.ExpeditionManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.repositories.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseActivity;
@@ -32,7 +39,7 @@ public class PartyView extends BaseActivity {
     private Expedition activeExpedition;
     private MaterialButton expBtn;
     private ExpeditionView expeditionView;
-    private final ExpeditionObserver expeditionObserver = upd -> loadExpedition();
+    private final ExpeditionObserver expeditionObserver = upd -> updateExpedition();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,8 @@ public class PartyView extends BaseActivity {
         expeditionView = new ExpeditionView(this, getLayoutInflater());
         loadCharacterButtons();
         loadExpedition();
+
+        loadDebugTools();
     }
 
     @Override
@@ -71,8 +80,14 @@ public class PartyView extends BaseActivity {
         }
     }
 
+    private void updateExpedition() {
+        Log.d("debug Expedition", "updateExpedition: ");
+        loadExpedition();
+    }
+
     private void loadExpedition() {
-        Expedition lExp = ExpeditionManager.getLatestUnfinishedExpedition();
+        ExpeditionView.debugLogExpeditions();
+        Expedition lExp = ExpeditionManager.getLatestUnfinishedExpedition();  // getLatestUnfinishedExpedition
         expBtn = findViewById(R.id.expedition_view_button);
         if (lExp == null) {
             expBtn.setText("Начать экспедицию");
@@ -89,7 +104,7 @@ public class PartyView extends BaseActivity {
         if (isEnded) {
             expBtn.setText("Собрать награду");
             expBtn.setBackgroundColor(Color.parseColor("#11FF00"));
-            expBtn.setOnClickListener(v -> expeditionView.finishExpedition());
+            expBtn.setOnClickListener(v -> expeditionView.finishExpedition(lExp));
             stopTimer();
         } else {
             activeExpedition = lExp;
@@ -149,19 +164,28 @@ public class PartyView extends BaseActivity {
     protected void onStart() {
         super.onStart();
         rep.subscribe(expeditionObserver);
+        UserStatusManager.subscribe(usProxy);
+        usProxy.update(new ArrayList<>());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         rep.unsubscribe(expeditionObserver);
+        UserStatusManager.unsubscribe(usProxy);
     }
-
 
     public void openCharView(int chId) {
         Intent myIntent = new Intent(PartyView.this, CharView.class);
         myIntent.putExtra("id", chId);
         PartyView.this.startActivity(myIntent);
         finish();
+    }
+
+    protected void loadDebugTools() {
+        Button deleteBut = findViewById(R.id.delete_last_expedition_debug_button);
+        deleteBut.setVisibility(View.VISIBLE);
+        deleteBut.setOnClickListener(v ->
+                ExpeditionManager.removeLast(ExpeditionManager.getLatestUnfinishedExpedition()));
     }
 }

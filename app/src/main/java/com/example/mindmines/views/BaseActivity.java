@@ -44,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @SuppressLint("DefaultLocale")
-    public void updateUserStatus(List<UserStatus> upd) {
+    protected void updateUserStatus(List<UserStatus> upd) {
         Log.d("Debug BasicActivity updateUserStatus", "updateUserStatus: ");
         runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getStatus();

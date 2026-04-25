@@ -2,7 +2,11 @@ package com.example.mindmines.views.game.expedition;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Handler;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +54,7 @@ public class ExpeditionView {
     private Button backButton;
 
     private List<MaterialButton> presetButtons;
+    private LinearLayout.LayoutParams presetButtonParams;
     private LinearLayout customDurationLayout;
     private Slider durationSlider;
 
@@ -82,6 +87,10 @@ public class ExpeditionView {
                 Toast.makeText(context, "Выберите локацию", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (selectedDuration == null) {
+                Toast.makeText(context, "Выберите продолжительность", Toast.LENGTH_SHORT).show();
+                return;
+            }
             createNewExpedition(selectedLocation);
             dialog.dismiss();
         });
@@ -102,6 +111,7 @@ public class ExpeditionView {
     private void loadCustomDurationLayout() {
         customDurationLayout = dialogView.findViewById(R.id.custom_duration_layout);
         customDurationLayout.setVisibility(View.GONE);
+        selectedDuration = null;
         loadDurationSlider();
         loadUnitPicker();
     }
@@ -114,11 +124,29 @@ public class ExpeditionView {
             MaterialButton presetButton = new MaterialButton(context, null, R.style.TimeOutlineButton);
             presetButton.setId(View.generateViewId());
             presetButton.setText(ViewsUtils.parsePresetDuration(duration));
-            presetButton.setOnClickListener(v -> selectPreset(duration, presetButton));
+            presetButtonParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            presetButtonParams.setMargins(8, 0, 8, 0);
+            presetButton.setLayoutParams(presetButtonParams);
+            presetButton.setBackgroundColor(Color.WHITE);
+            presetButton.setPadding(8, 8, 8, 8);
+            presetButton.setOnClickListener(v -> selectPreset(duration, presetButton, View.GONE));
 
             presetButtons.add(presetButton);
             presetButtonsLayout.addView(presetButton);
         }
+
+        MaterialButton presetButton = new MaterialButton(context, null, R.style.TimeOutlineButton);
+        presetButton.setId(View.generateViewId());
+        presetButton.setText("Ввод");
+        presetButton.setLayoutParams(presetButtonParams);
+        presetButton.setBackgroundColor(Color.WHITE);
+        presetButton.setPadding(8, 8, 8, 8);
+        presetButton.setOnClickListener(v -> selectPreset(selectedDuration, presetButton, View.VISIBLE));
+        presetButtons.add(presetButton);
+        presetButtonsLayout.addView(presetButton);
     }
 
     private void loadDurationSlider() {
@@ -129,36 +157,40 @@ public class ExpeditionView {
 
     private void loadUnitPicker() {
         WheelPicker durationUnitPicker = dialogView.findViewById(R.id.duration_unit_picker);
-        ArrayList<String> units = new ArrayList<>(Arrays.asList("Минуты", "Часы", "Дни", "Недели"));
+        ArrayList<String> units = new ArrayList<>(Arrays.asList("Минуты", "Часы", "Дни", "Недели", "Месяцы"));
         durationUnitPicker.setItems(units);
         durationUnitPicker.setSelectedItem("Минуты");
     }
 
-    private void selectPreset(Duration duration, MaterialButton activeButton) {
+    private void selectPreset(Duration duration, MaterialButton activeButton, int visibility) {
         resetPresetButtonsStyle();
         selectedDuration = duration;
-        activeButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context,
-                R.color.purple_background_color)));
+        activeButton.setBackgroundColor(ContextCompat.getColor(context, android.R.color.holo_purple));
         activeButton.setTextColor(ContextCompat.getColor(context, android.R.color.white));
-        customDurationLayout.setVisibility(View.GONE);
+        customDurationLayout.setVisibility(visibility);
     }
 
     private void resetPresetButtonsStyle() {
         for (MaterialButton btn : presetButtons) {
-            btn.setBackgroundTintList(null);
             btn.setTextColor(ContextCompat.getColor(context, android.R.color.black));
-            btn.setStrokeColorResource(R.color.white);
+            btn.setBackgroundColor(Color.WHITE);
         }
     }
 
     private void createNewExpedition(ExpeditionLocation expeditionLocation) {
-        ExpeditionManager.add(ExpeditionFactory.create(
+        Log.d("debug Expedition", "createNewExpedition: ");
+        Expedition result = ExpeditionFactory.create(
                 1,
                 expeditionLocation.getName(),
                 expeditionLocation.getImage(),
                 selectedDuration
-        ));
+        );
+        ExpeditionManager.add(result);
+
+        debugLogExpeditions();
     }
+
+
 
     public void viewExpedition(Expedition ex) {
         buildDialog(R.layout.expedition_view_dialog);
@@ -176,20 +208,17 @@ public class ExpeditionView {
     }
 
     private void loadForm(Expedition ex) {
-        // Находим элементы диалога
         locationImage = dialogView.findViewById(R.id.expedition_location_image);
         locationTitle = dialogView.findViewById(R.id.expedition_location_title);
         timerText = dialogView.findViewById(R.id.expedition_timer);
         backButton = dialogView.findViewById(R.id.expedition_back_button);
 
-        // Устанавливаем данные
         locationTitle.setText(ex.getTitle());
         // TODO: установить фото в зависимости от типа локации, пока заглушка
         locationImage.setImageResource(R.drawable.expedition_2);
     }
 
     private void startTimer(Expedition ex) {
-        // Запускаем таймер внутри диалога (аналогично кнопке)
         dialogTimerHandler = new Handler();
         dialogRunnable = new Runnable() {
             @Override
@@ -211,7 +240,15 @@ public class ExpeditionView {
     }
 
 
-    public void finishExpedition() {
-        Toast.makeText(context, "Завершение экспедиции (заглушка)", Toast.LENGTH_SHORT).show();
+    public void finishExpedition(Expedition lExp) {
+        ExpeditionManager.finishExp(lExp);
+    }
+
+
+    public static void debugLogExpeditions() {
+        List<Expedition> all = ExpeditionManager.getExpeditions();
+        for (Expedition ex: all) {
+            Log.d("Debug Expeditions", ex.getTitle() + " " + ex.getFinish().toLocalTime() + " " + ex.isFinished());
+        }
     }
 }

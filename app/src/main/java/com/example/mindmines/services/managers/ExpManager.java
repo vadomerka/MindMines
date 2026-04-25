@@ -2,6 +2,7 @@ package com.example.mindmines.services.managers;
 
 import android.util.Log;
 
+import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
 
@@ -44,5 +45,9 @@ public class ExpManager {
         status.setExperience(exp);
         status.setMaxExperience(maxExp);
         status.setLevel(level);
+    }
+
+    public static void gainFinishedExpedition(Expedition expedition) {
+        Log.d("Debug ExpManager", "gainFinishedExpedition: " + expedition.getTitle());
     }
 }

@@ -24,7 +24,7 @@ import com.example.mindmines.db.entities.ExpeditionEntity;
                         onDelete = ForeignKey.CASCADE
                 )
         },
-        indices = {@Index("charId")}
+        indices = {@Index("charId"), @Index("expeditionId")}
 )
 public class ExpeditionCharCrossRef {
     public int expeditionId;

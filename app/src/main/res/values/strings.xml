@@ -55,4 +55,5 @@
     <string name="tasks_view_text">Задачи:</string>
     <string name="default_time_text">1 час</string>
     <string name="create_expedition_button_text">Отправить экспедицию</string>
+    <string name="delete_last_expedition_debug_button">Удалить последнюю экспедицию</string>
 </resources>

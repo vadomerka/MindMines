@@ -22,7 +22,7 @@ import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 import java.time.OffsetDateTime;
 
 @Database(entities = {HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
-        ExpeditionCharCrossRef.class}, version = 5, exportSchema = false)
+        ExpeditionCharCrossRef.class}, version = 6, exportSchema = false)
 @TypeConverters(HabitTypeConverter.class)
 public abstract class MindMinesDatabase extends RoomDatabase {
     private static volatile MindMinesDatabase INSTANCE;
@@ -48,6 +48,7 @@ public abstract class MindMinesDatabase extends RoomDatabase {
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)
                             .addMigrations(MIGRATION_4_5)
+                            .addMigrations(MIGRATION_5_6)
                             .build();
                 }
             }
@@ -87,6 +88,19 @@ public abstract class MindMinesDatabase extends RoomDatabase {
                     "PRIMARY KEY(`expeditionId`, `charId`), " +
                     "FOREIGN KEY(`expeditionId`) REFERENCES `expeditions`(`expeditionId`) ON DELETE CASCADE, " +
                     "FOREIGN KEY(`charId`) REFERENCES `characters`(`charId`) ON DELETE CASCADE)");
+
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_expedition_char_cross_ref_expeditionId` " +
+                    "ON `expedition_char_cross_ref` (`expeditionId`)");
+        }
+    };
+
+    static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_expedition_char_cross_ref_charId` " +
+                    "ON `expedition_char_cross_ref` (`charId`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_expedition_char_cross_ref_expeditionId` " +
+                    "ON `expedition_char_cross_ref` (`expeditionId`)");
         }
     };
 }

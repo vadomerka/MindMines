@@ -73,8 +73,8 @@ public class HabitsView extends BaseActivity {
         super.onStart();
         Log.d(TAG, "onStart: 1");
         RepositoryService.getHabitRepository().subscribe(hProxy);
-        UserStatusManager.subscribe(usProxy);
         hProxy.update(new ArrayList<>());
+        UserStatusManager.subscribe(usProxy);
         usProxy.update(new ArrayList<>());
     }
 

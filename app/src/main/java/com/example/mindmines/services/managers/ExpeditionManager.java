@@ -14,10 +14,22 @@ public class ExpeditionManager {
 
     public static Expedition getLatestUnfinishedExpedition() {
         List<Expedition> expeditions = rep.getAll().stream()
-                .filter(Expedition::isFinished).collect(Collectors.toList());
+                .filter(ex -> !ex.isFinished()).collect(Collectors.toList());
         if (expeditions.isEmpty()) return null;
         expeditions.sort(Comparator.comparing(Expedition::getStart));
-        return expeditions.getLast();
+        return expeditions.get(expeditions.size() - 1);
+    }
+
+    public static Expedition getLatestExpedition() {
+        List<Expedition> expeditions = rep.getAll();
+        if (expeditions.isEmpty()) return null;
+        expeditions.sort(Comparator.comparing(Expedition::getStart));
+        return expeditions.get(expeditions.size() - 1);
+    }
+
+    public static List<Expedition> getExpeditions() {
+        List<Expedition> expeditions = rep.getAll();
+        return expeditions;
     }
 
     public static boolean isEnded(Expedition ex) {
@@ -27,5 +39,15 @@ public class ExpeditionManager {
     public static Expedition add(Expedition ex) {
         rep.add(ex);
         return ex;
+    }
+
+    public static void finishExp(Expedition ex) {
+        ex.setFinished(true);
+        rep.update(ex);
+        ExpManager.gainFinishedExpedition(ex);  // Возможно стоит заменить на ExpeditionObserver?
+    }
+
+    public static void removeLast(Expedition ex) {
+        rep.remove(ex);
     }
 }

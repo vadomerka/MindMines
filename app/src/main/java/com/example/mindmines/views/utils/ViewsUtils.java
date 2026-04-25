@@ -62,9 +62,9 @@ public class ViewsUtils {
         long days = duration.toDays();
         if (days > 0) { return days + " " + getDayWord(days); }
         long hours = duration.toHours();
-        if (hours > 0) { return days + " " + getHourWord(hours); }
+        if (hours > 0) { return hours + " " + getHourWord(hours); }
         long minutes = duration.toMinutes() - hours * 60;
-        if (minutes > 0) { return days + " " + getMinuteWord(minutes); }
+        if (minutes > 0) { return minutes + " " + getMinuteWord(minutes); }
         return "0 минут";
     }
 }
