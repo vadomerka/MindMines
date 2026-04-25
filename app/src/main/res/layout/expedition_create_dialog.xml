@@ -8,18 +8,14 @@
     <LinearLayout
         style="@style/SpreadCenterVerticalLayout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Выберите локацию"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="center"/>
+            style="@style/header1_text"
+            android:text="@string/choose_location_text"
+            android:layout_marginBottom="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/location_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/expedition_create_dialog_location_item" />
@@ -57,7 +53,7 @@
         android:id="@+id/custom_duration_layout"
         style="@style/SpreadCenterVerticalLayout"
         android:layout_marginTop="8dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             style="@style/header1_text"

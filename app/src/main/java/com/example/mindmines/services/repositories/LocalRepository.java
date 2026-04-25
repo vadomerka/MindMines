@@ -1,8 +1,5 @@
 package com.example.mindmines.services.repositories;
 
-import com.example.mindmines.views.observers.RepositoryObserver;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

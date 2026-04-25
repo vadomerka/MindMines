@@ -20,7 +20,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     private final List<ExpeditionLocation> locations;
     private int selectedPosition = RecyclerView.NO_POSITION;
     private final OnLocationClickListener listener;
-    private List<View> holders;
+    private final List<View> holders;
 
     public interface OnLocationClickListener {
         void onLocationClick(ExpeditionLocation expeditionLocation, int position);
@@ -29,12 +29,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     public LocationAdapter(List<ExpeditionLocation> locations, OnLocationClickListener listener) {
         this.locations = locations;
         this.listener = listener;
+        this.holders = new ArrayList<>();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        holders = new ArrayList<>();
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.expedition_create_dialog_location_item, parent, false);
         return new ViewHolder(view);
@@ -48,13 +48,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         holders.add(holder.itemView);
         holder.itemView.setSelected(selectedPosition == position);
         holder.itemView.setOnClickListener(v -> {
-            int previousSelected = selectedPosition;
             resetColors();
-            v.setBackgroundColor(Color.GRAY);
+            v.setBackgroundColor(Color.GREEN);
 
             selectedPosition = holder.getBindingAdapterPosition();
-            notifyItemChanged(previousSelected);
-            notifyItemChanged(selectedPosition);
+
             if (listener != null) {
                 listener.onLocationClick(expeditionLocation, selectedPosition);
             }

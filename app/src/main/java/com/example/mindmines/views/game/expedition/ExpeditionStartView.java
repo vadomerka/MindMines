@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +69,12 @@ public class ExpeditionStartView extends ExpeditionView{
                 Toast.makeText(context, "Выберите продолжительность", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            Log.d("debug Expedition start", "startExpedition: "
+                    + selectedLocation.getId() + " "
+                    + selectedLocation.getName() + " "
+                    + selectedLocation.getImage() + " ");
+
             createNewExpedition(selectedLocation);
             dialog.dismiss();
         });
@@ -98,7 +105,9 @@ public class ExpeditionStartView extends ExpeditionView{
         presetButtons = new ArrayList<>();
         Duration[] presets = {Duration.ofMinutes(5), Duration.ofMinutes(30), Duration.ofHours(1)};
         for (Duration duration: presets) {
-            MaterialButton presetButton = new MaterialButton(context, null, R.style.TimeOutlineButton);
+            ContextThemeWrapper wrapper = new ContextThemeWrapper(context, R.style.TimeOutlineButton);
+
+            MaterialButton presetButton = new MaterialButton(wrapper);
             presetButton.setId(View.generateViewId());
             presetButton.setText(ViewsUtils.parsePresetDuration(duration));
             presetButtonParams = new LinearLayout.LayoutParams(
@@ -108,7 +117,12 @@ public class ExpeditionStartView extends ExpeditionView{
             presetButtonParams.setMargins(8, 0, 8, 0);
             presetButton.setLayoutParams(presetButtonParams);
             presetButton.setBackgroundColor(Color.WHITE);
+
             presetButton.setPadding(8, 8, 8, 8);
+            presetButton.setInsetTop(0);
+            presetButton.setInsetBottom(0);
+
+
             presetButton.setOnClickListener(v -> selectPreset(duration, presetButton, View.GONE));
 
             presetButtons.add(presetButton);
@@ -130,14 +144,17 @@ public class ExpeditionStartView extends ExpeditionView{
         Slider durationSlider = dialogView.findViewById(R.id.duration_value_slider);
         durationSlider.setValueFrom(1);
         durationSlider.setValueTo(60);
-        durationSlider.setValue(1);
+        durationSlider.setValue(10);
     }
 
     private void loadUnitPicker() {
         WheelPicker durationUnitPicker = dialogView.findViewById(R.id.duration_unit_picker);
         ArrayList<String> units = new ArrayList<>(Arrays.asList("Минуты", "Часы", "Дни", "Недели", "Месяцы"));
         durationUnitPicker.setItems(units);
-        durationUnitPicker.setSelectedItem("Часы");
+        durationUnitPicker.post(() -> durationUnitPicker.setSelectedItemPosition(2));
+//        durationUnitPicker.setVerticalScrollbarPosition(2);
+//        durationUnitPicker.setSelectedItemPosition(2);
+//        durationUnitPicker.setSelectedItem(units.get(2));
     }
 
     private void selectPreset(Duration duration, MaterialButton activeButton, int visibility) {

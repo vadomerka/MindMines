@@ -56,4 +56,8 @@
     <string name="default_time_text">1 час</string>
     <string name="create_expedition_button_text">Отправить экспедицию</string>
     <string name="delete_last_expedition_debug_button">Удалить последнюю экспедицию</string>
+    <string name="update_last_expedition_debug_button">Обновить экспедиции</string>
+    <string name="location_view_text">Локация</string>
+    <string name="location_description_text">location_description</string>
+    <string name="choose_location_text">Выберите локацию</string>
 </resources>

@@ -49,8 +49,10 @@ public class ExpeditionTimerView extends ExpeditionView {
         backButton = dialogView.findViewById(R.id.expedition_back_button);
 
         locationTitle.setText(ex.getTitle());
-        // TODO: установить фото в зависимости от типа локации, пока заглушка
-        locationImage.setImageResource(R.drawable.expedition_2);
+
+        locationImage.setImageResource(ex.getType() != null
+                ? Integer.parseInt(ex.getType())
+                : R.drawable.expedition_2);
     }
 
     private void startTimer(Expedition ex) {

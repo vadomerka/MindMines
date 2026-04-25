@@ -20,11 +20,11 @@
                 android:layout_margin="0dp"
                 android:text="@string/your_character_party_text" />
 
-            <TextView
-                android:id="@+id/party_name_value_text"
-                style="@style/title_text"
-                android:layout_margin="0dp"
-                android:text="@string/default_party_name_text" />
+<!--            <TextView-->
+<!--                android:id="@+id/party_name_value_text"-->
+<!--                style="@style/title_text"-->
+<!--                android:layout_margin="0dp"-->
+<!--                android:text="@string/default_party_name_text" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -95,7 +95,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/update_last_expedition_debug_button"
             android:visibility="gone"
-            android:text="@string/delete_last_expedition_debug_button"
+            android:text="@string/update_last_expedition_debug_button"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginTop="20dp"
