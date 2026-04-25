@@ -19,7 +19,7 @@ public class ExpeditionFactory {
     private static int getId() {
         ExpeditionRepository rep = RepositoryService.getExpeditionRepository();
         OptionalInt rm = rep.getAll() != null ? rep.getAll().stream()
-                .mapToInt(Expedition::getExpeditionId).max() : OptionalInt.of(0);
+                .mapToInt(Expedition::getId).max() : OptionalInt.of(0);
         return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }
 
@@ -53,7 +53,7 @@ public class ExpeditionFactory {
 
     public static ExpeditionEntity createEntity(Expedition ex) {
         return new ExpeditionEntity(
-                ex.getExpeditionId(),
+                ex.getId(),
                 ex.getTitle(),
                 ex.getType(),
                 ex.getLevel(),

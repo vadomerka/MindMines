@@ -3,11 +3,11 @@ package com.example.mindmines.services.repositories;
 import com.example.mindmines.views.observers.RepositoryObserver;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-public abstract class LocalObservedRepository<T, TObserver extends RepositoryObserver<T>>
-    extends LocalRepository<T>
+public abstract class LocalObservedRepository<TId, T extends RepositoryItem<TId>, TObserver extends RepositoryObserver<T>>
+    extends LocalRepository<TId, T>
         implements Observed<TObserver> {
     protected List<TObserver> observers;
 
@@ -15,6 +15,7 @@ public abstract class LocalObservedRepository<T, TObserver extends RepositoryObs
     public void init() {
         observers = new ArrayList<>();
         initArray();
+        updateObservers();
     }
 
     public void subscribe(TObserver o) {
@@ -31,6 +32,12 @@ public abstract class LocalObservedRepository<T, TObserver extends RepositoryObs
         }
     }
 
+    public void updateObservers(T upd) {
+        for (TObserver o: observers) {
+            o.update(Collections.singletonList(upd));
+        }
+    }
+
     public List<T> getAll() {
         return array;
     }
@@ -41,10 +48,20 @@ public abstract class LocalObservedRepository<T, TObserver extends RepositoryObs
         updateObservers();
     }
 
+    public void add(T item) {
+        array.add(item);
+        updateObservers(item);
+    }
+
+    public void remove(T item) {
+        array.remove(item);
+        updateObservers();
+    }
+
     @Override
     public void update(T item) {
-        T found = get(item);
+        T found = get(item.getId());
         array.set(array.indexOf(found), item);
-        updateObservers();
+        updateObservers(item);
     }
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class LocalRepository<T> {
+public abstract class LocalRepository<TId, T extends RepositoryItem<TId>> {
     protected List<T> array;
 
     public void init() {
@@ -31,13 +31,13 @@ public abstract class LocalRepository<T> {
         array.remove(item);
     }
 
-    public T get(Object id) {
-        Optional<T> res = array.stream().filter(item -> item.equals(id)).findFirst();
+    public T get(TId id) {
+        Optional<T> res = array.stream().filter(item -> item.getId().equals(id)).findFirst();
         return res.orElse(null);
     }
 
     public void update(T item) {
-        T found = get(item);
+        T found = get(item.getId());
         array.set(array.indexOf(found), item);
     }
 }

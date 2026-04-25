@@ -4,10 +4,11 @@ import com.example.mindmines.R;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.game.equipment.types.Equipment;
+import com.example.mindmines.services.repositories.RepositoryItem;
 
 import java.io.Serializable;
 
-public class Char implements Serializable {
+public class Char implements Serializable, RepositoryItem<Integer> {
     private Integer charId;
     private String name;
     private CharStats stats;
@@ -34,7 +35,7 @@ public class Char implements Serializable {
         this.image = image;
     }
 
-    public Integer getCharId() {
+    public Integer getId() {
         return charId;
     }
 

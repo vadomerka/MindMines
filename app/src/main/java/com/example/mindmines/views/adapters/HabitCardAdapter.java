@@ -41,12 +41,12 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
     public void onBindViewHolder(CardViewHolder holder, int position) {
         Habit h = items.get(position);
 
-        holder.hId = h.getHabitId();
+        holder.hId = h.getId();
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
         holder.checkBtn.setOnClickListener(v -> HabitCurrentCheckerService.buttonStatusCheck((Button) v));  // buttonUpdate
         holder.checkBtn.setTag(h);
-        holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getHabitId()));
+        holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getId()));
 
         holder.streakTextView.setText(h.getStreakNumber().toString());
         holder.penaltyTextView.setText(h.getPenaltyNumber().toString());

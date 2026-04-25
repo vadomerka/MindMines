@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ExpeditionManager {
-    private static ExpeditionRepository rep = RepositoryService.getExpeditionRepository();
+    private static final ExpeditionRepository rep = RepositoryService.getExpeditionRepository();
 
     public static Expedition getLatestUnfinishedExpedition() {
         List<Expedition> expeditions = rep.getAll().stream()
@@ -28,8 +28,7 @@ public class ExpeditionManager {
     }
 
     public static List<Expedition> getExpeditions() {
-        List<Expedition> expeditions = rep.getAll();
-        return expeditions;
+        return rep.getAll();
     }
 
     public static boolean isEnded(Expedition ex) {
@@ -44,7 +43,6 @@ public class ExpeditionManager {
     public static void finishExp(Expedition ex) {
         ex.setFinished(true);
         rep.update(ex);
-        ExpManager.gainFinishedExpedition(ex);  // Возможно стоит заменить на ExpeditionObserver?
     }
 
     public static void removeLast(Expedition ex) {

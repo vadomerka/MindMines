@@ -16,7 +16,7 @@ public class HabitFactory {
     private static int getId() {
         HabitRepository rep = RepositoryService.getHabitRepository();
         OptionalInt rm = rep.getAll() != null
-                ? rep.getAll().stream().mapToInt(Habit::getHabitId).max()
+                ? rep.getAll().stream().mapToInt(Habit::getId).max()
                 : OptionalInt.of(0);
         return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }
@@ -165,7 +165,7 @@ public class HabitFactory {
 
     public static HabitEntity createEntity(Habit h) {
         return new HabitEntity(
-                h.getHabitId(),
+                h.getId(),
                 h.getUserId(),
                 h.getType().toString(),
                 h.getTitle(),

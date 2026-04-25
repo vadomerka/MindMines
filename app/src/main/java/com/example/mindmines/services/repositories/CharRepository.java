@@ -11,9 +11,8 @@ import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.views.observers.CharObserver;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
-public class CharRepository extends LocalObservedRepository<Char, CharObserver> {
+public class CharRepository extends LocalObservedRepository<Integer, Char, CharObserver> {
     protected final int MAX_CHARACTERS = 4;
 
     @Override
@@ -30,19 +29,6 @@ public class CharRepository extends LocalObservedRepository<Char, CharObserver> 
     public void add(Char item) {
         if (array.size() == MAX_CHARACTERS) return;
         array.add(item);
-    }
-
-    @Override
-    public Char get(Object obj) {
-        int itemId = (int) obj;
-        Optional<Char> res = array.stream().filter(i -> i.getCharId() == itemId).findFirst();
-        return res.orElse(null);
-    }
-
-    @Override
-    public void update(Char item) {
-        Char found = get(item.getCharId());
-        array.set(array.indexOf(found), item);
-        updateObservers();
+        updateObservers(item);
     }
 }

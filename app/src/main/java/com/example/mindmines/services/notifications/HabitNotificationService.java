@@ -31,7 +31,7 @@ public class HabitNotificationService {
 
         Intent intent = new Intent(context, NotifiBroadcastReciever.class);
         intent.setAction(ALARM_ACTION);
-        intent.putExtra("habitId", h.getHabitId());
+        intent.putExtra("habitId", h.getId());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,

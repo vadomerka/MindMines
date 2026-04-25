@@ -22,7 +22,7 @@ public class CharFactory {
     private static int getId() {
         CharRepository rep = RepositoryService.getCharRepository();
         OptionalInt rm = rep.getAll() != null
-                ? rep.getAll().stream().mapToInt(Char::getCharId).max()
+                ? rep.getAll().stream().mapToInt(Char::getId).max()
                 : OptionalInt.of(0);
         return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }
@@ -57,6 +57,6 @@ public class CharFactory {
 
     public static CharEntity createEntity(Char ch) {
         Gson g = new Gson();
-        return new CharEntity(ch.getCharId(), g.toJson(ch));
+        return new CharEntity(ch.getId(), g.toJson(ch));
     }
 }

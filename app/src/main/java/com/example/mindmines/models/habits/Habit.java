@@ -1,8 +1,10 @@
 package com.example.mindmines.models.habits;
 
+import com.example.mindmines.services.repositories.RepositoryItem;
+
 import java.time.OffsetDateTime;
 
-public class Habit {
+public class Habit implements RepositoryItem<Integer> {
     private Integer habitId;
     private final Integer userId;
     private HabitType type;
@@ -56,7 +58,7 @@ public class Habit {
         this.interval = interval;
     }
 
-    public Integer getHabitId() {
+    public Integer getId() {
         return habitId;
     }
     public void setHabitId(Integer value) { habitId = value; }

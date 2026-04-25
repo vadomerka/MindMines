@@ -5,12 +5,16 @@ import android.util.Log;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.views.observers.ExpeditionObserver;
+
+import java.util.List;
 
 public class ExpManager {
     private static final long baseExpForHabit = 10L;
     private static final long baseMaxExpChange = 10;
     private static final double maxExpChangeKoef = 1.5;
     private static final int maxLevel = 30;
+    private static final ExpeditionObserver exProxy = ExpManager::gainFinishedExpedition;
 
     public static long getBaseMaxExpChange() { return baseMaxExpChange; }
 
@@ -47,7 +51,8 @@ public class ExpManager {
         status.setLevel(level);
     }
 
-    public static void gainFinishedExpedition(Expedition expedition) {
-        Log.d("Debug ExpManager", "gainFinishedExpedition: " + expedition.getTitle());
+    public static void gainFinishedExpedition(List<Expedition> expedition) {
+        Log.d("Debug Expedition ExpManager", "gainFinishedExpedition: " +
+                expedition.get(0).getTitle());
     }
 }

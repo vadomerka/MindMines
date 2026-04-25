@@ -91,6 +91,16 @@
             android:layout_marginTop="20dp"
             android:textSize="20sp"
             />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/update_last_expedition_debug_button"
+            android:visibility="gone"
+            android:text="@string/delete_last_expedition_debug_button"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            />
     </LinearLayout>
 
 </RelativeLayout>

@@ -9,19 +9,18 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.game.characters.Char;
-import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
-import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.ExpeditionManager;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.repositories.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseActivity;
+import com.example.mindmines.views.game.expedition.ExpeditionFinishView;
+import com.example.mindmines.views.game.expedition.ExpeditionStartView;
+import com.example.mindmines.views.game.expedition.ExpeditionTimerView;
 import com.example.mindmines.views.game.expedition.ExpeditionView;
 import com.example.mindmines.views.observers.ExpeditionObserver;
 import com.example.mindmines.views.utils.ViewsUtils;
@@ -33,12 +32,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartyView extends BaseActivity {
-    private Handler timerHandler = new Handler(Looper.getMainLooper());
+    private final Handler timerHandler = new Handler(Looper.getMainLooper());
     private ExpeditionRepository rep;
     private Runnable timerRunnable;
-    private Expedition activeExpedition;
     private MaterialButton expBtn;
-    private ExpeditionView expeditionView;
+    private ExpeditionStartView exStartView;
+    private ExpeditionTimerView exView;
+    private ExpeditionFinishView exFinishView;
     private final ExpeditionObserver expeditionObserver = upd -> updateExpedition();
 
     @Override
@@ -49,21 +49,18 @@ public class PartyView extends BaseActivity {
 
         rep = RepositoryService.getExpeditionRepository();
         rep.subscribe(expeditionObserver);
-        expeditionView = new ExpeditionView(this, getLayoutInflater());
+
+        loadExViews();
         loadCharacterButtons();
         loadExpedition();
 
         loadDebugTools();
     }
 
-    @Override
-    protected int getContentLayoutId() {
-        return R.layout.char_party_view;
-    }
-
-    @Override
-    protected Context getCurrentContext() {
-        return this;
+    private void loadExViews() {
+        exStartView = new ExpeditionStartView(this, getLayoutInflater());
+        exView = new ExpeditionTimerView(this, getLayoutInflater());
+        exFinishView = new ExpeditionFinishView(this, getLayoutInflater());
     }
 
     private void loadCharacterButtons() {
@@ -76,8 +73,15 @@ public class PartyView extends BaseActivity {
         for (int i = 0; i < chars.size(); i++) {
             int finalI = i;
             btnArr.get(i).setEnabled(true);
-            btnArr.get(i).setOnClickListener(v -> openCharView(chars.get(finalI).getCharId()));
+            btnArr.get(i).setOnClickListener(v -> openCharView(chars.get(finalI).getId()));
         }
+    }
+
+    public void openCharView(int chId) {
+        Intent myIntent = new Intent(PartyView.this, CharView.class);
+        myIntent.putExtra("id", chId);
+        PartyView.this.startActivity(myIntent);
+        finish();
     }
 
     private void updateExpedition() {
@@ -87,12 +91,13 @@ public class PartyView extends BaseActivity {
 
     private void loadExpedition() {
         ExpeditionView.debugLogExpeditions();
-        Expedition lExp = ExpeditionManager.getLatestUnfinishedExpedition();  // getLatestUnfinishedExpedition
+
+        Expedition lExp = ExpeditionManager.getLatestUnfinishedExpedition();
         expBtn = findViewById(R.id.expedition_view_button);
         if (lExp == null) {
             expBtn.setText("Начать экспедицию");
             expBtn.setBackgroundColor(Color.parseColor("#FF6200EE"));
-            expBtn.setOnClickListener(v -> expeditionView.startExpedition());
+            expBtn.setOnClickListener(v -> exStartView.startExpedition());
             stopTimer();
             return;
         }
@@ -104,12 +109,11 @@ public class PartyView extends BaseActivity {
         if (isEnded) {
             expBtn.setText("Собрать награду");
             expBtn.setBackgroundColor(Color.parseColor("#11FF00"));
-            expBtn.setOnClickListener(v -> expeditionView.finishExpedition(lExp));
+            expBtn.setOnClickListener(v -> exFinishView.finishExpedition(lExp));
             stopTimer();
         } else {
-            activeExpedition = lExp;
             startTimer(expBtn, lExp);
-            expBtn.setOnClickListener(v -> expeditionView.viewExpedition(lExp));
+            expBtn.setOnClickListener(v -> exView.viewExpedition(lExp));
         }
     }
 
@@ -149,15 +153,21 @@ public class PartyView extends BaseActivity {
     }
 
     @Override
+    protected int getContentLayoutId() { return R.layout.char_party_view; }
+
+    @Override
+    protected Context getCurrentContext() { return this; }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        stopTimer();
+//        stopTimer();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadExpedition();
+//        loadExpedition();
     }
 
     @Override
@@ -175,17 +185,14 @@ public class PartyView extends BaseActivity {
         UserStatusManager.unsubscribe(usProxy);
     }
 
-    public void openCharView(int chId) {
-        Intent myIntent = new Intent(PartyView.this, CharView.class);
-        myIntent.putExtra("id", chId);
-        PartyView.this.startActivity(myIntent);
-        finish();
-    }
-
     protected void loadDebugTools() {
         Button deleteBut = findViewById(R.id.delete_last_expedition_debug_button);
         deleteBut.setVisibility(View.VISIBLE);
         deleteBut.setOnClickListener(v ->
                 ExpeditionManager.removeLast(ExpeditionManager.getLatestUnfinishedExpedition()));
+
+        Button updateBut = findViewById(R.id.update_last_expedition_debug_button);
+        updateBut.setVisibility(View.VISIBLE);
+        updateBut.setOnClickListener(v -> loadExpedition());
     }
 }

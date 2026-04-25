@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class HabitRepository extends LocalObservedRepository<Habit, HabitObserver> {
+public class HabitRepository extends LocalObservedRepository<Integer, Habit, HabitObserver> {
     @Override
     public void initArray() {
         OffsetDateTime n = OffsetDateTime.now();
@@ -21,18 +21,5 @@ public class HabitRepository extends LocalObservedRepository<Habit, HabitObserve
 //                add(new Habit(3, 1, HabitType.GOOD_INTERVAL,"title3", "desc3", 1,1, 3, 1,  n, n, n, new HabitInterval(3, HabitTimeUnit.MINUTE)));
             }
         };
-    }
-
-    @Override
-    public Habit get(Object id) {
-        Optional<Habit> res = array.stream().filter(i -> i.getHabitId() == (int) id).findFirst();
-        return res.orElse(null);
-    }
-
-    @Override
-    public void update(Habit item) {
-        Habit found = get(item.getHabitId());
-        array.set(array.indexOf(found), item);
-        updateObservers();
     }
 }

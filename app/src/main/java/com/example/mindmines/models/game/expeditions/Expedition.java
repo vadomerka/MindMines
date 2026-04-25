@@ -1,8 +1,10 @@
 package com.example.mindmines.models.game.expeditions;
 
+import com.example.mindmines.services.repositories.RepositoryItem;
+
 import java.time.OffsetDateTime;
 
-public class Expedition {
+public class Expedition implements RepositoryItem<Integer> {
     private Integer expeditionId;
     private Integer userId;
     private String title;
@@ -12,7 +14,7 @@ public class Expedition {
     private OffsetDateTime finish;
     private boolean isFinished;
 
-    public Integer getExpeditionId() {
+    public Integer getId() {
         return expeditionId;
     }
 
