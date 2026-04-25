@@ -1,9 +1,11 @@
 package com.example.mindmines.models.game.expeditions;
 
-public class ExpeditionLocation {
-    private String id;
-    private String name;
-    private String image;
+import com.example.mindmines.services.repositories.RepositoryItem;
+
+public class ExpeditionLocation implements RepositoryItem<String> {
+    private final String id;
+    private final String name;
+    private final String image;
 
     public ExpeditionLocation(String id, String name, String imageResId) {
         this.id = id;
