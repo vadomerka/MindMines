@@ -51,9 +51,11 @@ public class ExpeditionView {
     }
 
     public static void debugLogExpeditions() {
-        List<Expedition> all = ExpeditionManager.getExpeditions();
-        for (Expedition ex: all) {
-            Log.d("Debug Expeditions", ex.getTitle() + " " + ex.getFinish().toLocalTime() + " " + ex.isFinished());
+        Expedition ex = ExpeditionManager.getLatestUnfinishedExpedition();
+        if (ex == null) {
+            Log.d("Debug Expeditions", "no unfinishedExpeditions");
+            return;
         }
+        Log.d("Debug Expeditions", ex.getTitle() + " " + ex.getFinish().toLocalTime() + " " + ex.isFinished());
     }
 }

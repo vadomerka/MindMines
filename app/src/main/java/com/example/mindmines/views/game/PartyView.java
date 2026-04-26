@@ -48,7 +48,7 @@ public class PartyView extends BaseActivity {
         navButton.setEnabled(false);
 
         rep = RepositoryService.getExpeditionRepository();
-        rep.subscribe(expeditionObserver);
+//        rep.subscribe(expeditionObserver);
 
         loadExViews();
         loadCharacterButtons();
@@ -109,6 +109,7 @@ public class PartyView extends BaseActivity {
         if (isEnded) {
             expBtn.setText("Собрать награду");
             expBtn.setBackgroundColor(Color.parseColor("#11FF00"));
+            Log.d("Debug Expedition", lExp.getTitle() + " " + lExp.isFinished());
             expBtn.setOnClickListener(v -> exFinishView.finishExpedition(lExp));
             stopTimer();
         } else {
@@ -123,7 +124,9 @@ public class PartyView extends BaseActivity {
             @Override
             public void run() {
                 updateTimerText(button, expedition);
-                timerHandler.postDelayed(this, 1000);
+                if (timerRunnable == this) {
+                    timerHandler.postDelayed(this, 1000);
+                }
             }
         };
         timerHandler.post(timerRunnable);
@@ -131,6 +134,7 @@ public class PartyView extends BaseActivity {
 
     private void stopTimer() {
         if (timerRunnable != null) {
+            Log.d("Debug Expedition", "stopTimer: ");
             timerHandler.removeCallbacks(timerRunnable);
             timerRunnable = null;
         }
@@ -144,6 +148,7 @@ public class PartyView extends BaseActivity {
         Duration duration = Duration.between(now, finish);
         if (duration.isNegative() || duration.isZero()) {
             // Экспедиция завершилась, обновим состояние
+            Log.d("debug Expedition", "updateTimerText: ");
             reloadExpedition(expedition);
             return;
         }

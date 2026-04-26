@@ -1,5 +1,7 @@
 package com.example.mindmines.services.repositories;
 
+import android.util.Log;
+
 import com.example.mindmines.views.observers.RepositoryObserver;
 
 import java.util.ArrayList;
