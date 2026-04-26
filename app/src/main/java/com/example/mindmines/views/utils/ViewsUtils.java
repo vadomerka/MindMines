@@ -1,9 +1,11 @@
 package com.example.mindmines.views.utils;
 
 import android.annotation.SuppressLint;
+import android.text.format.DateUtils;
 
 import java.time.Duration;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ViewsUtils {
     @SuppressLint("DefaultLocale")
@@ -42,6 +44,21 @@ public class ViewsUtils {
         if (time % 10 == 1 && time % 100 != 11) return "минута";
         if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20)) return "минуты";
         return "минут";
+    }
+
+    public static Duration getDurationTime(int number, String str) {
+        if (str == null) return null;
+        switch (str) {
+            case "Минуты":
+                return Duration.ofMinutes(number);
+            case "Часы":
+                return Duration.ofHours(number);
+            case "Дни":
+                return Duration.ofDays(number);
+            case "Месяцы":
+                return Duration.ofDays(number * 24L);
+        }
+        return Duration.ofMinutes(0);
     }
 
     public static String parseDuration(Duration duration) {

@@ -58,9 +58,9 @@ public class PartyView extends BaseActivity {
     }
 
     private void loadExViews() {
-        exStartView = new ExpeditionStartView(this, getLayoutInflater());
-        exView = new ExpeditionTimerView(this, getLayoutInflater());
-        exFinishView = new ExpeditionFinishView(this, getLayoutInflater());
+        exStartView = new ExpeditionStartView(this.getCurrentContext(), getLayoutInflater());
+        exView = new ExpeditionTimerView(this.getCurrentContext(), getLayoutInflater());
+        exFinishView = new ExpeditionFinishView(this.getCurrentContext(), getLayoutInflater());
     }
 
     private void loadCharacterButtons() {

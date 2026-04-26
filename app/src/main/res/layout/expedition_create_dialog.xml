@@ -88,7 +88,8 @@
                     app:wheelPickerOrientationVertical="true"
                     app:wheelPickerScaleDownEnabled="false"
                     app:wheelPickerItemsTextSize="8dp"
-                    app:wheelPickerItemsUnselectedTextAlpha="0.8"/>
+                    app:wheelPickerItemsUnselectedTextAlpha="0.8"
+                    app:wheelPickerDefaultSelectedItemPos="1"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
