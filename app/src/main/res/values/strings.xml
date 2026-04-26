@@ -60,4 +60,7 @@
     <string name="location_view_text">Локация</string>
     <string name="location_description_text">location_description</string>
     <string name="choose_location_text">Выберите локацию</string>
+    <string name="enter_message_view_text">Введите сообщение</string>
+    <string name="send_button_text">Отправить</string>
+    <string name="chat_assistant_title_text">Чат с ассистентом</string>
 </resources>
