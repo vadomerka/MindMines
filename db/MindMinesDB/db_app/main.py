@@ -1,12 +1,16 @@
 import os
 import uuid
 from typing import Optional
+
+import httpx
+
 from db_app.Database.db import SessionDep, init
 
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
 from db_app.Models.Habit import Habit, HabitDTO
 from db_app.Models.User import User, UserDTO
+from db_app.Models.Chat import ChatMessage, ChatRequest, ChatResponse
 from datetime import datetime as dt
 
 app = FastAPI(title="MindMinesDB", version="0.1.0")
@@ -135,6 +139,59 @@ def delete_task(habit_id: int, session: SessionDep):
     session.commit()
 
     return {"result": "success"}
+
+
+
+# Конфигурация Ollama – хост задаётся переменной окружения или по умолчанию localhost
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+OLLAMA_CHAT_URL = f"{OLLAMA_HOST}/api/chat"
+MODEL_NAME = "gemma3:1b"  # можно вынести в env при желании
+
+# ----- Модели для чата -----
+
+# ---------------------------
+
+
+# Новый эндпоинт чата
+@app.post("/api/chat", response_model=ChatResponse)
+async def chat_endpoint(req: ChatRequest):
+    # Системный промпт, задающий роль ассистента
+    system_prompt = "Ты – дружелюбный ассистент по формированию полезных привычек. Отвечай кратко, поддерживающе и по делу. Если вопрос не относится к привычкам, вежливо напоминай о своей специализации."
+
+    # Формируем полный список сообщений для Ollama
+    ollama_messages = [
+        {"role": "system", "content": system_prompt}
+    ]
+    # Добавляем историю диалога, переданную клиентом
+    for msg in req.messages:
+        if msg.role in ("user", "assistant"):
+            ollama_messages.append({"role": msg.role, "content": msg.content})
+
+    if not any(m["role"] == "user" for m in ollama_messages):
+        raise HTTPException(status_code=400, detail="Нет сообщения пользователя")
+
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        try:
+            resp = await client.post(
+                OLLAMA_CHAT_URL,
+                json={
+                    "model": MODEL_NAME,
+                    "messages": ollama_messages,
+                    "stream": False,
+                    "options": {
+                        "temperature": 0.7,
+                        "num_predict": 512  # ограничиваем длину ответа
+                    }
+                }
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            answer = data["message"]["content"]
+            return ChatResponse(reply=answer)
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=502, detail=f"Ошибка модели: {e.response.text}")
+        except httpx.RequestError as e:
+            raise HTTPException(status_code=503, detail=f"Сервис Ollama недоступен: {str(e)}")
 
 
 if __name__ == "__main__":

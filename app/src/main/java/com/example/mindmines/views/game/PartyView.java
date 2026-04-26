@@ -48,7 +48,6 @@ public class PartyView extends BaseActivity {
         navButton.setEnabled(false);
 
         rep = RepositoryService.getExpeditionRepository();
-//        rep.subscribe(expeditionObserver);
 
         loadExViews();
         loadCharacterButtons();

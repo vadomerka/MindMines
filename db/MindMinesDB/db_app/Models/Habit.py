@@ -2,7 +2,6 @@ from datetime import date
 
 from pydantic import BaseModel, constr
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Float
-from sqlalchemy.ext.declarative import declarative_base
 from db_app.core.base import Base
 
 

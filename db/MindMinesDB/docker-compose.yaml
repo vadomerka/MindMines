@@ -5,7 +5,25 @@ services:
       - "8000:8000"
     environment:
       - DEBUG=False
+      - OLLAMA_HOST=http://ollama:11434   # <-- адрес для связи
     volumes:
       - .:/app
-#  db:
-#    build: ./db_app/
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"                     # можно не открывать наружу, но для отладки удобно
+    volumes:
+      - ollama_data:/root/.ollama         # сохраняем загруженные модели
+    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 5 && ollama pull gemma3:1b && wait"]
+    # Альтернатива: если хотите тянуть модель только при первом запуске, используйте скрипт
+    environment:
+     - OLLAMA_KEEP_ALIVE=24h
+     - OLLAMA_HOST=0.0.0.0
+
+volumes:
+  ollama_data:
+
+# curl -X POST http://localhost:8000/api/chat -H "Content-Type: application/json" -d '{"messages": [ { "role": "user", "content": "Как выработать привычку пить воду по утрам?" } ] }'
