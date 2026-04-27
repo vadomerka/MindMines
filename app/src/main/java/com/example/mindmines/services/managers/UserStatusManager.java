@@ -2,7 +2,7 @@ package com.example.mindmines.services.managers;
 
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.views.observers.UserStatusObserver;
+import com.example.mindmines.services.observers.UserStatusObserver;
 
 import java.util.ArrayList;
 import java.util.List;

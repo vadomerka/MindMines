@@ -8,7 +8,7 @@ import com.example.mindmines.models.game.equipment.types.LegArmor;
 import com.example.mindmines.models.game.equipment.types.Shield;
 import com.example.mindmines.models.game.equipment.types.Sword;
 import com.example.mindmines.services.factories.CharFactory;
-import com.example.mindmines.views.observers.CharObserver;
+import com.example.mindmines.services.observers.CharObserver;
 
 import java.util.ArrayList;
 

@@ -14,15 +14,17 @@ import com.example.mindmines.db.dao.CharDao;
 import com.example.mindmines.db.dao.ExpeditionCharCrossRefDao;
 import com.example.mindmines.db.dao.ExpeditionDao;
 import com.example.mindmines.db.dao.HabitDao;
+import com.example.mindmines.db.dao.MessageDao;
 import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.db.entities.ExpeditionEntity;
 import com.example.mindmines.db.entities.HabitEntity;
+import com.example.mindmines.db.entities.MessageEntity;
 import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 
 import java.time.OffsetDateTime;
 
 @Database(entities = {HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
-        ExpeditionCharCrossRef.class}, version = 6, exportSchema = false)
+        ExpeditionCharCrossRef.class, MessageEntity.class}, version = 7, exportSchema = false)
 @TypeConverters(HabitTypeConverter.class)
 public abstract class MindMinesDatabase extends RoomDatabase {
     private static volatile MindMinesDatabase INSTANCE;
@@ -33,6 +35,7 @@ public abstract class MindMinesDatabase extends RoomDatabase {
 
     public abstract ExpeditionDao expeditionDao();
     public abstract ExpeditionCharCrossRefDao expeditionCharCrossRefDao();
+    public abstract MessageDao messageDao();
 
     public static MindMinesDatabase getInstance(Context context) {
         if (INSTANCE == null) {
@@ -43,12 +46,13 @@ public abstract class MindMinesDatabase extends RoomDatabase {
                                     MindMinesDatabase.class,
                                     "habits.db"
                             )
-                            .allowMainThreadQueries()  // not recommended
+                            .allowMainThreadQueries()
                             .addMigrations(MIGRATION_1_2)
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)
                             .addMigrations(MIGRATION_4_5)
                             .addMigrations(MIGRATION_5_6)
+                            .addMigrations(MIGRATION_6_7)
                             .build();
                 }
             }
@@ -101,6 +105,21 @@ public abstract class MindMinesDatabase extends RoomDatabase {
                     "ON `expedition_char_cross_ref` (`charId`)");
             database.execSQL("CREATE INDEX IF NOT EXISTS `index_expedition_char_cross_ref_expeditionId` " +
                     "ON `expedition_char_cross_ref` (`expeditionId`)");
+        }
+    };
+
+    static final Migration MIGRATION_6_7 = new Migration(6, 7) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `messages` (" +
+                    "`messageId` INTEGER NOT NULL, " +
+                    "`author` TEXT, " +
+                    "`type` TEXT, " +
+                    "`context` TEXT, " +
+                    "`body` INTEGER, " +
+                    "`creationTime` TEXT, " +
+                    "`receivedTime` TEXT, " +
+                    "PRIMARY KEY(`messageId`))");
         }
     };
 }

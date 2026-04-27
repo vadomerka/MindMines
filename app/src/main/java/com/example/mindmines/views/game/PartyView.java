@@ -22,7 +22,7 @@ import com.example.mindmines.views.game.expedition.ExpeditionFinishView;
 import com.example.mindmines.views.game.expedition.ExpeditionStartView;
 import com.example.mindmines.views.game.expedition.ExpeditionTimerView;
 import com.example.mindmines.views.game.expedition.ExpeditionView;
-import com.example.mindmines.views.observers.ExpeditionObserver;
+import com.example.mindmines.services.observers.ExpeditionObserver;
 import com.example.mindmines.views.utils.ViewsUtils;
 import com.google.android.material.button.MaterialButton;
 

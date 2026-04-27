@@ -19,7 +19,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_BOT = 1;
     private List<ChatMessage> messages;
 
-    ChatAdapter(List<ChatMessage> messages) {
+    public ChatAdapter(List<ChatMessage> messages) {
         this.messages = messages;
     }
 

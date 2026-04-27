@@ -1,8 +1,6 @@
 package com.example.mindmines.services.repositories;
 
-import android.util.Log;
-
-import com.example.mindmines.views.observers.RepositoryObserver;
+import com.example.mindmines.services.observers.RepositoryObserver;
 
 import java.util.ArrayList;
 import java.util.Collections;

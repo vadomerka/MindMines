@@ -5,7 +5,7 @@ import android.util.Log;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.views.observers.ExpeditionObserver;
+import com.example.mindmines.services.observers.ExpeditionObserver;
 
 import java.util.List;
 

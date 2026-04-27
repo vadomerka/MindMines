@@ -17,7 +17,7 @@ import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseActivity;
-import com.example.mindmines.views.observers.HabitObserver;
+import com.example.mindmines.services.observers.HabitObserver;
 import com.example.mindmines.views.adapters.HabitCardAdapter;
 
 import java.util.ArrayList;

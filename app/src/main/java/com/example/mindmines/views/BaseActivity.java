@@ -22,7 +22,7 @@ import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.views.assistant.AssistantView;
 import com.example.mindmines.views.game.PartyView;
 import com.example.mindmines.views.habit.HabitsView;
-import com.example.mindmines.views.observers.UserStatusObserver;
+import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.views.user.FriendsView;
 import com.example.mindmines.views.user.ProfileView;
 

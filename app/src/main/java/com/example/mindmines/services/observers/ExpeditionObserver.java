@@ -1,4 +1,4 @@
-package com.example.mindmines.views.observers;
+package com.example.mindmines.services.observers;
 
 import com.example.mindmines.models.game.expeditions.Expedition;
 

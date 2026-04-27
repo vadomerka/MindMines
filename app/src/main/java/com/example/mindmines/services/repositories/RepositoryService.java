@@ -6,6 +6,7 @@ public class RepositoryService {
     private static ExpeditionRepository eRep = null;
     private static ExpeditionLocationRepository elRep = null;
     private static ExpeditionCharRepository cheRep = null;
+    private static ChatMessageRepository mRep = null;
 
     public static void initAll() {
         getCharRepository().init();
@@ -13,6 +14,7 @@ public class RepositoryService {
         getExpeditionRepository().init();
         getExpeditionLocationRepository().init();
         getExpeditionCharRepository().init();
+        getChatMessageRepository().init();
     }
 
     public static CharRepository getCharRepository() {
@@ -38,5 +40,10 @@ public class RepositoryService {
     public static ExpeditionCharRepository getExpeditionCharRepository() {
         if (cheRep == null) cheRep = new ExpeditionCharRepository();
         return cheRep;
+    }
+
+    public static ChatMessageRepository getChatMessageRepository() {
+        if (mRep == null) mRep = new ChatMessageRepository();
+        return mRep;
     }
 }

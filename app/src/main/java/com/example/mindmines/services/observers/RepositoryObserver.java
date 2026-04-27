@@ -1,4 +1,4 @@
-package com.example.mindmines.views.observers;
+package com.example.mindmines.services.observers;
 
 import java.util.List;
 
