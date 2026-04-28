@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
@@ -48,6 +50,7 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         holder.checkBtn.setTag(h);
         holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getId()));
 
+        if (MainActivity.isDebug()) { holder.debugHolder.setVisibility(View.VISIBLE); }
         holder.streakTextView.setText(h.getStreakNumber().toString());
         holder.penaltyTextView.setText(h.getPenaltyNumber().toString());
 
@@ -74,6 +77,7 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         public TextView descTextView;
         public Button changeBtn;
         public Button checkBtn;
+        public LinearLayout debugHolder;
         public TextView streakTextView;
         public TextView penaltyTextView;
 
@@ -84,6 +88,8 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
             descTextView = itemView.findViewById(R.id.habit_desc_card_view);
             changeBtn = itemView.findViewById(R.id.habit_card_change_btn);
             checkBtn = itemView.findViewById(R.id.habit_card_check_btn);
+
+            debugHolder = itemView.findViewById(R.id.habit_card_debug_layout);
             streakTextView = itemView.findViewById(R.id.habit_streak_textView);
             penaltyTextView = itemView.findViewById(R.id.habit_penalty_textView);
         }

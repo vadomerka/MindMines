@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
@@ -42,11 +43,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         container.addView(childView);
 
         initNavigation();
+        updateUserStatus(null);
     }
 
     @SuppressLint("DefaultLocale")
     protected void updateUserStatus(List<UserStatus> upd) {
-        Log.d("Debug BasicActivity updateUserStatus", "updateUserStatus: ");
+        if (MainActivity.isDebug()) { Log.d("Debug BasicActivity updateUserStatus", "updateUserStatus: "); }
         runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getStatus();
             levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",

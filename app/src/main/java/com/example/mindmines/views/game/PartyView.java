@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.game.characters.Char;
@@ -53,7 +54,7 @@ public class PartyView extends BaseActivity {
         loadCharacterButtons();
         loadExpedition();
 
-        loadDebugTools();
+        if (MainActivity.isDebug()) { loadDebugTools(); }
     }
 
     private void loadExViews() {
@@ -84,7 +85,7 @@ public class PartyView extends BaseActivity {
     }
 
     private void updateExpedition() {
-        Log.d("debug Expedition", "updateExpedition: ");
+        if (MainActivity.isDebug()) { Log.d("debug Expedition", "updateExpedition: "); }
         loadExpedition();
     }
 
@@ -108,7 +109,7 @@ public class PartyView extends BaseActivity {
         if (isEnded) {
             expBtn.setText("Собрать награду");
             expBtn.setBackgroundColor(Color.parseColor("#11FF00"));
-            Log.d("Debug Expedition", lExp.getTitle() + " " + lExp.isFinished());
+            if (MainActivity.isDebug()) { Log.d("Debug Expedition", lExp.getTitle() + " " + lExp.isFinished()); }
             expBtn.setOnClickListener(v -> exFinishView.finishExpedition(lExp));
             stopTimer();
         } else {
@@ -147,7 +148,7 @@ public class PartyView extends BaseActivity {
         Duration duration = Duration.between(now, finish);
         if (duration.isNegative() || duration.isZero()) {
             // Экспедиция завершилась, обновим состояние
-            Log.d("debug Expedition", "updateTimerText: ");
+            if (MainActivity.isDebug()) { Log.d("debug Expedition", "updateTimerText: "); }
             reloadExpedition(expedition);
             return;
         }
@@ -189,6 +190,7 @@ public class PartyView extends BaseActivity {
         UserStatusManager.unsubscribe(usProxy);
     }
 
+    @Override
     protected void loadDebugTools() {
         Button deleteBut = findViewById(R.id.delete_last_expedition_debug_button);
         deleteBut.setVisibility(View.VISIBLE);

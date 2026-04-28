@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.managers.UserStatusManager;
@@ -34,7 +35,7 @@ public class HabitsView extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         initUI();
-        loadDebugTools();
+        if (MainActivity.isDebug()) { loadDebugTools(); }
     }
 
     private void initUI() {
@@ -86,8 +87,6 @@ public class HabitsView extends BaseActivity {
     }
 
     private List<Habit> loadItemList() {
-        // TODO: implement sort and filters.
-        // TODO: load only current user habits
         return RepositoryService.getHabitRepository().getAll();
     }
 

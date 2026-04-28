@@ -38,10 +38,10 @@ public class HabitCurrentCheckerService extends BasicChecker {
         Habit h = (Habit) btn.getTag();
         if (isHabitUnchecked(h))  {
             btn.setTextAppearance(R.style.UncheckedHabitButton);
-            btn.setBackgroundColor(Color.RED);
+            btn.setBackgroundColor(Color.parseColor("#D56363"));
         } else {
             btn.setTextAppearance(R.style.CheckedHabitButton);
-            btn.setBackgroundColor(Color.GREEN);
+            btn.setBackgroundColor(Color.parseColor("#6DFF8D"));
         }
     }
 
