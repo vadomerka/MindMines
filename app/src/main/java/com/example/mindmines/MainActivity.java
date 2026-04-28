@@ -1,6 +1,9 @@
 package com.example.mindmines;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -16,24 +19,23 @@ import com.example.mindmines.db.datasync.DataSynchronizerManager;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.timers.DataBackupTimer;
 import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
-import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.views.habit.HabitsView;
-import com.example.mindmines.views.user.LoginView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Debug start finish";
+    private static final String TAG = "Debug MainActivity";
     private static final boolean DEBUG = false;
     private static DataSynchronizerManager dbSync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initNavigation();
 
         // TODO: change to loading from server.
         RepositoryService.initAll();
         dbSync = DataSynchronizerManager.getInstance(this);
         dbSync.loadFromDB();
-        RepositoryService.getCharRepository().initArray();
 
         // Notifications init
         createNotificationChannel();
@@ -50,11 +52,25 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        Intent myIntent = new Intent(MainActivity.this, HabitsView.class);
-        if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
-            myIntent = new Intent(MainActivity.this, LoginView.class);
-        }
-        MainActivity.this.startActivity(myIntent);
+//        if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
+//            Intent myIntent = new Intent(MainActivity.this, LoginView.class);
+//            MainActivity.this.startActivity(myIntent);
+//            finish();
+//        }
+    }
+
+//    private void initNavigation() {
+//        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_bar);
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavigationUI.setupWithNavController(bottomNav, navController);
+//    }
+
+    private void initNavigation() {
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_bar);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+        NavigationUI.setupWithNavController(bottomNav, navController);
     }
 
     @Override

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/profileFragment"
+        android:title="@string/profile_title_text"
+        android:icon="@drawable/ic_profile"
+        />
+    <item
+        android:id="@+id/assistantFragment"
+        android:title="@string/assistant_title_text"
+        android:icon="@drawable/ic_assistant"/>
+    <item
+        android:id="@+id/habitsFragment"
+        android:title="@string/habits_view_title_text"
+        android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/partyFragment"
+        android:title="@string/party_title_text"
+        android:icon="@drawable/ic_game"/>
+    <item
+        android:id="@+id/friendsFragment"
+        android:title="@string/friends_title_text"
+        android:icon="@drawable/ic_friends"/>
+</menu>

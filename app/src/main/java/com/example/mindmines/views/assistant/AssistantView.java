@@ -1,6 +1,5 @@
 package com.example.mindmines.views.assistant;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,9 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,23 +18,16 @@ import com.example.mindmines.R;
 import com.example.mindmines.models.chat.ChatMessage;
 import com.example.mindmines.services.factories.ChatMessageFactory;
 import com.example.mindmines.services.senders.ChatMessagesSender;
-import com.example.mindmines.views.BaseActivity;
+import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.adapters.ChatAdapter;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AssistantView extends BaseActivity {
+
+public class AssistantView extends BaseFragment {
 
     private RecyclerView chatRecyclerView;
     private EditText messageInput;
@@ -47,16 +39,20 @@ public class AssistantView extends BaseActivity {
     private Handler mainHandler = new Handler(Looper.getMainLooper());
 
 
+    public AssistantView() {
+        super(R.layout.assistant_chat_view);
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        chatRecyclerView = findViewById(R.id.chat_recycler_view);
-        messageInput = findViewById(R.id.message_input);
-        sendButton = findViewById(R.id.send_button);
-        typingIndicator = findViewById(R.id.typing_indicator);
+        chatRecyclerView = requireView().findViewById(R.id.chat_recycler_view);
+        messageInput = requireView().findViewById(R.id.message_input);
+        sendButton = requireView().findViewById(R.id.send_button);
+        typingIndicator = requireView().findViewById(R.id.typing_indicator);
 
-        chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        chatRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         chatAdapter = new ChatAdapter(messageList);
         chatRecyclerView.setAdapter(chatAdapter);
 
@@ -70,20 +66,10 @@ public class AssistantView extends BaseActivity {
             return false;
         });
 
-        Button navButton = findViewById(R.id.bottom_navigation_bar2);
+        Button navButton = requireView().findViewById(R.id.bottom_navigation_bar2);
         if (navButton != null) {
             navButton.setEnabled(false);
         }
-    }
-
-    @Override
-    protected int getContentLayoutId() {
-        return R.layout.assistant_chat_view;
-    }
-
-    @Override
-    protected Context getCurrentContext() {
-        return AssistantView.this;
     }
 
     private void sendMessage() {

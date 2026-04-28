@@ -1,87 +1,72 @@
 package com.example.mindmines.views.habit;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.services.managers.UserStatusManager;
+import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
-import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.services.repositories.RepositoryService;
-import com.example.mindmines.views.BaseActivity;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.HabitObserver;
+import com.example.mindmines.services.observers.UserStatusObserver;
+import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.adapters.HabitCardAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HabitsView extends BaseActivity {
+public class HabitsView extends BaseFragment {
     private static final String TAG = "Debug HabitsView";
     private final HabitObserver hProxy = upd -> updateHabits();
-
-    private AuthManager auth;
+    private final UserStatusObserver usProxy = upd -> updateUserStatus();
     private HabitCardAdapter listAdapter;
+    private TextView levelView;
+
+    public HabitsView() {
+        super(R.layout.habits_view);
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        initUI();
-        if (MainActivity.isDebug()) { loadDebugTools(); }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initUI(view);
     }
 
-    private void initUI() {
-        initListView();
-        initButtons();
-    }
-
-    private void initListView() {
-        RecyclerView listView = findViewById(R.id.habits_list_view);
-        listView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-        List<Habit> itemList = loadItemList();
-        listAdapter = new HabitCardAdapter(itemList, this);
+    private void initUI(@NonNull View view) {
+        RecyclerView listView = view.findViewById(R.id.habits_list_view);
+        listView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        listAdapter = new HabitCardAdapter(loadItemList(), this);
         listView.setAdapter(listAdapter);
-    }
 
-    private void initButtons() {
-        Button add_btn = findViewById(R.id.add_habit_button);
-        add_btn.setOnClickListener(v -> openHabitAddView());
-        Button navButton = findViewById(R.id.bottom_navigation_bar3);
-        navButton.setEnabled(false);
+        Button addBtn = view.findViewById(R.id.add_habit_button);
+        addBtn.setOnClickListener(v -> openHabitAddView());
     }
 
     @Override
-    protected int getContentLayoutId() {
-        return R.layout.habits_view;
-    }
-
-    @Override
-    protected Context getCurrentContext() {
-        return HabitsView.this;
-    }
-
-    @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: 1");
+        Log.d(TAG, "onStart");
         RepositoryService.getHabitRepository().subscribe(hProxy);
-        hProxy.update(new ArrayList<>());
         UserStatusManager.subscribe(usProxy);
+        hProxy.update(new ArrayList<>());
         usProxy.update(new ArrayList<>());
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         RepositoryService.getHabitRepository().unsubscribe(hProxy);
         UserStatusManager.unsubscribe(usProxy);
         super.onStop();
@@ -93,35 +78,47 @@ public class HabitsView extends BaseActivity {
 
     @SuppressLint("SetTextI18n")
     private void updateHabits() {
-        Log.d(TAG, "updateHabits: updating view");
-        runOnUiThread(() -> {
+        if (!isAdded() || listAdapter == null) {
+            return;
+        }
+        requireActivity().runOnUiThread(() -> {
             List<HabitCardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
-            if (cards == null) return;
-            for (HabitCardAdapter.CardViewHolder card: cards) {
+            if (cards == null) {
+                return;
+            }
+            for (HabitCardAdapter.CardViewHolder card : cards) {
                 Habit h = RepositoryService.getHabitRepository().get(card.hId);
-
+                if (h == null) {
+                    continue;
+                }
                 card.streakTextView.setText(h.getStreakNumber().toString());
                 card.penaltyTextView.setText(h.getPenaltyNumber().toString());
-
                 HabitCurrentCheckerService.buttonViewUpdate(card.checkBtn);
             }
         });
     }
 
+    @SuppressLint("DefaultLocale")
+    private void updateUserStatus() {
+        if (!isAdded() || levelView == null) {
+            return;
+        }
+        UserStatus status = UserStatusManager.getStatus();
+        levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",
+                status.getLevel(), status.getExperience(), status.getMaxExperience()));
+    }
+
     public void openHabitAddView() {
-        Intent myIntent = new Intent(HabitsView.this, HabitAddView.class);
-        HabitsView.this.startActivity(myIntent);
-        finish();
+        NavHostFragment.findNavController(this).navigate(R.id.action_habitsFragment_to_habitAddFragment);
     }
 
     public void openHabitChangeView(int hId) {
-        Intent myIntent = new Intent(HabitsView.this, HabitChangeView.class);
-        myIntent.putExtra("id", hId);
-        HabitsView.this.startActivity(myIntent);
-        finish();
+        Bundle args = new Bundle();
+        args.putInt("id", hId);
+        NavHostFragment.findNavController(this).navigate(R.id.action_habitsFragment_to_habitChangeFragment, args);
     }
 
     public void deleteHabit(int hId) {
-        HabitController.getInstance(getCurrentContext()).delete(hId);
+        HabitController.getInstance(requireContext()).delete(hId);
     }
 }

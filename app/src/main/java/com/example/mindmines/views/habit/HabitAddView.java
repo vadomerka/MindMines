@@ -1,7 +1,5 @@
 package com.example.mindmines.views.habit;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitController;
@@ -18,15 +18,14 @@ import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
-import com.example.mindmines.services.notifications.HabitNotificationService;
-import com.example.mindmines.views.BaseActivity;
+import com.example.mindmines.views.BaseFragment;
 import com.github.vikramezhil.wheelpicker.props.OnWheelPickerListener;
 import com.github.vikramezhil.wheelpicker.view.WheelPicker;
 import com.google.android.material.slider.Slider;
 
 import java.util.ArrayList;
 
-public class HabitAddView extends BaseActivity {
+public class HabitAddView extends BaseFragment {
     protected Integer habitId;
     protected Integer userId;
 
@@ -42,22 +41,15 @@ public class HabitAddView extends BaseActivity {
     protected Slider iSlider;
     protected NumberPicker gcPicker;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public HabitAddView() {
+        super(R.layout.habit_add);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initUI();
         loadValues();
-    }
-
-    @Override
-    protected int getContentLayoutId() {
-        return R.layout.habit_add;
-    }
-
-    @Override
-    protected Context getCurrentContext() {
-        return HabitAddView.this;
     }
 
     protected void initUI() {
@@ -70,9 +62,9 @@ public class HabitAddView extends BaseActivity {
     }
 
     protected void initVars() {
-        Intent intent = getIntent();
-        habitId = intent.getIntExtra("id", 0);
-        userId = Integer.valueOf(new AuthManager(getCurrentContext()).getUserId());
+        Bundle args = getArguments();
+        habitId = args == null ? 0 : args.getInt("id", 0);
+        userId = Integer.valueOf(new AuthManager(requireContext()).getUserId());
     }
 
     protected void loadValues() {
@@ -86,21 +78,24 @@ public class HabitAddView extends BaseActivity {
     }
 
     protected void initForm() {
-        tEdit = findViewById(R.id.habit_title_value_edit);
-        dEdit = findViewById(R.id.habit_desc_value_edit);
+        View root = requireView();
+        tEdit = root.findViewById(R.id.habit_title_value_edit);
+        dEdit = root.findViewById(R.id.habit_desc_value_edit);
     }
 
     protected void initSliders() {
-        dSlider = findViewById(R.id.habit_difficulty_value_slider);
-        pSlider = findViewById(R.id.habit_priority_value_slider);
-        iSlider = findViewById(R.id.habit_interval_number_value);
-        gcPicker = findViewById(R.id.count_type_habit_count_value);
+        View root = requireView();
+        dSlider = root.findViewById(R.id.habit_difficulty_value_slider);
+        pSlider = root.findViewById(R.id.habit_priority_value_slider);
+        iSlider = root.findViewById(R.id.habit_interval_number_value);
+        gcPicker = root.findViewById(R.id.count_type_habit_count_value);
     }
 
     protected void initTypeButtons() {
-        goodThb = findViewById(R.id.good_type_habit_button);
-        badThb = findViewById(R.id.bad_type_habit_button);
-        LinearLayout htEl = findViewById(R.id.habit_type_edit_layout);
+        View root = requireView();
+        goodThb = root.findViewById(R.id.good_type_habit_button);
+        badThb = root.findViewById(R.id.bad_type_habit_button);
+        LinearLayout htEl = root.findViewById(R.id.habit_type_edit_layout);
         goodThb.setOnClickListener(v -> {
             isBadType = false;
             htEl.setVisibility(View.VISIBLE);
@@ -116,15 +111,16 @@ public class HabitAddView extends BaseActivity {
     }
 
     protected void initWheelPickers() {
-        itPicker = findViewById(R.id.habit_interval_type_value);
+        View root = requireView();
+        itPicker = root.findViewById(R.id.habit_interval_type_value);
         itPicker.setItems(new ArrayList<String>()
         {{ add ("Минуты"); add ("Дни"); add ("Недели"); add ("Месяцы"); }});
 
-        htPicker = findViewById(R.id.habit_type_value);
+        htPicker = root.findViewById(R.id.habit_type_value);
         htPicker.setItems(new ArrayList<String>()
         {{ add ("Количественная"); add ("Интервальная"); add ("Подзадачи"); }});
-        LinearLayout countThl = findViewById(R.id.count_type_habit_layout);
-        LinearLayout taskThl = findViewById(R.id.task_type_habit_layout);
+        LinearLayout countThl = root.findViewById(R.id.count_type_habit_layout);
+        LinearLayout taskThl = root.findViewById(R.id.task_type_habit_layout);
         htPicker.setOnWheelPickerListener(new OnWheelPickerListener() {
             @Override
             public void onItemSelected(int i, @NonNull String s) {
@@ -145,7 +141,7 @@ public class HabitAddView extends BaseActivity {
     }
 
     protected void initSaveButton() {
-        Button saveButton = findViewById(R.id.save_button);
+        Button saveButton = requireView().findViewById(R.id.save_button);
         saveButton.setOnClickListener(v -> saveHabit());
     }
 
@@ -176,14 +172,11 @@ public class HabitAddView extends BaseActivity {
 
         // TODO: check data
 
-        HabitController.getInstance(getCurrentContext()).add(habitData);
-        //        HabitNotificationService.scheduleDailyAlarm(this, h);
+        HabitController.getInstance(requireContext()).add(habitData);
         exit();
     }
 
     protected void exit() {
-        Intent myIntent = new Intent(HabitAddView.this, HabitsView.class);
-        HabitAddView.this.startActivity(myIntent);
-        finish();
+        NavHostFragment.findNavController(this).popBackStack();
     }
 }

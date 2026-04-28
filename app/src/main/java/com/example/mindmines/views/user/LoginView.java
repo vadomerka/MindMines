@@ -8,10 +8,10 @@ import android.util.Pair;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.UserController;
 import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.views.habit.HabitsView;
 
 public class LoginView extends AppCompatActivity {
     protected AuthManager authManager;
@@ -41,7 +41,7 @@ public class LoginView extends AppCompatActivity {
             Pair<String, Integer> res = UserController.getAuthData(email, password);
             authManager.saveUserData(res.first, res.second.toString());
 
-            Intent myIntent = new Intent(LoginView.this, HabitsView.class);
+            Intent myIntent = new Intent(LoginView.this, MainActivity.class);
             LoginView.this.startActivity(myIntent);
             finish();
         }
@@ -51,7 +51,7 @@ public class LoginView extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (authManager.isUserLoggedIn()) {
-            Intent myIntent = new Intent(LoginView.this, HabitsView.class);
+            Intent myIntent = new Intent(LoginView.this, MainActivity.class);
             LoginView.this.startActivity(myIntent);
             finish();
         }

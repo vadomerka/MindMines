@@ -22,12 +22,12 @@ import java.util.List;
 
 public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.CardViewHolder> {
     private final List<Habit> items;
-    private final HabitsView activity;
-    private List<CardViewHolder> cardViews = new ArrayList<>();
+    private final HabitsView fragment;
+    private final List<CardViewHolder> cardViews = new ArrayList<>();
 
-    public HabitCardAdapter(List<Habit> items, HabitsView activity) {
+    public HabitCardAdapter(List<Habit> items, HabitsView fragment) {
         this.items = items;
-        this.activity = activity;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -47,10 +47,10 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
         holder.checkBtn.setOnClickListener(v ->
-                HabitCurrentCheckerService.buttonStatusCheck((Button) v, activity.getApplicationContext()));
+                HabitCurrentCheckerService.buttonStatusCheck((Button) v, fragment.requireContext().getApplicationContext()));
         holder.checkBtn.setTag(h);
-        holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getId()));
-        holder.deleteBtn.setOnClickListener(v -> activity.deleteHabit(h.getId()));
+        holder.changeBtn.setOnClickListener(v -> fragment.openHabitChangeView(h.getId()));
+        holder.deleteBtn.setOnClickListener(v -> fragment.deleteHabit(h.getId()));
 
         if (MainActivity.isDebug()) { holder.debugHolder.setVisibility(View.VISIBLE); }
         holder.streakTextView.setText(h.getStreakNumber().toString());

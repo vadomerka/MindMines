@@ -1,8 +1,6 @@
 package com.example.mindmines.views.game;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +8,10 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
@@ -19,7 +21,7 @@ import com.example.mindmines.services.managers.ExpeditionManager;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.repositories.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
-import com.example.mindmines.views.BaseActivity;
+import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.game.expedition.ExpeditionFinishView;
 import com.example.mindmines.views.game.expedition.ExpeditionStartView;
 import com.example.mindmines.views.game.expedition.ExpeditionTimerView;
@@ -33,7 +35,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartyView extends BaseActivity {
+public class PartyView extends BaseFragment {
     private final Handler timerHandler = new Handler(Looper.getMainLooper());
     private ExpeditionRepository rep;
     private Runnable timerRunnable;
@@ -43,11 +45,13 @@ public class PartyView extends BaseActivity {
     private ExpeditionFinishView exFinishView;
     private final ExpeditionObserver expeditionObserver = upd -> updateExpedition();
 
+    public PartyView() {
+        super(R.layout.char_party_view);
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Button navButton = findViewById(R.id.bottom_navigation_bar4);
-        navButton.setEnabled(false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         rep = RepositoryService.getExpeditionRepository();
 
@@ -59,32 +63,31 @@ public class PartyView extends BaseActivity {
     }
 
     private void loadExViews() {
-        exStartView = new ExpeditionStartView(this.getCurrentContext(), getLayoutInflater());
-        exView = new ExpeditionTimerView(this.getCurrentContext(), getLayoutInflater());
-        exFinishView = new ExpeditionFinishView(this.getCurrentContext(), getLayoutInflater());
+        exStartView = new ExpeditionStartView(requireContext(), getLayoutInflater());
+        exView = new ExpeditionTimerView(requireContext(), getLayoutInflater());
+        exFinishView = new ExpeditionFinishView(requireContext(), getLayoutInflater());
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void loadCharacterButtons() {
-        MaterialButton charBtn1 = findViewById(R.id.open_character_btn1);
-        MaterialButton charBtn2 = findViewById(R.id.open_character_btn2);
-        MaterialButton charBtn3 = findViewById(R.id.open_character_btn3);
-        MaterialButton charBtn4 = findViewById(R.id.open_character_btn4);
+        MaterialButton charBtn1 = requireView().findViewById(R.id.open_character_btn1);
+        MaterialButton charBtn2 = requireView().findViewById(R.id.open_character_btn2);
+        MaterialButton charBtn3 = requireView().findViewById(R.id.open_character_btn3);
+        MaterialButton charBtn4 = requireView().findViewById(R.id.open_character_btn4);
         List<MaterialButton> btnArr = new ArrayList<MaterialButton>() { {add(charBtn1); add(charBtn2); add(charBtn3); add(charBtn4); }};
         List<Char> chars = RepositoryService.getCharRepository().getAll();
         for (int i = 0; i < chars.size(); i++) {
             int finalI = i;
             btnArr.get(i).setEnabled(true);
             btnArr.get(i).setOnClickListener(v -> openCharView(chars.get(finalI).getId()));
-            btnArr.get(i).setIcon(getDrawable(Integer.parseInt(chars.get(finalI).getImage())));
+            btnArr.get(i).setIcon(requireContext().getDrawable(Integer.parseInt(chars.get(finalI).getImage())));
         }
     }
 
     public void openCharView(int chId) {
-        Intent myIntent = new Intent(PartyView.this, CharView.class);
-        myIntent.putExtra("id", chId);
-        PartyView.this.startActivity(myIntent);
-        finish();
+        Bundle args = new Bundle();
+        args.putInt("id", chId);
+        NavHostFragment.findNavController(this).navigate(R.id.action_partyFragment_to_charFragment, args);
     }
 
     private void updateExpedition() {
@@ -96,7 +99,7 @@ public class PartyView extends BaseActivity {
         ExpeditionView.debugLogExpeditions();
 
         Expedition lExp = ExpeditionManager.getLatestUnfinishedExpedition();
-        expBtn = findViewById(R.id.expedition_view_button);
+        expBtn = requireView().findViewById(R.id.expedition_view_button);
         if (lExp == null) {
             expBtn.setText("Начать экспедицию");
             expBtn.setBackgroundColor(Color.parseColor("#FF6200EE"));
@@ -161,25 +164,19 @@ public class PartyView extends BaseActivity {
     }
 
     @Override
-    protected int getContentLayoutId() { return R.layout.char_party_view; }
-
-    @Override
-    protected Context getCurrentContext() { return this; }
-
-    @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
 //        stopTimer();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 //        loadExpedition();
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         rep.subscribe(expeditionObserver);
         UserStatusManager.subscribe(usProxy);
@@ -187,7 +184,7 @@ public class PartyView extends BaseActivity {
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         rep.unsubscribe(expeditionObserver);
         UserStatusManager.unsubscribe(usProxy);
@@ -195,12 +192,12 @@ public class PartyView extends BaseActivity {
 
     @Override
     protected void loadDebugTools() {
-        Button deleteBut = findViewById(R.id.delete_last_expedition_debug_button);
+        Button deleteBut = requireView().findViewById(R.id.delete_last_expedition_debug_button);
         deleteBut.setVisibility(View.VISIBLE);
         deleteBut.setOnClickListener(v ->
                 ExpeditionManager.removeLast(ExpeditionManager.getLatestUnfinishedExpedition()));
 
-        Button updateBut = findViewById(R.id.update_last_expedition_debug_button);
+        Button updateBut = requireView().findViewById(R.id.update_last_expedition_debug_button);
         updateBut.setVisibility(View.VISIBLE);
         updateBut.setOnClickListener(v -> loadExpedition());
     }

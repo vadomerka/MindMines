@@ -38,35 +38,26 @@
         </receiver>
 
         <activity
-            android:name=".views.habit.HabitChangeView"
-            android:exported="false" />
-        <activity
-            android:name=".views.habit.HabitAddView"
-            android:exported="false" />
-        <activity
             android:name=".views.user.LoginView"
             android:exported="false" />
-        <activity
-            android:name=".views.user.ProfileView"
-            android:exported="false" />
-        <activity
-            android:name=".views.habit.HabitsView"
-            android:exported="false" />
-        <activity
-            android:name=".views.user.FriendsView"
-            android:exported="false" />
-        <activity
-            android:name=".views.game.PartyView"
-            android:exported="false" />
-        <activity
-            android:name=".views.game.CharView"
-            android:exported="false" />
-        <activity
-            android:name=".views.game.ShopView"
-            android:exported="false" />
-        <activity
-            android:name=".views.assistant.AssistantView"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".views.user.ProfileView"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".views.user.FriendsView"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".views.game.PartyView"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".views.game.CharView"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".views.game.ShopView"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".views.assistant.AssistantView"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".MainActivity"
             android:exported="true">
