@@ -1,8 +1,5 @@
-from datetime import date
-
 from pydantic import BaseModel, constr
-from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Float, BigInteger
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, Integer, BigInteger
 from db_app.core.base import Base
 
 

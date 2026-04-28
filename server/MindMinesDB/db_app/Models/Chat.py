@@ -3,7 +3,7 @@ from typing import Optional, List
 
 
 class ChatMessage(BaseModel):
-    role: str  # "user" или "assistant" (или "system", но мы добавляем свой)
+    role: str
     content: str
 
 

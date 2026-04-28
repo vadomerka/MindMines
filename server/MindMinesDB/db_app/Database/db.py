@@ -6,7 +6,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db_app.core.base import Base
 
-# Use environment variable for database URL, fallback to SQLite for tests
 database_url = os.getenv("DATABASE_URL", "sqlite:///./test.db")
 engine = create_engine(database_url)
 Session = sessionmaker(engine)

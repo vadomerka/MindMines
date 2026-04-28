@@ -141,28 +141,17 @@ def delete_task(habit_id: int, session: SessionDep):
     return {"result": "success"}
 
 
-
-# Конфигурация Ollama – хост задаётся переменной окружения или по умолчанию localhost
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 OLLAMA_CHAT_URL = f"{OLLAMA_HOST}/api/chat"
-MODEL_NAME = "gemma3:1b"  # можно вынести в env при желании
+MODEL_NAME = "gemma3:1b"
 
-# ----- Модели для чата -----
-
-# ---------------------------
-
-
-# Новый эндпоинт чата
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat_endpoint(req: ChatRequest):
-    # Системный промпт, задающий роль ассистента
     system_prompt = "Ты – дружелюбный ассистент по формированию полезных привычек. Отвечай кратко, поддерживающе и по делу. Если вопрос не относится к привычкам, вежливо напоминай о своей специализации."
 
-    # Формируем полный список сообщений для Ollama
     ollama_messages = [
         {"role": "system", "content": system_prompt}
     ]
-    # Добавляем историю диалога, переданную клиентом
     for msg in req.messages:
         if msg.role in ("user", "assistant"):
             ollama_messages.append({"role": msg.role, "content": msg.content})
@@ -180,7 +169,7 @@ async def chat_endpoint(req: ChatRequest):
                     "stream": False,
                     "options": {
                         "temperature": 0.7,
-                        "num_predict": 512  # ограничиваем длину ответа
+                        "num_predict": 512
                     }
                 }
             )
