@@ -35,9 +35,11 @@ public class CharFactory {
         int atk = rnd.nextInt(variation) + baseValue * level;
         int defence = rnd.nextInt(variation) + baseValue * level;
         int speed = rnd.nextInt(variation) + baseValue * level;
+        int hp = rnd.nextInt(variation) + baseValue * level;
+        long maxExperience = rnd.nextInt(2) + (long) baseValue * level;
         return new Char(getId(), "Char " + getId(),
                 new CharStats(atk, defence, speed),
-                new CharStatus(), new CharEquipment(), image);
+                new CharStatus(hp, level, maxExperience), new CharEquipment(), image);
     }
 
     public static Char generate(int level, String image, Equipment[] equipment) {

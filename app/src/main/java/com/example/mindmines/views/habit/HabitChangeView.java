@@ -92,7 +92,7 @@ public class HabitChangeView extends HabitAddView {
 
         // TODO: check data
 
-        HabitController.change(habitId, habitData);
+        HabitController.getInstance(getCurrentContext()).change(habitId, habitData);
         exit();
     }
 

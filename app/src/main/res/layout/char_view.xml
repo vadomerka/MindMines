@@ -30,13 +30,13 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/character_portrait_view"
+        style="@style/CharacterButton"
+        android:layout_margin="10dp"
+        android:enabled="true"
+        app:cornerRadius="20dp"
         app:icon="@drawable/h1"
         app:iconGravity="top"
-        app:iconSize="125dp"
-        app:cornerRadius="20dp"
-        style="@style/CharacterButton"
-        android:enabled="true"
-        android:layout_margin="10dp"/>
+        app:iconSize="125dp" />
 
     <LinearLayout
         android:layout_marginTop="10dp"

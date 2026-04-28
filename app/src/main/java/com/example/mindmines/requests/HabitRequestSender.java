@@ -14,4 +14,9 @@ public class HabitRequestSender {
         // TODO: заменить на настоящую отправку данных серверу.
         return HabitFactory.createFromDTO(hId, h);
     }
+
+    public static boolean delete(Integer hId) {
+        // TODO: заменить на настоящую отправку данных серверу.
+        return true;
+    }
 }

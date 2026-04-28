@@ -30,7 +30,7 @@ public class HabitSyncCheckerService extends BasicChecker {
         return HabitButtonStatus.CHECKED;
     }
 
-    private static void habitStatusCheck(Habit h) {
+    private static void habitStatusCheck(Habit h, Context context) {
         switch (h.getType()) {
             case GOOD_GOAL_COUNT:
                 break;
@@ -81,14 +81,14 @@ public class HabitSyncCheckerService extends BasicChecker {
                 break;
         }
 
-        HabitController.update(h);
+        HabitController.getInstance(context).update(h);
     }
 
     // Метод обновляет стрики и пенальтии привычек по таймеру MidnightChecker
     public static void allHabitsCheck(Context context) {
         List<Habit> hl = RepositoryService.getHabitRepository().getAll();
         for (Habit h: hl) {
-            habitStatusCheck(h);
+            habitStatusCheck(h, context);
         }
         UserStatusManager.updateObservers();
     }

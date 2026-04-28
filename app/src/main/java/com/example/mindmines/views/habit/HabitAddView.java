@@ -176,7 +176,7 @@ public class HabitAddView extends BaseActivity {
 
         // TODO: check data
 
-        HabitController.add(habitData);
+        HabitController.getInstance(getCurrentContext()).add(habitData);
         //        HabitNotificationService.scheduleDailyAlarm(this, h);
         exit();
     }

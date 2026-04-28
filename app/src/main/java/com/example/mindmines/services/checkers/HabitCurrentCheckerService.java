@@ -1,5 +1,6 @@
 package com.example.mindmines.services.checkers;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.widget.Button;
 
@@ -45,23 +46,23 @@ public class HabitCurrentCheckerService extends BasicChecker {
         }
     }
 
-    public static void buttonStatusCheck(Button btn) {
+    public static void buttonStatusCheck(Button btn, Context context) {
         Habit h = (Habit) btn.getTag();
         // Если пользователь нажал кнопку, и привычка не была отмечена -> отмечаем.
         if (isHabitUnchecked(h)) {
-            checkHabit(h);
+            checkHabit(h, context);
         }
         buttonViewUpdate(btn);
 
-        HabitController.update(h);
+        HabitController.getInstance(context).update(h);
     }
 
-    private static void checkHabit(Habit h) {
+    private static void checkHabit(Habit h, Context context) {
         h.setLastCompletedAt(OffsetDateTime.now());
 
         h.setStreakNumber(h.getStreakNumber() + 1);
         h.setPenaltyNumber(0);
-        HabitController.update(h);
+        HabitController.getInstance(context).update(h);
 
         UserStatusManager.gain(h);
         UserStatusManager.updateObservers();

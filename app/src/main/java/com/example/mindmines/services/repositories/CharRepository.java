@@ -18,11 +18,12 @@ public class CharRepository extends LocalObservedRepository<Integer, Char, CharO
     @Override
     public void initArray() {
         array = new ArrayList<>();
-        array.add(CharFactory.generate(1, String.valueOf(R.drawable.h1),
+        array.add(CharFactory.generate(1, String.valueOf(R.drawable.g2),
                 new Equipment[] { new Sword(), new Shield(), new BodyArmor(), new LegArmor() }));
-        array.add(CharFactory.generate(2, String.valueOf(R.drawable.h2),
+        array.add(CharFactory.generate(2, String.valueOf(R.drawable.g3),
                 new Equipment[] { new Sword(), new LegArmor() }));
-        array.add(CharFactory.generate(3, String.valueOf(R.drawable.h3), new Equipment[] { }));
+        array.add(CharFactory.generate(3, String.valueOf(R.drawable.g4), new Equipment[] { }));
+        array.add(CharFactory.generate(5, String.valueOf(R.drawable.g5), new Equipment[] { }));
     }
 
     @Override

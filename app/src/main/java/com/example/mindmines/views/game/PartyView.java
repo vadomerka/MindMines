@@ -1,5 +1,6 @@
 package com.example.mindmines.views.game;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -63,17 +64,19 @@ public class PartyView extends BaseActivity {
         exFinishView = new ExpeditionFinishView(this.getCurrentContext(), getLayoutInflater());
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void loadCharacterButtons() {
-        Button charBtn1 = findViewById(R.id.open_character_btn1);
-        Button charBtn2 = findViewById(R.id.open_character_btn2);
-        Button charBtn3 = findViewById(R.id.open_character_btn3);
-        Button charBtn4 = findViewById(R.id.open_character_btn4);
-        List<Button> btnArr = new ArrayList<Button>() { {add(charBtn1); add(charBtn2); add(charBtn3); add(charBtn4); }};
+        MaterialButton charBtn1 = findViewById(R.id.open_character_btn1);
+        MaterialButton charBtn2 = findViewById(R.id.open_character_btn2);
+        MaterialButton charBtn3 = findViewById(R.id.open_character_btn3);
+        MaterialButton charBtn4 = findViewById(R.id.open_character_btn4);
+        List<MaterialButton> btnArr = new ArrayList<MaterialButton>() { {add(charBtn1); add(charBtn2); add(charBtn3); add(charBtn4); }};
         List<Char> chars = RepositoryService.getCharRepository().getAll();
         for (int i = 0; i < chars.size(); i++) {
             int finalI = i;
             btnArr.get(i).setEnabled(true);
             btnArr.get(i).setOnClickListener(v -> openCharView(chars.get(finalI).getId()));
+            btnArr.get(i).setIcon(getDrawable(Integer.parseInt(chars.get(finalI).getImage())));
         }
     }
 

@@ -46,9 +46,11 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         holder.hId = h.getId();
         holder.titleTextView.setText(h.getTitle());
         holder.descTextView.setText(h.getDescription());
-        holder.checkBtn.setOnClickListener(v -> HabitCurrentCheckerService.buttonStatusCheck((Button) v));  // buttonUpdate
+        holder.checkBtn.setOnClickListener(v ->
+                HabitCurrentCheckerService.buttonStatusCheck((Button) v, activity.getApplicationContext()));
         holder.checkBtn.setTag(h);
         holder.changeBtn.setOnClickListener(v -> activity.openHabitChangeView(h.getId()));
+        holder.deleteBtn.setOnClickListener(v -> activity.deleteHabit(h.getId()));
 
         if (MainActivity.isDebug()) { holder.debugHolder.setVisibility(View.VISIBLE); }
         holder.streakTextView.setText(h.getStreakNumber().toString());
@@ -61,7 +63,6 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
     @Override
     public void onViewAttachedToWindow(@NonNull CardViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-//        System.out.println(holder.titleTextView.getText().toString());
     }
 
     @Override
@@ -75,6 +76,7 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         public int hId = 0;
         public TextView titleTextView;
         public TextView descTextView;
+        public Button deleteBtn;
         public Button changeBtn;
         public Button checkBtn;
         public LinearLayout debugHolder;
@@ -86,6 +88,7 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
 
             titleTextView = itemView.findViewById(R.id.habit_title_card_view);
             descTextView = itemView.findViewById(R.id.habit_desc_card_view);
+            deleteBtn = itemView.findViewById(R.id.habit_card_delete_btn);
             changeBtn = itemView.findViewById(R.id.habit_card_change_btn);
             checkBtn = itemView.findViewById(R.id.habit_card_check_btn);
 

@@ -21,7 +21,7 @@ import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.user.LoginView;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug start finish";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static DataSynchronizerManager dbSync;
 
     @Override
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         RepositoryService.initAll();
         dbSync = DataSynchronizerManager.getInstance(this);
         dbSync.loadFromDB();
+        RepositoryService.getCharRepository().initArray();
 
         // Notifications init
         createNotificationChannel();

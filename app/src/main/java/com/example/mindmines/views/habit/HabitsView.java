@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
+import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
@@ -118,5 +119,9 @@ public class HabitsView extends BaseActivity {
         myIntent.putExtra("id", hId);
         HabitsView.this.startActivity(myIntent);
         finish();
+    }
+
+    public void deleteHabit(int hId) {
+        HabitController.getInstance(getCurrentContext()).delete(hId);
     }
 }
