@@ -19,6 +19,7 @@ import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.views.habit.HabitsView;
 import com.example.mindmines.views.user.LoginView;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug start finish";
     private static final boolean DEBUG = false;

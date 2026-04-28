@@ -68,9 +68,11 @@ public class ExpeditionStartView extends ExpeditionView {
                 Toast.makeText(context, "Выберите локацию", Toast.LENGTH_SHORT).show();
                 return;
             }
-            selectedDuration = ViewsUtils.getDurationTime(
-                    Integer.parseInt(currentSliderLabels[(int) durationSlider.getValue()]),
-                    durationUnitPicker.getCurrentSelectedItem());
+            if (customDurationLayout.getVisibility() == View.VISIBLE) {
+                selectedDuration = ViewsUtils.getDurationTime(
+                        Integer.parseInt(currentSliderLabels[(int) durationSlider.getValue()]),
+                        durationUnitPicker.getCurrentSelectedItem());
+            }
             if (selectedDuration == null) {
                 Toast.makeText(context, "Выберите продолжительность", Toast.LENGTH_SHORT).show();
                 return;
@@ -80,7 +82,6 @@ public class ExpeditionStartView extends ExpeditionView {
                     + durationSlider.getValue() + " "
                     + durationUnitPicker.getCurrentSelectedItem() + " "
                     + selectedDuration.getUnits() + " "
-
             );
 
             createNewExpedition(selectedLocation);
