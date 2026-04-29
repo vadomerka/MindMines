@@ -18,7 +18,6 @@ import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
-import com.example.mindmines.services.notifications.HabitNotificationService;
 import com.example.mindmines.views.BaseActivity;
 import com.github.vikramezhil.wheelpicker.props.OnWheelPickerListener;
 import com.github.vikramezhil.wheelpicker.view.WheelPicker;

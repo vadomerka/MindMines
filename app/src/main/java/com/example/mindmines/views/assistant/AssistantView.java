@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import io.noties.markwon.Markwon;
+
 public class AssistantView extends BaseActivity {
 
     private RecyclerView chatRecyclerView;
@@ -57,7 +59,7 @@ public class AssistantView extends BaseActivity {
         typingIndicator = findViewById(R.id.typing_indicator);
 
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        chatAdapter = new ChatAdapter(messageList);
+        chatAdapter = new ChatAdapter(messageList, getCurrentContext());
         chatRecyclerView.setAdapter(chatAdapter);
 
         sendButton.setOnClickListener(v -> sendMessage());
@@ -102,16 +104,17 @@ public class AssistantView extends BaseActivity {
             String response = ChatMessagesSender.sendToServer(text);
             mainHandler.post(() -> {
                 typingIndicator.setVisibility(View.GONE);
+                String responseText;
                 if (response != null) {
-                    ChatMessage botMessage = ChatMessageFactory.create("BOT", "CHAT", response);
-                    messageList.add(botMessage);
-                    chatAdapter.notifyItemInserted(messageList.size() - 1);
-                    chatRecyclerView.smoothScrollToPosition(messageList.size() - 1);
+                    responseText = response;
                 } else {
-                    ChatMessage errorMessage = ChatMessageFactory.create("BOT", "CHAT", "Извините, произошла ошибка. Попробуйте позже.");
-                    messageList.add(errorMessage);
-                    chatAdapter.notifyItemInserted(messageList.size() - 1);
+                    responseText = "Извините, произошла ошибка. Попробуйте позже.";
                 }
+                ChatMessage resMessage = ChatMessageFactory.create("BOT", "CHAT", responseText);
+
+                messageList.add(resMessage);
+                chatAdapter.notifyItemInserted(messageList.size() - 1);
+                chatRecyclerView.smoothScrollToPosition(messageList.size() - 1);
             });
         });
     }
