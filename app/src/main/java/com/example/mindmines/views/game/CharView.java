@@ -21,7 +21,7 @@ public class CharView extends BaseFragment {
     private Char ch;
 
     public CharView() {
-        super(R.layout.char_party_view);
+        super(R.layout.char_view);
     }
 
     @Override
@@ -33,10 +33,10 @@ public class CharView extends BaseFragment {
         int chId = args.getInt("id", 0);
         ch = RepositoryService.getCharRepository().get(chId);
 
-        LinearLayout statsView = requireView().findViewById(R.id.char_stats_view);
-        LinearLayout equipView = requireView().findViewById(R.id.char_equipment_view);
-        Button statsViewBtn = requireView().findViewById(R.id.char_stats_view_button);
-        Button equipViewBtn = requireView().findViewById(R.id.char_equip_view_button);
+        LinearLayout statsView = requireActivity().findViewById(R.id.char_stats_view);
+        LinearLayout equipView = requireActivity().findViewById(R.id.char_equipment_view);
+        Button statsViewBtn = requireActivity().findViewById(R.id.char_stats_view_button);
+        Button equipViewBtn = requireActivity().findViewById(R.id.char_equip_view_button);
         equipView.setVisibility(View.GONE);
         equipViewBtn.setOnClickListener(v -> {
             statsView.setVisibility(View.GONE);
@@ -52,18 +52,18 @@ public class CharView extends BaseFragment {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     protected void loadCharData() {
-        MaterialButton charBtn = requireView().findViewById(R.id.character_portrait_view);
+        MaterialButton charBtn = requireActivity().findViewById(R.id.character_portrait_view);
         //                               2131165428
         Integer od = R.drawable.h1;
         charBtn.setIcon(requireContext().getDrawable(Integer.parseInt(ch.getImage())));
 
-        TextView statTv0 = requireView().findViewById(R.id.name_value_view);
-        TextView statTv1 = requireView().findViewById(R.id.level_value_view);
-        TextView statTv2 = requireView().findViewById(R.id.exp_value_view);
-        TextView statTv3 = requireView().findViewById(R.id.exp_until_next_value_view);
-        TextView statTv4 = requireView().findViewById(R.id.attack_value_view);
-        TextView statTv5 = requireView().findViewById(R.id.defence_value_view);
-        TextView statTv6 = requireView().findViewById(R.id.speed_value_view);
+        TextView statTv0 = requireActivity().findViewById(R.id.name_value_view);
+        TextView statTv1 = requireActivity().findViewById(R.id.level_value_view);
+        TextView statTv2 = requireActivity().findViewById(R.id.exp_value_view);
+        TextView statTv3 = requireActivity().findViewById(R.id.exp_until_next_value_view);
+        TextView statTv4 = requireActivity().findViewById(R.id.attack_value_view);
+        TextView statTv5 = requireActivity().findViewById(R.id.defence_value_view);
+        TextView statTv6 = requireActivity().findViewById(R.id.speed_value_view);
         statTv0.setText(ch.getName());
         statTv1.setText(String.valueOf(ch.getStatus().getLevel()));
         statTv2.setText(String.valueOf(ch.getStatus().getExperience()));
@@ -72,10 +72,10 @@ public class CharView extends BaseFragment {
         statTv5.setText(String.valueOf(ch.getStats().getDefence()));
         statTv6.setText(String.valueOf(ch.getStats().getSpeed()));
 
-        MaterialButton leftHand = requireView().findViewById(R.id.open_equipment_btn1);
-        MaterialButton rightHand = requireView().findViewById(R.id.open_equipment_btn2);
-        MaterialButton bodyArmor = requireView().findViewById(R.id.open_equipment_btn3);
-        MaterialButton legArmor = requireView().findViewById(R.id.open_equipment_btn4);
+        MaterialButton leftHand = requireActivity().findViewById(R.id.open_equipment_btn1);
+        MaterialButton rightHand = requireActivity().findViewById(R.id.open_equipment_btn2);
+        MaterialButton bodyArmor = requireActivity().findViewById(R.id.open_equipment_btn3);
+        MaterialButton legArmor = requireActivity().findViewById(R.id.open_equipment_btn4);
         CharEquipment chEq = ch.getEquipment();
         if (chEq.getLeftHand() != null) leftHand.setIcon(requireContext().getDrawable(Integer.parseInt(chEq.getLeftHand().getImage())));
         if (chEq.getRightHand() != null) rightHand.setIcon(requireContext().getDrawable(Integer.parseInt(chEq.getRightHand().getImage())));

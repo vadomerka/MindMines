@@ -2,7 +2,6 @@ package com.example.mindmines.views.user;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,14 +31,14 @@ public class FriendsView extends BaseFragment {
 
         auth = new AuthManager(requireContext());
 
-        RecyclerView listView = requireView().findViewById(R.id.item_list_view);
+        RecyclerView listView = requireActivity().findViewById(R.id.item_list_view);
         listView.setLayoutManager(new LinearLayoutManager(requireContext()));
         List<User> itemList = loadFriends();
         UserCardAdapter listAdapter = new UserCardAdapter(itemList, this);
         listView.setAdapter(listAdapter);
 
-        TextView tv = requireView().findViewById(R.id.navigation_title_view);
-        tv.setText("Топ игроков:");
+//        TextView tv = requireActivity().findViewById(R.id.navigation_title_view);
+//        tv.setText("Топ игроков:");
     }
 
     public List<User> loadFriends() {

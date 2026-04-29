@@ -22,22 +22,19 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
-<!--    <include-->
-<!--        android:id="@+id/bottom_navigation_bar"-->
-<!--        layout="@layout/bottom_navigation_layout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="65dp"-->
-<!--        android:layout_alignParentBottom="true" />-->
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:background="@color/purple_background_color"
-        android:elevation="4dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        app:menu="@menu/bottom_nav_menu"/>
+
+        app:menu="@menu/bottom_nav_menu"
+        app:backgroundTint="@color/purple_background_color"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@color/white"
+        app:itemBackground="@drawable/selector_nav_item_background"
+        app:itemIconSize="35dp"
+        app:itemActiveIndicatorStyle="@style/NoActiveIndicator"
+        />
 </RelativeLayout>
