@@ -13,6 +13,10 @@ public class CharEntity {
     @PrimaryKey
     @NotNull
     public Integer charId;
+
+    @ColumnInfo(name = "userId")
+    public String userId;
+
     @ColumnInfo(name = "charJson")
     public String charJson;
 
@@ -22,9 +26,11 @@ public class CharEntity {
 
     public CharEntity(
             @NonNull Integer charId,
+            String userId,
             String charJson
     ) {
         this.charId = charId;
+        this.userId = userId;
         this.charJson = charJson;
     }
 }

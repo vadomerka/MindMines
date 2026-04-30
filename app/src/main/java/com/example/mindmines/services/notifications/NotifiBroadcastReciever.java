@@ -1,4 +1,4 @@
-package com.example.mindmines.models;
+package com.example.mindmines.services.notifications;
 
 import android.Manifest;
 import android.app.AlarmManager;

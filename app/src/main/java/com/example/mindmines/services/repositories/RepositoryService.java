@@ -1,5 +1,7 @@
 package com.example.mindmines.services.repositories;
 
+import android.content.Context;
+
 public class RepositoryService {
     private static CharRepository chRep = null;
     private static HabitRepository hRep = null;
@@ -8,13 +10,13 @@ public class RepositoryService {
     private static ExpeditionCharRepository cheRep = null;
     private static ChatMessageRepository mRep = null;
 
-    public static void initAll() {
-        getCharRepository().init();
-        getHabitRepository().init();
-        getExpeditionRepository().init();
-        getExpeditionLocationRepository().init();
-        getExpeditionCharRepository().init();
-        getChatMessageRepository().init();
+    public static void initAll(Context context) {
+        getCharRepository().init(context);
+        getHabitRepository().init(context);
+        getExpeditionRepository().init(context);
+        getExpeditionLocationRepository().init(context);
+        getExpeditionCharRepository().init(context);
+        getChatMessageRepository().init(context);
     }
 
     public static CharRepository getCharRepository() {

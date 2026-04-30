@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 
 public class Expedition implements RepositoryItem<Integer> {
     private Integer expeditionId;
-    private Integer userId;
+    private String userId;
     private String title;
     private String type;
     private Integer level;
@@ -20,6 +20,15 @@ public class Expedition implements RepositoryItem<Integer> {
 
     public void setExpeditionId(Integer expeditionId) {
         this.expeditionId = expeditionId;
+    }
+
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -71,6 +80,7 @@ public class Expedition implements RepositoryItem<Integer> {
     }
 
     public Expedition(Integer expeditionId,
+                      String userId,
                       String title,
                       String type,
                       Integer level,
@@ -78,6 +88,7 @@ public class Expedition implements RepositoryItem<Integer> {
                       OffsetDateTime finish,
                       boolean isFinished) {
         this.expeditionId = expeditionId;
+        this.userId = userId;
         this.title = title;
         this.type = type;
         this.level = level;

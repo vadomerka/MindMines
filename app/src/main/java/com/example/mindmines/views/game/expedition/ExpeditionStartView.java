@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.game.expeditions.ExpeditionLocation;
+import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.ExpeditionFactory;
 import com.example.mindmines.services.managers.ExpeditionManager;
 import com.example.mindmines.services.repositories.RepositoryService;
@@ -213,7 +214,9 @@ public class ExpeditionStartView extends ExpeditionView {
 
     private void createNewExpedition(ExpeditionLocation expeditionLocation) {
         Log.d("debug Expedition", "createNewExpedition: ");
-        Expedition result = ExpeditionFactory.create(
+        String userId = new AuthManager(context).getUserId();
+        Expedition result = ExpeditionFactory.getInstance().create(
+                userId,
                 1,
                 expeditionLocation.getName(),
                 expeditionLocation.getImage(),

@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 public class Char implements Serializable, RepositoryItem<Integer> {
     private Integer charId;
+    private String userId;
     private String name;
     private CharStats stats;
     private CharStatus status;
@@ -18,6 +19,7 @@ public class Char implements Serializable, RepositoryItem<Integer> {
 
     public Char() {
         this.charId = 1;
+        this.userId = "";
         this.name = "";
         this.stats = new CharStats();
         this.status = new CharStatus();
@@ -25,9 +27,10 @@ public class Char implements Serializable, RepositoryItem<Integer> {
         this.image = String.valueOf(R.drawable.h1);
     }
 
-    public Char(Integer charId, String name, CharStats stats,
+    public Char(Integer charId, String userId, String name, CharStats stats,
                 CharStatus status, CharEquipment equipment, String image) {
         this.charId = charId;
+        this.userId = userId;
         this.name = name;
         this.stats = stats;
         this.status = status;
@@ -40,6 +43,12 @@ public class Char implements Serializable, RepositoryItem<Integer> {
     }
 
     public void setCharId(Integer charId) { this.charId = charId; }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserID(String userId) { this.userId = userId; }
 
     public String getName() {
         return name;

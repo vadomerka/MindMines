@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.chat.ChatMessage;
+import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.ChatMessageFactory;
 import com.example.mindmines.services.senders.ChatMessagesSender;
 import com.example.mindmines.views.BaseFragment;
@@ -29,6 +30,8 @@ import java.util.concurrent.Executors;
 
 public class AssistantView extends BaseFragment {
 
+    private ChatMessageFactory factory;
+    private String userID;
     private RecyclerView chatRecyclerView;
     private EditText messageInput;
     private ImageButton sendButton;
@@ -46,6 +49,9 @@ public class AssistantView extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        factory = ChatMessageFactory.getInstance();
+        userID = new AuthManager(requireContext()).getUserId();
 
         chatRecyclerView = requireView().findViewById(R.id.chat_recycler_view);
         messageInput = requireView().findViewById(R.id.message_input);
@@ -76,7 +82,7 @@ public class AssistantView extends BaseFragment {
         String text = messageInput.getText().toString().trim();
         if (text.isEmpty()) return;
 
-        ChatMessage userMessage = ChatMessageFactory.create("USER", "CHAT", text);
+        ChatMessage userMessage = factory.create(userID,"USER", "CHAT", text);
         messageList.add(userMessage);
         chatAdapter.notifyItemInserted(messageList.size() - 1);
         chatRecyclerView.smoothScrollToPosition(messageList.size() - 1);
@@ -89,12 +95,12 @@ public class AssistantView extends BaseFragment {
             mainHandler.post(() -> {
                 typingIndicator.setVisibility(View.GONE);
                 if (response != null) {
-                    ChatMessage botMessage = ChatMessageFactory.create("BOT", "CHAT", response);
+                    ChatMessage botMessage = factory.create(userID,"BOT", "CHAT", response);
                     messageList.add(botMessage);
                     chatAdapter.notifyItemInserted(messageList.size() - 1);
                     chatRecyclerView.smoothScrollToPosition(messageList.size() - 1);
                 } else {
-                    ChatMessage errorMessage = ChatMessageFactory.create("BOT", "CHAT", "Извините, произошла ошибка. Попробуйте позже.");
+                    ChatMessage errorMessage = factory.create(userID,"BOT", "CHAT", "Извините, произошла ошибка. Попробуйте позже.");
                     messageList.add(errorMessage);
                     chatAdapter.notifyItemInserted(messageList.size() - 1);
                 }

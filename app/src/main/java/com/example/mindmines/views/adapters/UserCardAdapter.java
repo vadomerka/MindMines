@@ -39,7 +39,8 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.UserCa
     public void onBindViewHolder(UserCardViewHolder holder, int position) {
         User dto = items.get(position);
 
-        holder.userId = dto.userID;
+        int userPos = position;
+        holder.userId = userPos;  // dto.userID;
         holder.nameView.setText(String.valueOf(position + 1));
         holder.nameView.setText(dto.name);
         holder.levelView.setText(String.valueOf(dto.level));

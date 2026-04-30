@@ -1,13 +1,17 @@
 package com.example.mindmines.services.repositories;
 
+import android.content.Context;
+
 import java.util.List;
 import java.util.Optional;
 
 public abstract class LocalRepository<TId, T extends RepositoryItem<TId>> {
     protected List<T> array;
+    protected Context context;
 
-    public void init() {
+    public void init(Context context) {
         initArray();
+        this.context = context;
     }
 
     public void initArray() {}

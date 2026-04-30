@@ -11,8 +11,10 @@ import java.time.OffsetDateTime;
 public class HabitEntity {
     @PrimaryKey
     public Integer habitId;
+
     @ColumnInfo(name = "userId")
-    public Integer userId;
+    public String userId;
+
     @ColumnInfo(name = "type")
     public String type;
 
@@ -47,7 +49,7 @@ public class HabitEntity {
 
     public HabitEntity(
             Integer habitId,
-            Integer userId,
+            String userId,
             String type,
             String title,
             String description,

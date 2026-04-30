@@ -18,9 +18,9 @@ public class UserRequestSender {
     public static List<User> getFriends(String userId) {
         // TODO: заменить на настоящую отправку данных серверу.
         List<User> arr = new ArrayList<>();
-        arr.add(new User(1, "friend 1", 3));
-        arr.add(new User(2, "friend 2", 2));
-        arr.add(new User(3, "friend 3", 1));
+        arr.add(new User("friend 1", 3));
+        arr.add(new User("friend 2", 2));
+        arr.add(new User("friend 3", 1));
         return arr;
     }
 }

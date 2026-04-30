@@ -16,9 +16,11 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.example.mindmines.db.datasync.DataSynchronizerManager;
+import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.timers.DataBackupTimer;
 import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
+import com.example.mindmines.views.user.LoginView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initNavigation();
 
-        // TODO: change to loading from server.
-        RepositoryService.initAll();
+        RepositoryService.initAll(this);
         dbSync = DataSynchronizerManager.getInstance(this);
         dbSync.loadFromDB();
 
@@ -52,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-//        if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
-//            Intent myIntent = new Intent(MainActivity.this, LoginView.class);
-//            MainActivity.this.startActivity(myIntent);
-//            finish();
-//        }
+        if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
+            Intent myIntent = new Intent(MainActivity.this, LoginView.class);
+            MainActivity.this.startActivity(myIntent);
+            finish();
+        }
     }
 
 //    private void initNavigation() {

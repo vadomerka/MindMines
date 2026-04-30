@@ -1,6 +1,7 @@
 package com.example.mindmines.services.factories;
 
 import com.example.mindmines.models.chat.ChatMessage;
+import com.example.mindmines.services.repositories.CharRepository;
 import com.example.mindmines.services.repositories.ChatMessageRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 
@@ -8,20 +9,35 @@ import java.time.OffsetDateTime;
 import java.util.OptionalInt;
 
 public class ChatMessageFactory {
-    private static int getId() {
-        ChatMessageRepository rep = RepositoryService.getChatMessageRepository();
+    private final ChatMessageRepository rep;
+    private static ChatMessageFactory instance;
+
+    public ChatMessageFactory() {
+        this.rep = RepositoryService.getChatMessageRepository();
+    }
+
+    public static ChatMessageFactory getInstance() {
+        if (instance == null) {
+            instance = new ChatMessageFactory();
+        }
+        return instance;
+    }
+
+    private int getId() {
         OptionalInt rm = rep.getAll() != null
                 ? rep.getAll().stream().mapToInt(ChatMessage::getId).max()
                 : OptionalInt.of(0);
         return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }
 
-    public static ChatMessage create(String author,
-                                     String type,
-                                     String body) {
+    public ChatMessage create(String userId,
+                              String author,
+                              String type,
+                              String body) {
 
         return new ChatMessage(
                 getId(),
+                userId,
                 author,
                 type,
                 "",

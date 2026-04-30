@@ -25,7 +25,7 @@ public class CharDataSynchronizer implements DataSynchronizer {
         List<Char> chars = new ArrayList<>();
 
         for (CharEntity e : entities) {
-            chars.add(CharFactory.createFromEntity(e));
+            chars.add(CharFactory.getInstance().createFromEntity(e));
         }
 
         RepositoryService.getCharRepository().setAll(chars);
@@ -36,7 +36,7 @@ public class CharDataSynchronizer implements DataSynchronizer {
         List<CharEntity> entities = new ArrayList<>();
 
         for (Char c : chars) {
-            entities.add(CharFactory.createEntity(c));
+            entities.add(CharFactory.getInstance().createEntity(c));
         }
 
         dao.deleteAll();

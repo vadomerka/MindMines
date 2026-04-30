@@ -3,7 +3,7 @@ package com.example.mindmines.models.habits;
 import java.time.OffsetDateTime;
 
 public class HabitDTO {
-    private Integer user_id;
+    private String user_id;
     private String title;
     private String description;
     private Integer goalCount;
@@ -15,7 +15,7 @@ public class HabitDTO {
     private HabitInterval interval;
 
     public HabitDTO(
-            Integer user_id,
+            String user_id,
             String title,
             String description,
             Integer goalCount,
@@ -36,11 +36,11 @@ public class HabitDTO {
         this.interval = interval;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return user_id;
     }
 
-    public void setUserId(Integer value) {
+    public void setUserId(String value) {
         user_id = value;
     }
 

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class HabitAddView extends BaseFragment {
     protected Integer habitId;
-    protected Integer userId;
+    protected String userId;
 
     protected WheelPicker itPicker;
     protected WheelPicker htPicker;
@@ -64,7 +64,7 @@ public class HabitAddView extends BaseFragment {
     protected void initVars() {
         Bundle args = getArguments();
         habitId = args == null ? 0 : args.getInt("id", 0);
-        userId = Integer.valueOf(new AuthManager(requireContext()).getUserId());
+        userId = new AuthManager(requireContext()).getUserId();
     }
 
     protected void loadValues() {

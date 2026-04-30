@@ -14,6 +14,8 @@ public class MessageEntity {
     @ColumnInfo(name = "messageId")
     public Integer messageId;
 
+    @ColumnInfo(name = "userId")
+    public String userId;
     @ColumnInfo(name = "author")
     public String author;
 
@@ -37,6 +39,7 @@ public class MessageEntity {
     }
 
     public MessageEntity(@NonNull Integer messageId,
+                         String userId,
                          String author,
                          String type,
                          String context,
@@ -44,6 +47,7 @@ public class MessageEntity {
                          OffsetDateTime creationTime,
                          OffsetDateTime receivedTime) {
         this.messageId = messageId;
+        this.userId = userId;
         this.author = author;
         this.type = type;
         this.context = context;

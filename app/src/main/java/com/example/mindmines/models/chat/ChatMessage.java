@@ -6,6 +6,7 @@ import java.time.OffsetDateTime;
 
 public class ChatMessage implements RepositoryItem<Integer> {
     private Integer messageId;
+    private String userId;
     private String author;
     private String type;
     private String context;
@@ -19,6 +20,15 @@ public class ChatMessage implements RepositoryItem<Integer> {
 
     public void setId(Integer value) {
         this.messageId = value;
+    }
+
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getAuthor() {
@@ -70,6 +80,7 @@ public class ChatMessage implements RepositoryItem<Integer> {
     }
 
     public ChatMessage(Integer messageId,
+                       String userId,
                        String author,
                        String type,
                        String context,
@@ -78,6 +89,7 @@ public class ChatMessage implements RepositoryItem<Integer> {
                        OffsetDateTime receivedTime
     ) {
         this.messageId = messageId;
+        this.userId = userId;
         this.author = author;
         this.type = type;
         this.context = context;

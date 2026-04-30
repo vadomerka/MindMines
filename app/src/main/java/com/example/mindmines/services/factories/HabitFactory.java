@@ -21,7 +21,7 @@ public class HabitFactory {
         return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }
 
-    public static HabitDTO createDTO(Integer userId, String title, String desc, Integer goalCount,
+    public static HabitDTO createDTO(String userId, String title, String desc, Integer goalCount,
                                      Boolean timeAccurate, Integer priority, Integer difficulty,
                                      HabitType hType, HabitInterval interval) {
         return new HabitDTO(userId,
@@ -35,7 +35,7 @@ public class HabitFactory {
                 interval);
     }
 
-    public static HabitDTO createDTO(Integer userId) {
+    public static HabitDTO createDTO(String userId) {
         return new HabitDTO(userId,
                 "Название привычки",
                 "Описание привычки",

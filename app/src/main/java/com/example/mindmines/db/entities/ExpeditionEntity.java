@@ -17,6 +17,9 @@ public class ExpeditionEntity {
     @NotNull
     public Integer expeditionId;
 
+    @ColumnInfo(name = "userId")
+    public String userId;
+
     @ColumnInfo(name = "title")
     public String title;
 
@@ -41,6 +44,7 @@ public class ExpeditionEntity {
 
     public ExpeditionEntity(
             @NonNull Integer expeditionId,
+            String userId,
             String title,
             String type,
             Integer level,
@@ -49,6 +53,7 @@ public class ExpeditionEntity {
             boolean isFinished
     ) {
         this.expeditionId = expeditionId;
+        this.userId = userId;
         this.title = title;
         this.type = type;
         this.level = level;

@@ -7,6 +7,7 @@ import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.models.game.equipment.types.LegArmor;
 import com.example.mindmines.models.game.equipment.types.Shield;
 import com.example.mindmines.models.game.equipment.types.Sword;
+import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.observers.CharObserver;
 
@@ -18,12 +19,16 @@ public class CharRepository extends LocalObservedRepository<Integer, Char, CharO
     @Override
     public void initArray() {
         array = new ArrayList<>();
-        array.add(CharFactory.generate(1, String.valueOf(R.drawable.g2),
+        String userId = new AuthManager(context).getUserId();
+        CharFactory factory = CharFactory.getInstance();
+        array.add(factory.generate("", 1, String.valueOf(R.drawable.g2),
                 new Equipment[] { new Sword(), new Shield(), new BodyArmor(), new LegArmor() }));
-        array.add(CharFactory.generate(2, String.valueOf(R.drawable.g3),
+        array.add(factory.generate("", 2, String.valueOf(R.drawable.g3),
                 new Equipment[] { new Sword(), new LegArmor() }));
-        array.add(CharFactory.generate(3, String.valueOf(R.drawable.g4), new Equipment[] { }));
-        array.add(CharFactory.generate(5, String.valueOf(R.drawable.g5), new Equipment[] { }));
+        array.add(factory.generate("", 3, String.valueOf(R.drawable.g4),
+                new Equipment[] { }));
+        array.add(factory.generate("", 5, String.valueOf(R.drawable.g5),
+                new Equipment[] { }));
     }
 
     @Override

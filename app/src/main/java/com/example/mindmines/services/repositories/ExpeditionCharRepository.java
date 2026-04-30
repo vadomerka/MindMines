@@ -1,5 +1,7 @@
 package com.example.mindmines.services.repositories;
 
+import android.content.Context;
+
 import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 
 import java.util.List;
@@ -7,8 +9,10 @@ import java.util.Optional;
 
 public class ExpeditionCharRepository {
     protected List<ExpeditionCharCrossRef> array;
+    protected Context context;
 
-    public void init() {
+    public void init(Context context) {
+        this.context = context;
         initArray();
     }
 

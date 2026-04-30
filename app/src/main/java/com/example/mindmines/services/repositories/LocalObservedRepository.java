@@ -1,5 +1,7 @@
 package com.example.mindmines.services.repositories;
 
+import android.content.Context;
+
 import com.example.mindmines.services.observers.RepositoryObserver;
 
 import java.util.ArrayList;
@@ -12,8 +14,9 @@ public abstract class LocalObservedRepository<TId, T extends RepositoryItem<TId>
     protected List<TObserver> observers;
 
     @Override
-    public void init() {
+    public void init(Context context) {
         observers = new ArrayList<>();
+        this.context = context;
         initArray();
         updateObservers();
     }

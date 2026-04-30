@@ -55,7 +55,6 @@ def get_user(user_id: int, session: SessionDep):
 def post_user(user_dto: UserDTO, session: SessionDep):
     try:
         res = User(name=user_dto.name, email=user_dto.email, password=user_dto.password)
-        print(res)
 
         session.add(res)
         session.commit()

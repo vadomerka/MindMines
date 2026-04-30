@@ -25,7 +25,7 @@ public class ExpeditionDataSynchronizer implements DataSynchronizer {
         List<Expedition> expeditions = new ArrayList<>();
 
         for (ExpeditionEntity e : entities) {
-            expeditions.add(ExpeditionFactory.createFromEntity(e));
+            expeditions.add(ExpeditionFactory.getInstance().createFromEntity(e));
         }
 
         RepositoryService.getExpeditionRepository().setAll(expeditions);
@@ -36,7 +36,7 @@ public class ExpeditionDataSynchronizer implements DataSynchronizer {
         List<ExpeditionEntity> entities = new ArrayList<>();
 
         for (Expedition e : expeditions) {
-            entities.add(ExpeditionFactory.createEntity(e));
+            entities.add(ExpeditionFactory.getInstance().createEntity(e));
         }
 
         dao.deleteAll();

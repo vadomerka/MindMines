@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 
 public class Habit implements RepositoryItem<Integer> {
     private Integer habitId;
-    private final Integer userId;
+    private final String userId;
     private HabitType type;
 
     private String title;
@@ -24,7 +24,7 @@ public class Habit implements RepositoryItem<Integer> {
 
     public Habit(
             Integer habitId,
-            Integer userId,
+            String userId,
             HabitType type,
 
             String title,
@@ -63,7 +63,7 @@ public class Habit implements RepositoryItem<Integer> {
     }
     public void setHabitId(Integer value) { habitId = value; }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
