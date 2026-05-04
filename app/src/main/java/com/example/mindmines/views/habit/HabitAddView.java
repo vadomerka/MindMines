@@ -1,14 +1,17 @@
 package com.example.mindmines.views.habit;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mindmines.R;
@@ -19,6 +22,7 @@ import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.views.BaseFragment;
+import com.example.mindmines.views.adapters.IntervalPickerAdapter;
 import com.github.vikramezhil.wheelpicker.props.OnWheelPickerListener;
 import com.github.vikramezhil.wheelpicker.view.WheelPicker;
 import com.google.android.material.slider.Slider;
@@ -28,18 +32,19 @@ import java.util.ArrayList;
 public class HabitAddView extends BaseFragment {
     protected Integer habitId;
     protected String userId;
-
-    protected WheelPicker itPicker;
     protected WheelPicker htPicker;
     protected boolean isBadType;
+    protected TextView tView;
     protected EditText tEdit;
     protected EditText dEdit;
     protected Button goodThb;
     protected Button badThb;
     protected Slider dSlider;
     protected Slider pSlider;
-    protected Slider iSlider;
     protected NumberPicker gcPicker;
+    protected IntervalPickerAdapter ipAdapter;
+
+    protected View rootView;
 
     public HabitAddView() {
         super(R.layout.habit_add);
@@ -48,6 +53,8 @@ public class HabitAddView extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        rootView = view;
+
         initUI();
         loadValues();
     }
@@ -57,7 +64,7 @@ public class HabitAddView extends BaseFragment {
         initForm();
         initSliders();
         initTypeButtons();
-        initWheelPickers();
+        initPickers();
         initSaveButton();
     }
 
@@ -67,35 +74,22 @@ public class HabitAddView extends BaseFragment {
         userId = new AuthManager(requireContext()).getUserId();
     }
 
-    protected void loadValues() {
-        gcPicker.setMinValue(1);
-        gcPicker.setMaxValue(10);
-        isBadType = false;
-        goodThb.setEnabled(false);
-        badThb.setEnabled(true);
-        itPicker.setSelectedItemPosition(0);
-        htPicker.setSelectedItemPosition(1);
-    }
-
     protected void initForm() {
-        View root = requireView();
-        tEdit = root.findViewById(R.id.habit_title_value_edit);
-        dEdit = root.findViewById(R.id.habit_desc_value_edit);
+        tView = rootView.findViewById(R.id.habit_add_title);
+        tEdit = rootView.findViewById(R.id.habit_title_value_edit);
+        dEdit = rootView.findViewById(R.id.habit_desc_value_edit);
     }
 
     protected void initSliders() {
-        View root = requireView();
-        dSlider = root.findViewById(R.id.habit_difficulty_value_slider);
-        pSlider = root.findViewById(R.id.habit_priority_value_slider);
-        iSlider = root.findViewById(R.id.habit_interval_number_value);
-        gcPicker = root.findViewById(R.id.count_type_habit_count_value);
+        dSlider = rootView.findViewById(R.id.habit_difficulty_value_slider);
+        pSlider = rootView.findViewById(R.id.habit_priority_value_slider);
+        gcPicker = rootView.findViewById(R.id.count_type_habit_count_value);
     }
 
     protected void initTypeButtons() {
-        View root = requireView();
-        goodThb = root.findViewById(R.id.good_type_habit_button);
-        badThb = root.findViewById(R.id.bad_type_habit_button);
-        LinearLayout htEl = root.findViewById(R.id.habit_type_edit_layout);
+        goodThb = rootView.findViewById(R.id.good_type_habit_button);
+        badThb = rootView.findViewById(R.id.bad_type_habit_button);
+        LinearLayout htEl = rootView.findViewById(R.id.habit_type_edit_layout);
         goodThb.setOnClickListener(v -> {
             isBadType = false;
             htEl.setVisibility(View.VISIBLE);
@@ -110,17 +104,14 @@ public class HabitAddView extends BaseFragment {
         });
     }
 
-    protected void initWheelPickers() {
-        View root = requireView();
-        itPicker = root.findViewById(R.id.habit_interval_type_value);
-        itPicker.setItems(new ArrayList<String>()
-        {{ add ("Минуты"); add ("Дни"); add ("Недели"); add ("Месяцы"); }});
+    protected void initPickers() {
+        ipAdapter = new IntervalPickerAdapter(rootView);
 
-        htPicker = root.findViewById(R.id.habit_type_value);
+        htPicker = rootView.findViewById(R.id.habit_type_value);
         htPicker.setItems(new ArrayList<String>()
         {{ add ("Количественная"); add ("Интервальная"); add ("Подзадачи"); }});
-        LinearLayout countThl = root.findViewById(R.id.count_type_habit_layout);
-        LinearLayout taskThl = root.findViewById(R.id.task_type_habit_layout);
+        LinearLayout countThl = rootView.findViewById(R.id.count_type_habit_layout);
+        LinearLayout taskThl = rootView.findViewById(R.id.task_type_habit_layout);
         htPicker.setOnWheelPickerListener(new OnWheelPickerListener() {
             @Override
             public void onItemSelected(int i, @NonNull String s) {
@@ -141,8 +132,19 @@ public class HabitAddView extends BaseFragment {
     }
 
     protected void initSaveButton() {
-        Button saveButton = requireView().findViewById(R.id.save_button);
+        Button saveButton = rootView.findViewById(R.id.save_button);
         saveButton.setOnClickListener(v -> saveHabit());
+    }
+
+    protected void loadValues() {
+        Log.d("Debug", "loadValues: ");
+        gcPicker.setMinValue(1);
+        gcPicker.setMaxValue(10);
+        isBadType = false;
+        goodThb.setEnabled(false);
+        badThb.setEnabled(true);
+        htPicker.postDelayed(() -> htPicker.setSelectedItemPosition(1), 200);
+        ipAdapter.loadDefault();
     }
 
     protected HabitDTO saveDto() {
@@ -160,8 +162,7 @@ public class HabitAddView extends BaseFragment {
         }
         Integer goalCount = hType == HabitType.GOOD_GOAL_COUNT ? gcPicker.getValue() : 1;
 
-        HabitInterval interval = HabitFactory.createHabitInterval(
-                (int) iSlider.getValue(), itPicker.getCurrentSelectedItem());
+        HabitInterval interval = ipAdapter.getHabitInterval();
 
         return HabitFactory.createDTO(userId, title, desc, goalCount, timeAccurate,
                                       priority, difficulty, hType, interval);

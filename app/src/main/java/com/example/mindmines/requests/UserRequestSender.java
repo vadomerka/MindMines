@@ -10,7 +10,7 @@ import java.util.List;
 public class UserRequestSender {
     public static Pair<String, Integer> getAuth(String email, String password) {
         // TODO: заменить на настоящую отправку данных серверу.
-        String tmpToken = email;
+        String tmpToken = email + "_token";
         Integer userId = 1;
         return new Pair<>(tmpToken, userId);
     }

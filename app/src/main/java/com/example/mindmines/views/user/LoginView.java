@@ -35,8 +35,7 @@ public class LoginView extends AppCompatActivity {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
 
-        if (!email.isEmpty() && !password.isEmpty())
-        {
+        if (!email.isEmpty() && !password.isEmpty()) {
             // TODO: add server check.
             Pair<String, Integer> res = UserController.getAuthData(email, password);
             authManager.saveUserData(res.first, res.second.toString());

@@ -65,7 +65,7 @@
                 style="@style/SpreadCenterHorizontalItem"
                 android:layout_weight="2">
                 <com.google.android.material.slider.Slider
-                    android:id="@+id/duration_value_slider"
+                    android:id="@+id/interval_number_value"
                     style="@style/StandardSlider"
                     android:layout_marginEnd="10dp"
                     android:valueFrom="1"
@@ -76,7 +76,7 @@
 
             <LinearLayout style="@style/SpreadCenterHorizontalItem">
                 <com.github.vikramezhil.wheelpicker.view.WheelPicker
-                    android:id="@+id/duration_unit_picker"
+                    android:id="@+id/interval_type_value"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="10dp"

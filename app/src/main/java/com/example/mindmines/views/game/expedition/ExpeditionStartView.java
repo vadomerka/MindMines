@@ -23,6 +23,7 @@ import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.ExpeditionFactory;
 import com.example.mindmines.services.managers.ExpeditionManager;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.views.adapters.IntervalPickerAdapter;
 import com.example.mindmines.views.adapters.LocationAdapter;
 import com.example.mindmines.views.utils.ViewsUtils;
 import com.github.vikramezhil.wheelpicker.props.OnWheelPickerListener;
@@ -43,11 +44,9 @@ public class ExpeditionStartView extends ExpeditionView {
     private List<MaterialButton> presetButtons;
     private LinearLayout.LayoutParams presetButtonParams;
     private LinearLayout customDurationLayout;
-
     private Duration selectedDuration;
-    private Slider durationSlider;
-    private WheelPicker durationUnitPicker;
-    private String[] currentSliderLabels;
+    private IntervalPickerAdapter ipAdapter;
+
 
 
     public ExpeditionStartView(Context context, LayoutInflater layoutInflater) {
@@ -70,20 +69,12 @@ public class ExpeditionStartView extends ExpeditionView {
                 return;
             }
             if (customDurationLayout.getVisibility() == View.VISIBLE) {
-                selectedDuration = ViewsUtils.getDurationTime(
-                        Integer.parseInt(currentSliderLabels[(int) durationSlider.getValue()]),
-                        durationUnitPicker.getCurrentSelectedItem());
+                selectedDuration = ipAdapter.getCurrentDuration();
             }
             if (selectedDuration == null) {
                 Toast.makeText(context, "Выберите продолжительность", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            Log.d("debug Expedition start", "startExpedition: "
-                    + durationSlider.getValue() + " "
-                    + durationUnitPicker.getCurrentSelectedItem() + " "
-                    + selectedDuration.getUnits() + " "
-            );
 
             createNewExpedition(selectedLocation);
             dialog.dismiss();
@@ -105,8 +96,7 @@ public class ExpeditionStartView extends ExpeditionView {
     private void loadCustomDurationLayout() {
         customDurationLayout = dialogView.findViewById(R.id.custom_duration_layout);
         selectedDuration = null;
-        loadDurationSlider();
-        loadUnitPicker();
+        ipAdapter = new IntervalPickerAdapter(dialogView);
     }
 
     private void loadPresetButtons() {
@@ -143,57 +133,12 @@ public class ExpeditionStartView extends ExpeditionView {
         presetButton.setText("Ввод");
 
         presetButton.setOnClickListener(v -> {
-            selectedDuration = ViewsUtils.getDurationTime((int) durationSlider.getValue(),
-                    durationUnitPicker.getCurrentSelectedItem());
+            selectedDuration = ipAdapter.getCurrentDuration();
             selectPreset(selectedDuration, presetButton, View.VISIBLE);
         });
 
         presetButtons.add(presetButton);
         return presetButton;
-    }
-
-    private void loadDurationSlider() {
-        durationSlider = dialogView.findViewById(R.id.duration_value_slider);
-        setDurationSlider(new String[] {"1", "5", "15", "30", "60"});
-    }
-
-    private void setDurationSlider(String[] arr) {
-        currentSliderLabels = arr;
-        durationSlider.setStepSize(1);
-        durationSlider.setValueFrom(0);
-        durationSlider.setValueTo(arr.length - 1);
-        durationSlider.setValue(Math.min(Math.max(0, durationSlider.getValue()), arr.length - 1));
-        durationSlider.setLabelFormatter(value -> arr[(int) value]);
-    }
-
-    private void loadUnitPicker() {
-        durationUnitPicker = dialogView.findViewById(R.id.duration_unit_picker);
-        durationUnitPicker.setVisibility(View.VISIBLE);
-        ArrayList<String> units = new ArrayList<>(Arrays.asList("Минуты", "Часы", "Дни"));
-        durationUnitPicker.setItems(units);
-        durationUnitPicker.setSelectedItemPosition(0);
-        durationUnitPicker.setOnWheelPickerListener(new OnWheelPickerListener() {
-            @Override
-            public void onItemSelected(int i, @NonNull String s) {
-                switch (s) {
-                    case "Минуты":
-                        setDurationSlider(new String[] {"1", "5", "15", "30", "60"});
-                        break;
-                    case "Часы":
-                        setDurationSlider(new String[] {"1", "3", "6", "8", "24"});
-                        break;
-                    case "Дни":
-                        setDurationSlider(new String[] {"1", "3", "7", "30"});
-                        break;
-                }
-            }
-
-            @Override
-            public void onRefreshed(@NonNull ArrayList<String> arrayList, int i, @NonNull String s) {}
-
-            @Override
-            public void onScrolling() {}
-        });
     }
 
     private void selectPreset(Duration duration, MaterialButton activeButton, int visibility) {

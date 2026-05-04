@@ -24,7 +24,7 @@ import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 import java.time.OffsetDateTime;
 
 @Database(entities = {HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
-        ExpeditionCharCrossRef.class, MessageEntity.class}, version = 7, exportSchema = false)
+        ExpeditionCharCrossRef.class, MessageEntity.class}, version = 8, exportSchema = false)
 @TypeConverters(HabitTypeConverter.class)
 public abstract class MindMinesDatabase extends RoomDatabase {
     private static volatile MindMinesDatabase INSTANCE;
@@ -46,13 +46,8 @@ public abstract class MindMinesDatabase extends RoomDatabase {
                                     MindMinesDatabase.class,
                                     "habits.db"
                             )
+                            .fallbackToDestructiveMigration()
                             .allowMainThreadQueries()
-                            .addMigrations(MIGRATION_1_2)
-                            .addMigrations(MIGRATION_2_3)
-                            .addMigrations(MIGRATION_3_4)
-                            .addMigrations(MIGRATION_4_5)
-                            .addMigrations(MIGRATION_5_6)
-                            .addMigrations(MIGRATION_6_7)
                             .build();
                 }
             }

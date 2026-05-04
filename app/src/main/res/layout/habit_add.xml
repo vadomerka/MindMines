@@ -88,12 +88,16 @@
                 <com.google.android.material.slider.Slider
                     style="@style/StandardSlider"
                     android:layout_marginEnd="10dp"
-                    android:id="@+id/habit_interval_number_value"/>
+                    android:id="@+id/interval_number_value"
+                    android:valueFrom="1"
+                    android:valueTo="60"
+                    android:value="1"
+                    android:stepSize="1"/>
 
             </LinearLayout>
             <LinearLayout style="@style/SpreadCenterHorizontalItem">
                 <com.github.vikramezhil.wheelpicker.view.WheelPicker
-                    android:id="@+id/habit_interval_type_value"
+                    android:id="@+id/interval_type_value"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="10dp"
