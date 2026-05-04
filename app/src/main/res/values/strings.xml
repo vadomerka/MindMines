@@ -4,7 +4,7 @@
     <string name="login_button_text">Войти</string>
     <string name="login_email_input_hint">Введите email</string>
     <string name="login_password_input_hint">Введите пароль</string>
-    <string name="register_page_button_text">Зарегестрироваться</string>
+    <string name="register_page_button_text">Регистрация</string>
     <string name="default_hello_world_text">default Hello World!</string>
     <string name="default_number_text">1</string>
     <string name="logout_btn_text">Logout</string>
@@ -66,4 +66,6 @@
     <string name="habits_view_title_text">Привычки</string>
     <string name="party_title_text">Команда</string>
     <string name="friends_title_text">Друзья</string>
+    <string name="registration_header_text">Регистрация</string>
+    <string name="login_password_confirmation_input_hint">Подтвердите пароль</string>
 </resources>

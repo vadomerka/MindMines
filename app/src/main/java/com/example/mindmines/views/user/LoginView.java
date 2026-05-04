@@ -27,8 +27,10 @@ public class LoginView extends AppCompatActivity {
         passwordInput = findViewById(R.id.login_password_input);
         authManager = new AuthManager(getApplicationContext());
         Button loginBtn = findViewById(R.id.login_button);
+        Button registerBtn = findViewById(R.id.register_page_button);
 
         loginBtn.setOnClickListener(v -> tryLogIn());
+        registerBtn.setOnClickListener(v -> openRegisterView());
     }
 
     private void tryLogIn() {
@@ -44,6 +46,12 @@ public class LoginView extends AppCompatActivity {
             LoginView.this.startActivity(myIntent);
             finish();
         }
+    }
+
+    private void openRegisterView() {
+        Intent myIntent = new Intent(LoginView.this, RegistrationView.class);
+        LoginView.this.startActivity(myIntent);
+        finish();
     }
 
     @Override
