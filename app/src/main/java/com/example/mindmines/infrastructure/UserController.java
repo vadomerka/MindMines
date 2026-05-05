@@ -8,8 +8,12 @@ import com.example.mindmines.requests.UserRequestSender;
 import java.util.List;
 
 public class UserController {
-    public static Pair<String, Integer> getAuthData(String email, String password) {
-        return UserRequestSender.getAuth(email, password);
+    public static String register(String email, String password) {
+        return UserRequestSender.registerRequestSend(email, password);
+    }
+
+    public static String login(String email, String password) {
+        return UserRequestSender.loginRequestSend(email, password);
     }
 
     public static List<User> getFriends(String userId) {

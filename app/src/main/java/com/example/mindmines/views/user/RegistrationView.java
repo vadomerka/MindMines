@@ -2,7 +2,6 @@ package com.example.mindmines.views.user;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,16 +37,14 @@ public class RegistrationView extends AppCompatActivity {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
 
-        if (!email.isEmpty() && !password.isEmpty()) {
-            if (!checkData()) { return; }
+        if (!checkData()) { return; }
 
-            Pair<String, Integer> res = UserController.getAuthData(email, password);
-            authManager.saveUserData(res.first, res.second.toString());
+        String token = UserController.register(email, password);
+        authManager.saveUserData(token, email);
 
-            Intent myIntent = new Intent(RegistrationView.this, MainActivity.class);
-            RegistrationView.this.startActivity(myIntent);
-            finish();
-        }
+        Intent myIntent = new Intent(RegistrationView.this, MainActivity.class);
+        RegistrationView.this.startActivity(myIntent);
+        finish();
     }
 
     private boolean checkData() {
@@ -72,6 +69,5 @@ public class RegistrationView extends AppCompatActivity {
             RegistrationView.this.startActivity(myIntent);
             finish();
         }
-        System.out.println("User not logged in!");
     }
 }

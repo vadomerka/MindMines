@@ -6,6 +6,7 @@ import com.example.mindmines.db.dao.HabitDao;
 import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.repositories.RepositoryService;
 
@@ -13,19 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HabitDataSynchronizer implements DataSynchronizer {
+    private final Context context;
     private final HabitDao dao;
 
     public HabitDataSynchronizer(Context context) {
+        this.context = context;
         MindMinesDatabase db = MindMinesDatabase.getInstance(context);
         this.dao = db.habitDao();
     }
 
     public void loadFromDB() {
-        List<HabitEntity> entities = dao.getAll();
+        String userId = new AuthManager(context).getUserId();
+        List<HabitEntity> entities = dao.getAllByUserId(userId);
         List<Habit> habits = new ArrayList<>();
 
         for (HabitEntity e : entities) {
-            habits.add(HabitFactory.createFromEntity(e));
+            habits.add(HabitFactory.getInstance().createFromEntity(e));
         }
 
         RepositoryService.getHabitRepository().setAll(habits);
@@ -36,10 +40,11 @@ public class HabitDataSynchronizer implements DataSynchronizer {
         List<HabitEntity> entities = new ArrayList<>();
 
         for (Habit h : habits) {
-            entities.add(HabitFactory.createEntity(h));
+            entities.add(HabitFactory.getInstance().createEntity(h));
         }
 
-        dao.deleteAll();
+        String userId = new AuthManager(context).getUserId();
+        dao.deleteAllByUserId(userId);
         dao.insertAll(entities);
     }
 }

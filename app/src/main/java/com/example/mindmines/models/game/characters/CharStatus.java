@@ -1,10 +1,10 @@
 package com.example.mindmines.models.game.characters;
 
-import com.example.mindmines.models.ExpStatus;
+import com.example.mindmines.models.XpStatus;
 
 import java.io.Serializable;
 
-public class CharStatus extends ExpStatus implements Serializable {
+public class CharStatus extends XpStatus implements Serializable {
     private Integer hp;
 
     public CharStatus() {

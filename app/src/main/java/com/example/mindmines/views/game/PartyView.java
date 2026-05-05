@@ -19,7 +19,7 @@ import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.services.managers.ExpeditionManager;
 import com.example.mindmines.services.managers.UserStatusManager;
-import com.example.mindmines.services.repositories.ExpeditionRepository;
+import com.example.mindmines.services.repositories.implementations.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.game.expedition.ExpeditionFinishView;
@@ -179,7 +179,7 @@ public class PartyView extends BaseFragment {
     public void onStart() {
         super.onStart();
         rep.subscribe(expeditionObserver);
-        UserStatusManager.subscribe(usProxy);
+        RepositoryService.getUserStatusRepository().subscribe(usProxy);
         usProxy.update(new ArrayList<>());
     }
 
@@ -187,7 +187,7 @@ public class PartyView extends BaseFragment {
     public void onStop() {
         super.onStop();
         rep.unsubscribe(expeditionObserver);
-        UserStatusManager.unsubscribe(usProxy);
+        RepositoryService.getUserStatusRepository().unsubscribe(usProxy);
     }
 
     @Override

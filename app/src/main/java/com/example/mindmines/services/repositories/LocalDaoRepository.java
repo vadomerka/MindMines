@@ -2,16 +2,16 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
+import androidx.room.Dao;
+
 import java.util.List;
 import java.util.Optional;
 
-public abstract class LocalRepository<TId, T extends RepositoryItem<TId>> {
-    protected List<T> array;
-    protected Context context;
-
+public abstract class LocalDaoRepository<TId, T extends RepositoryItem<TId>> extends LocalRepository<TId, T> {
+//    private Dao
     public void init(Context context) {
-        this.context = context;
         initArray();
+        this.context = context;
     }
 
     public void initArray() {}

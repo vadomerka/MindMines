@@ -2,23 +2,23 @@ package com.example.mindmines.services.managers;
 
 import android.util.Log;
 
+import com.example.mindmines.models.XpStatus;
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.observers.ExpeditionObserver;
 
 import java.util.List;
 
-public class ExpManager {
+public class XpManager {
     private static final long baseExpForHabit = 10L;
     private static final long baseMaxExpChange = 10;
     private static final double maxExpChangeKoef = 1.5;
     private static final int maxLevel = 30;
-    private static final ExpeditionObserver exProxy = ExpManager::gainFinishedExpedition;
+    private static final ExpeditionObserver exProxy = XpManager::gainFinishedExpedition;
 
     public static long getBaseMaxExpChange() { return baseMaxExpChange; }
 
-    public static Long gainExp(UserStatus status, Habit h) {
+    public static Long gainExp(XpStatus status, Habit h) {
         // Формула получения опыта - опыт увеличивается пропорционально стрику.
         long streakExp = baseExpForHabit * h.getStreakNumber() * h.getPriority() * h.getDifficulty();
         // Формула получения штрафа - штраф не увеличивается пропорционально,
@@ -30,7 +30,7 @@ public class ExpManager {
         return status.getExperience() + change;
     }
 
-    public static void gainLevel(UserStatus status, Long exp) {
+    public static void gainLevel(XpStatus status, Long exp) {
         Integer level = status.getLevel();
         Long maxExp = status.getMaxExperience();
         if (exp < 0) {

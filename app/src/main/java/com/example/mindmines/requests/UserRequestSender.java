@@ -8,11 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRequestSender {
-    public static Pair<String, Integer> getAuth(String email, String password) {
+    public static String registerRequestSend(String email, String password) {
         // TODO: заменить на настоящую отправку данных серверу.
-        String tmpToken = email + "_token";
-        Integer userId = 1;
-        return new Pair<>(tmpToken, userId);
+        // send("POST, "/user/?=email&password")
+        if (email == null || email.isEmpty()) return null;
+        return email + "_token";
+    }
+
+    public static String loginRequestSend(String email, String password) {
+        // TODO: заменить на настоящую отправку данных серверу.
+        // send("GET", "/user/?=email&password")
+        if (email == null || email.isEmpty()) return null;
+        return email + "_token";
     }
 
     public static List<User> getFriends(String userId) {

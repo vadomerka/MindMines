@@ -1,7 +1,8 @@
-package com.example.mindmines.services.repositories;
+package com.example.mindmines.services.repositories.implementations;
 
 import com.example.mindmines.models.chat.ChatMessage;
 import com.example.mindmines.services.observers.ChatMessageObserver;
+import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.util.ArrayList;
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.mindmines.services.managers.UserStatusManager;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class DataSynchronizerManager {
         synchronizers.add(new CharDataSynchronizer(context));
         UserStatusSynchronizer uss = new UserStatusSynchronizer(context);
         synchronizers.add(uss);
-        UserStatusManager.subscribe(uss);
+        RepositoryService.getUserStatusRepository().subscribe(uss);
         synchronizers.add(new ExpeditionDataSynchronizer(context));
         synchronizers.add(new ExpeditionCharDataSynchronizer(context));
     }

@@ -1,7 +1,7 @@
 package com.example.mindmines.services.managers;
 
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.services.repositories.ExpeditionRepository;
+import com.example.mindmines.services.repositories.implementations.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.OffsetDateTime;

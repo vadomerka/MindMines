@@ -60,7 +60,7 @@ public class HabitsView extends BaseFragment {
         super.onStart();
         Log.d(TAG, "onStart");
         RepositoryService.getHabitRepository().subscribe(hProxy);
-        UserStatusManager.subscribe(usProxy);
+        RepositoryService.getUserStatusRepository().subscribe(usProxy);
         hProxy.update(new ArrayList<>());
         usProxy.update(new ArrayList<>());
     }
@@ -68,7 +68,7 @@ public class HabitsView extends BaseFragment {
     @Override
     public void onStop() {
         RepositoryService.getHabitRepository().unsubscribe(hProxy);
-        UserStatusManager.unsubscribe(usProxy);
+        RepositoryService.getUserStatusRepository().unsubscribe(usProxy);
         super.onStop();
     }
 
@@ -103,7 +103,7 @@ public class HabitsView extends BaseFragment {
         if (!isAdded() || levelView == null) {
             return;
         }
-        UserStatus status = UserStatusManager.getStatus();
+        UserStatus status = new UserStatusManager(requireContext()).getStatus();
         levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",
                 status.getLevel(), status.getExperience(), status.getMaxExperience()));
     }

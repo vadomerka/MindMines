@@ -14,95 +14,59 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 
+import com.example.mindmines.db.MindMinesDatabase;
+import com.example.mindmines.db.dao.HabitDao;
+import com.example.mindmines.db.dao.UserStatusDao;
+import com.example.mindmines.db.entities.HabitEntity;
+import com.example.mindmines.db.entities.UserStatusEntity;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.user.UserStatus;
+import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.services.factories.HabitFactory;
+import com.example.mindmines.services.factories.UserStatusFactory;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.UserStatusObserver;
+import com.example.mindmines.services.repositories.RepositoryService;
 import com.google.common.util.concurrent.MoreExecutors;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 public class UserStatusSynchronizer implements DataSynchronizer, UserStatusObserver {
-    private final String TAG = "Debug UserStatusSynchronizer";
-    private final RxDataStore<Preferences> dataStore;
-    private final Executor executor = MoreExecutors.directExecutor();
-
-    // Ключи для каждого поля
-    private static final Preferences.Key<Integer> USER_ID = PreferencesKeys.intKey("user_id");
-    private static final Preferences.Key<Integer> LEVEL =
-            PreferencesKeys.intKey("level");
-    private static final Preferences.Key<Long> EXPERIENCE =
-            PreferencesKeys.longKey("experience");
-    private static final Preferences.Key<Long> MAX_EXPERIENCE =
-            PreferencesKeys.longKey("max_experience");
-
-    private static final Preferences.Key<Long> COINS =
-            PreferencesKeys.longKey("coins");
+    private final Context context;
+    private final UserStatusDao dao;
 
     public UserStatusSynchronizer(Context context) {
-        dataStore = new RxPreferenceDataStoreBuilder(context, "user_status").build();
+        this.context = context;
+        MindMinesDatabase db = MindMinesDatabase.getInstance(context);
+        this.dao = db.userStatusDao();
     }
+
 
     public void loadFromDB() {
-        this.load().subscribe(new io.reactivex.rxjava3.core.SingleObserver<UserStatus>() {
-            @Override
-            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {}
+        String userId = new AuthManager(context).getUserId();
+        List<UserStatusEntity> entities = dao.getAllByUserId(userId);
+        List<UserStatus> uses = new ArrayList<>();
 
-            @Override
-            public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull UserStatus userStatus) {
-                Log.d(TAG, "onLoadSuccess: status loaded");
-                UserStatusManager.setStatus(userStatus);
-            }
+        for (UserStatusEntity e : entities) {
+            uses.add(UserStatusFactory.getInstance().createFromEntity(e));
+        }
 
-            @Override
-            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                Log.d(TAG, String.format("onLoadError: %s", e));
-                e.printStackTrace();
-            }
-        });
-    }
-
-    public Single<UserStatus> load() {
-        UserStatus defaultStatus = new UserStatus();
-        return dataStore.data().firstOrError()
-                .map(prefs -> {
-                    // Извлекаем значения по ключам, или используем значения по умолчанию
-                    int userId = prefs.get(USER_ID) != null ? prefs.get(USER_ID) : defaultStatus.getUserId();
-                    int level = prefs.get(LEVEL) != null ? prefs.get(LEVEL) : defaultStatus.getLevel();
-                    long exp = prefs.get(EXPERIENCE) != null ? prefs.get(EXPERIENCE) : defaultStatus.getExperience();
-                    long maxExp = prefs.get(MAX_EXPERIENCE) != null ? prefs.get(MAX_EXPERIENCE) : defaultStatus.getMaxExperience();
-                    long coins = prefs.get(COINS) != null ? prefs.get(COINS) : defaultStatus.getCoins();
-                    return new UserStatus(userId, level, exp, maxExp, coins);
-                });
+        RepositoryService.getUserStatusRepository().setAll(uses);
     }
 
     public void saveToDB() {
-        UserStatus newStatus = UserStatusManager.getStatus();
-        Log.d(TAG, "save start");
-        this.save(newStatus).subscribe(new SingleObserver<Preferences>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {}
-            @Override
-            public void onSuccess(@NonNull Preferences preferences) {
-                Log.d(TAG, "onSaveSuccess: status saved");
-            }
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Log.d(TAG, String.format("onSaveError: %s", e));
-            }
-        });
-    }
+        List<UserStatus> uses = RepositoryService.getUserStatusRepository().getAll();
+        List<UserStatusEntity> entities = new ArrayList<>();
 
-    private Single<Preferences> save(UserStatus status) {
-        return dataStore.updateDataAsync(prefsIn -> {
-            MutablePreferences mutablePreferences = prefsIn.toMutablePreferences();
-            mutablePreferences.set(USER_ID, status.getUserId());
-            mutablePreferences.set(LEVEL, status.getLevel());
-            mutablePreferences.set(EXPERIENCE, status.getExperience());
-            mutablePreferences.set(MAX_EXPERIENCE, status.getMaxExperience());
-            mutablePreferences.set(COINS, status.getCoins());
-            return Single.just(mutablePreferences);
-        });
+        for (UserStatus h : uses) {
+            entities.add(UserStatusFactory.getInstance().createEntity(h));
+        }
+
+        String userId = new AuthManager(context).getUserId();
+        dao.deleteAllByUserId(userId);
+        dao.insertAll(entities);
     }
 
     @Override

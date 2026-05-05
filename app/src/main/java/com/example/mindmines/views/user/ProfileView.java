@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 
 import com.example.mindmines.models.user.UserStatus;
@@ -46,12 +48,17 @@ public class ProfileView extends BaseFragment {
 
     @SuppressLint("SetTextI18n")
     public void updateUserStatus() {
-        // TODO: change to auth token and id;
-        String email = auth.getAuthToken();
+        String email = auth.getEmail();
         TextView profileTitle = requireActivity().findViewById(R.id.user_info_view);
         profileTitle.setText("Профиль: " + email);
+        if (MainActivity.isDebug()) {
+            profileTitle.setText("Почта: " + email + "\n"
+                    + "Token: " + auth.getAuthToken() + "\n"
+                    + "Id: " + auth.getUserId() + "\n"
+            );
+        }
 
-        UserStatus status = UserStatusManager.getStatus();
+        UserStatus status = new UserStatusManager(requireContext()).getStatus();
         TextView levelValue = requireActivity().findViewById(R.id.level_value_view);
         TextView expValue = requireActivity().findViewById(R.id.exp_value_view);
         TextView expUntilValue = requireActivity().findViewById(R.id.exp_until_next_value_view);

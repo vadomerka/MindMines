@@ -121,7 +121,7 @@ public class IntervalPickerAdapter {
     }
 
     public HabitInterval getHabitInterval() {
-        return HabitFactory.createHabitInterval(
+        return HabitFactory.getInstance().createHabitInterval(
                 Integer.parseInt(currentSliderLabels[(int) numberSlider.getValue()]),
                 unitPicker.getCurrentSelectedItem());
     }

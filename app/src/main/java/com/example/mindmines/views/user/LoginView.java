@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
@@ -37,15 +38,27 @@ public class LoginView extends AppCompatActivity {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
 
-        if (!email.isEmpty() && !password.isEmpty()) {
-            // TODO: add server check.
-            Pair<String, Integer> res = UserController.getAuthData(email, password);
-            authManager.saveUserData(res.first, res.second.toString());
+        if (!checkData()) { return; }
 
-            Intent myIntent = new Intent(LoginView.this, MainActivity.class);
-            LoginView.this.startActivity(myIntent);
-            finish();
+        String token = UserController.login(email, password);
+        if (token == null) {
+            Toast.makeText(getApplicationContext(), "Пользователь не найден.", Toast.LENGTH_SHORT).show();
         }
+        authManager.saveUserData(token, email);
+
+        Intent myIntent = new Intent(LoginView.this, MainActivity.class);
+        LoginView.this.startActivity(myIntent);
+        finish();
+    }
+
+    private boolean checkData() {
+        String email = emailInput.getText().toString();
+        String password = passwordInput.getText().toString();
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Форма не заполнена", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void openRegisterView() {

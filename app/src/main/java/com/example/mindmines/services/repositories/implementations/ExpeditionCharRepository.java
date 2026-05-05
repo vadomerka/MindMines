@@ -1,4 +1,4 @@
-package com.example.mindmines.services.repositories;
+package com.example.mindmines.services.repositories.implementations;
 
 import android.content.Context;
 

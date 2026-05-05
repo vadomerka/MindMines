@@ -3,8 +3,7 @@ package com.example.mindmines.services.factories;
 import com.example.mindmines.R;
 import com.example.mindmines.db.entities.ExpeditionEntity;
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.services.repositories.ChatMessageRepository;
-import com.example.mindmines.services.repositories.ExpeditionRepository;
+import com.example.mindmines.services.repositories.implementations.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.Duration;
@@ -13,10 +12,6 @@ import java.util.OptionalInt;
 import java.util.Random;
 
 public class ExpeditionFactory {
-    private final Random rnd = new Random();
-    private final int variation = 5;
-    private final int baseValue = 10;
-
     private final ExpeditionRepository rep;
     private static ExpeditionFactory instance;
 

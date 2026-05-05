@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.user.UserStatus;
+import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
@@ -44,7 +45,8 @@ public abstract class BaseFragment extends Fragment {
     protected void updateUserStatus(List<UserStatus> upd) {
         Log.d("Debug BasicActivity updateUserStatus", "updateUserStatus: ");
         requireActivity().runOnUiThread(() -> {
-            UserStatus status = UserStatusManager.getStatus();
+            UserStatus status = new UserStatusManager(requireContext()).getStatus();
+            if (status == null) status = new UserStatus(new AuthManager(requireContext()).getUserId());
             levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",
                     status.getLevel(), status.getExperience(), status.getMaxExperience()));
         });
@@ -57,7 +59,7 @@ public abstract class BaseFragment extends Fragment {
         Button updBut = requireView().findViewById(R.id.update_nextDeadline_button);
         updBut.setOnClickListener(v -> HabitSyncCheckerService.allHabitsCheck(requireContext()));
         Button resetBut = requireView().findViewById(R.id.reset_userStatus_button);
-        resetBut.setOnClickListener(v -> UserStatusManager.resetStatus());
+        resetBut.setOnClickListener(v -> new UserStatusManager(requireContext()).resetStatus());
         CheckBox autoCheck = requireView().findViewById(R.id.autoCheck_button);
         autoCheck.setChecked(HabitCurrentCheckerService.getDebug());
         autoCheck.setOnClickListener(v -> {

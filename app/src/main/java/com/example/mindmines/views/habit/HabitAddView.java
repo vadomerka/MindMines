@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mindmines.R;
@@ -164,7 +163,7 @@ public class HabitAddView extends BaseFragment {
 
         HabitInterval interval = ipAdapter.getHabitInterval();
 
-        return HabitFactory.createDTO(userId, title, desc, goalCount, timeAccurate,
+        return HabitFactory.getInstance().createDTO(userId, title, desc, goalCount, timeAccurate,
                                       priority, difficulty, hType, interval);
     }
 

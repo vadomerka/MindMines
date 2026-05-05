@@ -18,6 +18,9 @@ public interface HabitDao {
     @Query("SELECT * FROM habits ORDER BY habitId ASC")
     List<HabitEntity> getAll();
 
+    @Query("SELECT * FROM habits WHERE userId = :userId ORDER BY habitId ASC")
+    List<HabitEntity> getAllByUserId(String userId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<HabitEntity> habits);
 
@@ -26,4 +29,7 @@ public interface HabitDao {
 
     @Query("DELETE FROM habits")
     void deleteAll();
+
+    @Query("DELETE FROM habits WHERE userId = :userId")
+    void deleteAllByUserId(String userId);
 }

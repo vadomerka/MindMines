@@ -1,8 +1,7 @@
 package com.example.mindmines.services.factories;
 
 import com.example.mindmines.models.chat.ChatMessage;
-import com.example.mindmines.services.repositories.CharRepository;
-import com.example.mindmines.services.repositories.ChatMessageRepository;
+import com.example.mindmines.services.repositories.implementations.ChatMessageRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.OffsetDateTime;

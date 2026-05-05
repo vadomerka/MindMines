@@ -1,7 +1,8 @@
-package com.example.mindmines.services.repositories;
+package com.example.mindmines.services.repositories.implementations;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.expeditions.ExpeditionLocation;
+import com.example.mindmines.services.repositories.LocalRepository;
 
 import java.util.ArrayList;
 

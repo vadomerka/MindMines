@@ -1,44 +1,50 @@
 package com.example.mindmines.services.managers;
 
+import android.content.Context;
+
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.services.factories.UserStatusFactory;
 import com.example.mindmines.services.observers.UserStatusObserver;
+import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.implementations.HabitRepository;
+import com.example.mindmines.services.repositories.implementations.UserStatusRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserStatusManager {
-    private static UserStatus status = new UserStatus();
-    private static final List<UserStatusObserver> observers = new ArrayList<>();
+    private final UserStatusRepository rep;
+    private final Context context;
 
-    public static UserStatus getStatus() {
-        return status;
+    public UserStatusManager(Context context) {
+        this.context = context;
+        rep = RepositoryService.getUserStatusRepository();
     }
 
-    public static void setStatus(UserStatus s) {
-        status = s;
+    public UserStatus getStatus() {
+        String userId = new AuthManager(context).getUserId();
+        return rep.get(userId);
     }
 
-    public static void resetStatus() {
-        status = new UserStatus();
+    public void setStatus(UserStatus s) {
+        rep.update(s);
     }
 
-    public static void gain(Habit h) {
-        Long newExp = ExpManager.gainExp(status, h);
-        ExpManager.gainLevel(status, newExp);
+    public void removeStatus() {
+        rep.remove(getStatus());
     }
 
-    public static void updateObservers() {
-        for (UserStatusObserver observer: observers) {
-            observer.update(new ArrayList<>());
-        }
+    public void resetStatus() {
+        String userId = new AuthManager(context).getUserId();
+        rep.update(UserStatusFactory.getInstance().create(userId));
     }
 
-    public static void subscribe(UserStatusObserver observer) {
-        observers.add(observer);
-    }
-
-    public static void unsubscribe(UserStatusObserver observer) {
-        observers.remove(observer);
+    public void gain(Habit h) {
+        UserStatus status = getStatus();
+        Long newExp = XpManager.gainExp(status, h);
+        XpManager.gainLevel(status, newExp);
+        setStatus(status);
     }
 }

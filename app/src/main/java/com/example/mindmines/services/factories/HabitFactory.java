@@ -5,7 +5,8 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.repositories.HabitRepository;
+import com.example.mindmines.services.repositories.implementations.ExpeditionRepository;
+import com.example.mindmines.services.repositories.implementations.HabitRepository;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.services.repositories.RepositoryService;
 
@@ -13,15 +14,29 @@ import java.time.OffsetDateTime;
 import java.util.OptionalInt;
 
 public class HabitFactory {
-    private static int getId() {
-        HabitRepository rep = RepositoryService.getHabitRepository();
+
+    private final HabitRepository rep;
+    private static HabitFactory instance;
+
+    public HabitFactory() {
+        this.rep = RepositoryService.getHabitRepository();
+    }
+
+    public static HabitFactory getInstance() {
+        if (instance == null) {
+            instance = new HabitFactory();
+        }
+        return instance;
+    }
+
+    private int getId() {
         OptionalInt rm = rep.getAll() != null
                 ? rep.getAll().stream().mapToInt(Habit::getId).max()
                 : OptionalInt.of(0);
         return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }
 
-    public static HabitDTO createDTO(String userId, String title, String desc, Integer goalCount,
+    public HabitDTO createDTO(String userId, String title, String desc, Integer goalCount,
                                      Boolean timeAccurate, Integer priority, Integer difficulty,
                                      HabitType hType, HabitInterval interval) {
         return new HabitDTO(userId,
@@ -35,7 +50,7 @@ public class HabitFactory {
                 interval);
     }
 
-    public static HabitDTO createDTO(String userId) {
+    public HabitDTO createDTO(String userId) {
         return new HabitDTO(userId,
                 "Название привычки",
                 "Описание привычки",
@@ -47,7 +62,7 @@ public class HabitFactory {
                 null);
     }
 
-    public static Habit createFromDTO(HabitDTO dto) {
+    public Habit createFromDTO(HabitDTO dto) {
         return new Habit(
                 getId(),
                 dto.getUserId(),
@@ -65,13 +80,13 @@ public class HabitFactory {
                 dto.getInterval());
     }
 
-    public static Habit createFromDTO(Integer hId, HabitDTO dto) {
+    public Habit createFromDTO(Integer hId, HabitDTO dto) {
         Habit res = createFromDTO(dto);
         res.setHabitId(hId);
         return res;
     }
 
-    public static OffsetDateTime getNewNextDeadline(OffsetDateTime now, HabitInterval interval) {
+    public OffsetDateTime getNewNextDeadline(OffsetDateTime now, HabitInterval interval) {
         OffsetDateTime res = now;
         switch (interval.getTimeUnit()) {
             // Сложно отслеживать мягкое начало (+ 1), легче отслеживать неотмеченные привычки.
@@ -109,7 +124,7 @@ public class HabitFactory {
         return res;
     }
 
-    public static Habit createFromEntity(HabitEntity e) {
+    public Habit createFromEntity(HabitEntity e) {
         return new Habit(
                 e.habitId,
                 e.userId,
@@ -127,7 +142,7 @@ public class HabitFactory {
                 createHabitInterval(e.intervalNumber, e.intervalUnit));
     }
 
-    public static HabitType habitTypeFromString(String type) {
+    public HabitType habitTypeFromString(String type) {
         switch (type.toUpperCase()) {
             case "GOOD_GOAL_COUNT":
                 return HabitType.GOOD_GOAL_COUNT;
@@ -140,11 +155,11 @@ public class HabitFactory {
         }
     }
 
-    public static HabitInterval createHabitInterval(Integer num, String unit) {
+    public HabitInterval createHabitInterval(Integer num, String unit) {
         return new HabitInterval(num, intervalUnitFromString(unit));
     }
 
-    public static HabitTimeUnit intervalUnitFromString(String type) {
+    public HabitTimeUnit intervalUnitFromString(String type) {
         switch (type.toUpperCase()) {
             case "MINUTE":
             case "МИНУТЫ":
@@ -163,7 +178,7 @@ public class HabitFactory {
         }
     }
 
-    public static HabitEntity createEntity(Habit h) {
+    public HabitEntity createEntity(Habit h) {
         return new HabitEntity(
                 h.getId(),
                 h.getUserId(),

@@ -10,6 +10,7 @@ import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.managers.UserStatusManager;
+import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.OffsetDateTime;
 
@@ -23,7 +24,7 @@ public class HabitCurrentCheckerService extends BasicChecker {
         OffsetDateTime ded = h.getNextDeadlineAt();
         if (ded == null) {
             // Debug, null deadlines should not be created.
-            ded = HabitFactory.getNewNextDeadline(OffsetDateTime.now(), h.getInterval());
+            ded = HabitFactory.getInstance().getNewNextDeadline(OffsetDateTime.now(), h.getInterval());
             h.setNextDeadlineAt(ded);
         }
         OffsetDateTime s = h.getPeriodStart();
@@ -64,7 +65,7 @@ public class HabitCurrentCheckerService extends BasicChecker {
         h.setPenaltyNumber(0);
         HabitController.getInstance(context).update(h);
 
-        UserStatusManager.gain(h);
-        UserStatusManager.updateObservers();
+        new UserStatusManager(context).gain(h);
+        RepositoryService.getUserStatusRepository().updateObservers();
     }
 }

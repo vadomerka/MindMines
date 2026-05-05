@@ -25,7 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private static DataSynchronizerManager dbSync;
 
     @Override
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initNavigation();
 
-        RepositoryService.initAll(this);
-        dbSync = DataSynchronizerManager.getInstance(this);
+        RepositoryService.initAll(getApplicationContext());
+        dbSync = DataSynchronizerManager.getInstance(getApplicationContext());
         dbSync.loadFromDB();
 
         // Notifications init

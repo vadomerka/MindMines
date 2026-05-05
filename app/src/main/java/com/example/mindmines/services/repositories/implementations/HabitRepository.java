@@ -1,10 +1,11 @@
-package com.example.mindmines.services.repositories;
+package com.example.mindmines.services.repositories.implementations;
 
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.observers.HabitObserver;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
+import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -21,4 +22,6 @@ public class HabitRepository extends LocalObservedRepository<Integer, Habit, Hab
             }
         };
     }
+
+
 }

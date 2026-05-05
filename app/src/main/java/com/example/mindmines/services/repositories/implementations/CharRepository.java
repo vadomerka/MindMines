@@ -1,4 +1,4 @@
-package com.example.mindmines.services.repositories;
+package com.example.mindmines.services.repositories.implementations;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.characters.Char;
@@ -10,6 +10,7 @@ import com.example.mindmines.models.game.equipment.types.Sword;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.observers.CharObserver;
+import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.util.ArrayList;
 
@@ -21,13 +22,13 @@ public class CharRepository extends LocalObservedRepository<Integer, Char, CharO
         array = new ArrayList<>();
         String userId = new AuthManager(context).getUserId();
         CharFactory factory = CharFactory.getInstance();
-        array.add(factory.generate("", 1, String.valueOf(R.drawable.g2),
+        array.add(factory.generate(userId, 1, String.valueOf(R.drawable.g2),
                 new Equipment[] { new Sword(), new Shield(), new BodyArmor(), new LegArmor() }));
-        array.add(factory.generate("", 2, String.valueOf(R.drawable.g3),
+        array.add(factory.generate(userId, 2, String.valueOf(R.drawable.g3),
                 new Equipment[] { new Sword(), new LegArmor() }));
-        array.add(factory.generate("", 3, String.valueOf(R.drawable.g4),
+        array.add(factory.generate(userId, 3, String.valueOf(R.drawable.g4),
                 new Equipment[] { }));
-        array.add(factory.generate("", 5, String.valueOf(R.drawable.g5),
+        array.add(factory.generate(userId, 5, String.valueOf(R.drawable.g5),
                 new Equipment[] { }));
     }
 

@@ -15,9 +15,8 @@ public abstract class LocalObservedRepository<TId, T extends RepositoryItem<TId>
 
     @Override
     public void init(Context context) {
+        super.init(context);
         observers = new ArrayList<>();
-        this.context = context;
-        initArray();
         updateObservers();
     }
 
@@ -47,24 +46,25 @@ public abstract class LocalObservedRepository<TId, T extends RepositoryItem<TId>
 
     @Override
     public void setAll(List<T> arr) {
-        array = arr;
+        super.setAll(arr);
         updateObservers();
     }
 
+    @Override
     public void add(T item) {
-        array.add(item);
+        super.add(item);
         updateObservers(item);
     }
 
+    @Override
     public void remove(T item) {
-        array.remove(item);
+        super.remove(item);
         updateObservers();
     }
 
     @Override
     public void update(T item) {
-        T found = get(item.getId());
-        array.set(array.indexOf(found), item);
+        super.update(item);
         updateObservers(item);
     }
 }

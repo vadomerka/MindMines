@@ -7,12 +7,12 @@ import com.example.mindmines.services.factories.HabitFactory;
 public class HabitRequestSender {
     public static Habit post(HabitDTO h) {
         // TODO: заменить на настоящую отправку данных серверу.
-        return HabitFactory.createFromDTO(h);
+        return HabitFactory.getInstance().createFromDTO(h);
     }
 
     public static Habit put(Integer hId, HabitDTO h) {
         // TODO: заменить на настоящую отправку данных серверу.
-        return HabitFactory.createFromDTO(hId, h);
+        return HabitFactory.getInstance().createFromDTO(hId, h);
     }
 
     public static boolean delete(Integer hId) {

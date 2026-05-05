@@ -15,16 +15,18 @@ import com.example.mindmines.db.dao.ExpeditionCharCrossRefDao;
 import com.example.mindmines.db.dao.ExpeditionDao;
 import com.example.mindmines.db.dao.HabitDao;
 import com.example.mindmines.db.dao.MessageDao;
+import com.example.mindmines.db.dao.UserStatusDao;
 import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.db.entities.ExpeditionEntity;
 import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.db.entities.MessageEntity;
+import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 
 import java.time.OffsetDateTime;
 
 @Database(entities = {HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
-        ExpeditionCharCrossRef.class, MessageEntity.class}, version = 8, exportSchema = false)
+        ExpeditionCharCrossRef.class, MessageEntity.class, UserStatusEntity.class}, version = 9, exportSchema = false)
 @TypeConverters(HabitTypeConverter.class)
 public abstract class MindMinesDatabase extends RoomDatabase {
     private static volatile MindMinesDatabase INSTANCE;
@@ -36,6 +38,7 @@ public abstract class MindMinesDatabase extends RoomDatabase {
     public abstract ExpeditionDao expeditionDao();
     public abstract ExpeditionCharCrossRefDao expeditionCharCrossRefDao();
     public abstract MessageDao messageDao();
+    public abstract UserStatusDao userStatusDao();
 
     public static MindMinesDatabase getInstance(Context context) {
         if (INSTANCE == null) {

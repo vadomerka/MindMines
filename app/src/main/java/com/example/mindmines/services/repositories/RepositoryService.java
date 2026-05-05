@@ -2,6 +2,14 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
+import com.example.mindmines.services.repositories.implementations.CharRepository;
+import com.example.mindmines.services.repositories.implementations.ChatMessageRepository;
+import com.example.mindmines.services.repositories.implementations.ExpeditionCharRepository;
+import com.example.mindmines.services.repositories.implementations.ExpeditionLocationRepository;
+import com.example.mindmines.services.repositories.implementations.ExpeditionRepository;
+import com.example.mindmines.services.repositories.implementations.HabitRepository;
+import com.example.mindmines.services.repositories.implementations.UserStatusRepository;
+
 public class RepositoryService {
     private static CharRepository chRep = null;
     private static HabitRepository hRep = null;
@@ -9,6 +17,7 @@ public class RepositoryService {
     private static ExpeditionLocationRepository elRep = null;
     private static ExpeditionCharRepository cheRep = null;
     private static ChatMessageRepository mRep = null;
+    private static UserStatusRepository usRep = null;
 
     public static void initAll(Context context) {
         getCharRepository().init(context);
@@ -17,6 +26,7 @@ public class RepositoryService {
         getExpeditionLocationRepository().init(context);
         getExpeditionCharRepository().init(context);
         getChatMessageRepository().init(context);
+        getUserStatusRepository().init(context);
     }
 
     public static CharRepository getCharRepository() {
@@ -47,5 +57,10 @@ public class RepositoryService {
     public static ChatMessageRepository getChatMessageRepository() {
         if (mRep == null) mRep = new ChatMessageRepository();
         return mRep;
+    }
+
+    public static UserStatusRepository getUserStatusRepository() {
+        if (usRep == null) usRep = new UserStatusRepository();
+        return usRep;
     }
 }
