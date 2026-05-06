@@ -29,7 +29,8 @@ public class UserStatusManager {
     }
 
     public void setStatus(UserStatus s) {
-        rep.update(s);
+        rep.remove(s);
+        rep.add(s);
     }
 
     public void removeStatus() {

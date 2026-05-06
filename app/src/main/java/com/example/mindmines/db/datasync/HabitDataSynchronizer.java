@@ -1,6 +1,7 @@
 package com.example.mindmines.db.datasync;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.mindmines.db.dao.HabitDao;
 import com.example.mindmines.db.MindMinesDatabase;
@@ -26,10 +27,16 @@ public class HabitDataSynchronizer implements DataSynchronizer {
     public void loadFromDB() {
         String userId = new AuthManager(context).getUserId();
         List<HabitEntity> entities = dao.getAllByUserId(userId);
+
         List<Habit> habits = new ArrayList<>();
 
+        for (HabitEntity e: dao.getAll()) {
+            Log.d("Debug HabitSync load", "loadFromDB: " + e.title + " " + e.habitId);
+        }
+
         for (HabitEntity e : entities) {
-            habits.add(HabitFactory.getInstance().createFromEntity(e));
+            Habit res = HabitFactory.getInstance().createFromEntity(e);
+            habits.add(res);
         }
 
         RepositoryService.getHabitRepository().setAll(habits);
@@ -46,5 +53,9 @@ public class HabitDataSynchronizer implements DataSynchronizer {
         String userId = new AuthManager(context).getUserId();
         dao.deleteAllByUserId(userId);
         dao.insertAll(entities);
+
+        for (HabitEntity e: dao.getAll()) {
+            Log.d("Debug HabitSync save", "saveToDB: " + e.title + " " + e.habitId);
+        }
     }
 }
