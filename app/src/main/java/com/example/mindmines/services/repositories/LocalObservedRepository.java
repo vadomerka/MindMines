@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class LocalObservedRepository<TId, T extends RepositoryItem<TId>, TObserver extends RepositoryObserver<T>>
+public abstract class LocalObservedRepository<TId,
+                                              T extends RepositoryItem<TId>,
+                                              TObserver extends RepositoryObserver<T>>
     extends LocalRepository<TId, T>
         implements Observed<TObserver> {
     protected List<TObserver> observers;
@@ -40,13 +42,9 @@ public abstract class LocalObservedRepository<TId, T extends RepositoryItem<TId>
         }
     }
 
-    public List<T> getAll() {
-        return array;
-    }
-
     @Override
-    public void setAll(List<T> arr) {
-        super.setAll(arr);
+    public void setAll(String userId, List<T> arr) {
+        super.setAll(userId, arr);
         updateObservers();
     }
 

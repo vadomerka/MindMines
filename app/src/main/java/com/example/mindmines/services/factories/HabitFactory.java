@@ -5,7 +5,8 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.repositories.implementations.ExpeditionRepository;
+import com.example.mindmines.services.repositories.DBEntity;
+import com.example.mindmines.services.repositories.RepositoryItem;
 import com.example.mindmines.services.repositories.implementations.HabitRepository;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.services.repositories.RepositoryService;
@@ -13,7 +14,7 @@ import com.example.mindmines.services.repositories.RepositoryService;
 import java.time.OffsetDateTime;
 import java.util.OptionalInt;
 
-public class HabitFactory {
+public class HabitFactory implements RepFactory<Integer, Habit, HabitEntity> {
 
     private final HabitRepository rep;
     private static HabitFactory instance;
@@ -124,7 +125,7 @@ public class HabitFactory {
         return res;
     }
 
-    public Habit createFromEntity(HabitEntity e) {
+    public Habit toItem(HabitEntity e) {
         return new Habit(
                 e.habitId,
                 e.userId,
@@ -178,7 +179,7 @@ public class HabitFactory {
         }
     }
 
-    public HabitEntity createEntity(Habit h) {
+    public HabitEntity toEntity(Habit h) {
         return new HabitEntity(
                 h.getId(),
                 h.getUserId(),

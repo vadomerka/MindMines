@@ -1,5 +1,6 @@
 package com.example.mindmines.services.factories;
 
+import com.example.mindmines.db.entities.ChatMessageEntity;
 import com.example.mindmines.models.chat.ChatMessage;
 import com.example.mindmines.services.repositories.implementations.ChatMessageRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
@@ -7,7 +8,7 @@ import com.example.mindmines.services.repositories.RepositoryService;
 import java.time.OffsetDateTime;
 import java.util.OptionalInt;
 
-public class ChatMessageFactory {
+public class ChatMessageFactory implements RepFactory<Integer, ChatMessage, ChatMessageEntity>{
     private final ChatMessageRepository rep;
     private static ChatMessageFactory instance;
 
@@ -43,6 +44,34 @@ public class ChatMessageFactory {
                 body,
                 OffsetDateTime.now(),
                 null
+        );
+    }
+
+    public ChatMessage toItem(ChatMessageEntity entity) {
+
+        return new ChatMessage(
+                entity.messageId,
+                entity.userId,
+                entity.author,
+                entity.type,
+                entity.context,
+                entity.body,
+                entity.creationTime,
+                entity.receivedTime
+        );
+    }
+
+    public ChatMessageEntity toEntity(ChatMessage item) {
+
+        return new ChatMessageEntity(
+                item.getId(),
+                item.getUserId(),
+                item.getAuthor(),
+                item.getType(),
+                item.getContext(),
+                item.getBody(),
+                item.getCreationTime(),
+                item.getReceivedTime()
         );
     }
 }

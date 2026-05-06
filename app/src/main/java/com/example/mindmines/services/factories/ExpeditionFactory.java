@@ -9,9 +9,8 @@ import com.example.mindmines.services.repositories.RepositoryService;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.OptionalInt;
-import java.util.Random;
 
-public class ExpeditionFactory {
+public class ExpeditionFactory implements RepFactory<Integer, Expedition, ExpeditionEntity> {
     private final ExpeditionRepository rep;
     private static ExpeditionFactory instance;
 
@@ -49,7 +48,7 @@ public class ExpeditionFactory {
         );
     }
 
-    public Expedition createFromEntity(ExpeditionEntity entity) {
+    public Expedition toItem(ExpeditionEntity entity) {
         return new Expedition(
                 entity.expeditionId,
                 entity.userId,
@@ -62,7 +61,7 @@ public class ExpeditionFactory {
         );
     }
 
-    public ExpeditionEntity createEntity(Expedition ex) {
+    public ExpeditionEntity toEntity(Expedition ex) {
         return new ExpeditionEntity(
                 ex.getId(),
                 ex.getUserId(),

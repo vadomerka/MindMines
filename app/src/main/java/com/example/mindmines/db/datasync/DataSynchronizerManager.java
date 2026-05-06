@@ -23,7 +23,7 @@ public class DataSynchronizerManager {
         synchronizers.add(new ExpeditionCharDataSynchronizer(context));
     }
 
-    public static DataSynchronizerManager getInstance(Context context) {
+    private static DataSynchronizerManager getInstance(Context context) {
         if (instance == null) {
             instance = new DataSynchronizerManager(context);
         }

@@ -5,7 +5,7 @@ import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.implementations.UserStatusRepository;
 
-public class UserStatusFactory {
+public class UserStatusFactory implements RepFactory<String, UserStatus, UserStatusEntity>{
     private static UserStatusFactory instance;
 
     public UserStatusFactory() {
@@ -43,7 +43,7 @@ public class UserStatusFactory {
         );
     }
 
-    public UserStatus createFromEntity(UserStatusEntity entity) {
+    public UserStatus toItem(UserStatusEntity entity) {
         return new UserStatus(
                 entity.userId,
                 entity.level,
@@ -53,7 +53,7 @@ public class UserStatusFactory {
         );
     }
 
-    public UserStatusEntity createEntity(UserStatus ex) {
+    public UserStatusEntity toEntity(UserStatus ex) {
         return new UserStatusEntity(
                 ex.getId(),
                 ex.getLevel(),

@@ -33,7 +33,7 @@ public class HabitController {
         try {
             Habit result = HabitRequestSender.post(hDTO);
             HabitManager.add(result);
-            DataSynchronizerManager.getInstance(instance.context).saveToDB();
+//            DataSynchronizerManager.getInstance(instance.context).saveToDB();
             return result;
         } catch (Exception e) {
             System.out.println("Произошла ошибка при добавлении привычки.");
@@ -57,7 +57,7 @@ public class HabitController {
             boolean result = HabitRequestSender.delete(habitId);
             if (result == true) {
                 HabitManager.delete(habitId);
-                DataSynchronizerManager.getInstance(instance.context).saveToDB();
+//                DataSynchronizerManager.getInstance(instance.context).saveToDB();
             }
         } catch (Exception e) {
             System.out.println("Произошла ошибка при удалении привычки.");
@@ -66,6 +66,6 @@ public class HabitController {
 
     public void update(Habit h) {
         HabitManager.update(h);
-        DataSynchronizerManager.getInstance(instance.context).saveToDB();
+//        DataSynchronizerManager.getInstance(instance.context).saveToDB();
     }
 }

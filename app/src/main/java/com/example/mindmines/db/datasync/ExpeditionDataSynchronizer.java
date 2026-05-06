@@ -25,10 +25,10 @@ public class ExpeditionDataSynchronizer implements DataSynchronizer {
         List<Expedition> expeditions = new ArrayList<>();
 
         for (ExpeditionEntity e : entities) {
-            expeditions.add(ExpeditionFactory.getInstance().createFromEntity(e));
+            expeditions.add(ExpeditionFactory.getInstance().toItem(e));
         }
 
-        RepositoryService.getExpeditionRepository().setAll(expeditions);
+//        RepositoryService.getExpeditionRepository().setAll(expeditions);
     }
 
     public void saveToDB() {
@@ -36,10 +36,10 @@ public class ExpeditionDataSynchronizer implements DataSynchronizer {
         List<ExpeditionEntity> entities = new ArrayList<>();
 
         for (Expedition e : expeditions) {
-            entities.add(ExpeditionFactory.getInstance().createEntity(e));
+            entities.add(ExpeditionFactory.getInstance().toEntity(e));
         }
 
-        dao.deleteAll();
-        dao.insertAll(entities);
+//        dao.deleteAll();
+//        dao.insertAll(entities);
     }
 }

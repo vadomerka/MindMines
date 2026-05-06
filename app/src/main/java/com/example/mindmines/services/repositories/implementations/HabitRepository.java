@@ -1,16 +1,22 @@
 package com.example.mindmines.services.repositories.implementations;
 
+import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitType;
+import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.observers.HabitObserver;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
+import com.example.mindmines.services.repositories.LocalDaoRepository;
 import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
-public class HabitRepository extends LocalObservedRepository<Integer, Habit, HabitObserver> {
+public class HabitRepository extends LocalDaoRepository<Integer, Habit, HabitEntity, HabitObserver> {
+    @Override
+    public void initFactory() { factory = new HabitFactory(); }
+
     @Override
     public void initArray() {
         OffsetDateTime n = OffsetDateTime.now();
@@ -22,6 +28,4 @@ public class HabitRepository extends LocalObservedRepository<Integer, Habit, Hab
             }
         };
     }
-
-
 }

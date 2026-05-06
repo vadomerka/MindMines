@@ -24,13 +24,13 @@ public class ExpeditionCharDataSynchronizer implements DataSynchronizer {
 
     public void loadFromDB() {
         List<ExpeditionCharCrossRef> entities = dao.getAll();
-        RepositoryService.getExpeditionCharRepository().setAll(entities);
+//        RepositoryService.getExpeditionCharRepository().setAll(entities);
     }
 
     public void saveToDB() {
         List<ExpeditionCharCrossRef> entities = RepositoryService.getExpeditionCharRepository().getAll();
 
-        dao.deleteAll();
-        dao.insertAll(entities);
+//        dao.deleteAll();
+//        dao.insertAll(entities);
     }
 }

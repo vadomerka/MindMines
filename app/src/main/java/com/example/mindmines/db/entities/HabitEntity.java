@@ -5,10 +5,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.mindmines.services.repositories.DBEntity;
+
 import java.time.OffsetDateTime;
 
 @Entity(tableName = "habits")
-public class HabitEntity {
+public class HabitEntity implements DBEntity {
     @PrimaryKey
     public Integer habitId;
 

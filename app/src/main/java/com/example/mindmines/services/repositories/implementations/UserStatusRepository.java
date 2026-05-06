@@ -5,12 +5,14 @@ import android.util.Log;
 import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
+import com.example.mindmines.services.factories.UserStatusFactory;
 import com.example.mindmines.services.observers.UserStatusObserver;
+import com.example.mindmines.services.repositories.LocalDaoRepository;
 import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.util.List;
 
-public class UserStatusRepository extends LocalObservedRepository<String, UserStatus, UserStatusObserver> {
+public class UserStatusRepository extends LocalDaoRepository<String, UserStatus, UserStatusEntity, UserStatusObserver> {
     @Override
     public void updateObservers() {
         super.updateObservers();
@@ -19,5 +21,10 @@ public class UserStatusRepository extends LocalObservedRepository<String, UserSt
         for (UserStatusEntity us: all) {
             Log.d("Debug UserStatus", String.format("%s, %d", us.userId, us.level));
         }
+    }
+
+    @Override
+    public void initFactory() {
+        factory = new UserStatusFactory();
     }
 }

@@ -35,11 +35,11 @@ public class HabitDataSynchronizer implements DataSynchronizer {
         }
 
         for (HabitEntity e : entities) {
-            Habit res = HabitFactory.getInstance().createFromEntity(e);
+            Habit res = HabitFactory.getInstance().toItem(e);
             habits.add(res);
         }
 
-        RepositoryService.getHabitRepository().setAll(habits);
+//        RepositoryService.getHabitRepository().setAll(habits);
     }
 
     public void saveToDB() {
@@ -47,12 +47,12 @@ public class HabitDataSynchronizer implements DataSynchronizer {
         List<HabitEntity> entities = new ArrayList<>();
 
         for (Habit h : habits) {
-            entities.add(HabitFactory.getInstance().createEntity(h));
+            entities.add(HabitFactory.getInstance().toEntity(h));
         }
 
         String userId = new AuthManager(context).getUserId();
-        dao.deleteAllByUserId(userId);
-        dao.insertAll(entities);
+//        dao.deleteAllByUserId(userId);
+//        dao.insertAll(entities);
 
         for (HabitEntity e: dao.getAll()) {
             Log.d("Debug HabitSync save", "saveToDB: " + e.title + " " + e.habitId);

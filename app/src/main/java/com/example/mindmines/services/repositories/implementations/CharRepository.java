@@ -1,6 +1,7 @@
 package com.example.mindmines.services.repositories.implementations;
 
 import com.example.mindmines.R;
+import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.types.BodyArmor;
 import com.example.mindmines.models.game.equipment.types.Equipment;
@@ -10,12 +11,18 @@ import com.example.mindmines.models.game.equipment.types.Sword;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.observers.CharObserver;
+import com.example.mindmines.services.repositories.LocalDaoRepository;
 import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.util.ArrayList;
 
-public class CharRepository extends LocalObservedRepository<Integer, Char, CharObserver> {
+public class CharRepository extends LocalDaoRepository<Integer, Char, CharEntity, CharObserver> {
     protected final int MAX_CHARACTERS = 4;
+
+    @Override
+    public void initFactory() {
+        factory = new CharFactory();
+    }
 
     @Override
     public void initArray() {
@@ -34,8 +41,7 @@ public class CharRepository extends LocalObservedRepository<Integer, Char, CharO
 
     @Override
     public void add(Char item) {
-        if (array.size() == MAX_CHARACTERS) return;
-        array.add(item);
-        updateObservers(item);
+        if (getByUser(item.getUserId()).size() >= MAX_CHARACTERS) return;
+        super.add(item);
     }
 }

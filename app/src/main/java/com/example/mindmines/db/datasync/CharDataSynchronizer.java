@@ -25,10 +25,10 @@ public class CharDataSynchronizer implements DataSynchronizer {
         List<Char> chars = new ArrayList<>();
 
         for (CharEntity e : entities) {
-            chars.add(CharFactory.getInstance().createFromEntity(e));
+            chars.add(CharFactory.getInstance().toItem(e));
         }
 
-        RepositoryService.getCharRepository().setAll(chars);
+//        RepositoryService.getCharRepository().setAll(chars);
     }
 
     public void saveToDB() {
@@ -36,10 +36,10 @@ public class CharDataSynchronizer implements DataSynchronizer {
         List<CharEntity> entities = new ArrayList<>();
 
         for (Char c : chars) {
-            entities.add(CharFactory.getInstance().createEntity(c));
+            entities.add(CharFactory.getInstance().toEntity(c));
         }
 
-        dao.deleteAll();
-        dao.insertAll(entities);
+//        dao.deleteAll();
+//        dao.insertAll(entities);
     }
 }

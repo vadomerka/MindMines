@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class LocalRepository<TId, T extends RepositoryItem<TId>> {
     protected List<T> array;
@@ -20,8 +21,13 @@ public abstract class LocalRepository<TId, T extends RepositoryItem<TId>> {
         return array;
     }
 
-    public void setAll(List<T> arr) {
-        array = arr;
+    public List<T> getByUser(String userId) {
+        return array.stream().filter(it -> userId.equals(it.getUserId())).collect(Collectors.toList());
+    }
+
+    public void setAll(String userId, List<T> arr) {
+        array = array.stream().filter(it -> !it.getUserId().equals(userId)).collect(Collectors.toList());
+        array.addAll(arr);
     }
 
     public void add(T item) {
@@ -33,7 +39,7 @@ public abstract class LocalRepository<TId, T extends RepositoryItem<TId>> {
     }
 
     public T get(TId id) {
-        Optional<T> res = array.stream().filter(item -> item.getId().equals(id)).findFirst();
+        Optional<T> res = getAll().stream().filter(item -> item.getId().equals(id)).findFirst();
         return res.orElse(null);
     }
 

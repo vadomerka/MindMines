@@ -6,10 +6,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.mindmines.services.repositories.DBEntity;
+
 import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "characters")
-public class CharEntity {
+public class CharEntity implements DBEntity {
     @PrimaryKey
     @NotNull
     public Integer charId;

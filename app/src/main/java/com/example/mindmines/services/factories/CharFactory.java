@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import java.util.OptionalInt;
 import java.util.Random;
 
-public class CharFactory {
+public class CharFactory implements RepFactory<Integer, Char, CharEntity> {
     private final Random rnd = new Random();
     private static final int variation = 5;
     private static final int baseValue = 10;
@@ -62,14 +62,14 @@ public class CharFactory {
         return ch;
     }
 
-    public Char createFromEntity(CharEntity entity) {
+    public Char toItem(CharEntity entity) {
         Gson g = new Gson();
         Char ch = g.fromJson(entity.charJson, Char.class);
         ch.setCharId(entity.charId);
         return ch;
     }
 
-    public CharEntity createEntity(Char ch) {
+    public CharEntity toEntity(Char ch) {
         Gson g = new Gson();
         return new CharEntity(ch.getId(), ch.getUserId(), g.toJson(ch));
     }

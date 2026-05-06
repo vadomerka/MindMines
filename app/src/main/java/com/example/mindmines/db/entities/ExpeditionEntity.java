@@ -6,12 +6,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.mindmines.services.repositories.DBEntity;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;
 
 @Entity(tableName = "expeditions")
-public class ExpeditionEntity {
+public class ExpeditionEntity implements DBEntity {
     @PrimaryKey
     @ColumnInfo(name = "expeditionId")
     @NotNull

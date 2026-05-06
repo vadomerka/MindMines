@@ -4,10 +4,13 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
+
+import com.example.mindmines.services.repositories.DBEntity;
+
 import java.time.OffsetDateTime;
 
 @Entity(tableName = "messages")
-public class MessageEntity {
+public class ChatMessageEntity implements DBEntity {
 
     @PrimaryKey
     @NonNull
@@ -26,7 +29,7 @@ public class MessageEntity {
     public String context;
 
     @ColumnInfo(name = "body")
-    public Integer body;
+    public String body;
 
     @ColumnInfo(name = "creationTime")
     public OffsetDateTime creationTime;
@@ -34,18 +37,18 @@ public class MessageEntity {
     @ColumnInfo(name = "receivedTime")
     public OffsetDateTime receivedTime;
 
-    public MessageEntity() {
+    public ChatMessageEntity() {
         messageId = 0;
     }
 
-    public MessageEntity(@NonNull Integer messageId,
-                         String userId,
-                         String author,
-                         String type,
-                         String context,
-                         Integer body,
-                         OffsetDateTime creationTime,
-                         OffsetDateTime receivedTime) {
+    public ChatMessageEntity(@NonNull Integer messageId,
+                             String userId,
+                             String author,
+                             String type,
+                             String context,
+                             String body,
+                             OffsetDateTime creationTime,
+                             OffsetDateTime receivedTime) {
         this.messageId = messageId;
         this.userId = userId;
         this.author = author;

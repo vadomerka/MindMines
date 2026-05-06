@@ -6,35 +6,35 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.mindmines.db.entities.MessageEntity;
+import com.example.mindmines.db.entities.ChatMessageEntity;
 
 import java.util.List;
 
 @Dao
 public interface MessageDao {
 
-    @Query("SELECT * FROM messages ORDER BY messageId ASC")
-    List<MessageEntity> getAll();
+    @Query("SELECT * FROM ChatMessageEntity ORDER BY messageId ASC")
+    List<ChatMessageEntity> getAll();
 
-    @Query("SELECT * FROM messages WHERE messageId = :id")
-    MessageEntity getById(int id);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<MessageEntity> messages);
+    @Query("SELECT * FROM ChatMessageEntity WHERE messageId = :id")
+    ChatMessageEntity getById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(MessageEntity message);
+    void insertAll(List<ChatMessageEntity> messages);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(ChatMessageEntity message);
 
     @Update
-    void update(MessageEntity message);
+    void update(ChatMessageEntity message);
 
-    @Query("DELETE FROM messages")
+    @Query("DELETE FROM ChatMessageEntity")
     void deleteAll();
 
-    @Query("DELETE FROM messages WHERE messageId = :id")
+    @Query("DELETE FROM ChatMessageEntity WHERE messageId = :id")
     void deleteById(int id);
 
     // Дополнительные выборки, если нужны
-    @Query("SELECT * FROM messages WHERE author = :author ORDER BY creationTime ASC")
-    List<MessageEntity> getByAuthor(String author);
+    @Query("SELECT * FROM ChatMessageEntity WHERE author = :author ORDER BY creationTime ASC")
+    List<ChatMessageEntity> getByAuthor(String author);
 }
