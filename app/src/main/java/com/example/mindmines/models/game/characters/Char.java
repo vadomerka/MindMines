@@ -4,7 +4,7 @@ import com.example.mindmines.R;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.game.equipment.types.Equipment;
-import com.example.mindmines.services.repositories.RepositoryItem;
+import com.example.mindmines.models.interfaces.RepositoryItem;
 
 import java.io.Serializable;
 

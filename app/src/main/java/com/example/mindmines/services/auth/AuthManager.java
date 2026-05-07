@@ -52,7 +52,7 @@ public class AuthManager {
     }
 
     public void logout() {
-        DataSynchronizerManager.getInstance(context).saveToDB();
+//        DataSynchronizerManager.getInstance(context).saveToDB();
 
         sharedPreferences.edit()
                 .remove(KEY_AUTH_TOKEN)

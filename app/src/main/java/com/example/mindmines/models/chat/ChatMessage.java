@@ -1,6 +1,6 @@
 package com.example.mindmines.models.chat;
 
-import com.example.mindmines.services.repositories.RepositoryItem;
+import com.example.mindmines.models.interfaces.RepositoryItem;
 
 import java.time.OffsetDateTime;
 

@@ -3,14 +3,17 @@ package com.example.mindmines.services.repositories;
 import android.content.Context;
 
 import com.example.mindmines.db.dao.RepDao;
-import com.example.mindmines.services.factories.RepFactory;
+import com.example.mindmines.models.interfaces.DBEntity;
+import com.example.mindmines.models.interfaces.RepositoryItem;
+import com.example.mindmines.services.converters.RepConverter;
 import com.example.mindmines.services.observers.RepositoryObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class LocalDaoRepository<TId,
+public abstract class LocalDaoRepository<TId extends Comparable<TId>,
                                          T extends RepositoryItem<TId>,
                                          TEntity extends DBEntity,
                                          TObserver extends RepositoryObserver<T>>
@@ -18,24 +21,35 @@ public abstract class LocalDaoRepository<TId,
 
     protected RepDao<TEntity> dao;
 
-    protected RepFactory<TId, T, TEntity> factory;
+    protected RepConverter<TId, T, TEntity> converter;
 
+    @Override
     public void init(Context context) {
-        initFactory();
-        initArray();
         this.context = context;
+        initDao();
+        initConverter();
+        observers = new ArrayList<>();
+        updateObservers();
+        initArray();
     }
 
-    public abstract void initFactory();
+    public abstract void initDao();
+
+    public abstract void initConverter();
+
+    @Override
+    public TId getId() {
+        return getAll().stream().map(T::getId).max(Comparable::compareTo).orElse(defaultId());
+    }
 
     public void initArray() {}
 
     protected List<TEntity> toEntityList(List<T> items) {
-        return items.stream().map(e -> factory.toEntity(e)).collect(Collectors.toList());
+        return items.stream().map(e -> converter.toEntity(e)).collect(Collectors.toList());
     }
 
     protected List<T> toItemList(List<TEntity> items) {
-        return items.stream().map(e -> factory.toItem(e)).collect(Collectors.toList());
+        return items.stream().map(e -> converter.toItem(e)).collect(Collectors.toList());
     }
 
     public List<T> getAll() {
@@ -56,13 +70,13 @@ public abstract class LocalDaoRepository<TId,
 
     @Override
     public void add(T item) {
-        dao.insert(factory.toEntity(item));
+        dao.insert(converter.toEntity(item));
         super.add(item);
     }
 
     @Override
     public void remove(T item) {
-        dao.delete(factory.toEntity(item));
+        dao.delete(converter.toEntity(item));
         super.remove(item);
     }
 
@@ -73,7 +87,7 @@ public abstract class LocalDaoRepository<TId,
     }
 
     public void update(T item) {
-        dao.update(factory.toEntity(item));
+        dao.update(converter.toEntity(item));
         super.update(item);
     }
 }

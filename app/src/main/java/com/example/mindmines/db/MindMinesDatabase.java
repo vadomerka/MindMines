@@ -24,7 +24,7 @@ import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 
 @Database(entities = {HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
-        ExpeditionCharCrossRef.class, ChatMessageEntity.class, UserStatusEntity.class}, version = 9, exportSchema = false)
+        ExpeditionCharCrossRef.class, ChatMessageEntity.class, UserStatusEntity.class}, version = 10, exportSchema = false)
 @TypeConverters(HabitTypeConverter.class)
 public abstract class MindMinesDatabase extends RoomDatabase {
     private static volatile MindMinesDatabase INSTANCE;
@@ -43,7 +43,7 @@ public abstract class MindMinesDatabase extends RoomDatabase {
             synchronized (MindMinesDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(
-                                    context.getApplicationContext(),
+                                    context,
                                     MindMinesDatabase.class,
                                     "habits.db"
                             )

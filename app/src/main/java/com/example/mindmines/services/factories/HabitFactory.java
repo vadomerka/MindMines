@@ -5,16 +5,14 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.repositories.DBEntity;
-import com.example.mindmines.services.repositories.RepositoryItem;
-import com.example.mindmines.services.repositories.implementations.HabitRepository;
+import com.example.mindmines.services.converters.RepConverter;
+import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.OffsetDateTime;
-import java.util.OptionalInt;
 
-public class HabitFactory implements RepFactory<Integer, Habit, HabitEntity> {
+public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
 
     private final HabitRepository rep;
     private static HabitFactory instance;
@@ -28,13 +26,6 @@ public class HabitFactory implements RepFactory<Integer, Habit, HabitEntity> {
             instance = new HabitFactory();
         }
         return instance;
-    }
-
-    private int getId() {
-        OptionalInt rm = rep.getAll() != null
-                ? rep.getAll().stream().mapToInt(Habit::getId).max()
-                : OptionalInt.of(0);
-        return (rm.isPresent() ? rm.getAsInt() : 0) + 1;
     }
 
     public HabitDTO createDTO(String userId, String title, String desc, Integer goalCount,
@@ -65,7 +56,7 @@ public class HabitFactory implements RepFactory<Integer, Habit, HabitEntity> {
 
     public Habit createFromDTO(HabitDTO dto) {
         return new Habit(
-                getId(),
+                rep.getId() + 1,
                 dto.getUserId(),
                 dto.getType(),
                 dto.getTitle(),

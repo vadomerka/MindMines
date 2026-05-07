@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
-import com.example.mindmines.services.repositories.DBEntity;
+import com.example.mindmines.models.interfaces.DBEntity;
 
 import java.time.OffsetDateTime;
 

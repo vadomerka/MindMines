@@ -6,7 +6,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.mindmines.services.repositories.DBEntity;
+import com.example.mindmines.models.interfaces.DBEntity;
 
 import org.jetbrains.annotations.NotNull;
 

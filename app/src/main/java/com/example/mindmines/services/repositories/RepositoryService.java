@@ -2,13 +2,13 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
-import com.example.mindmines.services.repositories.implementations.CharRepository;
-import com.example.mindmines.services.repositories.implementations.ChatMessageRepository;
-import com.example.mindmines.services.repositories.implementations.ExpeditionCharRepository;
-import com.example.mindmines.services.repositories.implementations.ExpeditionLocationRepository;
-import com.example.mindmines.services.repositories.implementations.ExpeditionRepository;
-import com.example.mindmines.services.repositories.implementations.HabitRepository;
-import com.example.mindmines.services.repositories.implementations.UserStatusRepository;
+import com.example.mindmines.services.repositories.dao.CharRepository;
+import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
+import com.example.mindmines.services.repositories.local.ExpeditionCharRepository;
+import com.example.mindmines.services.repositories.local.ExpeditionLocationRepository;
+import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
+import com.example.mindmines.services.repositories.dao.HabitRepository;
+import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 
 public class RepositoryService {
     private static CharRepository chRep = null;

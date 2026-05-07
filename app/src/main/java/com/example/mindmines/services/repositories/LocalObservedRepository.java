@@ -2,13 +2,15 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
+import com.example.mindmines.models.interfaces.Observed;
+import com.example.mindmines.models.interfaces.RepositoryItem;
 import com.example.mindmines.services.observers.RepositoryObserver;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class LocalObservedRepository<TId,
+public abstract class LocalObservedRepository<TId extends Comparable<TId>,
                                               T extends RepositoryItem<TId>,
                                               TObserver extends RepositoryObserver<T>>
     extends LocalRepository<TId, T>

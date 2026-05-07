@@ -7,16 +7,17 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.mindmines.db.entities.ChatMessageEntity;
+import com.example.mindmines.db.entities.HabitEntity;
 
 import java.util.List;
 
 @Dao
-public interface MessageDao {
+public interface MessageDao extends RepDao<ChatMessageEntity> {
 
-    @Query("SELECT * FROM ChatMessageEntity ORDER BY messageId ASC")
+    @Query("SELECT * FROM messages ORDER BY messageId ASC")
     List<ChatMessageEntity> getAll();
 
-    @Query("SELECT * FROM ChatMessageEntity WHERE messageId = :id")
+    @Query("SELECT * FROM messages WHERE messageId = :id")
     ChatMessageEntity getById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -28,13 +29,12 @@ public interface MessageDao {
     @Update
     void update(ChatMessageEntity message);
 
-    @Query("DELETE FROM ChatMessageEntity")
+    @Query("DELETE FROM messages")
     void deleteAll();
 
-    @Query("DELETE FROM ChatMessageEntity WHERE messageId = :id")
+    @Query("DELETE FROM messages WHERE messageId = :id")
     void deleteById(int id);
 
-    // Дополнительные выборки, если нужны
-    @Query("SELECT * FROM ChatMessageEntity WHERE author = :author ORDER BY creationTime ASC")
+    @Query("SELECT * FROM messages WHERE author = :author ORDER BY creationTime ASC")
     List<ChatMessageEntity> getByAuthor(String author);
 }

@@ -1,21 +1,28 @@
-package com.example.mindmines.services.repositories.implementations;
+package com.example.mindmines.services.repositories.dao;
 
+import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitType;
+import com.example.mindmines.services.converters.HabitConverter;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.observers.HabitObserver;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.services.repositories.LocalDaoRepository;
-import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 public class HabitRepository extends LocalDaoRepository<Integer, Habit, HabitEntity, HabitObserver> {
     @Override
-    public void initFactory() { factory = new HabitFactory(); }
+    public void initDao() {
+        MindMinesDatabase db = MindMinesDatabase.getInstance(context);
+        this.dao = db.habitDao();
+    }
+
+    @Override
+    public void initConverter() { converter = new HabitConverter(); }
 
     @Override
     public void initArray() {
@@ -28,4 +35,6 @@ public class HabitRepository extends LocalDaoRepository<Integer, Habit, HabitEnt
             }
         };
     }
+
+    protected Integer defaultId() {return 0;}
 }

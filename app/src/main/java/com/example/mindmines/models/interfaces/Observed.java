@@ -1,4 +1,4 @@
-package com.example.mindmines.services.repositories;
+package com.example.mindmines.models.interfaces;
 
 public interface Observed<TObserver> {
     void subscribe(TObserver o);

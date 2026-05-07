@@ -6,13 +6,8 @@ import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.UserStatusFactory;
-import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
-import com.example.mindmines.services.repositories.implementations.HabitRepository;
-import com.example.mindmines.services.repositories.implementations.UserStatusRepository;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 
 public class UserStatusManager {
     private final UserStatusRepository rep;

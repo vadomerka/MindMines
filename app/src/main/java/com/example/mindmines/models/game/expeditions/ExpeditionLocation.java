@@ -1,6 +1,6 @@
 package com.example.mindmines.models.game.expeditions;
 
-import com.example.mindmines.services.repositories.RepositoryItem;
+import com.example.mindmines.models.interfaces.RepositoryItem;
 
 public class ExpeditionLocation implements RepositoryItem<String> {
     private final String id;
@@ -14,6 +14,7 @@ public class ExpeditionLocation implements RepositoryItem<String> {
     }
 
     public String getId() { return id; }
+    public String getUserId() { return id; }
     public String getName() { return name; }
     public String getImage() { return image; }
 }

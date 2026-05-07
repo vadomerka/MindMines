@@ -1,6 +1,7 @@
-package com.example.mindmines.services.repositories.implementations;
+package com.example.mindmines.services.repositories.dao;
 
 import com.example.mindmines.R;
+import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.types.BodyArmor;
@@ -9,10 +10,10 @@ import com.example.mindmines.models.game.equipment.types.LegArmor;
 import com.example.mindmines.models.game.equipment.types.Shield;
 import com.example.mindmines.models.game.equipment.types.Sword;
 import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.services.converters.CharConverter;
 import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.observers.CharObserver;
 import com.example.mindmines.services.repositories.LocalDaoRepository;
-import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.util.ArrayList;
 
@@ -20,8 +21,13 @@ public class CharRepository extends LocalDaoRepository<Integer, Char, CharEntity
     protected final int MAX_CHARACTERS = 4;
 
     @Override
-    public void initFactory() {
-        factory = new CharFactory();
+    public void initDao() {
+        MindMinesDatabase db = MindMinesDatabase.getInstance(context);
+        this.dao = db.charDao();
+    }
+
+    public void initConverter() {
+        converter = new CharConverter();
     }
 
     @Override
@@ -38,6 +44,8 @@ public class CharRepository extends LocalDaoRepository<Integer, Char, CharEntity
         array.add(factory.generate(userId, 5, String.valueOf(R.drawable.g5),
                 new Equipment[] { }));
     }
+
+    protected Integer defaultId() {return 0;}
 
     @Override
     public void add(Char item) {

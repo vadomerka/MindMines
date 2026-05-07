@@ -1,18 +1,29 @@
-package com.example.mindmines.services.repositories.implementations;
+package com.example.mindmines.services.repositories.dao;
 
 import android.util.Log;
 
 import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
+import com.example.mindmines.services.converters.UserStatusConverter;
 import com.example.mindmines.services.factories.UserStatusFactory;
 import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.services.repositories.LocalDaoRepository;
-import com.example.mindmines.services.repositories.LocalObservedRepository;
 
 import java.util.List;
 
 public class UserStatusRepository extends LocalDaoRepository<String, UserStatus, UserStatusEntity, UserStatusObserver> {
+    @Override
+    public void initDao() {
+        MindMinesDatabase db = MindMinesDatabase.getInstance(context);
+        this.dao = db.userStatusDao();
+    }
+
+    @Override
+    public void initConverter() {
+        converter = new UserStatusConverter();
+    }
+
     @Override
     public void updateObservers() {
         super.updateObservers();
@@ -23,8 +34,5 @@ public class UserStatusRepository extends LocalDaoRepository<String, UserStatus,
         }
     }
 
-    @Override
-    public void initFactory() {
-        factory = new UserStatusFactory();
-    }
+    protected String defaultId() { return ""; }
 }

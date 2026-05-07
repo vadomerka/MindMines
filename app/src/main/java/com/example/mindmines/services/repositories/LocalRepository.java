@@ -2,11 +2,14 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
+import com.example.mindmines.models.interfaces.Identified;
+import com.example.mindmines.models.interfaces.RepositoryItem;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class LocalRepository<TId, T extends RepositoryItem<TId>> {
+public abstract class LocalRepository<TId extends Comparable<TId>, T extends RepositoryItem<TId>> implements Identified<TId> {
     protected List<T> array;
     protected Context context;
 
@@ -16,6 +19,12 @@ public abstract class LocalRepository<TId, T extends RepositoryItem<TId>> {
     }
 
     public void initArray() {}
+
+    protected abstract TId defaultId();
+
+    public TId getId() {
+        return getAll().stream().map(T::getId).max(Comparable::compareTo).orElse(defaultId());
+    }
 
     public List<T> getAll() {
         return array;

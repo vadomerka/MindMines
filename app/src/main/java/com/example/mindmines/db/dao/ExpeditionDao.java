@@ -15,7 +15,7 @@ import com.example.mindmines.db.entities.crossref.ExpeditionWithChars;
 import java.util.List;
 
 @Dao
-public interface ExpeditionDao {
+public interface ExpeditionDao extends RepDao<ExpeditionEntity>{
     @Query("SELECT * FROM expeditions ORDER BY expeditionId ASC")
     List<ExpeditionEntity> getAll();
 

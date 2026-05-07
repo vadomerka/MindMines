@@ -1,4 +1,4 @@
-package com.example.mindmines.services.repositories.implementations;
+package com.example.mindmines.services.repositories.local;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.expeditions.ExpeditionLocation;
@@ -14,4 +14,6 @@ public class ExpeditionLocationRepository extends LocalRepository<String, Expedi
         array.add(new ExpeditionLocation("exp2", "Замок предрассудков", String.valueOf(R.drawable.expedition_2)));
         array.add(new ExpeditionLocation("exp3", "Подземелье сознатики", String.valueOf(R.drawable.expedition_3)));
     }
+
+    protected String defaultId() {return "id";}
 }

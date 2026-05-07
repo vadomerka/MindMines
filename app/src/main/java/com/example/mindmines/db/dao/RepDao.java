@@ -4,19 +4,19 @@ package com.example.mindmines.db.dao;
 import java.util.List;
 
 public interface RepDao <TEntity> {
-    List<TEntity> getAll();
+    default List<TEntity> getAll() {throw new UnsupportedOperationException();}
 
-    List<TEntity> getAllByUserId(String userId);
+    default List<TEntity> getAllByUserId(String userId) {throw new UnsupportedOperationException();}
 
-    void insertAll(List<TEntity> entities);
+    default void insertAll(List<TEntity> entities) {throw new UnsupportedOperationException();}
 
-    void insert(TEntity entity);
+    default void insert(TEntity entity) {throw new UnsupportedOperationException();}
 
-    void update(TEntity entity);
+    default void update(TEntity entity) {throw new UnsupportedOperationException();}
 
-    void deleteAll();
+    default void deleteAll() {throw new UnsupportedOperationException();}
 
-    void delete(TEntity entity);
+    default void delete(TEntity entity) {throw new UnsupportedOperationException();}
 
-    void deleteAllByUserId(String userId);
+    default void deleteAllByUserId(String userId) {throw new UnsupportedOperationException();}
 }

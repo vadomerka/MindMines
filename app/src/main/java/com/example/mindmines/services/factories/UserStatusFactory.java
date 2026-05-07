@@ -2,10 +2,11 @@ package com.example.mindmines.services.factories;
 
 import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
+import com.example.mindmines.services.converters.RepConverter;
 import com.example.mindmines.services.repositories.RepositoryService;
-import com.example.mindmines.services.repositories.implementations.UserStatusRepository;
+import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 
-public class UserStatusFactory implements RepFactory<String, UserStatus, UserStatusEntity>{
+public class UserStatusFactory implements RepConverter<String, UserStatus, UserStatusEntity> {
     private static UserStatusFactory instance;
 
     public UserStatusFactory() {

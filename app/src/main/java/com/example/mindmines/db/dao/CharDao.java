@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 @Dao
-public interface CharDao {
+public interface CharDao extends RepDao<CharEntity>{
     @Query("SELECT * FROM characters ORDER BY charId ASC")
     List<CharEntity> getAll();
 

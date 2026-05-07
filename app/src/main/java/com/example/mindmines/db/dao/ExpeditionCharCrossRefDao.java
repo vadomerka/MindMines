@@ -14,7 +14,7 @@ import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 import java.util.List;
 
 @Dao
-public interface ExpeditionCharCrossRefDao {
+public interface ExpeditionCharCrossRefDao extends RepDao<ExpeditionCharCrossRef>{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<ExpeditionCharCrossRef> crossRefs);
 

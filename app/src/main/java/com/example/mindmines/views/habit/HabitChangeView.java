@@ -4,7 +4,7 @@ import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.repositories.implementations.HabitRepository;
+import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 
 public class HabitChangeView extends HabitAddView {

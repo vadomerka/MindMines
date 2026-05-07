@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         initNavigation();
 
         RepositoryService.initAll(getApplicationContext());
-        dbSync = DataSynchronizerManager.getInstance(getApplicationContext());
-        dbSync.loadFromDB();
+//        dbSync = DataSynchronizerManager.getInstance(getApplicationContext());
+//        dbSync.loadFromDB();
 
         // Notifications init
         createNotificationChannel();
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy");
-        dbSync.saveToDB();
+//        dbSync.saveToDB();
 
         super.onDestroy();
     }

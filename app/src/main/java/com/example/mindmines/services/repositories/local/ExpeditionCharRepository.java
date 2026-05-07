@@ -1,15 +1,13 @@
-package com.example.mindmines.services.repositories.implementations;
+package com.example.mindmines.services.repositories.local;
 
 import android.content.Context;
 
+import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.dao.ExpeditionCharCrossRefDao;
-import com.example.mindmines.db.dao.RepDao;
 import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
-import com.example.mindmines.services.repositories.LocalDaoRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ExpeditionCharRepository {
     protected Context context;
@@ -17,6 +15,8 @@ public class ExpeditionCharRepository {
 
     public void init(Context context) {
         this.context = context;
+        MindMinesDatabase db = MindMinesDatabase.getInstance(context);
+        this.dao = db.expeditionCharCrossRefDao();
         initArray();
     }
 
