@@ -5,12 +5,10 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.mindmines.db.entities.ExpeditionEntity;
-import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
-import com.example.mindmines.db.entities.crossref.ExpeditionWithChars;
+import com.example.mindmines.db.entities.HabitEntity;
 
 import java.util.List;
 
@@ -19,12 +17,24 @@ public interface ExpeditionDao extends RepDao<ExpeditionEntity>{
     @Query("SELECT * FROM expeditions ORDER BY expeditionId ASC")
     List<ExpeditionEntity> getAll();
 
+    @Query("SELECT * FROM expeditions WHERE userId = :userId ORDER BY expeditionId ASC")
+    List<ExpeditionEntity> getAllByUserId(String userId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<ExpeditionEntity> expeditions);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(HabitEntity expedition);
 
     @Update
     void update(ExpeditionEntity expedition);
 
     @Query("DELETE FROM expeditions")
     void deleteAll();
+
+    @Delete
+    void delete(ExpeditionEntity expedition);
+
+    @Query("DELETE FROM expeditions WHERE userId = :userId")
+    void deleteAllByUserId(String userId);
 }

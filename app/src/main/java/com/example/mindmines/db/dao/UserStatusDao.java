@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.db.entities.UserStatusEntity;
 
 import java.util.List;

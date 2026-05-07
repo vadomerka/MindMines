@@ -1,6 +1,7 @@
 package com.example.mindmines.db.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -21,8 +22,14 @@ public interface CharDao extends RepDao<CharEntity>{
     @Query("SELECT * FROM characters ORDER BY charId ASC")
     List<CharEntity> getAll();
 
+    @Query("SELECT * FROM characters WHERE userId = :userId ORDER BY charId ASC")
+    List<CharEntity> getAllByUserId(String userId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<CharEntity> characters);
+
+    @Insert
+    void insert(CharEntity entity);
 
     @Update
     void update(CharEntity character);
@@ -30,6 +37,8 @@ public interface CharDao extends RepDao<CharEntity>{
     @Query("DELETE FROM characters")
     void deleteAll();
 
+    @Delete
+    void delete(CharEntity entity);
 
     @Transaction
     @Query("SELECT * FROM characters WHERE charId = :charId")
