@@ -16,12 +16,17 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.example.mindmines.db.datasync.DataSynchronizerManager;
+import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 import com.example.mindmines.services.timers.DataBackupTimer;
 import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
 import com.example.mindmines.views.user.LoginView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
@@ -37,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
         RepositoryService.initAll(getApplicationContext());
 //        dbSync = DataSynchronizerManager.getInstance(getApplicationContext());
 //        dbSync.loadFromDB();
+
+        RepositoryService.getUserStatusRepository().subscribe(upd -> {
+            UserStatusRepository usr = RepositoryService.getUserStatusRepository();
+            for (UserStatus us: usr.getAll()) {
+                Log.d("Debug UserStatus rep", us.getId() + " " + us.getExperience() + " " + us.getMaxExperience() + " " + us.getLevel());
+            }
+        });
 
         // Notifications init
         createNotificationChannel();

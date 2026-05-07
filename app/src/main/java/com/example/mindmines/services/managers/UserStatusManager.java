@@ -23,8 +23,7 @@ public class UserStatusManager {
         return rep.get(userId);
     }
 
-    public void setStatus(UserStatus s) {
-        rep.remove(s);
+    public void addStatus(UserStatus s) {
         rep.add(s);
     }
 
@@ -41,6 +40,6 @@ public class UserStatusManager {
         UserStatus status = getStatus();
         Long newExp = XpManager.gainExp(status, h);
         XpManager.gainLevel(status, newExp);
-        setStatus(status);
+        addStatus(status);
     }
 }

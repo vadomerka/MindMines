@@ -38,11 +38,13 @@ public abstract class LocalRepository<TId extends Comparable<TId>, T extends Rep
 
     public List<T> getByUser() {
         String userId = new AuthManager(context).getUserId();
-        return array.stream().filter(it -> userId.equals(it.getUserId())).collect(Collectors.toList());
+        return array.stream().filter(it -> userId != null && userId.equals(it.getUserId())).collect(Collectors.toList());
     }
 
     public void setAll(String userId, List<T> arr) {
-        array = array.stream().filter(it -> !it.getUserId().equals(userId)).collect(Collectors.toList());
+        array = array.stream()
+                .filter(it -> userId == null || !it.getUserId().equals(userId))
+                .collect(Collectors.toList());
         array.addAll(arr);
     }
 

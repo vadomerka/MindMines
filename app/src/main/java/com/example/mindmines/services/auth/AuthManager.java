@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.mindmines.db.datasync.DataSynchronizerManager;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.factories.UserStatusFactory;
 import com.example.mindmines.services.managers.UserStatusManager;
@@ -28,7 +27,14 @@ public class AuthManager {
                 .putString(KEY_AUTH_TOKEN, authToken)
                 .putString(KEY_USER_EMAIL, email)
                 .apply();
-        new UserStatusManager(context).setStatus(UserStatusFactory.getInstance().create(authToken));
+    }
+
+    public void saveNewUserData(String authToken, String email) {
+        sharedPreferences.edit()
+                .putString(KEY_AUTH_TOKEN, authToken)
+                .putString(KEY_USER_EMAIL, email)
+                .apply();
+        new UserStatusManager(context).addStatus(UserStatusFactory.getInstance().create(authToken));
     }
 
     public String getAuthToken() {
