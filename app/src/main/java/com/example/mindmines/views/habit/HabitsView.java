@@ -17,6 +17,7 @@ import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.user.UserStatus;
+import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.HabitObserver;
@@ -73,7 +74,7 @@ public class HabitsView extends BaseFragment {
     }
 
     private List<Habit> loadItemList() {
-        return RepositoryService.getHabitRepository().getAll();
+        return RepositoryService.getHabitRepository().getByUser();
     }
 
     @SuppressLint("SetTextI18n")

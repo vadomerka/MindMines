@@ -1,6 +1,7 @@
 package com.example.mindmines.db.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -22,11 +23,17 @@ public interface UserStatusDao extends RepDao<UserStatusEntity>{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<UserStatusEntity> userStatuses);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(UserStatusEntity entity);
+
     @Update
     void update(UserStatusEntity userStatuses);
 
     @Query("DELETE FROM userStatuses")
     void deleteAll();
+
+    @Delete
+    void delete(UserStatusEntity entity);
 
     @Query("DELETE FROM userStatuses WHERE userId = :userId")
     void deleteAllByUserId(String userId);

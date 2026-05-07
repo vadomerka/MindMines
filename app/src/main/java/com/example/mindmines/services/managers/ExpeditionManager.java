@@ -13,7 +13,7 @@ public class ExpeditionManager {
     private static final ExpeditionRepository rep = RepositoryService.getExpeditionRepository();
 
     public static Expedition getLatestUnfinishedExpedition() {
-        List<Expedition> expeditions = rep.getAll().stream()
+        List<Expedition> expeditions = rep.getByUser().stream()
                 .filter(ex -> !ex.isFinished()).collect(Collectors.toList());
         if (expeditions.isEmpty()) return null;
         expeditions.sort(Comparator.comparing(Expedition::getStart));
@@ -21,14 +21,14 @@ public class ExpeditionManager {
     }
 
     public static Expedition getLatestExpedition() {
-        List<Expedition> expeditions = rep.getAll();
+        List<Expedition> expeditions = rep.getByUser();
         if (expeditions.isEmpty()) return null;
         expeditions.sort(Comparator.comparing(Expedition::getStart));
         return expeditions.get(expeditions.size() - 1);
     }
 
     public static List<Expedition> getExpeditions() {
-        return rep.getAll();
+        return rep.getByUser();
     }
 
     public static boolean isEnded(Expedition ex) {

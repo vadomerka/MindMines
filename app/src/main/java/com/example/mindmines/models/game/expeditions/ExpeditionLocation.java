@@ -14,7 +14,7 @@ public class ExpeditionLocation implements RepositoryItem<String> {
     }
 
     public String getId() { return id; }
-    public String getUserId() { return id; }
+    public String getUserId() { return id; }  // Репозиторий статичен.
     public String getName() { return name; }
     public String getImage() { return image; }
 }

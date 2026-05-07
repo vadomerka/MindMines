@@ -2,9 +2,13 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
+import com.example.mindmines.db.entities.HabitEntity;
+import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.interfaces.Identified;
 import com.example.mindmines.models.interfaces.RepositoryItem;
+import com.example.mindmines.services.auth.AuthManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,7 +22,9 @@ public abstract class LocalRepository<TId extends Comparable<TId>, T extends Rep
         initArray();
     }
 
-    public void initArray() {}
+    public void initArray() {
+        array = new ArrayList<>();
+    }
 
     protected abstract TId defaultId();
 
@@ -30,7 +36,8 @@ public abstract class LocalRepository<TId extends Comparable<TId>, T extends Rep
         return array;
     }
 
-    public List<T> getByUser(String userId) {
+    public List<T> getByUser() {
+        String userId = new AuthManager(context).getUserId();
         return array.stream().filter(it -> userId.equals(it.getUserId())).collect(Collectors.toList());
     }
 
@@ -47,13 +54,14 @@ public abstract class LocalRepository<TId extends Comparable<TId>, T extends Rep
         array.remove(item);
     }
 
-    public T get(TId id) {
-        Optional<T> res = getAll().stream().filter(item -> item.getId().equals(id)).findFirst();
+    private T get(TId id) {
+        Optional<T> res = array.stream().filter(item -> item.getId().equals(id)).findFirst();
         return res.orElse(null);
     }
 
     public void update(T item) {
         T found = get(item.getId());
-        array.set(array.indexOf(found), item);
+        int ind = array.indexOf(found);
+        array.set(ind, item);
     }
 }

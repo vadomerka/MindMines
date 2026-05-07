@@ -86,7 +86,7 @@ public class HabitSyncCheckerService extends BasicChecker {
 
     // Метод обновляет стрики и пенальтии привычек по таймеру MidnightChecker
     public static void allHabitsCheck(Context context) {
-        List<Habit> hl = RepositoryService.getHabitRepository().getAll();
+        List<Habit> hl = RepositoryService.getHabitRepository().getByUser();
         for (Habit h: hl) {
             habitStatusCheck(h, context);
         }

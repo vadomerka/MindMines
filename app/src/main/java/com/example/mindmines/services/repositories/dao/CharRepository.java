@@ -49,7 +49,7 @@ public class CharRepository extends LocalDaoRepository<Integer, Char, CharEntity
 
     @Override
     public void add(Char item) {
-        if (getByUser(item.getUserId()).size() >= MAX_CHARACTERS) return;
+        if (getByUser().size() >= MAX_CHARACTERS) return;
         super.add(item);
     }
 }

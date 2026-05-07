@@ -84,7 +84,7 @@ public class ExpeditionStartView extends ExpeditionView {
     }
 
     private void loadLocationsAdapter() {
-        List<ExpeditionLocation> locationList = RepositoryService.getExpeditionLocationRepository().getAll();
+        List<ExpeditionLocation> locationList = RepositoryService.getExpeditionLocationRepository().getByUser();
         RecyclerView recyclerView = dialogView.findViewById(R.id.location_recycler_view);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.mindmines.db.dao.RepDao;
 import com.example.mindmines.models.interfaces.DBEntity;
 import com.example.mindmines.models.interfaces.RepositoryItem;
+import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.converters.RepConverter;
 import com.example.mindmines.services.observers.RepositoryObserver;
 
@@ -31,18 +32,22 @@ public abstract class LocalDaoRepository<TId extends Comparable<TId>,
         observers = new ArrayList<>();
         updateObservers();
         initArray();
+        loadArray();
     }
 
     public abstract void initDao();
 
     public abstract void initConverter();
 
+    protected void loadArray() {
+        String userId = new AuthManager(context).getUserId();
+        super.setAll(userId, getAll());
+    }
+
     @Override
     public TId getId() {
         return getAll().stream().map(T::getId).max(Comparable::compareTo).orElse(defaultId());
     }
-
-    public void initArray() {}
 
     protected List<TEntity> toEntityList(List<T> items) {
         return items.stream().map(e -> converter.toEntity(e)).collect(Collectors.toList());
@@ -57,7 +62,8 @@ public abstract class LocalDaoRepository<TId extends Comparable<TId>,
     }
 
     @Override
-    public List<T> getByUser(String userId) {
+    public List<T> getByUser() {
+        String userId = new AuthManager(context).getUserId();
         return toItemList(dao.getAllByUserId(userId));
     }
 
@@ -80,7 +86,6 @@ public abstract class LocalDaoRepository<TId extends Comparable<TId>,
         super.remove(item);
     }
 
-    @Override
     public T get(TId id) {
         Optional<T> res = getAll().stream().filter(item -> item.getId().equals(id)).findFirst();
         return res.orElse(null);

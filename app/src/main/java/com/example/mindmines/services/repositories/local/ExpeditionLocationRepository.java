@@ -5,6 +5,7 @@ import com.example.mindmines.models.game.expeditions.ExpeditionLocation;
 import com.example.mindmines.services.repositories.LocalRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExpeditionLocationRepository extends LocalRepository<String, ExpeditionLocation> {
     @Override
@@ -13,6 +14,12 @@ public class ExpeditionLocationRepository extends LocalRepository<String, Expedi
         array.add(new ExpeditionLocation("exp1", "Пещера обмана", String.valueOf(R.drawable.expedition_1)));
         array.add(new ExpeditionLocation("exp2", "Замок предрассудков", String.valueOf(R.drawable.expedition_2)));
         array.add(new ExpeditionLocation("exp3", "Подземелье сознатики", String.valueOf(R.drawable.expedition_3)));
+    }
+
+    @Override
+    public List<ExpeditionLocation> getByUser() {
+        // Репозиторий статичен.
+        return getAll();
     }
 
     protected String defaultId() {return "id";}
