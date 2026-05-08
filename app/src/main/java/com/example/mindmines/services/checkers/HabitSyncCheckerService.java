@@ -31,6 +31,7 @@ public class HabitSyncCheckerService extends BasicChecker {
     }
 
     private static void habitStatusCheck(Habit h, Context context) {
+        UserStatusManager usm = UserStatusManager.getInstance(context);
         switch (h.getType()) {
             case GOOD_GOAL_COUNT:
                 break;
@@ -45,7 +46,7 @@ public class HabitSyncCheckerService extends BasicChecker {
                         if (ALWAYS_CHECKED) {
                             h.setStreakNumber(h.getStreakNumber() + 1);
                             h.setPenaltyNumber(0);
-                            new UserStatusManager(context).gain(h);
+                            usm.gain(h);
                         }
                         h.setNextDeadlineAt(h.getNextNextDeadline(1));
                     }
@@ -63,7 +64,7 @@ public class HabitSyncCheckerService extends BasicChecker {
                     if (missed > 0) {
                         h.setStreakNumber(0);
                         h.setPenaltyNumber(h.getPenaltyNumber() + (int) missed);
-                        new UserStatusManager(context).gain(h);
+                        usm.gain(h);
                         // Вычисление следующего дедлайна.
                         h.setNextDeadlineAt(h.getNextNextDeadline((int) missed));
                     }
@@ -72,7 +73,7 @@ public class HabitSyncCheckerService extends BasicChecker {
                     while (h.getNextDeadlineAt().isBefore(OffsetDateTime.now())) {
                         h.setStreakNumber(0);
                         h.setPenaltyNumber(h.getPenaltyNumber() + 1);
-                        new UserStatusManager(context).gain(h);
+                        usm.gain(h);
                         h.setNextDeadlineAt(h.getNextNextDeadline(1));
                     }
                 }
@@ -90,6 +91,6 @@ public class HabitSyncCheckerService extends BasicChecker {
         for (Habit h: hl) {
             habitStatusCheck(h, context);
         }
-        RepositoryService.getUserStatusRepository().updateObservers();
+//        RepositoryService.getUserStatusRepository().updateObservers();
     }
 }

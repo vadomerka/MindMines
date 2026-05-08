@@ -65,7 +65,7 @@ public class HabitCurrentCheckerService extends BasicChecker {
         h.setPenaltyNumber(0);
         HabitController.getInstance(context).update(h);
 
-        new UserStatusManager(context).gain(h);
-        RepositoryService.getUserStatusRepository().updateObservers();
+        UserStatusManager.getInstance(context).gain(h);
+//        RepositoryService.getUserStatusRepository().updateObservers();
     }
 }

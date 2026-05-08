@@ -23,17 +23,20 @@ import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.HabitObserver;
 import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.adapters.HabitCardAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HabitsView extends BaseFragment {
     private static final String TAG = "Debug HabitsView";
-    private final HabitObserver hProxy = upd -> updateHabits();
-    private final UserStatusObserver usProxy = upd -> updateUserStatus();
+    private final HabitObserver hProxy = upd -> updateHabits(upd);
+    private final UserStatusObserver usProxy = upd -> updateUserStatus(null);
     private HabitCardAdapter listAdapter;
+    private List<Habit> habitsList;
 
     public HabitsView() {
         super(R.layout.habits_view);
@@ -48,7 +51,8 @@ public class HabitsView extends BaseFragment {
     private void initUI(@NonNull View view) {
         RecyclerView listView = view.findViewById(R.id.habits_list_view);
         listView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        listAdapter = new HabitCardAdapter(loadItemList(), this);
+        habitsList = loadItemList();
+        listAdapter = new HabitCardAdapter(habitsList, this);
         listView.setAdapter(listAdapter);
 
         Button addBtn = view.findViewById(R.id.add_habit_button);
@@ -77,17 +81,34 @@ public class HabitsView extends BaseFragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void updateHabits() {
+    private void updateHabits(List<Habit> upd) {
         if (!isAdded() || listAdapter == null) {
             return;
         }
         requireActivity().runOnUiThread(() -> {
+            HabitRepository rep = RepositoryService.getHabitRepository();
             List<HabitCardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
-            if (cards == null) {
-                return;
+
+            if (upd == null) {
+                List<HabitCardAdapter.CardViewHolder> deleted = cards.stream().filter(it -> rep.get(it.hId) == null).collect(Collectors.toList());
+                habitsList = rep.getByUser();
+                for (HabitCardAdapter.CardViewHolder vh: deleted) {
+                    listAdapter.notifyItemRemoved(vh.getLayoutPosition());
+                }
+            } else {
+                for (Habit h: upd) {
+                    if (habitsList.contains(h)) {
+                        listAdapter.notifyItemChanged(habitsList.indexOf(h));
+                    } else {
+                        habitsList.add(h);
+                        listAdapter.notifyItemInserted(habitsList.size() - 1);
+                    }
+                }
             }
-            for (HabitCardAdapter.CardViewHolder card : cards) {
-                Habit h = RepositoryService.getHabitRepository().get(card.hId);
+
+
+            for (HabitCardAdapter.CardViewHolder card : listAdapter.getCardViews()) {
+                Habit h = rep.get(card.hId);
                 if (h == null) {
                     continue;
                 }
@@ -96,16 +117,6 @@ public class HabitsView extends BaseFragment {
                 HabitCurrentCheckerService.buttonViewUpdate(card.checkBtn);
             }
         });
-    }
-
-    @SuppressLint("DefaultLocale")
-    private void updateUserStatus() {
-        if (!isAdded() || levelView == null) {
-            return;
-        }
-        UserStatus status = new UserStatusManager(requireContext()).getStatus();
-        levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",
-                status.getLevel(), status.getExperience(), status.getMaxExperience()));
     }
 
     public void openHabitAddView() {

@@ -45,10 +45,10 @@ public abstract class BaseFragment extends Fragment {
     protected void updateUserStatus(List<UserStatus> upd) {
         Log.d("Debug BasicActivity updateUserStatus", "updateUserStatus: ");
         requireActivity().runOnUiThread(() -> {
-            UserStatus status = new UserStatusManager(requireContext()).getStatus();
+            UserStatus status = UserStatusManager.getInstance(requireContext()).getStatus();
             if (status == null) status = new UserStatus(new AuthManager(requireContext()).getUserId());
-            levelView.setText(String.format("Уровень: %d; Опыт: %d/%d",
-                    status.getLevel(), status.getExperience(), status.getMaxExperience()));
+            levelView.setText(String.format("Уровень: %d; Опыт: %d/%d; Монеты: %d",
+                    status.getLevel(), status.getExperience(), status.getMaxExperience(), status.getCoins()));
         });
     }
 
@@ -59,7 +59,7 @@ public abstract class BaseFragment extends Fragment {
         Button updBut = requireView().findViewById(R.id.update_nextDeadline_button);
         updBut.setOnClickListener(v -> HabitSyncCheckerService.allHabitsCheck(requireContext()));
         Button resetBut = requireView().findViewById(R.id.reset_userStatus_button);
-        resetBut.setOnClickListener(v -> new UserStatusManager(requireContext()).resetStatus());
+        resetBut.setOnClickListener(v -> UserStatusManager.getInstance(requireContext()).resetStatus());
         CheckBox autoCheck = requireView().findViewById(R.id.autoCheck_button);
         autoCheck.setChecked(HabitCurrentCheckerService.getDebug());
         autoCheck.setOnClickListener(v -> {

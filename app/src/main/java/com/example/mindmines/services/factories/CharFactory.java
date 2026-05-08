@@ -6,12 +6,17 @@ import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.characters.CharStats;
 import com.example.mindmines.models.game.characters.CharStatus;
 import com.example.mindmines.models.game.equipment.CharEquipment;
+import com.example.mindmines.models.game.equipment.types.BodyArmor;
 import com.example.mindmines.models.game.equipment.types.Equipment;
+import com.example.mindmines.models.game.equipment.types.LegArmor;
+import com.example.mindmines.models.game.equipment.types.Shield;
+import com.example.mindmines.models.game.equipment.types.Sword;
 import com.example.mindmines.services.converters.entities.RepConverter;
 import com.example.mindmines.services.repositories.dao.CharRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.google.gson.Gson;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
@@ -32,6 +37,23 @@ public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
         return instance;
     }
 
+    public Char generateDefault(String userId, int defaultInd) {
+        switch (defaultInd) {
+            case 2:
+                return generate(userId, 3, String.valueOf(R.drawable.g3),
+                        new Equipment[]{new Sword(), new LegArmor()});
+            case 3:
+                return generate(userId, 5, String.valueOf(R.drawable.g4),
+                        new Equipment[]{});
+            case 4:
+                return generate(userId, 10, String.valueOf(R.drawable.g5),
+                        new Equipment[]{});
+            default:
+                return generate(userId, 1, String.valueOf(R.drawable.g2),
+                        new Equipment[]{new Sword(), new Shield(), new BodyArmor(), new LegArmor()});
+        }
+    }
+
     public Char generate(String userId) {
         return generate(userId, 0, String.valueOf(R.drawable.h1));
     }
@@ -49,7 +71,7 @@ public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
 
     public Char generate(String userId, int level, String image, Equipment[] equipment) {
         Char ch = generate(userId, level, image);
-        for (Equipment eq: equipment) {
+        for (Equipment eq : equipment) {
             ch.equip(eq);
         }
         return ch;

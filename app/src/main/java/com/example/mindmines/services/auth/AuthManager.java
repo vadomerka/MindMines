@@ -34,7 +34,7 @@ public class AuthManager {
                 .putString(KEY_AUTH_TOKEN, authToken)
                 .putString(KEY_USER_EMAIL, email)
                 .apply();
-        new UserStatusManager(context).addStatus(UserStatusFactory.getInstance().create(authToken));
+        UserStatusManager.getInstance(context).addStatus(UserStatusFactory.getInstance().create(authToken));
     }
 
     public String getAuthToken() {
@@ -53,7 +53,7 @@ public class AuthManager {
     }
 
     public boolean isUserLoggedIn() {
-        UserStatus status = new UserStatusManager(context).getStatus();
+        UserStatus status = UserStatusManager.getInstance(context).getStatus();
         return status != null;
     }
 

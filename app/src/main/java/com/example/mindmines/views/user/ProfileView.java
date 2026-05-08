@@ -58,7 +58,7 @@ public class ProfileView extends BaseFragment {
             );
         }
 
-        UserStatus status = new UserStatusManager(requireContext()).getStatus();
+        UserStatus status = UserStatusManager.getInstance(requireContext()).getStatus();
         TextView levelValue = requireActivity().findViewById(R.id.level_value_view);
         TextView expValue = requireActivity().findViewById(R.id.exp_value_view);
         TextView expUntilValue = requireActivity().findViewById(R.id.exp_until_next_value_view);
