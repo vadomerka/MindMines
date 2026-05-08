@@ -1,48 +1,31 @@
 package com.example.mindmines.requests;
 
-import android.util.Pair;
-
-import com.example.mindmines.MainActivity;
 import com.example.mindmines.models.user.User;
-import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.services.repositories.RepositoryService;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserRequestSender {
-    private static String generateLocalToken(String email, String password) {
-        return email + "_token";
-    }
-
-    private static boolean userExists(String token) {
-        List<String> allData = RepositoryService.getUserStatusRepository().getAll().stream()
-                .map(UserStatus::getUserId).collect(Collectors.toList());
-        return allData.contains(token);
-    }
+    private static final String REGISTER_URL = "http://10.0.2.2:8000/users/register";
+    private static final String LOGIN_URL = "http://10.0.2.2:8000/users/login";
 
     public static String registerRequestSend(String email, String password) {
-        // TODO: заменить на настоящую отправку данных серверу.
-        // send("POST, "/user/?=email&password")
         if (email == null || email.isEmpty()) return null;
-
-        String token = generateLocalToken(email, password);
-        if (userExists(token)) return null;
-        return token;
+        return sendAuthRequest(REGISTER_URL, email, password);
     }
 
     public static String loginRequestSend(String email, String password) {
-        // TODO: заменить на настоящую отправку данных серверу.
-        // send("GET", "/user/?=email&password")
         if (email == null || email.isEmpty()) return null;
-
-        String token = generateLocalToken(email, password);
-        if (userExists(token)) {
-            return token;
-        }
-        return null;
+        return sendAuthRequest(LOGIN_URL, email, password);
     }
 
     public static List<User> getFriends(String userId) {
@@ -52,5 +35,52 @@ public class UserRequestSender {
         arr.add(new User("friend 2", 2));
         arr.add(new User("friend 3", 1));
         return arr;
+    }
+
+    private static String sendAuthRequest(String endpoint, String email, String password) {
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(endpoint);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
+
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("email", email);
+            requestBody.put("password", password);
+
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
+            }
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                return parseToken(connection);
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    private static String parseToken(HttpURLConnection connection) throws IOException, JSONException {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                response.append(line);
+            }
+            return new JSONObject(response.toString()).optString("user_token", null);
+        }
     }
 }

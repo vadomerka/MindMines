@@ -4,12 +4,18 @@ import httpx
 from db_app.Database.db import SessionDep, init
 
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from db_app.Models.Habit import Habit, HabitDTO
 from db_app.Models.User import User, UserDTO
 from db_app.Models.Chat import ChatRequest, ChatResponse, ChatHistoryMessage
 from datetime import datetime as dt
 
 app = FastAPI(title="MindMinesDB", version="0.1.0")
+
+
+class AuthRequest(BaseModel):
+    email: str
+    password: str
 
 
 @app.on_event("startup")
@@ -68,7 +74,44 @@ def generate_user_token(user_email: str, user_password: str):
 
 @app.get("/users/{user_email}/{user_password}")
 def get_user_token(user_email: str, user_password: str, session: SessionDep):
+    user = (
+        session.query(User)
+        .filter(User.email == user_email, User.password == user_password)
+        .first()
+    )
+    if user is None:
+        raise HTTPException(status_code=404, detail="Пользователь не найден")
     return {"user_token": generate_user_token(user_email, user_password)}
+
+
+@app.post("/users/register")
+def register_user(auth_dto: AuthRequest, session: SessionDep):
+    if not auth_dto.email:
+        raise HTTPException(status_code=400, detail="Email обязателен")
+
+    existing = session.query(User).filter(User.email == auth_dto.email).first()
+    if existing is not None:
+        raise HTTPException(status_code=409, detail="Пользователь уже существует")
+
+    user = User(name=auth_dto.email, email=auth_dto.email, password=auth_dto.password)
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+
+    return {"user_token": generate_user_token(user.email, user.password)}
+
+
+@app.post("/users/login")
+def login_user(auth_dto: AuthRequest, session: SessionDep):
+    user = (
+        session.query(User)
+        .filter(User.email == auth_dto.email, User.password == auth_dto.password)
+        .first()
+    )
+    if user is None:
+        raise HTTPException(status_code=404, detail="Пользователь не найден")
+
+    return {"user_token": generate_user_token(user.email, user.password)}
 
 
 @app.get("/habits")

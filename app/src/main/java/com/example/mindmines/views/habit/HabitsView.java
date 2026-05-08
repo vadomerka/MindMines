@@ -34,7 +34,6 @@ public class HabitsView extends BaseFragment {
     private final HabitObserver hProxy = upd -> updateHabits();
     private final UserStatusObserver usProxy = upd -> updateUserStatus();
     private HabitCardAdapter listAdapter;
-    private TextView levelView;
 
     public HabitsView() {
         super(R.layout.habits_view);
