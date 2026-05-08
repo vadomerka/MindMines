@@ -24,7 +24,7 @@ public interface ExpeditionDao extends RepDao<ExpeditionEntity>{
     void insertAll(List<ExpeditionEntity> expeditions);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(HabitEntity expedition);
+    void insert(ExpeditionEntity expedition);
 
     @Update
     void update(ExpeditionEntity expedition);
