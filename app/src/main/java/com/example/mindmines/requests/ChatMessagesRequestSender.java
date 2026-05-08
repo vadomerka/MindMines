@@ -1,4 +1,4 @@
-package com.example.mindmines.services.senders;
+package com.example.mindmines.requests;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class ChatMessagesSender {
+public class ChatMessagesRequestSender {
     private static HttpURLConnection connection;
     private static final String SERVER_URL = "http://10.0.2.2:8000/api/chat";
 
@@ -70,8 +70,7 @@ public class ChatMessagesSender {
             br.close();
 
             return new JSONObject(response.toString()).optString("reply", "Пустой ответ");
-        } else {
-            return null;
         }
+        return null;
     }
 }

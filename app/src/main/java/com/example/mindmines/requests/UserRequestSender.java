@@ -1,5 +1,7 @@
 package com.example.mindmines.requests;
 
+import android.util.Log;
+
 import com.example.mindmines.models.user.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ import java.util.List;
 public class UserRequestSender {
     private static final String REGISTER_URL = "http://10.0.2.2:8000/users/register";
     private static final String LOGIN_URL = "http://10.0.2.2:8000/users/login";
+    private static HttpURLConnection connection;
 
     public static String registerRequestSend(String email, String password) {
         if (email == null || email.isEmpty()) return null;
@@ -38,38 +43,49 @@ public class UserRequestSender {
     }
 
     private static String sendAuthRequest(String endpoint, String email, String password) {
-        HttpURLConnection connection = null;
         try {
-            URL url = new URL(endpoint);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setDoOutput(true);
-            connection.setConnectTimeout(10000);
-            connection.setReadTimeout(10000);
+            initConnection(endpoint);
+            Log.d("Debug send error", "initConnection");
 
             JSONObject requestBody = new JSONObject();
             requestBody.put("email", email);
             requestBody.put("password", password);
+            Log.d("Debug send error", "body");
 
-            try (OutputStream os = connection.getOutputStream()) {
-                os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
-            }
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                return parseToken(connection);
-            }
-            return null;
+            return parseResponse(requestBody);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("Debug send error", "sendAuthRequest error: " + e);
             return null;
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
+    }
+
+    private static void initConnection(String endpoint) throws IOException {
+        URL url = new URL(endpoint);
+        connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setDoOutput(true);
+        connection.setConnectTimeout(10000);
+        connection.setReadTimeout(10000);
+    }
+
+    private static String parseResponse(JSONObject requestBody) throws IOException, JSONException {
+        OutputStream os = connection.getOutputStream();
+        os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
+        os.close();
+        Log.d("Debug send error", "connection.getOutputStream");
+
+        int responseCode = connection.getResponseCode();
+        Log.d("Debug send error", "responseCode");
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            return parseToken(connection);
+        }
+        return null;
     }
 
     private static String parseToken(HttpURLConnection connection) throws IOException, JSONException {

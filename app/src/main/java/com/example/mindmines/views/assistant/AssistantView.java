@@ -22,7 +22,7 @@ import com.example.mindmines.services.managers.ChatManager;
 import com.example.mindmines.services.observers.ChatMessageObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
-import com.example.mindmines.services.senders.ChatMessagesSender;
+import com.example.mindmines.requests.ChatMessagesRequestSender;
 import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.adapters.ChatAdapter;
 
@@ -113,7 +113,7 @@ public class AssistantView extends BaseFragment implements ChatMessageObserver {
         typingIndicator.setVisibility(View.VISIBLE);
 
         executor.execute(() -> {
-            String response = ChatMessagesSender.sendToServer(text, userID);
+            String response = ChatMessagesRequestSender.sendToServer(text, userID);
             mainHandler.post(() -> {
                 typingIndicator.setVisibility(View.GONE);
                 if (response != null) {

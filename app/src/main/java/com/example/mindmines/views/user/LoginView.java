@@ -40,12 +40,7 @@ public class LoginView extends AppCompatActivity {
 
         if (!checkData()) { return; }
 
-        String token = UserController.login(email, password);
-        if (token == null) {
-            Toast.makeText(getApplicationContext(), "Пользователь не найден.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        authManager.saveUserData(token, email);
+
 
         Intent myIntent = new Intent(LoginView.this, MainActivity.class);
         LoginView.this.startActivity(myIntent);
