@@ -39,7 +39,17 @@ public class RegistrationView extends AppCompatActivity {
 
         if (!checkData()) { return; }
 
-        UserController.getInstance(getApplicationContext()).register(email, password);
+        UserController uc = UserController.getInstance(getApplicationContext());
+        String token = uc.register(email, password);
+
+        if (token == null) {
+            Toast.makeText(getApplicationContext(), "Пользователь уже зарегестрирован.", Toast.LENGTH_SHORT).show();
+
+            token = uc.login(email, password);
+            authManager.saveUserData(token, email);
+        } else {
+            authManager.saveNewUserData(token, email);
+        }
 
         Intent myIntent = new Intent(RegistrationView.this, MainActivity.class);
         RegistrationView.this.startActivity(myIntent);

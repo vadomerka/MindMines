@@ -12,24 +12,28 @@ import com.example.mindmines.models.user.User;
 import com.example.mindmines.requests.ChatMessagesRequestSender;
 import com.example.mindmines.requests.UserRequestSender;
 import com.example.mindmines.services.auth.AuthManager;
+import com.google.common.util.concurrent.Futures;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class UserController {
     private static UserController instance;
     private final Context context;
     private final AuthManager auth;
-    private final List<String> tokens;
-    private final Executor executor;
+    private final AtomicReference<String> token;
+    private final ExecutorService executor;
     private final Handler mainHandler;
 
     public UserController(Context context) {
         this.context = context;
-        this.tokens = new ArrayList<>();
+        this.token = new AtomicReference<>();
         this.auth = new AuthManager(context);
         this.executor = Executors.newSingleThreadExecutor();
         this.mainHandler = new Handler(Looper.getMainLooper());
@@ -42,42 +46,34 @@ public class UserController {
         return instance;
     }
 
-    public void register(String email, String password) {
-        executor.execute(() -> {
+    public String register(String email, String password) {
+        Future<?> future = executor.submit(() -> {
 
-            tokens.add(UserRequestSender.registerRequestSend(email, password));
+            token.set(UserRequestSender.registerRequestSend(email, password));
 
-            mainHandler.post(() -> {
-                String token = tokens.get(tokens.size() - 1);
-                if (token == null) {
-                    Toast.makeText(context, "Пользователь уже зарегестрирован.", Toast.LENGTH_SHORT).show();
-
-                    login(email, password);
-
-                    auth.saveUserData(tokens.get(tokens.size() - 1), email);
-                } else {
-                    auth.saveNewUserData(token, email);
-                }
-                tokens.clear();
-            });
+            mainHandler.post(() -> {});
         });
+        try {
+            future.get();
+            return token.get();
+        } catch (ExecutionException | InterruptedException e) {
+            return null;
+        }
     }
 
-    public void login(String email, String password) {
-        executor.execute(() -> {
+    public String login(String email, String password) {
+        Future<?> future = executor.submit(() -> {
 
-            tokens.add(UserRequestSender.loginRequestSend(email, password));
+            token.set(UserRequestSender.loginRequestSend(email, password));
 
-            mainHandler.post(() -> {
-                String token = tokens.get(tokens.size() - 1);
-
-                if (token == null) {
-                    Toast.makeText(context, "Пользователь не найден.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                auth.saveUserData(token, email);
-            });
+            mainHandler.post(() -> {});
         });
+        try {
+            future.get();
+            return token.get();
+        } catch (ExecutionException | InterruptedException e) {
+            return null;
+        }
     }
 
     public static List<User> getFriends(String userId) {

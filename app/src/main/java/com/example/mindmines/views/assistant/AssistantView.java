@@ -25,6 +25,7 @@ import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
 import com.example.mindmines.requests.ChatMessagesRequestSender;
 import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.adapters.ChatAdapter;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -85,7 +86,7 @@ public class AssistantView extends BaseFragment implements ChatMessageObserver {
         ImageButton sendButton = requireView().findViewById(R.id.send_button);
         sendButton.setOnClickListener(v -> sendMessage());
 
-        ImageButton deleteButton = requireView().findViewById(R.id.chat_reset_button);
+        MaterialButton deleteButton = requireView().findViewById(R.id.chat_reset_button);
         deleteButton.setOnClickListener(v -> deleteMessages());
     }
 
