@@ -49,7 +49,7 @@ public class AuthManager {
     }
 
     public String getEmail() {
-        return getUserId(); // return new UserStatusManager(context).getStatus().getEmail();
+        return getUserId();
     }
 
     public boolean isUserLoggedIn() {
@@ -58,8 +58,6 @@ public class AuthManager {
     }
 
     public void logout() {
-//        DataSynchronizerManager.getInstance(context).saveToDB();
-
         sharedPreferences.edit()
                 .remove(KEY_AUTH_TOKEN)
                 .remove(KEY_USER_EMAIL)

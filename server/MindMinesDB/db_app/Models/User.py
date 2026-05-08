@@ -1,5 +1,6 @@
 from pydantic import BaseModel, constr
 from sqlalchemy import Column, String, Integer, BigInteger
+from sqlalchemy.orm import relationship
 from db_app.core.base import Base
 
 
@@ -20,6 +21,7 @@ class User(Base):
     level = Column(Integer, default=0, nullable=False)
     expeditions = Column(Integer, default=0, nullable=False)
     prestige = Column(Integer, default=0, nullable=False)
+    chat_messages = relationship("ChatHistoryMessage", back_populates="user", cascade="all, delete-orphan")
 
     def to_json(self):
         return {

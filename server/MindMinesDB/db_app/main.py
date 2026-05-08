@@ -1,16 +1,12 @@
 import os
-import uuid
-from typing import Optional
-
 import httpx
 
 from db_app.Database.db import SessionDep, init
 
-from fastapi import FastAPI, File, HTTPException, Request, UploadFile
-from fastapi.exceptions import RequestValidationError
+from fastapi import FastAPI, HTTPException
 from db_app.Models.Habit import Habit, HabitDTO
 from db_app.Models.User import User, UserDTO
-from db_app.Models.Chat import ChatMessage, ChatRequest, ChatResponse
+from db_app.Models.Chat import ChatRequest, ChatResponse, ChatHistoryMessage
 from datetime import datetime as dt
 
 app = FastAPI(title="MindMinesDB", version="0.1.0")
@@ -60,9 +56,19 @@ def post_user(user_dto: UserDTO, session: SessionDep):
         session.commit()
         session.refresh(res)
 
-        return res.to_json()
+        payload = res.to_json()
+        payload["user_token"] = generate_user_token(res.email, res.password)
+        return payload
     except Exception as e:
         raise HTTPException(status_code=400, detail=e)
+
+
+def generate_user_token(user_email: str, user_password: str):
+    return user_email + "_token"
+
+@app.get("/users/{user_email}/{user_password}")
+def get_user_token(user_email: str, user_password: str, session: SessionDep):
+    return {"user_token": generate_user_token(user_email, user_password)}
 
 
 @app.get("/habits")
@@ -102,32 +108,6 @@ def post_task(habit_dto: HabitDTO, session: SessionDep):
         raise HTTPException(status_code=400, detail="Bad request")
 
 
-# @app.put("/habits/{habit_id}")
-# def put_task(habit_id: int, habit_dto: HabitDTO, session: SessionDep):
-#     habit = session.get(Habit, habit_id)
-#     if habit is None:
-#         raise HTTPException(status_code=404, detail="Item not found")
-#
-#     try:
-#         habit.title = habit_dto.title
-#         habit.description = habit_dto.description
-#         habit.type = habit_dto.type
-#         habit.status = habit_dto.status
-#         habit.priority = habit_dto.priority
-#         habit.tag = habit_dto.tag
-#         habit.due_at = habit_dto.due_at
-#         habit.started_at = habit_dto.started_at
-#
-#         session.add(habit)
-#         session.commit()
-#         session.refresh(habit)
-#
-#         return habit.to_json()
-#     except Exception as e:
-#         print(e)
-#         raise HTTPException(status_code=400, detail="Bad request")
-
-
 @app.delete("/habits/{habit_id}")
 def delete_task(habit_id: int, session: SessionDep):
     res = session.get(Habit, habit_id)
@@ -145,18 +125,66 @@ OLLAMA_CHAT_URL = f"{OLLAMA_HOST}/api/chat"
 MODEL_NAME = "gemma3:1b"
 
 @app.post("/api/chat", response_model=ChatResponse)
-async def chat_endpoint(req: ChatRequest):
-    system_prompt = "Ты – дружелюбный ассистент по формированию полезных привычек. Отвечай кратко, поддерживающе и по делу. Если вопрос не относится к привычкам, вежливо напоминай о своей специализации."
+async def chat_endpoint(req: ChatRequest, session: SessionDep):
+    system_prompt = ("Ты – дружелюбный ассистент по формированию полезных привычек. "
+                     "Отвечай кратко, поддерживая и по делу. "
+                     "Если вопрос не относится к привычкам, вежливо напоминай о своей специализации.")
+
+    incoming_messages = [msg for msg in req.messages if msg.role in ("user", "assistant")]
+    if not incoming_messages:
+        raise HTTPException(status_code=400, detail="Нет сообщений для обработки")
+
+    latest_user_message = next((msg for msg in reversed(incoming_messages) if msg.role == "user"), None)
+    if latest_user_message is None:
+        raise HTTPException(status_code=400, detail="Нет сообщения пользователя")
+    user_token = latest_user_message.userToken
+    if not user_token:
+        raise HTTPException(status_code=400, detail="Не указан userToken")
+
+    user = next(
+        (
+            db_user
+            for db_user in session.query(User).all()
+            if generate_user_token(db_user.email, db_user.password) == user_token
+        ),
+        None
+    )
+    if user is None:
+        raise HTTPException(status_code=404, detail="Пользователь не найден")
+
+    chat_id = latest_user_message.chatId or "default"
+
+    history_rows = (
+        session.query(ChatHistoryMessage)
+        .filter(
+            ChatHistoryMessage.user_id == user.user_id,
+            ChatHistoryMessage.chat_id == chat_id
+        )
+        .order_by(ChatHistoryMessage.created_at.asc())
+        .all()
+    )
 
     ollama_messages = [
         {"role": "system", "content": system_prompt}
     ]
-    for msg in req.messages:
-        if msg.role in ("user", "assistant"):
-            ollama_messages.append({"role": msg.role, "content": msg.content})
+    for history_message in history_rows:
+        if history_message.role in ("user", "assistant"):
+            ollama_messages.append({"role": history_message.role, "content": history_message.content})
 
-    if not any(m["role"] == "user" for m in ollama_messages):
-        raise HTTPException(status_code=400, detail="Нет сообщения пользователя")
+    for msg in incoming_messages:
+        ollama_messages.append({"role": msg.role, "content": msg.content})
+
+    for msg in incoming_messages:
+        session.add(
+            ChatHistoryMessage(
+                user_id=user.user_id,
+                chat_id=chat_id,
+                role=msg.role,
+                content=msg.content
+            )
+        )
+
+    session.commit()
 
     async with httpx.AsyncClient(timeout=30.0) as client:
         try:
@@ -175,6 +203,17 @@ async def chat_endpoint(req: ChatRequest):
             resp.raise_for_status()
             data = resp.json()
             answer = data["message"]["content"]
+
+            session.add(
+                ChatHistoryMessage(
+                    user_id=user.user_id,
+                    chat_id=chat_id,
+                    role="assistant",
+                    content=answer
+                )
+            )
+            session.commit()
+
             return ChatResponse(reply=answer)
         except httpx.HTTPStatusError as e:
             raise HTTPException(status_code=502, detail=f"Ошибка модели: {e.response.text}")

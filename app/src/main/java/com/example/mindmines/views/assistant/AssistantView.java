@@ -91,7 +91,7 @@ public class AssistantView extends BaseFragment {
         typingIndicator.setVisibility(View.VISIBLE);
 
         executor.execute(() -> {
-            String response = ChatMessagesSender.sendToServer(text);
+            String response = ChatMessagesSender.sendToServer(text, userID);
             mainHandler.post(() -> {
                 typingIndicator.setVisibility(View.GONE);
                 if (response != null) {

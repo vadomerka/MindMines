@@ -16,7 +16,7 @@ public class ChatMessagesSender {
     private static HttpURLConnection connection;
     private static final String SERVER_URL = "http://10.0.2.2:8000/api/chat";
 
-    public static String sendToServer(String userMessage) {
+    public static String sendToServer(String userMessage, String userToken) {
         try {
             initConnection();
 
@@ -24,6 +24,8 @@ public class ChatMessagesSender {
             JSONObject messageObj = new JSONObject();
             messageObj.put("role", "user");
             messageObj.put("content", userMessage);
+            messageObj.put("userToken", userToken);
+            messageObj.put("chatId", userToken);  // В будущем будут реализованы разные чаты.
             messagesArray.put(messageObj);
 
             JSONObject requestBody = new JSONObject();
