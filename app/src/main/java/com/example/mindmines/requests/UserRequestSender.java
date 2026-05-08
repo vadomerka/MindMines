@@ -45,16 +45,13 @@ public class UserRequestSender {
     private static String sendAuthRequest(String endpoint, String email, String password) {
         try {
             initConnection(endpoint);
-            Log.d("Debug send error", "initConnection");
 
             JSONObject requestBody = new JSONObject();
             requestBody.put("email", email);
             requestBody.put("password", password);
-            Log.d("Debug send error", "body");
 
             return parseResponse(requestBody);
         } catch (Exception e) {
-            Log.d("Debug send error", "sendAuthRequest error: " + e);
             return null;
         } finally {
             if (connection != null) {
@@ -78,10 +75,8 @@ public class UserRequestSender {
         OutputStream os = connection.getOutputStream();
         os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
         os.close();
-        Log.d("Debug send error", "connection.getOutputStream");
 
         int responseCode = connection.getResponseCode();
-        Log.d("Debug send error", "responseCode");
         if (responseCode == HttpURLConnection.HTTP_OK) {
             return parseToken(connection);
         }

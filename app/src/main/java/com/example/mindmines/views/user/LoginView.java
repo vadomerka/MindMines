@@ -40,7 +40,7 @@ public class LoginView extends AppCompatActivity {
 
         if (!checkData()) { return; }
 
-        String token = UserController.getInstance(getApplicationContext()).login(email, password);
+        String token = UserController.getInstance().login(email, password);
         if (token == null) {
             Toast.makeText(getApplicationContext(), "Пользователь не найден.", Toast.LENGTH_SHORT).show();
             return;

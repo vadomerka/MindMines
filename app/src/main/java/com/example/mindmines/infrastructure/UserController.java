@@ -25,23 +25,19 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class UserController {
     private static UserController instance;
-    private final Context context;
-    private final AuthManager auth;
     private final AtomicReference<String> token;
     private final ExecutorService executor;
     private final Handler mainHandler;
 
-    public UserController(Context context) {
-        this.context = context;
+    public UserController() {
         this.token = new AtomicReference<>();
-        this.auth = new AuthManager(context);
         this.executor = Executors.newSingleThreadExecutor();
         this.mainHandler = new Handler(Looper.getMainLooper());
     }
 
-    public static UserController getInstance(Context context) {
+    public static UserController getInstance() {
         if (instance == null) {
-            instance = new UserController(context);
+            instance = new UserController();
         }
         return instance;
     }
