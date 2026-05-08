@@ -26,7 +26,6 @@ import com.example.mindmines.services.senders.ChatMessagesSender;
 import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.adapters.ChatAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

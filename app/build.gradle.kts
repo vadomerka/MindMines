@@ -56,9 +56,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation("com.github.vikramezhil:WheelPicker:1.0.3")
 
-    implementation("androidx.navigation:navigation-fragment:2.9.7")
-    implementation("androidx.navigation:navigation-ui:2.9.7")
+    implementation("androidx.navigation:navigation-fragment:2.7.7")
+    implementation("androidx.navigation:navigation-ui:2.7.7")
     implementation("androidx.navigation:navigation-runtime-android:2.9.7")
+    implementation("io.noties.markwon:core:4.6.2")
 
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
