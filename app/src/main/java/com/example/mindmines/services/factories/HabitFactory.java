@@ -5,7 +5,7 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.converters.RepConverter;
+import com.example.mindmines.services.converters.entities.RepConverter;
 import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.services.repositories.RepositoryService;

@@ -1,11 +1,7 @@
-package com.example.mindmines.services.converters;
+package com.example.mindmines.services.converters.entities;
 
 import com.example.mindmines.db.entities.ChatMessageEntity;
 import com.example.mindmines.models.chat.ChatMessage;
-import com.example.mindmines.services.repositories.RepositoryService;
-import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
-
-import java.time.OffsetDateTime;
 
 public class ChatMessageConverter implements RepConverter<Integer, ChatMessage, ChatMessageEntity> {
     public ChatMessage toItem(ChatMessageEntity entity) {

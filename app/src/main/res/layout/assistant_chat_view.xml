@@ -2,20 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- Заголовок чата (опционально) -->
-    <TextView
-        android:id="@+id/chat_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+
+    <LinearLayout
+        style="@style/SpreadLinearLayout"
         android:padding="12dp"
-        android:text="@string/chat_assistant_title_text"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:background="#F5F5F5"/>
+        android:background="#F5F5F5"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/SmallButton"
+            android:visibility="invisible"
+            app:icon="@drawable/ic_delete"
+            app:iconGravity="top"
+            app:iconPadding="0dp"
+            app:iconSize="25dp"
+            />
+
+        <!-- Заголовок чата (опционально) -->
+        <TextView
+            android:id="@+id/chat_title"
+            android:text="@string/chat_assistant_title_text"
+            style="@style/header1_text"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chat_reset_button"
+            style="@style/SmallButton"
+            android:backgroundTint="#D6D6D6"
+            app:icon="@drawable/ic_delete"
+            app:iconGravity="top"
+            app:iconPadding="0dp"
+            app:iconSize="25dp"
+            />
+
+    </LinearLayout>
 
     <!-- Список сообщений -->
     <androidx.recyclerview.widget.RecyclerView

@@ -1,13 +1,7 @@
-package com.example.mindmines.services.converters;
+package com.example.mindmines.services.converters.entities;
 
-import com.example.mindmines.R;
 import com.example.mindmines.db.entities.ExpeditionEntity;
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.services.repositories.RepositoryService;
-import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
-
-import java.time.Duration;
-import java.time.OffsetDateTime;
 
 public class ExpeditionConverter implements RepConverter<Integer, Expedition, ExpeditionEntity> {
     public Expedition toItem(ExpeditionEntity entity) {

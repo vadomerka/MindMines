@@ -5,8 +5,7 @@ import android.util.Log;
 import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.converters.UserStatusConverter;
-import com.example.mindmines.services.factories.UserStatusFactory;
+import com.example.mindmines.services.converters.entities.UserStatusConverter;
 import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.services.repositories.LocalDaoRepository;
 

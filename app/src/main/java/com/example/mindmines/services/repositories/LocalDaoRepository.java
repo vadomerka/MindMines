@@ -6,7 +6,7 @@ import com.example.mindmines.db.dao.RepDao;
 import com.example.mindmines.models.interfaces.DBEntity;
 import com.example.mindmines.models.interfaces.RepositoryItem;
 import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.services.converters.RepConverter;
+import com.example.mindmines.services.converters.entities.RepConverter;
 import com.example.mindmines.services.observers.RepositoryObserver;
 
 import java.util.ArrayList;

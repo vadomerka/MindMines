@@ -2,7 +2,7 @@ package com.example.mindmines.services.factories;
 
 import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.converters.RepConverter;
+import com.example.mindmines.services.converters.entities.RepConverter;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 

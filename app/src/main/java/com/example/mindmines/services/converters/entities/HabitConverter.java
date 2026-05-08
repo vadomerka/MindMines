@@ -1,15 +1,10 @@
-package com.example.mindmines.services.converters;
+package com.example.mindmines.services.converters.entities;
 
 import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.repositories.RepositoryService;
-import com.example.mindmines.services.repositories.dao.HabitRepository;
-
-import java.time.OffsetDateTime;
 
 public class HabitConverter implements RepConverter<Integer, Habit, HabitEntity> {
     public Habit toItem(HabitEntity e) {

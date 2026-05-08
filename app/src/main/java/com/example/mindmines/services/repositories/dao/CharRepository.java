@@ -10,7 +10,7 @@ import com.example.mindmines.models.game.equipment.types.LegArmor;
 import com.example.mindmines.models.game.equipment.types.Shield;
 import com.example.mindmines.models.game.equipment.types.Sword;
 import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.services.converters.CharConverter;
+import com.example.mindmines.services.converters.entities.CharConverter;
 import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.observers.CharObserver;
 import com.example.mindmines.services.repositories.LocalDaoRepository;

@@ -1,9 +1,7 @@
-package com.example.mindmines.services.converters;
+package com.example.mindmines.services.converters.entities;
 
 import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.repositories.RepositoryService;
-import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 
 public class UserStatusConverter implements RepConverter<String, UserStatus, UserStatusEntity> {
     public UserStatus toItem(UserStatusEntity entity) {

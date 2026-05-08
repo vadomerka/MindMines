@@ -1,4 +1,4 @@
-package com.example.mindmines.services.converters;
+package com.example.mindmines.services.converters.entities;
 
 import com.example.mindmines.models.interfaces.DBEntity;
 import com.example.mindmines.models.interfaces.RepositoryItem;

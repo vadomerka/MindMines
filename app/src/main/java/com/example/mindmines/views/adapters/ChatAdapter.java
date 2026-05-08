@@ -11,40 +11,43 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.chat.ChatMessage;
+import com.example.mindmines.services.converters.ChatMessageTypeConverter;
 
 import java.util.List;
 
 import io.noties.markwon.Markwon;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private static final int TYPE_USER = 0;
-    private static final int TYPE_BOT = 1;
-    private List<ChatMessage> messages;
-    private Context context;
+    private final List<ChatMessage> messages;
+    private final Context context;
+    private final ChatMessageTypeConverter converter;
 
     public ChatAdapter(List<ChatMessage> messages, Context context) {
         this.messages = messages;
         this.context = context;
+        this.converter = new ChatMessageTypeConverter();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return messages.get(position).getAuthor().equals("USER") ? TYPE_USER : TYPE_BOT;
+        return converter.fromString(messages.get(position).getAuthor());
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        if (viewType == TYPE_USER) {
+        if (converter.isUser(viewType)) {
             View view = inflater.inflate(R.layout.message_item_user, parent, false);
             return new UserMessageViewHolder(view);
+        } else if (converter.isError(viewType)) {
+            View view = inflater.inflate(R.layout.message_item_error, parent, false);
+            return new BotMessageViewHolder(view, context);
         } else {
             View view = inflater.inflate(R.layout.message_item_bot, parent, false);
             return new BotMessageViewHolder(view, context);
         }
-    }// Привет, я хочу начать делать зарядку по утрам, с чего лучше начать?
+    }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {

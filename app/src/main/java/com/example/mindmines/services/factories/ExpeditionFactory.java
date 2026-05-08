@@ -3,7 +3,7 @@ package com.example.mindmines.services.factories;
 import com.example.mindmines.R;
 import com.example.mindmines.db.entities.ExpeditionEntity;
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.services.converters.RepConverter;
+import com.example.mindmines.services.converters.entities.RepConverter;
 import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 

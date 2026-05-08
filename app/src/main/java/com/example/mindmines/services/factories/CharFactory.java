@@ -7,7 +7,7 @@ import com.example.mindmines.models.game.characters.CharStats;
 import com.example.mindmines.models.game.characters.CharStatus;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.types.Equipment;
-import com.example.mindmines.services.converters.RepConverter;
+import com.example.mindmines.services.converters.entities.RepConverter;
 import com.example.mindmines.services.repositories.dao.CharRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.google.gson.Gson;
