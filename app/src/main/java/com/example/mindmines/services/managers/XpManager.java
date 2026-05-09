@@ -19,7 +19,6 @@ public class XpManager {
     private static final long minCoins = 1;
     private static final double maxExpChangeKoef = 1.5;
     private static final int maxLevel = 30;
-    private static final ExpeditionObserver exProxy = XpManager::gainFinishedExpedition;
 
     public static long getBaseMaxExpChange() { return baseMaxExpChange; }
 
@@ -72,10 +71,5 @@ public class XpManager {
         status.setExperience(exp);
         status.setMaxExperience(maxExp);
         status.setLevel(level);
-    }
-
-    public static void gainFinishedExpedition(List<Expedition> expedition) {
-        Log.d("Debug Expedition ExpManager", "gainFinishedExpedition: " +
-                expedition.get(0).getTitle());
     }
 }

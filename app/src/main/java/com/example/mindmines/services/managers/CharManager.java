@@ -25,7 +25,7 @@ public class CharManager {
 
         this.context = context;
         rep = RepositoryService.getCharRepository();
-        ExpeditionObserver exProxy = upd -> gain(upd.get(0));
+        ExpeditionObserver exProxy = upd -> { if (!upd.isEmpty()) gain(upd.get(0)); };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
     }
 

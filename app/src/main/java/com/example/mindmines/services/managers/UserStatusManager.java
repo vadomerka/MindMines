@@ -24,10 +24,10 @@ public class UserStatusManager {
     private UserStatusManager(Context context) {
         this.context = context;
         rep = RepositoryService.getUserStatusRepository();
-        chProxy = upd -> unlock(upd.get(0));
+        chProxy = upd -> { if (!upd.isEmpty()) unlock(upd.get(0)); };;
         rep.subscribe(chProxy);
 
-        exProxy = upd -> { if (upd.get(0).isFinished()) gain(upd.get(0)); };
+        exProxy = upd -> { if (!upd.isEmpty() && upd.get(0).isFinished()) gain(upd.get(0)); };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
 
     }
@@ -65,7 +65,6 @@ public class UserStatusManager {
         UserStatus status = getStatus();
         Long newExp = XpManager.habitToExp(h);
         XpManager.gainLevel(status, newExp);
-        Log.d("Debug unlock chars", "status: " + status.getLevel() + " " + status.getExperience() + " " + newExp);
         updateStatus(status);
     }
 
@@ -74,12 +73,10 @@ public class UserStatusManager {
         UserStatus status = getStatus();
         long coins = XpManager.expeditionToRewards(ex);
         status.setCoins(status.getCoins() + coins);
-        Log.d("Debug add coins", "coins: " + status.getCoins() + coins);
         updateStatus(status);
     }
 
     public void unlock(UserStatus status) {
-        Log.d("Debug unlock chars", "unlock: ");
         CharManager.getInstance(context).unlockAvailableChars(status);
     }
 }

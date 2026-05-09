@@ -1,6 +1,7 @@
 package com.example.mindmines.services.checkers;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
@@ -53,6 +54,7 @@ public class HabitSyncCheckerService extends BasicChecker {
 
                     OffsetDateTime d = h.getNextDeadlineAt();
                     OffsetDateTime n = OffsetDateTime.now();
+
                     Duration dur = Duration.between(d, n);
                     long missed;
                     if (h.getInterval().getTimeUnit() == HabitTimeUnit.MINUTE) {
@@ -91,6 +93,6 @@ public class HabitSyncCheckerService extends BasicChecker {
         for (Habit h: hl) {
             habitStatusCheck(h, context);
         }
-//        RepositoryService.getUserStatusRepository().updateObservers();
+        RepositoryService.getUserStatusRepository().updateObservers();
     }
 }

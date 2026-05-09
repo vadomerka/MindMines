@@ -2,6 +2,7 @@ package com.example.mindmines.services.checkers;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.Button;
 
 
@@ -18,18 +19,14 @@ import java.time.OffsetDateTime;
 // Класс для изменений привычек на основе состояния в текущий момент.
 public class HabitCurrentCheckerService extends BasicChecker {
     private static Boolean isHabitUnchecked(Habit h) {
-        String title = h.getTitle();
         OffsetDateTime last = h.getLastCompletedAt();
         OffsetDateTime n = OffsetDateTime.now();
         OffsetDateTime ded = h.getNextDeadlineAt();
-        if (ded == null) {
-            // Debug, null deadlines should not be created.
-            ded = HabitFactory.getInstance().getNewNextDeadline(OffsetDateTime.now(), h.getInterval());
-            h.setNextDeadlineAt(ded);
-        }
+
         OffsetDateTime s = h.getPeriodStart();
         if (ALWAYS_CHECKED) return false;
         if (last == null) return true;
+
         // Дедлайн прошел.
         if (n.isAfter(ded)) return true;
         // Отмечена ли привычка отмечена в текущем периоде.
@@ -66,6 +63,5 @@ public class HabitCurrentCheckerService extends BasicChecker {
         HabitController.getInstance(context).update(h);
 
         UserStatusManager.getInstance(context).gain(h);
-//        RepositoryService.getUserStatusRepository().updateObservers();
     }
 }

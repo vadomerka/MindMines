@@ -86,9 +86,8 @@ public class HabitsView extends BaseFragment {
         requireActivity().runOnUiThread(() -> {
             for (HabitCardAdapter.CardViewHolder card : listAdapter.getCardViews()) {
                 Habit h = rep.get(card.hId);
-                if (h == null) {
-                    continue;
-                }
+                if (h == null) { continue; }
+                card.checkBtn.setTag(h);
                 card.streakTextView.setText(h.getStreakNumber().toString());
                 card.penaltyTextView.setText(h.getPenaltyNumber().toString());
                 HabitCurrentCheckerService.buttonViewUpdate(card.checkBtn);
