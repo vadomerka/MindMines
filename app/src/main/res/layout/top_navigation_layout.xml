@@ -8,6 +8,11 @@
     android:gravity="center">
 
     <LinearLayout
+        android:id="@+id/top_navigation_title_layout_background"
+        style="@style/NavigationLinearLayout"
+        android:gravity="center_vertical">
+
+    <LinearLayout
         android:id="@+id/top_navigation_title_layout"
         style="@style/NavigationLinearLayout"
         android:gravity="center_vertical">
@@ -23,15 +28,71 @@
             app:iconGravity="top"
             />
 
-        <TextView
-            android:id="@+id/navigation_title_view"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/default_hello_world_text"
-            android:textSize="20sp"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:padding="8dp">
+            <TextView
+                android:id="@+id/navigation_level_view_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/level_title_view_text"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="5dp"
+                />
+
+            <TextView
+                android:id="@+id/navigation_level_view_text_value"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="@string/level_title_view_text"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ProgressBar
+                android:id="@+id/experience_progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:outlineSpotShadowColor="@color/white"
+                android:outlineAmbientShadowColor="@color/white"
+                android:max="100"
+                android:progress="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/coin_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_dollar"
+                android:contentDescription="@string/coin_icon_description"
+                android:layout_marginEnd="4dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/coin_value_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="16sp"
             android:textColor="@color/white"
-            android:padding="10dp"
-            android:layout_weight="5"/>
+            android:layout_marginEnd="8dp" />
 
     </LinearLayout>
 
@@ -61,6 +122,7 @@
             android:id="@+id/autoCheck_button"
             style="@style/SpreadLinearLayoutItem"/>
 
+    </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

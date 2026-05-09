@@ -70,4 +70,6 @@
     <string name="login_password_confirmation_input_hint">Подтвердите пароль</string>
     <string name="url_change_text">Введите ip сервера</string>
     <string name="url_input_hint">Введите ip</string>
+    <string name="coin_icon_description">coin_icon_description</string>
+    <string name="level_title_view_text">Lvl:</string>
 </resources>

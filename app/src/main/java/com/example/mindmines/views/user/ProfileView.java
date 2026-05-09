@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,8 +32,9 @@ public class ProfileView extends BaseFragment {
 
         auth = new AuthManager(requireContext());
 
-        TextView tv = requireActivity().findViewById(R.id.navigation_title_view);
-        tv.setText("");
+        LinearLayout topNav = requireActivity().findViewById(R.id.top_navigation_title_layout);
+        topNav.setVisibility(View.INVISIBLE);
+
         Button btn = requireActivity().findViewById(R.id.logout_btn);
         btn.setOnClickListener(v -> logout());
 
