@@ -44,7 +44,7 @@
                         android:id="@+id/open_character_btn1"
                         style="@style/CharacterButton"
                         app:cornerRadius="20dp"
-                        app:icon="@drawable/h1"
+                        app:icon="@drawable/g0"
                         app:iconGravity="top"
                         app:iconSize="@dimen/character_icon_size" />
 
@@ -52,7 +52,7 @@
                         android:id="@+id/open_character_btn2"
                         style="@style/CharacterButton"
                         app:cornerRadius="20dp"
-                        app:icon="@drawable/h2"
+                        app:icon="@drawable/g0"
                         app:iconGravity="top"
                         app:iconSize="@dimen/character_icon_size" />
 
@@ -64,7 +64,7 @@
                         android:id="@+id/open_character_btn3"
                         style="@style/CharacterButton"
                         app:cornerRadius="20dp"
-                        app:icon="@drawable/h3"
+                        app:icon="@drawable/g0"
                         app:iconGravity="top"
                         app:iconSize="@dimen/character_icon_size" />
 
@@ -72,7 +72,7 @@
                         android:id="@+id/open_character_btn4"
                         style="@style/CharacterButton"
                         app:cornerRadius="20dp"
-                        app:icon="@drawable/h4"
+                        app:icon="@drawable/g0"
                         app:iconGravity="top"
                         app:iconSize="@dimen/character_icon_size" />
 

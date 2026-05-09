@@ -55,7 +55,7 @@ public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
     }
 
     public Char generate(String userId, String name) {
-        return generate(userId, name, 0, String.valueOf(R.drawable.h1));
+        return generate(userId, name, 0, String.valueOf(R.drawable.g0));
     }
 
     public Char generate(String userId, String name, int level, String image, Equipment[] equipment) {

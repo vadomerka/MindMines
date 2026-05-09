@@ -42,7 +42,7 @@
         android:layout_margin="10dp"
         android:enabled="true"
         app:cornerRadius="20dp"
-        app:icon="@drawable/h1"
+        app:icon="@drawable/g0"
         app:iconGravity="top"
         app:iconSize="125dp" />
 

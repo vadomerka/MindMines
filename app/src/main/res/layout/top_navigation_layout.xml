@@ -68,7 +68,9 @@
                 android:outlineSpotShadowColor="@color/white"
                 android:outlineAmbientShadowColor="@color/white"
                 android:max="100"
-                android:progress="0" />
+                android:progress="0"
+                android:progressTint="@color/white"
+                android:progressBackgroundTint="#2A0067"/>
         </LinearLayout>
 
         <LinearLayout

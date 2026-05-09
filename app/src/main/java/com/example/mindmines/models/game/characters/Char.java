@@ -24,7 +24,7 @@ public class Char implements Serializable, RepositoryItem<Integer> {
         this.stats = new CharStats();
         this.status = new CharStatus();
         this.equipment = new CharEquipment();
-        this.image = String.valueOf(R.drawable.h1);
+        this.image = String.valueOf(R.drawable.g0);
     }
 
     public Char(Integer charId, String userId, String name, CharStats stats,

@@ -66,8 +66,6 @@ public class CharView extends BaseFragment {
     @SuppressLint("UseCompatLoadingForDrawables")
     protected void loadCharData() {
         MaterialButton charBtn = requireActivity().findViewById(R.id.character_portrait_view);
-        //                               2131165428
-        Integer od = R.drawable.h1;
         charBtn.setIcon(requireContext().getDrawable(Integer.parseInt(ch.getImage())));
 
         TextView statTv0 = requireActivity().findViewById(R.id.name_value_view);
