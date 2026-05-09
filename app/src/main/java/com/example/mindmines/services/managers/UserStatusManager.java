@@ -8,7 +8,6 @@ import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.UserStatusFactory;
-import com.example.mindmines.services.observers.CharObserver;
 import com.example.mindmines.services.observers.ExpeditionObserver;
 import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
@@ -19,13 +18,13 @@ public class UserStatusManager {
     private final UserStatusRepository rep;
     private final Context context;
     private final ExpeditionObserver exProxy;
-    private final UserStatusObserver chProxy;
+    private final UserStatusObserver usProxy;
 
     private UserStatusManager(Context context) {
         this.context = context;
         rep = RepositoryService.getUserStatusRepository();
-        chProxy = upd -> { if (!upd.isEmpty()) unlock(upd.get(0)); };;
-        rep.subscribe(chProxy);
+        usProxy = upd -> { if (!upd.isEmpty()) unlock(upd.get(0)); };;
+        rep.subscribe(usProxy);
 
         exProxy = upd -> { if (!upd.isEmpty() && upd.get(0).isFinished()) gain(upd.get(0)); };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
@@ -70,9 +69,9 @@ public class UserStatusManager {
     public void gain(Habit h) {
         UserStatus status = getStatus();
         Long newExp = XpManager.habitToExp(h);
-        Log.d("Debug updateUserStatus", "gain: " + status.getExperience() + " " + status.getMaxExperience() + " " + newExp);
         XpManager.gainLevel(status, newExp);
         updateStatus(status);
+        CharManager.getInstance(context).unlockAvailableChars(status);
     }
 
     public void gain(Expedition ex) {
@@ -80,6 +79,7 @@ public class UserStatusManager {
         UserStatus status = getStatus();
         long coins = XpManager.expeditionToRewards(ex);
         status.setCoins(status.getCoins() + coins);
+        Log.d("Debug coins", "gain: " + coins);
         updateStatus(status);
     }
 

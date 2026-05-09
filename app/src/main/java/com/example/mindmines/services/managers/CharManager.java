@@ -47,7 +47,6 @@ public class CharManager {
     }
 
     public void unlockAvailableChars(UserStatus status) {
-        Log.d("Debug unlock chars", "unlock: " + rep.getByUser().size());
         if (rep.getByUser().size() == 0 && status.getLevel() >= 0) rep.add(factory.generateDefault(status.getUserId(), 1));
         if (rep.getByUser().size() == 1 && status.getLevel() >= 3) rep.add(factory.generateDefault(status.getUserId(), 2));
         if (rep.getByUser().size() == 2 && status.getLevel() >= 5) rep.add(factory.generateDefault(status.getUserId(), 3));

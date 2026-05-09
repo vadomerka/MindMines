@@ -37,7 +37,8 @@ public class AuthManager {
                 .putString(KEY_USER_EMAIL, email)
                 .apply();
         UserStatusManager usm = UserStatusManager.getInstance(context);
-        if (usm.getStatus() != null) usm.addStatus(UserStatusFactory.getInstance().create(authToken));
+        if (usm.getStatus() == null) usm.addStatus(UserStatusFactory.getInstance().create(authToken));
+//        Log.d("Debug register", "saveNewUserData: " + usm.getStatus().getUserId());
     }
 
     public String getAuthToken() {

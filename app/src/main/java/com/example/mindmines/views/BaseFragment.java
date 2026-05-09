@@ -68,8 +68,6 @@ public abstract class BaseFragment extends Fragment {
             UserStatus status = UserStatusManager.getInstance(requireContext()).getStatus();
             if (status == null) status = new UserStatus(new AuthManager(requireContext()).getUserId());
 
-            Log.d("Debug updateUserStatus", "updateUserStatus: " + status.getExperience() + " " + status.getMaxExperience());
-
             levelValueView.setText(String.valueOf(status.getLevel()));
             expProgressBar.setMax(status.getMaxExperience().intValue());
             expProgressBar.setProgress(status.getExperience().intValue());

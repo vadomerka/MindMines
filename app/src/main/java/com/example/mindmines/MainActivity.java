@@ -13,11 +13,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.example.mindmines.infrastructure.UserController;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.services.managers.CharManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 import com.example.mindmines.services.timers.DataBackupTimer;
@@ -29,7 +33,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,12 @@ public class MainActivity extends AppCompatActivity {
             Intent myIntent = new Intent(MainActivity.this, LoginView.class);
             MainActivity.this.startActivity(myIntent);
             finish();
+            return;
         }
+
+
+        CharManager.getInstance(getApplicationContext()).unlockAvailableChars(
+                UserStatusManager.getInstance(getApplicationContext()).getStatus());
 
         // Notifications init
         createNotificationChannel();
