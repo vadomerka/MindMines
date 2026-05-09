@@ -1,106 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/party_vertical_layout"
+    android:layout_height="match_parent"
+    android:layout_below="@id/top_navigation_bar"
+    android:layout_above="@id/bottom_navigation_bar"
+    android:fillViewport="false">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            style="@style/SpreadCenterVerticalLayout"
-            android:layout_margin="30dp">
+            android:id="@+id/party_vertical_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <TextView
-                style="@style/title_text"
-                android:layout_margin="0dp"
-                android:text="@string/your_character_party_text" />
+            <LinearLayout
+                style="@style/SpreadCenterVerticalLayout"
+                android:layout_margin="30dp">
 
-<!--            <TextView-->
-<!--                android:id="@+id/party_name_value_text"-->
-<!--                style="@style/title_text"-->
-<!--                android:layout_margin="0dp"-->
-<!--                android:text="@string/default_party_name_text" />-->
-        </LinearLayout>
+                <TextView
+                    style="@style/title_text"
+                    android:layout_margin="0dp"
+                    android:text="@string/your_character_party_text" />
 
-        <LinearLayout
-            android:id="@+id/character_list"
-            style="@style/SpreadCenterVerticalLayout">
+                <!--            <TextView-->
+                <!--                android:id="@+id/party_name_value_text"-->
+                <!--                style="@style/title_text"-->
+                <!--                android:layout_margin="0dp"-->
+                <!--                android:text="@string/default_party_name_text" />-->
+            </LinearLayout>
 
-            <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+            <LinearLayout
+                android:id="@+id/character_list"
+                style="@style/SpreadCenterVerticalLayout">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/open_character_btn1"
-                    style="@style/CharacterButton"
-                    app:cornerRadius="20dp"
-                    app:icon="@drawable/h1"
-                    app:iconGravity="top"
-                    app:iconSize="@dimen/character_icon_size" />
+                <LinearLayout style="@style/SpreadCenterHorizontalLayout">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/open_character_btn2"
-                    style="@style/CharacterButton"
-                    app:cornerRadius="20dp"
-                    app:icon="@drawable/h2"
-                    app:iconGravity="top"
-                    app:iconSize="@dimen/character_icon_size" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/open_character_btn1"
+                        style="@style/CharacterButton"
+                        app:cornerRadius="20dp"
+                        app:icon="@drawable/h1"
+                        app:iconGravity="top"
+                        app:iconSize="@dimen/character_icon_size" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/open_character_btn2"
+                        style="@style/CharacterButton"
+                        app:cornerRadius="20dp"
+                        app:icon="@drawable/h2"
+                        app:iconGravity="top"
+                        app:iconSize="@dimen/character_icon_size" />
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/open_character_btn3"
+                        style="@style/CharacterButton"
+                        app:cornerRadius="20dp"
+                        app:icon="@drawable/h3"
+                        app:iconGravity="top"
+                        app:iconSize="@dimen/character_icon_size" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/open_character_btn4"
+                        style="@style/CharacterButton"
+                        app:cornerRadius="20dp"
+                        app:icon="@drawable/h4"
+                        app:iconGravity="top"
+                        app:iconSize="@dimen/character_icon_size" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/expedition_view_button"
+                android:text="@string/begin_expedition_text"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/open_character_btn3"
-                    style="@style/CharacterButton"
-                    app:cornerRadius="20dp"
-                    app:icon="@drawable/h3"
-                    app:iconGravity="top"
-                    app:iconSize="@dimen/character_icon_size" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_last_expedition_debug_button"
+                android:visibility="gone"
+                android:text="@string/delete_last_expedition_debug_button"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/open_character_btn4"
-                    style="@style/CharacterButton"
-                    app:cornerRadius="20dp"
-                    app:icon="@drawable/h4"
-                    app:iconGravity="top"
-                    app:iconSize="@dimen/character_icon_size" />
-
-            </LinearLayout>
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/update_last_expedition_debug_button"
+                android:visibility="gone"
+                android:text="@string/update_last_expedition_debug_button"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                />
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/expedition_view_button"
-            android:text="@string/begin_expedition_text"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/delete_last_expedition_debug_button"
-            android:visibility="gone"
-            android:text="@string/delete_last_expedition_debug_button"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/update_last_expedition_debug_button"
-            android:visibility="gone"
-            android:text="@string/update_last_expedition_debug_button"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            />
-    </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

@@ -68,6 +68,16 @@ def post_user(user_dto: UserDTO, session: SessionDep):
     except Exception as e:
         raise HTTPException(status_code=400, detail=e)
 
+@app.delete("/users/{user_token}")
+def delete_user(user_token: str, session: SessionDep):
+    for db_user in session.query(User).all():
+        if generate_user_token(db_user.email, db_user.password) == user_token:
+            session.delete(db_user)
+            session.commit()
+            return {"result": "success"}
+
+    raise HTTPException(status_code=404, detail="Item not found")
+
 
 def generate_user_token(user_email: str, user_password: str):
     return user_email + "_token"

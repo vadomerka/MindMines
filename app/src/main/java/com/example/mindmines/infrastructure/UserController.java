@@ -1,23 +1,13 @@
 package com.example.mindmines.infrastructure;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.mindmines.models.chat.ChatMessage;
 import com.example.mindmines.models.user.User;
-import com.example.mindmines.requests.ChatMessagesRequestSender;
 import com.example.mindmines.requests.UserRequestSender;
-import com.example.mindmines.services.auth.AuthManager;
-import com.google.common.util.concurrent.Futures;
+import com.example.mindmines.services.managers.UserStatusManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -27,17 +17,17 @@ public class UserController {
     private static UserController instance;
     private final AtomicReference<String> token;
     private final ExecutorService executor;
-    private final Handler mainHandler;
+    private final Context context;
 
-    public UserController() {
+    public UserController(Context context) {
         this.token = new AtomicReference<>();
         this.executor = Executors.newSingleThreadExecutor();
-        this.mainHandler = new Handler(Looper.getMainLooper());
+        this.context = context;
     }
 
-    public static UserController getInstance() {
+    public static UserController getInstance(Context context) {
         if (instance == null) {
-            instance = new UserController();
+            instance = new UserController(context);
         }
         return instance;
     }
@@ -64,6 +54,10 @@ public class UserController {
         } catch (ExecutionException | InterruptedException e) {
             return null;
         }
+    }
+
+    public void deleteUser(String email, String password) {
+        UserStatusManager.getInstance(context).tryRemoveStatus(email + "_token");
     }
 
     public static List<User> getFriends(String userId) {

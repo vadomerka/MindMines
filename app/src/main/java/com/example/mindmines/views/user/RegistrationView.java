@@ -39,7 +39,7 @@ public class RegistrationView extends AppCompatActivity {
 
         if (!checkData()) { return; }
 
-        UserController uc = UserController.getInstance();
+        UserController uc = UserController.getInstance(getApplicationContext());
         String token = uc.register(email, password);
 
         if (token == null) {

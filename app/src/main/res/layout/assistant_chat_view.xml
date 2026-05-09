@@ -22,7 +22,6 @@
             app:iconSize="25dp"
             />
 
-        <!-- Заголовок чата (опционально) -->
         <TextView
             android:id="@+id/chat_title"
             android:text="@string/chat_assistant_title_text"
@@ -45,7 +44,6 @@
 
     </LinearLayout>
 
-    <!-- Список сообщений -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recycler_view"
         android:layout_width="match_parent"
@@ -54,7 +52,6 @@
         android:clipToPadding="false"
         android:padding="8dp" />
 
-    <!-- Индикатор "печатает..." (появляется при загрузке ответа) -->
     <ProgressBar
         android:id="@+id/typing_indicator"
         style="?android:attr/progressBarStyleSmall"
@@ -65,7 +62,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="4dp"/>
 
-    <!-- Нижняя панель ввода -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,7 +91,6 @@
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
-    <!-- Фиктивная кнопка для совместимости с существующим findViewById -->
     <Button
         android:id="@+id/bottom_navigation_bar2"
         android:layout_width="0dp"

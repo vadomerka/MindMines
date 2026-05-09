@@ -29,7 +29,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
+            Intent myIntent = new Intent(MainActivity.this, LoginView.class);
+            MainActivity.this.startActivity(myIntent);
+            finish();
+        }
+
         // Notifications init
         createNotificationChannel();
 
@@ -59,12 +65,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
             intent.setData(Uri.parse("package:" + getPackageName()));
             startActivity(intent);
-        }
-
-        if (!new AuthManager(getApplicationContext()).isUserLoggedIn()) {
-            Intent myIntent = new Intent(MainActivity.this, LoginView.class);
-            MainActivity.this.startActivity(myIntent);
-            finish();
         }
     }
 

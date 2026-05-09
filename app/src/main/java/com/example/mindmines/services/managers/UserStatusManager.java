@@ -41,7 +41,8 @@ public class UserStatusManager {
 
     public UserStatus getStatus() {
         String userId = new AuthManager(context).getUserId();
-        return rep.get(userId);
+        UserStatus status = rep.get(userId);
+        return status;
     }
 
     public void addStatus(UserStatus s) {
@@ -54,6 +55,11 @@ public class UserStatusManager {
 
     public void removeStatus() {
         rep.remove(getStatus());
+    }
+
+    public void tryRemoveStatus(String userToken) {
+        if (rep.get(userToken) == null) return;
+        rep.remove(rep.get(userToken));
     }
 
     public void resetStatus() {
