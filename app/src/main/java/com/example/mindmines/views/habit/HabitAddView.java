@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -173,10 +174,18 @@ public class HabitAddView extends BaseFragment {
                                       priority, difficulty, hType, interval);
     }
 
+    protected boolean checkDto(HabitDTO dto) {
+        if (dto.getTitle() == null || dto.getTitle().isEmpty()) {
+            Toast.makeText(requireContext(), "Введите название привычки.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     protected void saveHabit() {
         HabitDTO habitData = saveDto();
 
-        // TODO: check data
+        if (!checkDto(habitData)) return;
 
         HabitController.getInstance(requireContext()).add(habitData);
         exit();

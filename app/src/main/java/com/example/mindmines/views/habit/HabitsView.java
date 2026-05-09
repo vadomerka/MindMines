@@ -25,6 +25,7 @@ import com.example.mindmines.views.adapters.HabitCardAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HabitsView extends BaseFragment {
     private static final String TAG = "Debug HabitsView";
@@ -32,6 +33,7 @@ public class HabitsView extends BaseFragment {
     private final UserStatusObserver usProxy = upd -> updateUserStatus(null);
     private HabitCardAdapter listAdapter;
     private List<Habit> habitsList;
+    private HabitRepository rep;
 
     public HabitsView() {
         super(R.layout.habits_view);
@@ -40,6 +42,7 @@ public class HabitsView extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        rep = RepositoryService.getHabitRepository();
         initUI(view);
     }
 
@@ -81,8 +84,6 @@ public class HabitsView extends BaseFragment {
             return;
         }
         requireActivity().runOnUiThread(() -> {
-            HabitRepository rep = RepositoryService.getHabitRepository();
-
             for (HabitCardAdapter.CardViewHolder card : listAdapter.getCardViews()) {
                 Habit h = rep.get(card.hId);
                 if (h == null) {
@@ -105,10 +106,14 @@ public class HabitsView extends BaseFragment {
         NavHostFragment.findNavController(this).navigate(R.id.action_habitsFragment_to_habitChangeFragment, args);
     }
 
-    public void deleteHabit(int hId, int position) {
+    public void deleteHabit(int hId) {
+        List<Habit> deleted = habitsList.stream().filter(it -> it.getId() == hId).collect(Collectors.toList());
+        if (deleted.isEmpty()) return;
+        Habit posH = deleted.get(0);
+        int pos = habitsList.indexOf(posH);
+        habitsList.remove(pos);
         HabitController.getInstance(requireContext()).delete(hId);
 
-        habitsList.remove(position);
-        listAdapter.notifyItemRemoved(position);
+        listAdapter.notifyItemRemoved(pos);
     }
 }

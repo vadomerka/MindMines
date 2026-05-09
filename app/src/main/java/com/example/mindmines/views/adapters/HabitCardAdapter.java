@@ -50,7 +50,7 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
                 HabitCurrentCheckerService.buttonStatusCheck((Button) v, fragment.requireContext().getApplicationContext()));
         holder.checkBtn.setTag(h);
         holder.changeBtn.setOnClickListener(v -> fragment.openHabitChangeView(h.getId()));
-        holder.deleteBtn.setOnClickListener(v -> fragment.deleteHabit(h.getId(), position));
+        holder.deleteBtn.setOnClickListener(v -> fragment.deleteHabit(h.getId()));
 
         if (MainActivity.isDebug()) { holder.debugHolder.setVisibility(View.VISIBLE); }
         holder.streakTextView.setText(h.getStreakNumber().toString());

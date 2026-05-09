@@ -70,7 +70,7 @@ public class HabitChangeView extends HabitAddView {
     protected void saveHabit() {
         HabitDTO habitData = saveDto();
 
-        // TODO: check data
+        if (!checkDto(habitData)) return;
 
         HabitController.getInstance(requireContext()).change(habitId, habitData);
         exit();
