@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SpreadCenterVerticalLayout"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white">
+
+    <LinearLayout style="@style/SpreadCenterVerticalLayout"
+        android:layout_width="wrap_content">
+
+        <TextView
+            android:id="@+id/login_header"
+            style="@style/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/url_change_text" />
+
+        <LinearLayout
+            style="@style/SpreadCenterVerticalLayout">
+        <EditText
+            android:id="@+id/server_url_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/url_input_hint"
+            android:inputType="textUri"
+            android:minWidth="250dp"
+            android:minHeight="48dp" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/SpreadCenterHorizontalLayout"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/save_url_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:backgroundTint="@color/holo_purple"
+                android:text="@string/save_button_text" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

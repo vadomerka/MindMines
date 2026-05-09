@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/habitsFragment">
+
+    <fragment
+        android:id="@+id/habitsFragment"
+        android:name="com.example.mindmines.views.habit.HabitsView"
+        android:label="Привычки">
+        <action
+            android:id="@+id/action_habitsFragment_to_habitAddFragment"
+            app:destination="@id/habitAddFragment" />
+        <action
+            android:id="@+id/action_habitsFragment_to_habitChangeFragment"
+            app:destination="@id/habitChangeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/habitAddFragment"
+        android:name="com.example.mindmines.views.habit.HabitAddView"
+        android:label="Добавление привычки">
+        <action
+            android:id="@+id/action_habitAddFragment_to_habitsFragment"
+            app:destination="@id/habitsFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/habitChangeFragment"
+        android:name="com.example.mindmines.views.habit.HabitChangeView"
+        android:label="Изменение привычки">
+        <action
+            android:id="@+id/action_habitChangeFragment_to_habitsFragment"
+            app:destination="@id/habitsFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/partyFragment"
+        android:name="com.example.mindmines.views.game.PartyView"
+        android:label="Команда">
+        <action
+            android:id="@+id/action_partyFragment_to_charFragment"
+            app:destination="@id/charFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/charFragment"
+        android:name="com.example.mindmines.views.game.CharView"
+        android:label="Персонаж">
+        <action
+            android:id="@+id/action_charFragment_to_partyFragment"
+            app:destination="@id/partyFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.example.mindmines.views.user.FriendsView"
+        android:label="Список лидеров">
+    </fragment>
+
+    <fragment
+        android:id="@+id/assistantFragment"
+        android:name="com.example.mindmines.views.assistant.AssistantView"
+        android:label="Ассистент">
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.mindmines.views.user.ProfileView"
+        android:label="Профиль">
+<!--        <action-->
+<!--            android:id="@+id/action_profileFragment_to_loginFragment"-->
+<!--            app:destination="@id/loginFragment" />-->
+    </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/loginFragment"-->
+<!--        android:name="com.example.mindmines.views.user.LoginView"-->
+<!--        android:label="Логин">-->
+<!--        <action-->
+<!--            android:id="@+id/action_loginFragment_to_habitsFragment"-->
+<!--            app:destination="@id/habitsFragment" />-->
+<!--    </fragment>-->
+</navigation>

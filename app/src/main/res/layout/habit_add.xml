@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/top_navigation_bar"
+    android:layout_above="@id/bottom_navigation_bar"
+    android:fillViewport="false">
+<LinearLayout
+    android:gravity="center_horizontal"
+    style="@style/SpreadCenterVerticalLayout">
+
+    <TextView
+        android:id="@+id/habit_add_title"
+        style="@style/title_text"
+        android:text="@string/habit_add_title" />
+
+    <LinearLayout
+        style="@style/SpreadCenterHorizontalLayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:visibility="gone">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/good_type_habit_button"
+            style="@style/SpreadCenterHorizontalItem"
+            android:text="@string/good_habit_button_text" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bad_type_habit_button"
+            style="@style/SpreadCenterHorizontalItem"
+            android:text="@string/bad_habit_button_text" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpreadStartVerticalLayout">
+
+        <EditText
+            android:id="@+id/habit_title_value_edit"
+            style="@style/HabitEditTextView"
+            android:hint="@string/edit_habit_title_hint_text"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/habit_desc_value_edit"
+            style="@style/HabitEditTextView"
+            android:hint="@string/edit_habit_desc_hint_text"
+            android:textSize="15sp"
+            android:autofillHints=""
+            android:inputType="textLongMessage" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+
+        <LinearLayout style="@style/SpreadCenterHorizontalItem">
+            <LinearLayout style="@style/SpreadCenterVerticalLayout">
+                <TextView
+                    style="@style/header2_text"
+                    android:text="@string/habit_difficulty_text_view" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/habit_difficulty_value_slider"
+                    style="@style/StandardSlider"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/SpreadCenterHorizontalItem">
+            <LinearLayout style="@style/SpreadCenterVerticalLayout">
+                <TextView
+                    style="@style/header2_text"
+                    android:text="@string/habit_priority_text_view" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/habit_priority_value_slider"
+                    style="@style/StandardSlider"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/SpreadCenterVerticalLayout">
+
+        <TextView
+            style="@style/header1_text"
+            android:layout_marginVertical="10dp"
+            android:text="@string/interval_configure_text"/>
+
+        <LinearLayout style="@style/SpreadCenterHorizontalLayout"
+            android:baselineAligned="false">
+            <LinearLayout
+                style="@style/SpreadCenterHorizontalItem"
+                android:layout_weight="2">
+
+                <com.google.android.material.slider.Slider
+                    style="@style/StandardSlider"
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/interval_number_value"
+                    android:valueFrom="1"
+                    android:valueTo="60"
+                    android:value="1"
+                    android:stepSize="1"/>
+
+            </LinearLayout>
+            <LinearLayout style="@style/SpreadCenterHorizontalItem">
+
+                <com.github.vikramezhil.wheelpicker.view.WheelPicker
+                    android:id="@+id/interval_type_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="10dp"
+                    app:wheelPickerBgColor="@color/purple_background_color"
+                    app:wheelPickerDividerColor="@color/purple_background_color"
+                    app:wheelPickerItemSelectedBgColor="@color/purple_background_color"
+                    app:wheelPickerItemSelectedTextColor="@color/white"
+                    app:wheelPickerItemUnselectedTextColor="@color/white"
+                    app:wheelPickerItemsTextSize="8dp"
+                    app:wheelPickerItemsUnselectedTextAlpha="0.8"
+                    app:wheelPickerOrientationVertical="true"
+                    app:wheelPickerScaleDownEnabled="false" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/habit_type_edit_layout"
+        style="@style/SpreadCenterVerticalLayout">
+
+        <TextView
+            style="@style/header1_text"
+            android:text="@string/choose_habit_type_text"
+            android:layout_marginVertical="10dp"/>
+
+        <LinearLayout
+            style="@style/SpreadCenterHorizontalLayout">
+            <com.github.vikramezhil.wheelpicker.view.WheelPicker
+                android:id="@+id/habit_type_value"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:wheelPickerDividerColor="@color/white"
+                app:wheelPickerBgColor="@color/purple_background_color"
+                app:wheelPickerItemSelectedBgColor="@color/purple_background_color"
+                app:wheelPickerItemSelectedTextColor="@color/white"
+                app:wheelPickerItemUnselectedTextColor="@color/white"
+                app:wheelPickerOrientationVertical="false"
+                app:wheelPickerItemsTextSize="5dp"
+                app:wheelPickerItemsUnselectedTextAlpha="0.8"
+                app:wheelPickerScaleDownEnabled="true"
+                app:wheelPickerInfiniteScrolling="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/count_type_habit_layout"
+            android:visibility="gone"
+            style="@style/SpreadCenterHorizontalLayout">
+            <LinearLayout
+                style="@style/SpreadCenterHorizontalItem"
+                android:gravity="end"
+                android:layout_marginEnd="40dp">
+                <TextView
+                    style="@style/header1_text"
+                    android:text="@string/goal_text"/>
+            </LinearLayout>
+            <LinearLayout
+                style="@style/SpreadCenterHorizontalItem"
+                android:gravity="start"
+                android:layout_marginStart="40dp">
+                <NumberPicker
+                    android:id="@+id/count_type_habit_count_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="75dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/task_type_habit_layout"
+            android:visibility="gone"
+            style="@style/SpreadCenterVerticalLayout">
+            <TextView
+                style="@style/header1_text"
+                android:text="@string/tasks_view_text"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/task_type_habit_tasks_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"/>
+            <com.google.android.material.button.MaterialButton
+                style="@style/NavButton"
+                android:id="@+id/add_habit_task_button"
+                app:icon="@drawable/ic_add"
+                app:iconSize="30dp"
+                app:iconGravity="top"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="@string/save_button_text" />
+</LinearLayout>
+</ScrollView>

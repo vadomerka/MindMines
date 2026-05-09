@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        style="@style/UserCardLinearLayout">
+        <TextView
+            android:id="@+id/user_rank_value_view"
+            android:text="@string/default_number_text"
+            style="@style/UserCardRankValueView"/>
+        <TextView
+            android:id="@+id/name_value_view"
+            android:text="@string/default_hello_world_text"
+            style="@style/UserCardNameValueView"/>
+        <TextView
+            android:id="@+id/level_value_view"
+            android:text="@string/default_number_text"
+            style="@style/UserCardLevelValueView"/>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

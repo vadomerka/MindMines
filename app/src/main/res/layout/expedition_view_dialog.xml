@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SpreadCenterVerticalLayout"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Экспедиция"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/expedition_location_image"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/expedition_3"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/expedition_location_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Название локации"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/expedition_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/expedition_back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Вернуться"
+        android:textSize="18sp"/>
+
+</LinearLayout>

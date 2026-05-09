@@ -1,0 +1,169 @@
+package com.example.mindmines.models.habits;
+
+import com.example.mindmines.models.interfaces.RepositoryItem;
+
+import java.time.OffsetDateTime;
+
+public class Habit implements RepositoryItem<Integer> {
+    private Integer habitId;
+    private final String userId;
+    private HabitType type;
+
+    private String title;
+    private String description;
+    private Integer goalCount;
+    private Integer priority;
+    private Integer difficulty;
+    private Integer penaltyNumber;
+    private Integer streakNumber;
+
+    private final OffsetDateTime creationDate;
+    private OffsetDateTime lastCompletedAt;
+    private OffsetDateTime nextDeadlineAt;
+    private HabitInterval interval;
+
+    public Habit(
+            Integer habitId,
+            String userId,
+            HabitType type,
+
+            String title,
+            String description,
+            Integer goalCount,
+            Integer priority,
+            Integer difficulty,
+            Integer penaltyNumber,
+            Integer streakNumber,
+
+            OffsetDateTime creationDate,
+            OffsetDateTime lastCompletedAt,
+            OffsetDateTime nextDeadlineAt,
+            HabitInterval interval
+    ) {
+        this.habitId = habitId;
+        this.userId = userId;
+        this.type = type;
+
+        this.title = title;
+        this.description = description;
+        this.goalCount = goalCount;
+        this.priority = priority;
+        this.difficulty = difficulty;
+        this.penaltyNumber = penaltyNumber;
+        this.streakNumber = streakNumber;
+
+        this.creationDate = creationDate;
+        this.lastCompletedAt = lastCompletedAt;
+        this.nextDeadlineAt = nextDeadlineAt;
+        this.interval = interval;
+    }
+
+    public Integer getId() {
+        return habitId;
+    }
+    public void setHabitId(Integer value) { habitId = value; }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getTitle() { return title; }
+
+    public HabitType getType() { return type; }
+
+    public void setType(HabitType value) { type = value; }
+
+
+    public void setTitle(String value) { title = value; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String value) { description = value; }
+
+    public Integer getGoalCount() {
+        return goalCount;
+    }
+
+    public void setGoalCount(Integer value) {
+        goalCount = value;
+    }
+
+    public Integer getPriority() { return priority; }
+
+    public void setPriority(Integer value) { priority = value; }
+
+    public Integer getDifficulty() { return difficulty; }
+
+    public void setDifficulty(Integer value) { difficulty = value; }
+
+    public Integer getPenaltyNumber() { return penaltyNumber; }
+
+    public void setPenaltyNumber(Integer value) { penaltyNumber = value; }
+
+    public Integer getStreakNumber() { return streakNumber; }
+
+    public void setStreakNumber(Integer value) { streakNumber = value; }
+
+
+
+    public OffsetDateTime getCreationDate() { return creationDate; }
+
+    public OffsetDateTime getLastCompletedAt() { return lastCompletedAt; }
+
+    public void setLastCompletedAt(OffsetDateTime value) { lastCompletedAt = value; }
+
+    public OffsetDateTime getNextDeadlineAt() { return nextDeadlineAt; }
+
+    public void setNextDeadlineAt(OffsetDateTime value) { nextDeadlineAt = value; }
+
+    public HabitInterval getInterval() { return interval; }
+
+    public void setInterval(HabitInterval value) { interval = value; }
+
+    public OffsetDateTime getPeriodStart() {
+        OffsetDateTime start = nextDeadlineAt;
+        if (interval == null) throw new NullPointerException();
+
+        switch (interval.getTimeUnit()) {
+            case MINUTE:
+                start = nextDeadlineAt.minusMinutes(interval.getNumber());
+                break;
+            case HOUR:
+                start = nextDeadlineAt.minusHours(interval.getNumber());
+                break;
+            case DAY:
+                start = nextDeadlineAt.minusDays(interval.getNumber());
+                break;
+            case WEEK:
+                start = nextDeadlineAt.minusWeeks(interval.getNumber());
+                break;
+            case MONTH:
+                start = nextDeadlineAt.minusMonths(interval.getNumber());
+                break;
+        }
+        return start;
+    }
+
+    public OffsetDateTime getNextNextDeadline(int forward) {
+        OffsetDateTime end = nextDeadlineAt;
+        int plusNum = interval.getNumber() * forward;
+        switch (interval.getTimeUnit()) {
+            case MINUTE:
+                end = nextDeadlineAt.plusMinutes(plusNum).withSecond(59);
+                break;
+            case HOUR:
+                end = nextDeadlineAt.plusHours(plusNum).withMinute(59).withSecond(59);
+                break;
+            case DAY:
+                end = nextDeadlineAt.plusDays(plusNum).withHour(23).withMinute(59).withSecond(59);
+                break;
+            case WEEK:
+                end = nextDeadlineAt.plusWeeks(plusNum).withHour(23).withMinute(59).withSecond(59);
+                break;
+            case MONTH:
+                end = nextDeadlineAt.plusMonths(plusNum).withHour(23).withMinute(59).withSecond(59);
+                break;
+        }
+        return end;
+    }
+}

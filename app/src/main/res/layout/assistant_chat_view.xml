@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+
+    <LinearLayout
+        style="@style/SpreadLinearLayout"
+        android:padding="12dp"
+        android:background="#F5F5F5"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/SmallButton"
+            android:visibility="invisible"
+            app:icon="@drawable/ic_delete"
+            app:iconGravity="top"
+            app:iconPadding="0dp"
+            app:iconSize="25dp"
+            />
+
+        <TextView
+            android:id="@+id/chat_title"
+            android:text="@string/chat_assistant_title_text"
+            style="@style/header1_text"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chat_reset_button"
+            style="@style/SmallButton"
+            android:backgroundTint="#D6D6D6"
+            app:icon="@drawable/ic_delete"
+            app:iconGravity="top"
+            app:iconPadding="0dp"
+            app:iconSize="25dp"
+            />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="8dp" />
+
+    <ProgressBar
+        android:id="@+id/typing_indicator"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:visibility="gone"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="#F5F5F5"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/message_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/enter_message_view_text"
+            android:maxLines="4"
+            android:inputType="textCapSentences|textMultiLine"
+            android:background="@drawable/edit_text_rounded"
+            android:padding="12dp" />
+
+        <ImageButton
+            android:id="@+id/send_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/send_button_text"
+            android:src="@android:drawable/ic_menu_send"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bottom_navigation_bar2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+</LinearLayout>

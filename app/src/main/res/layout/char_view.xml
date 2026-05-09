@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/top_navigation_bar"
+    android:layout_above="@id/bottom_navigation_bar"
+    android:fillViewport="false">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        style="@style/SpreadCenterHorizontalLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/character_name_text_view"
+            style="@style/title_text"
+            />
+
+        <TextView
+            android:id="@+id/name_value_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/header1_text"
+            android:text="@string/default_hello_world_text"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/character_portrait_view"
+        style="@style/CharacterButton"
+        android:layout_margin="10dp"
+        android:enabled="true"
+        app:cornerRadius="20dp"
+        app:icon="@drawable/g0"
+        app:iconGravity="top"
+        app:iconSize="125dp" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        style="@style/SpreadCenterHorizontalLayout">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/char_stats_view_button"
+            android:text="@string/char_stats_view_button"
+            style="@style/SpreadCenterHorizontalItem"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/char_equip_view_button"
+            android:text="@string/char_equip_view_button"
+            style="@style/SpreadCenterHorizontalItem"/>
+
+    </LinearLayout>
+    <include layout="@layout/char_stats_view_content"/>
+    <include layout="@layout/char_equip_view_content"/>
+</LinearLayout>
+</ScrollView>

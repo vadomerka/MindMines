@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SpreadLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="SpreadLinearLayoutItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="NavigationLinearLayout" parent="SpreadLinearLayout">
+        <item name="android:background">@color/purple_background_color</item>
+    </style>
+
+
+    <style name="SpreadCenterLinearLayout" parent="SpreadLinearLayout">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="SpreadCenterHorizontalLayout" parent="SpreadCenterLinearLayout">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="SpreadCenterHorizontalItem" parent="SpreadLinearLayoutItem">
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="SpreadCenterVerticalLayout" parent="SpreadCenterLinearLayout">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+
+    <style name="SpreadEndHorizontalLayout" parent="SpreadCenterLinearLayout">
+        <item name="android:gravity">end</item>
+    </style>
+
+    <style name="SpreadStartVerticalLayout" parent="SpreadCenterVerticalLayout">
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="InfoTextView" parent="header1_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="InfoValueView" parent="header1_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">end</item>
+    </style>
+
+
+    <style name="UserCardLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="android:paddingHorizontal">20dp</item>
+        <item name="android:paddingVertical">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="UserCardRankValueView" parent="header1_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.25</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="UserCardNameValueView" parent="header1_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="UserCardLevelValueView" parent="header1_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+</resources>

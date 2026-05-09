@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:background="@color/white"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/habit_title_card_view"
+                style="@style/header1_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:text="@string/default_hello_world_text" />
+            <TextView
+                android:id="@+id/habit_desc_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/collapsed_description"
+                android:layout_below="@+id/habit_title_card_view"
+                android:text="@string/default_hello_world_text"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/habit_card_debug_layout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:padding="8dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible"
+            >
+            <TextView
+                android:id="@+id/habit_streak_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_number_text"
+                android:layout_marginEnd="8dp"
+                />
+
+            <TextView
+                android:id="@+id/habit_penalty_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_number_text"
+                android:layout_marginStart="8dp"
+                />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/habit_card_delete_btn"
+            style="@style/SmallButton"
+            android:backgroundTint="#DF1C1C"
+            app:icon="@drawable/ic_delete"
+            app:iconGravity="top"
+            app:iconPadding="0dp"
+            app:iconSize="25dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/habit_card_change_btn"
+            style="@style/UncheckedHabitButton"
+            app:icon="@drawable/ic_edit"
+            app:iconGravity="top"
+            app:iconPadding="0dp"
+            app:iconSize="25dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/habit_card_check_btn"
+            style="@style/SmallButton"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="top"
+            app:iconPadding="0dp"
+            app:iconSize="25dp"
+            />
+
+
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

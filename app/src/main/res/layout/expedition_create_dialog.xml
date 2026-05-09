@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SpreadCenterVerticalLayout">
+
+
+    <LinearLayout
+        style="@style/SpreadCenterVerticalLayout">
+        <TextView
+            style="@style/header1_text"
+            android:text="@string/choose_location_text"
+            android:layout_marginBottom="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/location_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/expedition_create_dialog_location_item" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/duration_presets_layout"
+        style="@style/SpreadCenterHorizontalLayout"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/custom_duration_layout"
+        style="@style/SpreadCenterVerticalLayout"
+        android:layout_marginTop="8dp"
+        android:visibility="visible">
+
+        <TextView
+            style="@style/header1_text"
+            android:layout_marginVertical="10dp"
+            android:text="@string/interval_configure_text"/>
+
+        <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+            <LinearLayout
+                style="@style/SpreadCenterHorizontalItem"
+                android:layout_weight="2">
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/interval_number_value"
+                    style="@style/StandardSlider"
+                    android:layout_marginEnd="10dp"
+                    android:valueFrom="1"
+                    android:valueTo="60"
+                    android:value="1"
+                    android:stepSize="1"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/SpreadCenterHorizontalItem">
+                <com.github.vikramezhil.wheelpicker.view.WheelPicker
+                    android:id="@+id/interval_type_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="10dp"
+                    app:wheelPickerBgColor="@color/purple_background_color"
+                    app:wheelPickerDividerColor="@color/purple_background_color"
+                    app:wheelPickerItemSelectedBgColor="@color/purple_background_color"
+                    app:wheelPickerItemSelectedTextColor="@color/white"
+                    app:wheelPickerItemUnselectedTextColor="@color/white"
+                    app:wheelPickerItemsTextSize="6dp"
+                    app:wheelPickerItemsUnselectedTextAlpha="0.8"
+                    app:wheelPickerOrientationVertical="true"
+                    app:wheelPickerScaleDownEnabled="false" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/create_expedition_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/create_expedition_button_text"
+        android:textSize="18sp"/>
+
+</LinearLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SpreadCenterVerticalLayout"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white">
+
+    <LinearLayout style="@style/SpreadCenterVerticalLayout"
+        android:layout_width="wrap_content">
+
+        <TextView
+            android:id="@+id/login_header"
+            style="@style/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration_header_text" />
+
+        <LinearLayout
+            style="@style/SpreadCenterVerticalLayout">
+        <EditText
+            android:id="@+id/login_email_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/login_email_input_hint"
+            android:inputType="textEmailAddress"
+            android:minWidth="250dp"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/login_password_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/login_password_input_hint"
+            android:inputType="textPassword"
+            android:minWidth="250dp"
+            android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/login_password_confirmation_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/login_password_confirmation_input_hint"
+                android:inputType="textPassword"
+                android:minWidth="250dp"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/SpreadCenterHorizontalLayout"
+            android:layout_marginTop="8dp">
+            <Button
+                android:id="@+id/register_page_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:backgroundTint="@color/purple_background_color"
+                android:text="@string/register_page_button_text" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
