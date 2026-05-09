@@ -55,6 +55,7 @@ public class XpManager {
     public static void gainLevel(XpStatus status, Long exp) {
         Integer level = status.getLevel();
         Long maxExp = status.getMaxExperience();
+        exp = status.getExperience() + exp;
         if (exp < 0) {
             status.setExperience(0L);
             return;

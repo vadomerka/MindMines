@@ -2,6 +2,7 @@ package com.example.mindmines.views;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -66,6 +67,9 @@ public abstract class BaseFragment extends Fragment {
         requireActivity().runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getInstance(requireContext()).getStatus();
             if (status == null) status = new UserStatus(new AuthManager(requireContext()).getUserId());
+
+            Log.d("Debug updateUserStatus", "updateUserStatus: " + status.getExperience() + " " + status.getMaxExperience());
+
             levelValueView.setText(String.valueOf(status.getLevel()));
             expProgressBar.setMax(status.getMaxExperience().intValue());
             expProgressBar.setProgress(status.getExperience().intValue());

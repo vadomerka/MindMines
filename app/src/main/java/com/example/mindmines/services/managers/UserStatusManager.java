@@ -70,6 +70,7 @@ public class UserStatusManager {
     public void gain(Habit h) {
         UserStatus status = getStatus();
         Long newExp = XpManager.habitToExp(h);
+        Log.d("Debug updateUserStatus", "gain: " + status.getExperience() + " " + status.getMaxExperience() + " " + newExp);
         XpManager.gainLevel(status, newExp);
         updateStatus(status);
     }
