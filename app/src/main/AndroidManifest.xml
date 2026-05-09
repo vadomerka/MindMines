@@ -45,24 +45,10 @@
             android:name=".views.user.RegistrationView"
             android:exported="false" />
 
-<!--        <activity-->
-<!--            android:name=".views.user.ProfileView"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".views.user.FriendsView"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".views.game.PartyView"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".views.game.CharView"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".views.game.ShopView"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".views.assistant.AssistantView"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".views.user.ServerUrlChangeView"
+            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

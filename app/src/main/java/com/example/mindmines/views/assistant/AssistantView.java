@@ -114,7 +114,7 @@ public class AssistantView extends BaseFragment implements ChatMessageObserver {
         typingIndicator.setVisibility(View.VISIBLE);
 
         executor.execute(() -> {
-            String response = ChatMessagesRequestSender.sendToServer(text, userID);
+            String response = ChatMessagesRequestSender.getInstance().sendToServer(text, userID);
             mainHandler.post(() -> {
                 typingIndicator.setVisibility(View.GONE);
                 if (response != null) {

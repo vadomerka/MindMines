@@ -4,15 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.UserController;
 import com.example.mindmines.services.auth.AuthManager;
+import com.google.android.material.button.MaterialButton;
 
 public class LoginView extends AppCompatActivity {
     protected AuthManager authManager;
@@ -30,8 +32,13 @@ public class LoginView extends AppCompatActivity {
         Button loginBtn = findViewById(R.id.login_button);
         Button registerBtn = findViewById(R.id.register_page_button);
 
+        LinearLayout changeUrlLayout = findViewById(R.id.change_server_url_button_layout);
+        if (MainActivity.isDebug()) changeUrlLayout.setVisibility(View.VISIBLE);
+        MaterialButton changeUrlBtn = findViewById(R.id.change_server_url_button);
+
         loginBtn.setOnClickListener(v -> tryLogIn());
         registerBtn.setOnClickListener(v -> openRegisterView());
+        changeUrlBtn.setOnClickListener(v -> openServerUrlChangeView());
     }
 
     private void tryLogIn() {
@@ -64,6 +71,12 @@ public class LoginView extends AppCompatActivity {
 
     private void openRegisterView() {
         Intent myIntent = new Intent(LoginView.this, RegistrationView.class);
+        LoginView.this.startActivity(myIntent);
+        finish();
+    }
+
+    private void openServerUrlChangeView() {
+        Intent myIntent = new Intent(LoginView.this, ServerUrlChangeView.class);
         LoginView.this.startActivity(myIntent);
         finish();
     }

@@ -16,10 +16,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.example.mindmines.db.datasync.DataSynchronizerManager;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 import com.example.mindmines.services.timers.DataBackupTimer;
@@ -32,7 +30,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
     private static final boolean DEBUG = false;
-    private static DataSynchronizerManager dbSync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         initNavigation();
 
         RepositoryService.initAll(getApplicationContext());
-//        dbSync = DataSynchronizerManager.getInstance(getApplicationContext());
-//        dbSync.loadFromDB();
 
         RepositoryService.getUserStatusRepository().subscribe(upd -> {
             UserStatusRepository usr = RepositoryService.getUserStatusRepository();
@@ -72,12 +67,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
-
-//    private void initNavigation() {
-//        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_bar);
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupWithNavController(bottomNav, navController);
-//    }
 
     private void initNavigation() {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_bar);
@@ -117,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy");
-//        dbSync.saveToDB();
 
         super.onDestroy();
     }

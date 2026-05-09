@@ -44,10 +44,7 @@ public class UserController {
 
     public String register(String email, String password) {
         Future<?> future = executor.submit(() -> {
-
-            token.set(UserRequestSender.registerRequestSend(email, password));
-
-            mainHandler.post(() -> {});
+            token.set(UserRequestSender.getInstance().registerRequestSend(email, password));
         });
         try {
             future.get();
@@ -59,10 +56,7 @@ public class UserController {
 
     public String login(String email, String password) {
         Future<?> future = executor.submit(() -> {
-
-            token.set(UserRequestSender.loginRequestSend(email, password));
-
-            mainHandler.post(() -> {});
+            token.set(UserRequestSender.getInstance().loginRequestSend(email, password));
         });
         try {
             future.get();
@@ -73,6 +67,6 @@ public class UserController {
     }
 
     public static List<User> getFriends(String userId) {
-        return UserRequestSender.getFriends(userId);
+        return UserRequestSender.getInstance().getFriends(userId);
     }
 }

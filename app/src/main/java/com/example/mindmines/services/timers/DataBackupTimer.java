@@ -8,9 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
-import com.example.mindmines.db.datasync.DataSynchronizerManager;
-import com.example.mindmines.services.checkers.HabitSyncCheckerService;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.concurrent.ExecutorService;

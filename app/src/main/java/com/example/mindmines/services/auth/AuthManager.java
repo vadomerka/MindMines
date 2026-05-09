@@ -27,6 +27,8 @@ public class AuthManager {
                 .putString(KEY_AUTH_TOKEN, authToken)
                 .putString(KEY_USER_EMAIL, email)
                 .apply();
+        UserStatusManager usm = UserStatusManager.getInstance(context);
+        if (usm.getStatus() == null) usm.addStatus(UserStatusFactory.getInstance().create(authToken));
     }
 
     public void saveNewUserData(String authToken, String email) {
@@ -34,7 +36,8 @@ public class AuthManager {
                 .putString(KEY_AUTH_TOKEN, authToken)
                 .putString(KEY_USER_EMAIL, email)
                 .apply();
-        UserStatusManager.getInstance(context).addStatus(UserStatusFactory.getInstance().create(authToken));
+        UserStatusManager usm = UserStatusManager.getInstance(context);
+        if (usm.getStatus() != null) usm.addStatus(UserStatusFactory.getInstance().create(authToken));
     }
 
     public String getAuthToken() {
@@ -53,7 +56,8 @@ public class AuthManager {
     }
 
     public boolean isUserLoggedIn() {
-        UserStatus status = UserStatusManager.getInstance(context).getStatus();
+        UserStatusManager usm = UserStatusManager.getInstance(context);
+        UserStatus status = usm.getStatus();
         return status != null;
     }
 

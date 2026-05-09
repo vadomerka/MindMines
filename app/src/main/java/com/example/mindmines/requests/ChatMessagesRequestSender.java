@@ -1,5 +1,7 @@
 package com.example.mindmines.requests;
 
+import com.example.mindmines.MainActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,10 +15,24 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class ChatMessagesRequestSender {
-    private static HttpURLConnection connection;
-    private static final String SERVER_URL = "http://10.0.2.2:8000/api/chat";
+    private HttpURLConnection connection;
+    private final String SERVER_URL;
+    private final String ASSISTANT_API;
+    private static ChatMessagesRequestSender instance;
 
-    public static String sendToServer(String userMessage, String userToken) {
+    public ChatMessagesRequestSender() {
+        SERVER_URL = ServerProperties.getInstance().SERVER_URL;
+        ASSISTANT_API = ServerProperties.getInstance().ASSISTANT_API;
+    }
+
+    public static ChatMessagesRequestSender getInstance() {
+        if (instance == null) {
+            instance = new ChatMessagesRequestSender();
+        }
+        return instance;
+    }
+
+    public String sendToServer(String userMessage, String userToken) {
         try {
             initConnection();
 
@@ -33,7 +49,7 @@ public class ChatMessagesRequestSender {
 
             return parseResponse(requestBody);
         } catch (Exception e) {
-            e.printStackTrace();  // java.net.ConnectException: Failed to connect to /127.0.0.1:8000
+            e.printStackTrace();
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -42,8 +58,8 @@ public class ChatMessagesRequestSender {
         return null;
     }
 
-    private static void initConnection() throws IOException {
-        URL url = new URL(SERVER_URL);
+    private void initConnection() throws IOException {
+        URL url = new URL(SERVER_URL + ASSISTANT_API);
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
@@ -53,7 +69,7 @@ public class ChatMessagesRequestSender {
         connection.setReadTimeout(10000);
     }
 
-    private static String parseResponse(JSONObject requestBody) throws IOException, JSONException {
+    private String parseResponse(JSONObject requestBody) throws IOException, JSONException {
         OutputStream os = connection.getOutputStream();
         os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
         os.close();

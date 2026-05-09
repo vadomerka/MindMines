@@ -68,4 +68,6 @@
     <string name="friends_title_text">Друзья</string>
     <string name="registration_header_text">Регистрация</string>
     <string name="login_password_confirmation_input_hint">Подтвердите пароль</string>
+    <string name="url_change_text">Введите ip сервера</string>
+    <string name="url_input_hint">Введите ip</string>
 </resources>

@@ -2,17 +2,10 @@ package com.example.mindmines.infrastructure;
 
 import android.content.Context;
 
-import com.example.mindmines.db.datasync.CharDataSynchronizer;
-import com.example.mindmines.db.datasync.DataSynchronizerManager;
-import com.example.mindmines.db.datasync.ExpeditionCharDataSynchronizer;
-import com.example.mindmines.db.datasync.ExpeditionDataSynchronizer;
-import com.example.mindmines.db.datasync.HabitDataSynchronizer;
-import com.example.mindmines.db.datasync.UserStatusSynchronizer;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.requests.HabitRequestSender;
 import com.example.mindmines.services.managers.HabitManager;
-import com.example.mindmines.services.managers.UserStatusManager;
 
 public class HabitController {
     private static HabitController instance = null;

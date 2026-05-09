@@ -1,7 +1,5 @@
 package com.example.mindmines.requests;
 
-import android.util.Log;
-
 import com.example.mindmines.models.user.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,29 +9,43 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRequestSender {
-    private static final String REGISTER_URL = "http://10.0.2.2:8000/users/register";
-    private static final String LOGIN_URL = "http://10.0.2.2:8000/users/login";
-    private static HttpURLConnection connection;
+    private final String SERVER_URL;
+    private final String REGISTER_URL;
+    private final String LOGIN_URL;
+    private HttpURLConnection connection;
 
-    public static String registerRequestSend(String email, String password) {
-        if (email == null || email.isEmpty()) return null;
-        return sendAuthRequest(REGISTER_URL, email, password);
+    private static UserRequestSender instance;
+
+    public UserRequestSender() {
+        SERVER_URL = ServerProperties.getInstance().SERVER_URL;
+        REGISTER_URL = ServerProperties.getInstance().REGISTER_URL;
+        LOGIN_URL = ServerProperties.getInstance().LOGIN_URL;
     }
 
-    public static String loginRequestSend(String email, String password) {
-        if (email == null || email.isEmpty()) return null;
-        return sendAuthRequest(LOGIN_URL, email, password);
+    public static UserRequestSender getInstance() {
+        if (instance == null) {
+            instance = new UserRequestSender();
+        }
+        return instance;
     }
 
-    public static List<User> getFriends(String userId) {
+    public String registerRequestSend(String email, String password) {
+        if (email == null || email.isEmpty()) return null;
+        return sendAuthRequest(SERVER_URL + REGISTER_URL, email, password);
+    }
+
+    public String loginRequestSend(String email, String password) {
+        if (email == null || email.isEmpty()) return null;
+        return sendAuthRequest(SERVER_URL + LOGIN_URL, email, password);
+    }
+
+    public List<User> getFriends(String userId) {
         // TODO: заменить на настоящую отправку данных серверу.
         List<User> arr = new ArrayList<>();
         arr.add(new User("friend 1", 3));
@@ -42,7 +54,7 @@ public class UserRequestSender {
         return arr;
     }
 
-    private static String sendAuthRequest(String endpoint, String email, String password) {
+    private String sendAuthRequest(String endpoint, String email, String password) {
         try {
             initConnection(endpoint);
 
@@ -60,7 +72,7 @@ public class UserRequestSender {
         }
     }
 
-    private static void initConnection(String endpoint) throws IOException {
+    private void initConnection(String endpoint) throws IOException {
         URL url = new URL(endpoint);
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
@@ -71,7 +83,7 @@ public class UserRequestSender {
         connection.setReadTimeout(10000);
     }
 
-    private static String parseResponse(JSONObject requestBody) throws IOException, JSONException {
+    private String parseResponse(JSONObject requestBody) throws IOException, JSONException {
         OutputStream os = connection.getOutputStream();
         os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
         os.close();
@@ -83,7 +95,7 @@ public class UserRequestSender {
         return null;
     }
 
-    private static String parseToken(HttpURLConnection connection) throws IOException, JSONException {
+    private String parseToken(HttpURLConnection connection) throws IOException, JSONException {
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
             StringBuilder response = new StringBuilder();
