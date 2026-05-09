@@ -16,6 +16,7 @@ public class XpManager {
     private static final long baseExpForHabit = 10L;
     private static final long baseExpForEx = 10L;
     private static final long baseMaxExpChange = 10;
+    private static final long minCoins = 1;
     private static final double maxExpChangeKoef = 1.5;
     private static final int maxLevel = 30;
     private static final ExpeditionObserver exProxy = XpManager::gainFinishedExpedition;
@@ -37,7 +38,7 @@ public class XpManager {
     public static Long expeditionToRewards(Expedition ex) {  // XpStatus status,
         int level = ex.getLevel();
         Duration d = Duration.between(ex.getStart(), ex.getFinish());
-        return level * (d.getSeconds() / 3600);
+        return minCoins + level * (d.getSeconds() / 3600);
     }
 
     public static Long expeditionToCharExp(Char ch, Expedition ex) {  // XpStatus status,

@@ -21,12 +21,14 @@ import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.UserStatusObserver;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 import java.util.Objects;
 
 public abstract class BaseFragment extends Fragment {
     protected TextView levelView;
+    protected MaterialButton backButton;
     protected final UserStatusObserver usProxy = this::updateUserStatus;
 
     public BaseFragment(int layout) {
@@ -37,13 +39,24 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         levelView = requireActivity().findViewById(R.id.navigation_title_view);
-        Log.d("Debug baseFragment", "onViewCreated: " + levelView);
+        backButton = requireActivity().findViewById(R.id.navigation_back_button);
+        backButton.setOnClickListener(v -> returnBack());
+
+        setBackButtonVisible(false);
         updateUserStatus(null);
     }
 
+    protected void setBackButtonVisible(boolean isVisible) {
+        if (backButton == null) {
+            return;
+        }
+        backButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    protected void returnBack() {}
+
     @SuppressLint("DefaultLocale")
     protected void updateUserStatus(List<UserStatus> upd) {
-        Log.d("Debug BasicActivity updateUserStatus", "updateUserStatus: ");
         requireActivity().runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getInstance(requireContext()).getStatus();
             if (status == null) status = new UserStatus(new AuthManager(requireContext()).getUserId());

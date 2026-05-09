@@ -40,41 +40,41 @@ public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
     public Char generateDefault(String userId, int defaultInd) {
         switch (defaultInd) {
             case 2:
-                return generate(userId, 3, String.valueOf(R.drawable.g3),
+                return generate(userId, "Грустный Шахтер", 3, String.valueOf(R.drawable.g3),
                         new Equipment[]{new Sword(), new LegArmor()});
             case 3:
-                return generate(userId, 5, String.valueOf(R.drawable.g4),
+                return generate(userId, "Боец Ученый", 5, String.valueOf(R.drawable.g4),
                         new Equipment[]{});
             case 4:
-                return generate(userId, 10, String.valueOf(R.drawable.g5),
+                return generate(userId, "Мистический маг", 10, String.valueOf(R.drawable.g5),
                         new Equipment[]{});
             default:
-                return generate(userId, 1, String.valueOf(R.drawable.g2),
+                return generate(userId, "Бывалый Пират", 1, String.valueOf(R.drawable.g2),
                         new Equipment[]{new Sword(), new Shield(), new BodyArmor(), new LegArmor()});
         }
     }
 
-    public Char generate(String userId) {
-        return generate(userId, 0, String.valueOf(R.drawable.h1));
+    public Char generate(String userId, String name) {
+        return generate(userId, name, 0, String.valueOf(R.drawable.h1));
     }
 
-    public Char generate(String userId, int level, String image) {
+    public Char generate(String userId, String name, int level, String image, Equipment[] equipment) {
+        Char ch = generate(userId, name, level, image);
+        for (Equipment eq : equipment) {
+            ch.equip(eq);
+        }
+        return ch;
+    }
+
+    public Char generate(String userId, String name, int level, String image) {
         int atk = rnd.nextInt(variation) + baseValue * level;
         int defence = rnd.nextInt(variation) + baseValue * level;
         int speed = rnd.nextInt(variation) + baseValue * level;
         int hp = rnd.nextInt(variation) + baseValue * level;
         long maxExperience = rnd.nextInt(2) + (long) baseValue * level;
-        return new Char(rep.getId() + 1, userId, "Char " + rep.getId(),
+        return new Char(rep.getId() + 1, userId, name,
                 new CharStats(atk, defence, speed),
                 new CharStatus(hp, level, maxExperience), new CharEquipment(), image);
-    }
-
-    public Char generate(String userId, int level, String image, Equipment[] equipment) {
-        Char ch = generate(userId, level, image);
-        for (Equipment eq : equipment) {
-            ch.equip(eq);
-        }
-        return ch;
     }
 
     public Char toItem(CharEntity entity) {

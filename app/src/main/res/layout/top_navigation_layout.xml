@@ -12,6 +12,17 @@
         style="@style/NavigationLinearLayout"
         android:gravity="center_vertical">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/navigation_back_button"
+            style="@style/SmallButton"
+            android:visibility="visible"
+            app:cornerRadius="20dp"
+
+            app:icon="@drawable/ic_arrow_left"
+            app:iconSize="30dp"
+            app:iconGravity="top"
+            />
+
         <TextView
             android:id="@+id/navigation_title_view"
             android:layout_width="0dp"

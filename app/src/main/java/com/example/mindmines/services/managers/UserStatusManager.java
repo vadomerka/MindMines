@@ -27,7 +27,7 @@ public class UserStatusManager {
         chProxy = upd -> unlock(upd.get(0));
         rep.subscribe(chProxy);
 
-        exProxy = upd -> gain(upd.get(0));
+        exProxy = upd -> { if (upd.get(0).isFinished()) gain(upd.get(0)); };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
 
     }
@@ -70,9 +70,11 @@ public class UserStatusManager {
     }
 
     public void gain(Expedition ex) {
+        if (!ex.isFinished()) return;
         UserStatus status = getStatus();
         long coins = XpManager.expeditionToRewards(ex);
-        status.setCoins(status.getExperience() + coins);
+        status.setCoins(status.getCoins() + coins);
+        Log.d("Debug add coins", "coins: " + status.getCoins() + coins);
         updateStatus(status);
     }
 

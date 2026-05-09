@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,10 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
-import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.HabitObserver;
 import com.example.mindmines.services.observers.UserStatusObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
@@ -29,11 +25,10 @@ import com.example.mindmines.views.adapters.HabitCardAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HabitsView extends BaseFragment {
     private static final String TAG = "Debug HabitsView";
-    private final HabitObserver hProxy = upd -> updateHabits(upd);
+    private final HabitObserver hProxy = this::updateHabits;
     private final UserStatusObserver usProxy = upd -> updateUserStatus(null);
     private HabitCardAdapter listAdapter;
     private List<Habit> habitsList;
@@ -87,25 +82,6 @@ public class HabitsView extends BaseFragment {
         }
         requireActivity().runOnUiThread(() -> {
             HabitRepository rep = RepositoryService.getHabitRepository();
-            List<HabitCardAdapter.CardViewHolder> cards = listAdapter.getCardViews();
-
-            if (upd == null) {
-                List<HabitCardAdapter.CardViewHolder> deleted = cards.stream().filter(it -> rep.get(it.hId) == null).collect(Collectors.toList());
-                habitsList = rep.getByUser();
-                for (HabitCardAdapter.CardViewHolder vh: deleted) {
-                    listAdapter.notifyItemRemoved(vh.getLayoutPosition());
-                }
-            } else {
-                for (Habit h: upd) {
-                    if (habitsList.contains(h)) {
-                        listAdapter.notifyItemChanged(habitsList.indexOf(h));
-                    } else {
-                        habitsList.add(h);
-                        listAdapter.notifyItemInserted(habitsList.size() - 1);
-                    }
-                }
-            }
-
 
             for (HabitCardAdapter.CardViewHolder card : listAdapter.getCardViews()) {
                 Habit h = rep.get(card.hId);
@@ -129,7 +105,10 @@ public class HabitsView extends BaseFragment {
         NavHostFragment.findNavController(this).navigate(R.id.action_habitsFragment_to_habitChangeFragment, args);
     }
 
-    public void deleteHabit(int hId) {
+    public void deleteHabit(int hId, int position) {
         HabitController.getInstance(requireContext()).delete(hId);
+
+        habitsList.remove(position);
+        listAdapter.notifyItemRemoved(position);
     }
 }

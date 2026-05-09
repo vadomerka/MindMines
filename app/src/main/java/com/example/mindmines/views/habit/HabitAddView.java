@@ -53,9 +53,15 @@ public class HabitAddView extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rootView = view;
+        setBackButtonVisible(true);
 
         initUI();
         loadValues();
+    }
+
+    @Override
+    protected void returnBack() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_habitAddFragment_to_habitsFragment);
     }
 
     protected void initUI() {

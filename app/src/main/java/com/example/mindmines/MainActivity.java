@@ -2,6 +2,7 @@ package com.example.mindmines;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static DataSynchronizerManager dbSync;
 
     @Override
@@ -84,6 +85,33 @@ public class MainActivity extends AppCompatActivity {
                 .findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(bottomNav, navController);
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int topLevelDestinationId = resolveTopLevelDestination(destination);
+            if (topLevelDestinationId == 0) {
+                return;
+            }
+            // Обновляем только визуальную подсветку таба, не инициируя новую навигацию.
+            bottomNav.getMenu().findItem(topLevelDestinationId).setChecked(true);
+        });
+    }
+
+    private int resolveTopLevelDestination(NavDestination destination) {
+        int id = destination.getId();
+        if (id == R.id.charFragment) {
+            return R.id.partyFragment;
+        }
+        if (id == R.id.habitAddFragment || id == R.id.habitChangeFragment) {
+            return R.id.habitsFragment;
+        }
+        if (id == R.id.habitsFragment
+                || id == R.id.partyFragment
+                || id == R.id.friendsFragment
+                || id == R.id.assistantFragment
+                || id == R.id.profileFragment) {
+            return id;
+        }
+        return 0;
     }
 
     @Override

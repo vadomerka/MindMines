@@ -33,13 +33,15 @@ public abstract class LocalObservedRepository<TId extends Comparable<TId>,
     }
 
     public void updateObservers() {
-        for (TObserver o: observers) {
+        List<TObserver> snapshot = new ArrayList<>(observers);
+        for (TObserver o: snapshot) {
             o.update(new ArrayList<>());
         }
     }
 
     public void updateObservers(T upd) {
-        for (TObserver o: observers) {
+        List<TObserver> snapshot = new ArrayList<>(observers);
+        for (TObserver o: snapshot) {
             o.update(Collections.singletonList(upd));
         }
     }

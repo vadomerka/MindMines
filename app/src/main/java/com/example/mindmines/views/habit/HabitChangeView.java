@@ -1,5 +1,8 @@
 package com.example.mindmines.views.habit;
 
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitDTO;
@@ -8,6 +11,11 @@ import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
 
 public class HabitChangeView extends HabitAddView {
+    @Override
+    protected void returnBack() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_habitChangeFragment_to_habitsFragment);
+    }
+
     @Override
     protected void loadValues() {
         HabitRepository rep = RepositoryService.getHabitRepository();

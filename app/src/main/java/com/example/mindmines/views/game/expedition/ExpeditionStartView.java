@@ -42,7 +42,6 @@ public class ExpeditionStartView extends ExpeditionView {
     private LocationAdapter adapter;
 
     private List<MaterialButton> presetButtons;
-    private LinearLayout.LayoutParams presetButtonParams;
     private LinearLayout customDurationLayout;
     private Duration selectedDuration;
     private IntervalPickerAdapter ipAdapter;
@@ -162,7 +161,7 @@ public class ExpeditionStartView extends ExpeditionView {
         String userId = new AuthManager(context).getUserId();
         Expedition result = ExpeditionFactory.getInstance().create(
                 userId,
-                1,
+                expeditionLocation.getLevel(),
                 expeditionLocation.getName(),
                 expeditionLocation.getImage(),
                 selectedDuration

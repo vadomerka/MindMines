@@ -33,16 +33,6 @@ public class CharRepository extends LocalDaoRepository<Integer, Char, CharEntity
     @Override
     public void initArray() {
         array = new ArrayList<>();
-        String userId = new AuthManager(context).getUserId();
-        CharFactory factory = CharFactory.getInstance();
-        array.add(factory.generate(userId, 1, String.valueOf(R.drawable.g2),
-                new Equipment[] { new Sword(), new Shield(), new BodyArmor(), new LegArmor() }));
-        array.add(factory.generate(userId, 2, String.valueOf(R.drawable.g3),
-                new Equipment[] { new Sword(), new LegArmor() }));
-        array.add(factory.generate(userId, 3, String.valueOf(R.drawable.g4),
-                new Equipment[] { }));
-        array.add(factory.generate(userId, 5, String.valueOf(R.drawable.g5),
-                new Equipment[] { }));
     }
 
     protected Integer defaultId() {return 0;}

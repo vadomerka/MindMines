@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.characters.Char;
@@ -27,6 +28,7 @@ public class CharView extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setBackButtonVisible(true);
 
         Bundle args = getArguments();
         if (args == null) { return; }
@@ -48,6 +50,17 @@ public class CharView extends BaseFragment {
         });
 
         loadCharData();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        setBackButtonVisible(false);
+    }
+
+    @Override
+    protected void returnBack() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_charFragment_to_partyFragment);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

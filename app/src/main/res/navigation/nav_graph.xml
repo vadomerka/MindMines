@@ -20,6 +20,9 @@
         android:id="@+id/habitAddFragment"
         android:name="com.example.mindmines.views.habit.HabitAddView"
         android:label="Добавление привычки">
+        <action
+            android:id="@+id/action_habitAddFragment_to_habitsFragment"
+            app:destination="@id/habitsFragment" />
         <argument
             android:name="id"
             app:argType="integer"
@@ -30,6 +33,9 @@
         android:id="@+id/habitChangeFragment"
         android:name="com.example.mindmines.views.habit.HabitChangeView"
         android:label="Изменение привычки">
+        <action
+            android:id="@+id/action_habitChangeFragment_to_habitsFragment"
+            app:destination="@id/habitsFragment" />
         <argument
             android:name="id"
             app:argType="integer"
