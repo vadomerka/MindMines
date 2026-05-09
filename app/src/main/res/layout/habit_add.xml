@@ -103,20 +103,21 @@
 
             </LinearLayout>
             <LinearLayout style="@style/SpreadCenterHorizontalItem">
+
                 <com.github.vikramezhil.wheelpicker.view.WheelPicker
                     android:id="@+id/interval_type_value"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="10dp"
-                    app:wheelPickerDividerColor="@color/purple_background_color"
                     app:wheelPickerBgColor="@color/purple_background_color"
+                    app:wheelPickerDividerColor="@color/purple_background_color"
                     app:wheelPickerItemSelectedBgColor="@color/purple_background_color"
                     app:wheelPickerItemSelectedTextColor="@color/white"
                     app:wheelPickerItemUnselectedTextColor="@color/white"
-                    app:wheelPickerOrientationVertical="true"
-                    app:wheelPickerScaleDownEnabled="false"
                     app:wheelPickerItemsTextSize="8dp"
-                    app:wheelPickerItemsUnselectedTextAlpha="0.8"/>
+                    app:wheelPickerItemsUnselectedTextAlpha="0.8"
+                    app:wheelPickerOrientationVertical="true"
+                    app:wheelPickerScaleDownEnabled="false" />
 
             </LinearLayout>
         </LinearLayout>
@@ -143,7 +144,7 @@
                 app:wheelPickerItemSelectedTextColor="@color/white"
                 app:wheelPickerItemUnselectedTextColor="@color/white"
                 app:wheelPickerOrientationVertical="false"
-                app:wheelPickerItemsTextSize="8dp"
+                app:wheelPickerItemsTextSize="5dp"
                 app:wheelPickerItemsUnselectedTextAlpha="0.8"
                 app:wheelPickerScaleDownEnabled="true"
                 app:wheelPickerInfiniteScrolling="true"/>

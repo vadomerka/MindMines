@@ -179,6 +179,10 @@ public class HabitAddView extends BaseFragment {
             Toast.makeText(requireContext(), "Введите название привычки.", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (dto.getType() == HabitType.GOOD_GOAL_COUNT || dto.getType() == HabitType.GOOD_TASKS) {
+            Toast.makeText(requireContext(), "Такой вид привычки в данный момент не поддерживается.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 

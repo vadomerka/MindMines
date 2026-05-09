@@ -27,26 +27,6 @@
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:orientation="horizontal">
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/preset_1min"-->
-<!--            style="@style/TimeOutlineButton"-->
-<!--            android:text="@string/default_time_text"/>-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/preset_1hour"-->
-<!--            style="@style/TimeOutlineButton"-->
-<!--            android:text="@string/default_time_text"/>-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/preset_1day"-->
-<!--            style="@style/TimeOutlineButton"-->
-<!--            android:text="@string/default_time_text"/>-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/preset_custom"-->
-<!--            style="@style/TimeOutlineButton"-->
-<!--            android:text="@string/default_time_text"/>-->
     </LinearLayout>
 
     <LinearLayout
@@ -78,18 +58,17 @@
                 <com.github.vikramezhil.wheelpicker.view.WheelPicker
                     android:id="@+id/interval_type_value"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="10dp"
-                    app:wheelPickerDividerColor="@color/purple_background_color"
                     app:wheelPickerBgColor="@color/purple_background_color"
+                    app:wheelPickerDividerColor="@color/purple_background_color"
                     app:wheelPickerItemSelectedBgColor="@color/purple_background_color"
                     app:wheelPickerItemSelectedTextColor="@color/white"
                     app:wheelPickerItemUnselectedTextColor="@color/white"
-                    app:wheelPickerOrientationVertical="true"
-                    app:wheelPickerScaleDownEnabled="false"
-                    app:wheelPickerItemsTextSize="8dp"
+                    app:wheelPickerItemsTextSize="6dp"
                     app:wheelPickerItemsUnselectedTextAlpha="0.8"
-                    app:wheelPickerDefaultSelectedItemPos="1"/>
+                    app:wheelPickerOrientationVertical="true"
+                    app:wheelPickerScaleDownEnabled="false" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
