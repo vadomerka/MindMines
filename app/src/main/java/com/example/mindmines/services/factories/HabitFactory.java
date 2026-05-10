@@ -26,12 +26,14 @@ public class HabitFactory {
         return instance;
     }
 
-    public HabitDTO createDTO(String userId, String title, String desc, Integer goalCount,
+    public HabitDTO createDTO(String userId, String title, String desc, Integer currCount,
+                              Integer goalCount,
                               Boolean timeAccurate, Integer priority, Integer difficulty,
                               HabitType hType, HabitInterval interval) {
         return new HabitDTO(userId,
                 title,
                 desc,
+                currCount,
                 goalCount,
                 timeAccurate,
                 priority,
@@ -44,6 +46,7 @@ public class HabitFactory {
         return new HabitDTO(userId,
                 "Название привычки",
                 "Описание привычки",
+                0,
                 1,
                 true,
                 1,
@@ -59,6 +62,7 @@ public class HabitFactory {
                 dto.getType(),
                 dto.getTitle(),
                 dto.getDescription(),
+                dto.getCurrCount(),
                 dto.getGoalCount(),
                 dto.getPriority(),
                 dto.getDifficulty(),

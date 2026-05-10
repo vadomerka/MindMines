@@ -6,6 +6,7 @@ public class HabitDTO {
     private String user_id;
     private String title;
     private String description;
+    private Integer currCount;
     private Integer goalCount;
     private Boolean timeAccurate;
     private Integer priority;
@@ -18,6 +19,7 @@ public class HabitDTO {
             String user_id,
             String title,
             String description,
+            Integer currCount,
             Integer goalCount,
             Boolean timeAccurate,
             Integer priority,
@@ -28,6 +30,7 @@ public class HabitDTO {
         this.user_id = user_id;
         this.title = title;
         this.description = description;
+        this.currCount = currCount;
         this.goalCount = goalCount;
         this.timeAccurate = timeAccurate;
         this.priority = priority;
@@ -58,6 +61,14 @@ public class HabitDTO {
 
     public void setDescription(String value) {
         description = value;
+    }
+
+    public Integer getCurrCount() {
+        return currCount;
+    }
+
+    public void setCurrCount(Integer value) {
+        currCount = value;
     }
 
     public Integer getGoalCount() {

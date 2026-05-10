@@ -11,6 +11,7 @@ public class Habit implements RepositoryItem<Integer> {
     private HabitType type;
     private String title;
     private String description;
+    private Integer currCount;
     private Integer goalCount;
     private Integer priority;
     private Integer difficulty;
@@ -27,6 +28,7 @@ public class Habit implements RepositoryItem<Integer> {
 
             String title,
             String description,
+            Integer currCount,
             Integer goalCount,
             Integer priority,
             Integer difficulty,
@@ -44,6 +46,7 @@ public class Habit implements RepositoryItem<Integer> {
 
         this.title = title;
         this.description = description;
+        this.currCount = currCount;
         this.goalCount = goalCount;
         this.priority = priority;
         this.difficulty = difficulty;
@@ -90,6 +93,14 @@ public class Habit implements RepositoryItem<Integer> {
 
     public void setDescription(String value) {
         description = value;
+    }
+
+    public Integer getCurrCount() {
+        return currCount;
+    }
+
+    public void setCurrCount(Integer value) {
+        currCount = value;
     }
 
     public Integer getGoalCount() {

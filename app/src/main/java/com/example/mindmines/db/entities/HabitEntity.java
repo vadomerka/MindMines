@@ -24,8 +24,12 @@ public class HabitEntity implements DBEntity {
     public String title;
     @ColumnInfo(name = "description")
     public String description;
+
+    @ColumnInfo(name = "currCount")
+    public Integer currCount;
     @ColumnInfo(name = "goalCount")
     public Integer goalCount;
+
     @ColumnInfo(name = "priority")
     public Integer priority;
     @ColumnInfo(name = "difficulty")
@@ -55,6 +59,7 @@ public class HabitEntity implements DBEntity {
             String type,
             String title,
             String description,
+            Integer currCount,
             Integer goalCount,
             Integer priority,
             Integer difficulty,
@@ -72,6 +77,7 @@ public class HabitEntity implements DBEntity {
 
         this.title = title;
         this.description = description;
+        this.currCount = currCount;
         this.goalCount = goalCount;
         this.priority = priority;
         this.difficulty = difficulty;
