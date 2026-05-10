@@ -21,7 +21,9 @@ public class ChatMessageRepository extends LocalDaoRepository<Integer, ChatMessa
         converter = new ChatMessageConverter();
     }
 
-    protected Integer defaultId() {return 0;}
+    protected Integer defaultId() {
+        return 0;
+    }
 
     @Override
     public void initArray() {

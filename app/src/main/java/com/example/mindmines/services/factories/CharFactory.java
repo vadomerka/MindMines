@@ -1,7 +1,6 @@
 package com.example.mindmines.services.factories;
 
 import com.example.mindmines.R;
-import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.characters.CharStats;
 import com.example.mindmines.models.game.characters.CharStatus;
@@ -11,20 +10,17 @@ import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.models.game.equipment.types.LegArmor;
 import com.example.mindmines.models.game.equipment.types.Shield;
 import com.example.mindmines.models.game.equipment.types.Sword;
-import com.example.mindmines.services.converters.entities.RepConverter;
-import com.example.mindmines.services.repositories.dao.CharRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
-import com.google.gson.Gson;
+import com.example.mindmines.services.repositories.dao.CharRepository;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class CharFactory {
-    private final Random rnd = new Random();
     private static final int variation = 5;
     private static final int baseValue = 10;
-    private final CharRepository rep;
     private static CharFactory instance;
+    private final Random rnd = new Random();
+    private final CharRepository rep;
 
     public CharFactory() {
         this.rep = RepositoryService.getCharRepository();

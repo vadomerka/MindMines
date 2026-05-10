@@ -7,13 +7,9 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.db.entities.HabitEntity;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface HabitDao extends RepDao<HabitEntity> {

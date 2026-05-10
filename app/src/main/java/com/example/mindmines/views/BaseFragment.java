@@ -2,7 +2,6 @@ package com.example.mindmines.views;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,8 +28,8 @@ public abstract class BaseFragment extends Fragment {
     protected TextView levelValueView;
     protected ProgressBar expProgressBar;
     protected TextView coinValueView;
-    protected MaterialButton backButton;
     protected final UserStatusObserver usProxy = this::updateUserStatus;
+    protected MaterialButton backButton;
 
     public BaseFragment(int layout) {
         super(layout);
@@ -60,13 +59,15 @@ public abstract class BaseFragment extends Fragment {
         backButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
-    protected void returnBack() {}
+    protected void returnBack() {
+    }
 
     @SuppressLint("DefaultLocale")
     public void updateUserStatus(List<UserStatus> upd) {
         requireActivity().runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getInstance(requireContext()).getStatus();
-            if (status == null) status = new UserStatus(new AuthManager(requireContext()).getUserId());
+            if (status == null)
+                status = new UserStatus(new AuthManager(requireContext()).getUserId());
 
             levelValueView.setText(String.valueOf(status.getLevel()));
             expProgressBar.setMax(status.getMaxExperience().intValue());

@@ -25,7 +25,9 @@ public class CharManager {
 
         this.context = context;
         rep = RepositoryService.getCharRepository();
-        exProxy = upd -> { if (!upd.isEmpty()) gain(upd.get(0)); };
+        exProxy = upd -> {
+            if (!upd.isEmpty()) gain(upd.get(0));
+        };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
     }
 
@@ -37,7 +39,7 @@ public class CharManager {
     }
 
     public void gain(Expedition ex) {
-        for (Char ch: rep.getByUser()) {
+        for (Char ch : rep.getByUser()) {
             long newExp = XpManager.expeditionToCharExp(ch, ex);
             CharStatus status = ch.getStatus();
             XpManager.gainLevel(status, newExp);
@@ -47,9 +49,13 @@ public class CharManager {
     }
 
     public void unlockAvailableChars(UserStatus status) {
-        if (rep.getByUser().size() == 0 && status.getLevel() >= 0) rep.add(factory.generateDefault(status.getUserId(), 1));
-        if (rep.getByUser().size() == 1 && status.getLevel() >= 3) rep.add(factory.generateDefault(status.getUserId(), 2));
-        if (rep.getByUser().size() == 2 && status.getLevel() >= 5) rep.add(factory.generateDefault(status.getUserId(), 3));
-        if (rep.getByUser().size() == 3 && status.getLevel() >= 10) rep.add(factory.generateDefault(status.getUserId(), 4));
+        if (rep.getByUser().size() == 0 && status.getLevel() >= 0)
+            rep.add(factory.generateDefault(status.getUserId(), 1));
+        if (rep.getByUser().size() == 1 && status.getLevel() >= 3)
+            rep.add(factory.generateDefault(status.getUserId(), 2));
+        if (rep.getByUser().size() == 2 && status.getLevel() >= 5)
+            rep.add(factory.generateDefault(status.getUserId(), 3));
+        if (rep.getByUser().size() == 3 && status.getLevel() >= 10)
+            rep.add(factory.generateDefault(status.getUserId(), 4));
     }
 }

@@ -1,7 +1,6 @@
 package com.example.mindmines.services.checkers;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
@@ -90,7 +89,7 @@ public class HabitSyncCheckerService extends BasicChecker {
     // Метод обновляет стрики и пенальтии привычек по таймеру MidnightChecker
     public static void allHabitsCheck(Context context) {
         List<Habit> hl = RepositoryService.getHabitRepository().getByUser();
-        for (Habit h: hl) {
+        for (Habit h : hl) {
             habitStatusCheck(h, context);
         }
         RepositoryService.getUserStatusRepository().updateObservers();

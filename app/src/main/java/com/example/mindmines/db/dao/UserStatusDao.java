@@ -12,7 +12,7 @@ import com.example.mindmines.db.entities.UserStatusEntity;
 import java.util.List;
 
 @Dao
-public interface UserStatusDao extends RepDao<UserStatusEntity>{
+public interface UserStatusDao extends RepDao<UserStatusEntity> {
     @Query("SELECT * FROM userStatuses ORDER BY userId ASC")
     List<UserStatusEntity> getAll();
 

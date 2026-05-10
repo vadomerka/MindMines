@@ -1,16 +1,14 @@
 package com.example.mindmines.services.factories;
 
-import com.example.mindmines.db.entities.ChatMessageEntity;
 import com.example.mindmines.models.chat.ChatMessage;
-import com.example.mindmines.services.converters.entities.RepConverter;
-import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
 
 import java.time.OffsetDateTime;
 
 public class ChatMessageFactory {
-    private final ChatMessageRepository rep;
     private static ChatMessageFactory instance;
+    private final ChatMessageRepository rep;
 
     public ChatMessageFactory() {
         this.rep = RepositoryService.getChatMessageRepository();

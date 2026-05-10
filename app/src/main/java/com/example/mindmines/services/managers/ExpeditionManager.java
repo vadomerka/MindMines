@@ -1,8 +1,8 @@
 package com.example.mindmines.services.managers;
 
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
 
 import java.time.OffsetDateTime;
 import java.util.Comparator;

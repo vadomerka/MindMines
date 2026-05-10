@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.chat.ChatMessage;
+import com.example.mindmines.requests.ChatMessagesRequestSender;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.ChatMessageFactory;
 import com.example.mindmines.services.managers.ChatManager;
 import com.example.mindmines.services.observers.ChatMessageObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
-import com.example.mindmines.requests.ChatMessagesRequestSender;
 import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.adapters.ChatAdapter;
 import com.google.android.material.button.MaterialButton;
@@ -34,18 +34,17 @@ import java.util.concurrent.Executors;
 
 public class AssistantView extends BaseFragment implements ChatMessageObserver {
 
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private ChatMessageFactory factory;
     private ChatManager manager;
     private ChatMessageRepository rep;
     private String userID;
-
     private RecyclerView chatRecyclerView;
     private EditText messageInput;
     private ProgressBar typingIndicator;
     private ChatAdapter chatAdapter;
     private List<ChatMessage> messageList;
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
 
     public AssistantView() {
@@ -106,7 +105,7 @@ public class AssistantView extends BaseFragment implements ChatMessageObserver {
         String text = messageInput.getText().toString().trim();
         if (text.isEmpty()) return;
 
-        ChatMessage userMessage = factory.create(userID,"USER", "CHAT", text);
+        ChatMessage userMessage = factory.create(userID, "USER", "CHAT", text);
         manager.addMessage(userMessage);
 
         messageInput.setText("");
@@ -118,10 +117,10 @@ public class AssistantView extends BaseFragment implements ChatMessageObserver {
             mainHandler.post(() -> {
                 typingIndicator.setVisibility(View.GONE);
                 if (response != null) {
-                    ChatMessage botMessage = factory.create(userID,"BOT", "CHAT", response);
+                    ChatMessage botMessage = factory.create(userID, "BOT", "CHAT", response);
                     manager.addMessage(botMessage);
                 } else {
-                    ChatMessage errorMessage = factory.create(userID,"ERROR", "CHAT", "Извините, произошла ошибка. Попробуйте позже.");
+                    ChatMessage errorMessage = factory.create(userID, "ERROR", "CHAT", "Извините, произошла ошибка. Попробуйте позже.");
                     manager.addMessage(errorMessage);
                 }
             });

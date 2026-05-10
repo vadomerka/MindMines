@@ -52,7 +52,9 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         holder.changeBtn.setOnClickListener(v -> fragment.openHabitChangeView(h.getId()));
         holder.deleteBtn.setOnClickListener(v -> fragment.deleteHabit(h.getId()));
 
-        if (MainActivity.isDebug()) { holder.debugHolder.setVisibility(View.VISIBLE); }
+        if (MainActivity.isDebug()) {
+            holder.debugHolder.setVisibility(View.VISIBLE);
+        }
         holder.streakTextView.setText(h.getStreakNumber().toString());
         holder.penaltyTextView.setText(h.getPenaltyNumber().toString());
 
@@ -70,7 +72,9 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         return items.size();
     }
 
-    public List<CardViewHolder> getCardViews() { return cardViews; }
+    public List<CardViewHolder> getCardViews() {
+        return cardViews;
+    }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         public int hId = 0;

@@ -14,11 +14,8 @@ import com.example.mindmines.db.entities.crossref.CharWithExpeditions;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
-
 @Dao
-public interface CharDao extends RepDao<CharEntity>{
+public interface CharDao extends RepDao<CharEntity> {
     @Query("SELECT * FROM characters ORDER BY charId ASC")
     List<CharEntity> getAll();
 

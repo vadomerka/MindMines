@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.UserStatusFactory;
 import com.example.mindmines.services.observers.ExpeditionObserver;
@@ -23,10 +23,14 @@ public class UserStatusManager {
     private UserStatusManager(Context context) {
         this.context = context;
         rep = RepositoryService.getUserStatusRepository();
-        usProxy = upd -> { if (!upd.isEmpty()) unlock(upd.get(0)); };;
+        usProxy = upd -> {
+            if (!upd.isEmpty()) unlock(upd.get(0));
+        };
         rep.subscribe(usProxy);
 
-        exProxy = upd -> { if (!upd.isEmpty() && upd.get(0).isFinished()) gain(upd.get(0)); };
+        exProxy = upd -> {
+            if (!upd.isEmpty() && upd.get(0).isFinished()) gain(upd.get(0));
+        };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
 
     }

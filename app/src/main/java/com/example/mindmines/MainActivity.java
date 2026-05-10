@@ -1,11 +1,5 @@
 package com.example.mindmines;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
-
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,11 +7,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.example.mindmines.infrastructure.UserController;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.managers.CharManager;
@@ -29,11 +27,13 @@ import com.example.mindmines.services.timers.HabitStatusCheckerTimer;
 import com.example.mindmines.views.user.LoginView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
     private static final boolean DEBUG = false;
+
+    public static boolean isDebug() {
+        return DEBUG;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         RepositoryService.getUserStatusRepository().subscribe(upd -> {
             UserStatusRepository usr = RepositoryService.getUserStatusRepository();
-            for (UserStatus us: usr.getAll()) {
+            for (UserStatus us : usr.getAll()) {
                 Log.d("Debug UserStatus rep", us.getId() + " " + us.getExperience() + " " + us.getMaxExperience() + " " + us.getLevel());
             }
         });
@@ -131,7 +131,5 @@ public class MainActivity extends AppCompatActivity {
             manager.createNotificationChannel(channel);
         }
     }
-
-    public static boolean isDebug() { return DEBUG; }
 }
 

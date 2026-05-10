@@ -13,10 +13,9 @@ import androidx.annotation.Nullable;
 
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
-
 import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseFragment;
 

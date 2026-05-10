@@ -8,12 +8,11 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.mindmines.db.entities.ExpeditionEntity;
-import com.example.mindmines.db.entities.HabitEntity;
 
 import java.util.List;
 
 @Dao
-public interface ExpeditionDao extends RepDao<ExpeditionEntity>{
+public interface ExpeditionDao extends RepDao<ExpeditionEntity> {
     @Query("SELECT * FROM expeditions ORDER BY expeditionId ASC")
     List<ExpeditionEntity> getAll();
 

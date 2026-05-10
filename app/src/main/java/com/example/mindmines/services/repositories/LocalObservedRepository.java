@@ -11,9 +11,9 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class LocalObservedRepository<TId extends Comparable<TId>,
-                                              T extends RepositoryItem<TId>,
-                                              TObserver extends RepositoryObserver<T>>
-    extends LocalRepository<TId, T>
+        T extends RepositoryItem<TId>,
+        TObserver extends RepositoryObserver<T>>
+        extends LocalRepository<TId, T>
         implements Observed<TObserver> {
     protected List<TObserver> observers;
 
@@ -34,14 +34,14 @@ public abstract class LocalObservedRepository<TId extends Comparable<TId>,
 
     public void updateObservers() {
         List<TObserver> snapshot = new ArrayList<>(observers);
-        for (TObserver o: snapshot) {
+        for (TObserver o : snapshot) {
             o.update(new ArrayList<>());
         }
     }
 
     public void updateObservers(T upd) {
         List<TObserver> snapshot = new ArrayList<>(observers);
-        for (TObserver o: snapshot) {
+        for (TObserver o : snapshot) {
             o.update(Collections.singletonList(upd));
         }
     }

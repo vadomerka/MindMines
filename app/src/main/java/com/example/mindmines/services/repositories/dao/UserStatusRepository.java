@@ -28,10 +28,12 @@ public class UserStatusRepository extends LocalDaoRepository<String, UserStatus,
         super.updateObservers();
         List<UserStatusEntity> all = MindMinesDatabase.getInstance(context).userStatusDao().getAll();
         Log.d("Debug UserStatus", "start");
-        for (UserStatusEntity us: all) {
+        for (UserStatusEntity us : all) {
             Log.d("Debug UserStatus", String.format("%s, %d", us.userId, us.level));
         }
     }
 
-    protected String defaultId() { return ""; }
+    protected String defaultId() {
+        return "";
+    }
 }

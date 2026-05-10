@@ -29,11 +29,11 @@ import java.util.stream.Collectors;
 
 public class HabitsView extends BaseFragment {
     private static final String TAG = "Debug HabitsView";
-    private final HabitObserver hProxy = this::updateHabits;
     private final UserStatusObserver usProxy = upd -> updateUserStatus(null);
     private HabitCardAdapter listAdapter;
     private List<Habit> habitsList;
     private HabitRepository rep;
+    private final HabitObserver hProxy = this::updateHabits;
 
     public HabitsView() {
         super(R.layout.habits_view);
@@ -86,7 +86,9 @@ public class HabitsView extends BaseFragment {
         requireActivity().runOnUiThread(() -> {
             for (HabitCardAdapter.CardViewHolder card : listAdapter.getCardViews()) {
                 Habit h = rep.get(card.hId);
-                if (h == null) { continue; }
+                if (h == null) {
+                    continue;
+                }
                 card.checkBtn.setTag(h);
                 card.streakTextView.setText(h.getStreakNumber().toString());
                 card.penaltyTextView.setText(h.getPenaltyNumber().toString());

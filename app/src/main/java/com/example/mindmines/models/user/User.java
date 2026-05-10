@@ -1,7 +1,7 @@
 package com.example.mindmines.models.user;
 
 public class User {
-//    public String userID;
+    //    public String userID;
     public String name;
     public Integer level;
 

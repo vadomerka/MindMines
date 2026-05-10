@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,16 +25,10 @@ import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.adapters.IntervalPickerAdapter;
 import com.example.mindmines.views.adapters.LocationAdapter;
 import com.example.mindmines.views.utils.ViewsUtils;
-import com.github.vikramezhil.wheelpicker.props.OnWheelPickerListener;
-import com.github.vikramezhil.wheelpicker.view.WheelPicker;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.slider.Slider;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ExpeditionStartView extends ExpeditionView {
@@ -86,7 +79,8 @@ public class ExpeditionStartView extends ExpeditionView {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new LocationAdapter(locationList, (location, position) -> {});
+        adapter = new LocationAdapter(locationList, (location, position) -> {
+        });
         recyclerView.setAdapter(adapter);
     }
 
@@ -102,7 +96,7 @@ public class ExpeditionStartView extends ExpeditionView {
         Duration[] presets = {Duration.ofMinutes(5), Duration.ofMinutes(30), Duration.ofHours(1)};
         ContextThemeWrapper wrapper = new ContextThemeWrapper(context, R.style.TimeOutlineButton);
         MaterialButton presetButton;
-        for (Duration duration: presets) {
+        for (Duration duration : presets) {
             presetButton = createPresetTimeButton(wrapper, duration);
             presetButtonsLayout.addView(presetButton);
         }

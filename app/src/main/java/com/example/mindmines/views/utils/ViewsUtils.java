@@ -1,11 +1,9 @@
 package com.example.mindmines.views.utils;
 
 import android.annotation.SuppressLint;
-import android.text.format.DateUtils;
 
 import java.time.Duration;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class ViewsUtils {
     @SuppressLint("DefaultLocale")
@@ -30,19 +28,22 @@ public class ViewsUtils {
 
     public static String getWeekWord(long time) {
         if (time % 10 == 1 && time % 100 != 11) return "неделя";
-        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20)) return "недели";
+        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20))
+            return "недели";
         return "неделей";
     }
 
     public static String getHourWord(long time) {
         if (time % 10 == 1 && time % 100 != 11) return "час";
-        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20)) return "часа";
+        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20))
+            return "часа";
         return "часов";
     }
 
     public static String getMinuteWord(long time) {
         if (time % 10 == 1 && time % 100 != 11) return "минута";
-        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20)) return "минуты";
+        if (time % 10 >= 2 && time % 10 <= 4 && (time % 100 < 10 || time % 100 >= 20))
+            return "минуты";
         return "минут";
     }
 
@@ -77,11 +78,17 @@ public class ViewsUtils {
 
     public static String parsePresetDuration(Duration duration) {
         long days = duration.toDays();
-        if (days > 0) { return days + " " + getDayWord(days); }
+        if (days > 0) {
+            return days + " " + getDayWord(days);
+        }
         long hours = duration.toHours();
-        if (hours > 0) { return hours + " " + getHourWord(hours); }
+        if (hours > 0) {
+            return hours + " " + getHourWord(hours);
+        }
         long minutes = duration.toMinutes() - hours * 60;
-        if (minutes > 0) { return minutes + " " + getMinuteWord(minutes); }
+        if (minutes > 0) {
+            return minutes + " " + getMinuteWord(minutes);
+        }
         return "0 минут";
     }
 }

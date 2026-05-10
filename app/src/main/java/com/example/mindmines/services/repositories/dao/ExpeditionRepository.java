@@ -17,9 +17,13 @@ public class ExpeditionRepository extends LocalDaoRepository<Integer, Expedition
     }
 
     @Override
-    public void initConverter() { converter = new ExpeditionConverter(); }
+    public void initConverter() {
+        converter = new ExpeditionConverter();
+    }
 
-    protected Integer defaultId() {return 0;}
+    protected Integer defaultId() {
+        return 0;
+    }
 
     @Override
     public void initArray() {

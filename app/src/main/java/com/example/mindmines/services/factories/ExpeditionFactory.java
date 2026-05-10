@@ -1,18 +1,16 @@
 package com.example.mindmines.services.factories;
 
 import com.example.mindmines.R;
-import com.example.mindmines.db.entities.ExpeditionEntity;
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.services.converters.entities.RepConverter;
-import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
 
 public class ExpeditionFactory {
-    private final ExpeditionRepository rep;
     private static ExpeditionFactory instance;
+    private final ExpeditionRepository rep;
 
     public ExpeditionFactory() {
         this.rep = RepositoryService.getExpeditionRepository();

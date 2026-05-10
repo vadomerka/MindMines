@@ -10,7 +10,9 @@ public class CharEquipment implements Serializable {
     private Equipment body;
     private Equipment legs;
 
-    public CharEquipment() {}
+    public CharEquipment() {
+    }
+
     public CharEquipment(Equipment leftHand, Equipment rightHand, Equipment body, Equipment legs) {
         this.leftHand = leftHand;
         this.rightHand = rightHand;
@@ -21,9 +23,11 @@ public class CharEquipment implements Serializable {
     public Equipment getLeftHand() {
         return leftHand;
     }
+
     public void setLeftHand(Equipment leftHand) {
         this.leftHand = leftHand;
     }
+
     public Equipment getRightHand() {
         return rightHand;
     }
@@ -39,9 +43,11 @@ public class CharEquipment implements Serializable {
     public void setBody(Equipment body) {
         this.body = body;
     }
+
     public Equipment getLegs() {
         return legs;
     }
+
     public void setLegs(Equipment legs) {
         this.legs = legs;
     }

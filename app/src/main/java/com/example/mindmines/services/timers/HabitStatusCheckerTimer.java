@@ -16,12 +16,41 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HabitStatusCheckerTimer extends BroadcastReceiver {
+    public static final String timeInterval = "minute";
     private static final String TAG = "Debug data sync";
     private static final String ACTION_CHECK = "com.example.mindmines.MIDNIGHT_CHECK";
     private static final int REQUEST_CODE = 2000;
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public static final String timeInterval = "minute";
+    private static void checkHabits(Context context) {
+        HabitSyncCheckerService.allHabitsCheck(context);
+    }
+
+    public static long nowMillis() {
+        return LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
+    public static void ensureScheduled(Context context) {
+        Log.d(TAG, "ensureScheduled: scheduled");
+
+        checkHabits(context);
+
+        Intent intent = new Intent(context, HabitStatusCheckerTimer.class);
+        intent.setAction(ACTION_CHECK);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                REQUEST_CODE,
+                intent,
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                        ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_NO_CREATE
+                        : PendingIntent.FLAG_NO_CREATE
+        );
+
+        if (pendingIntent == null) {
+            new HabitStatusCheckerTimer().scheduleNextCheck(context);
+        }
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -30,19 +59,15 @@ public class HabitStatusCheckerTimer extends BroadcastReceiver {
         final PendingResult pendingResult = goAsync();
 
         new Thread(() ->
-            executor.execute(() -> {
-                try {
-                    checkHabits(context);
-                    scheduleNextCheck(context);
-                } finally {
-                    pendingResult.finish();
-                }
-            }
-        )).start();
-    }
-
-    private static void checkHabits(Context context) {
-        HabitSyncCheckerService.allHabitsCheck(context);
+                executor.execute(() -> {
+                            try {
+                                checkHabits(context);
+                                scheduleNextCheck(context);
+                            } finally {
+                                pendingResult.finish();
+                            }
+                        }
+                )).start();
     }
 
     private long getNextDayStart() {
@@ -65,10 +90,6 @@ public class HabitStatusCheckerTimer extends BroadcastReceiver {
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli();
-    }
-
-    public static long nowMillis() {
-        return LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     private void scheduleNextCheck(Context context) {
@@ -97,27 +118,5 @@ public class HabitStatusCheckerTimer extends BroadcastReceiver {
                 triggerAt,
                 pendingIntent
         );
-    }
-
-    public static void ensureScheduled(Context context) {
-        Log.d(TAG, "ensureScheduled: scheduled");
-
-        checkHabits(context);
-
-        Intent intent = new Intent(context, HabitStatusCheckerTimer.class);
-        intent.setAction(ACTION_CHECK);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context,
-                REQUEST_CODE,
-                intent,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-                        ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_NO_CREATE
-                        : PendingIntent.FLAG_NO_CREATE
-        );
-
-        if (pendingIntent == null) {
-            new HabitStatusCheckerTimer().scheduleNextCheck(context);
-        }
     }
 }

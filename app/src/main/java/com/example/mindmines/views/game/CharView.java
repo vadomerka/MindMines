@@ -33,7 +33,9 @@ public class CharView extends BaseFragment {
         setBackButtonVisible(true);
 
         Bundle args = getArguments();
-        if (args == null) { return; }
+        if (args == null) {
+            return;
+        }
         int chId = args.getInt("id", 0);
         ch = RepositoryService.getCharRepository().get(chId);
 

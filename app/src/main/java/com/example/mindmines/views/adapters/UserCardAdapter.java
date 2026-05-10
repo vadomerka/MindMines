@@ -19,7 +19,7 @@ import java.util.List;
 public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.UserCardViewHolder> {
     private final List<User> items;
     private final FriendsView activity;
-    private List<UserCardViewHolder> cardViews = new ArrayList<>();
+    private final List<UserCardViewHolder> cardViews = new ArrayList<>();
 
     public UserCardAdapter(List<User> items, FriendsView activity) {
         this.items = items;

@@ -6,8 +6,8 @@ import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.EquipRepository;
 
 public class EquipManager {
-    private EquipRepository rep;
     private static EquipManager instance;
+    private final EquipRepository rep;
 
     public EquipManager() {
         rep = RepositoryService.getEquipRepository();

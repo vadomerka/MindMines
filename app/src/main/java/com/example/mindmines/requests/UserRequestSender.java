@@ -1,6 +1,7 @@
 package com.example.mindmines.requests;
 
 import com.example.mindmines.models.user.User;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,12 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRequestSender {
+    private static UserRequestSender instance;
     private final String SERVER_URL;
     private final String REGISTER_URL;
     private final String LOGIN_URL;
     private HttpURLConnection connection;
-
-    private static UserRequestSender instance;
 
     public UserRequestSender() {
         SERVER_URL = ServerProperties.getInstance().SERVER_URL;

@@ -1,8 +1,8 @@
 package com.example.mindmines.services.managers;
 
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.HabitRepository;
 
 public class HabitManager {
     public static void add(Habit h) {

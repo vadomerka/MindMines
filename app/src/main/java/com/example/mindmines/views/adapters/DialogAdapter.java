@@ -15,7 +15,7 @@ public abstract class DialogAdapter {
     public DialogAdapter(Context context, LayoutInflater layoutInflater) {
         this.context = context;
         this.layoutInflater = layoutInflater;
-        this.builder = new AlertDialog.Builder(context);;
+        this.builder = new AlertDialog.Builder(context);
     }
 
     public void buildDialog(int id) {

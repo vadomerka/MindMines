@@ -2,16 +2,12 @@ package com.example.mindmines.services.checkers;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.widget.Button;
-
 
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.services.managers.UserStatusManager;
-import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.OffsetDateTime;
 
@@ -35,7 +31,7 @@ public class HabitCurrentCheckerService extends BasicChecker {
 
     public static void buttonViewUpdate(Button btn) {
         Habit h = (Habit) btn.getTag();
-        if (isHabitUnchecked(h))  {
+        if (isHabitUnchecked(h)) {
             btn.setTextAppearance(R.style.UncheckedHabitButton);
             btn.setBackgroundColor(Color.parseColor("#D56363"));
         } else {

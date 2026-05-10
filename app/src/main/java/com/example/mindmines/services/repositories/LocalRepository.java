@@ -2,8 +2,6 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
-import com.example.mindmines.db.entities.HabitEntity;
-import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.interfaces.Identified;
 import com.example.mindmines.models.interfaces.RepositoryItem;
 import com.example.mindmines.services.auth.AuthManager;

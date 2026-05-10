@@ -20,7 +20,8 @@ public class ExpeditionCharRepository {
         initArray();
     }
 
-    public void initArray() {}
+    public void initArray() {
+    }
 
     public List<ExpeditionCharCrossRef> getAll() {
         return dao.getAll();

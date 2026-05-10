@@ -7,14 +7,12 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.mindmines.db.entities.ExpeditionEntity;
-import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 
 import java.util.List;
 
 @Dao
-public interface ExpeditionCharCrossRefDao extends RepDao<ExpeditionCharCrossRef>{
+public interface ExpeditionCharCrossRefDao extends RepDao<ExpeditionCharCrossRef> {
     @Query("SELECT * FROM expedition_char_cross_ref ORDER BY charId ASC")
     List<ExpeditionCharCrossRef> getAll();
 

@@ -1,17 +1,9 @@
 package com.example.mindmines.services.repositories.dao;
 
-import com.example.mindmines.R;
 import com.example.mindmines.db.MindMinesDatabase;
 import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.models.game.characters.Char;
-import com.example.mindmines.models.game.equipment.types.BodyArmor;
-import com.example.mindmines.models.game.equipment.types.Equipment;
-import com.example.mindmines.models.game.equipment.types.LegArmor;
-import com.example.mindmines.models.game.equipment.types.Shield;
-import com.example.mindmines.models.game.equipment.types.Sword;
-import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.converters.entities.CharConverter;
-import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.observers.CharObserver;
 import com.example.mindmines.services.repositories.LocalDaoRepository;
 
@@ -35,7 +27,9 @@ public class CharRepository extends LocalDaoRepository<Integer, Char, CharEntity
         array = new ArrayList<>();
     }
 
-    protected Integer defaultId() {return 0;}
+    protected Integer defaultId() {
+        return 0;
+    }
 
     @Override
     public void add(Char item) {

@@ -14,6 +14,25 @@ public class ChatMessage implements RepositoryItem<Integer> {
     private OffsetDateTime creationTime;
     private OffsetDateTime receivedTime;
 
+    public ChatMessage(Integer messageId,
+                       String userId,
+                       String author,
+                       String type,
+                       String context,
+                       String body,
+                       OffsetDateTime creationTime,
+                       OffsetDateTime receivedTime
+    ) {
+        this.messageId = messageId;
+        this.userId = userId;
+        this.author = author;
+        this.type = type;
+        this.context = context;
+        this.body = body;
+        this.creationTime = creationTime;
+        this.receivedTime = receivedTime;
+    }
+
     public Integer getId() {
         return messageId;
     }
@@ -21,7 +40,6 @@ public class ChatMessage implements RepositoryItem<Integer> {
     public void setId(Integer value) {
         this.messageId = value;
     }
-
 
     public String getUserId() {
         return userId;
@@ -76,25 +94,6 @@ public class ChatMessage implements RepositoryItem<Integer> {
     }
 
     public void setReceivedTime(OffsetDateTime receivedTime) {
-        this.receivedTime = receivedTime;
-    }
-
-    public ChatMessage(Integer messageId,
-                       String userId,
-                       String author,
-                       String type,
-                       String context,
-                       String body,
-                       OffsetDateTime creationTime,
-                       OffsetDateTime receivedTime
-    ) {
-        this.messageId = messageId;
-        this.userId = userId;
-        this.author = author;
-        this.type = type;
-        this.context = context;
-        this.body = body;
-        this.creationTime = creationTime;
         this.receivedTime = receivedTime;
     }
 }

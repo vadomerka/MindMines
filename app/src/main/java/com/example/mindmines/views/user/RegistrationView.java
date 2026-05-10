@@ -12,7 +12,6 @@ import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.UserController;
 import com.example.mindmines.services.auth.AuthManager;
-import com.example.mindmines.services.managers.CharManager;
 
 public class RegistrationView extends AppCompatActivity {
     protected AuthManager authManager;
@@ -38,7 +37,9 @@ public class RegistrationView extends AppCompatActivity {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
 
-        if (!checkData()) { return; }
+        if (!checkData()) {
+            return;
+        }
 
         UserController uc = UserController.getInstance(getApplicationContext());
         String token = uc.register(email, password);

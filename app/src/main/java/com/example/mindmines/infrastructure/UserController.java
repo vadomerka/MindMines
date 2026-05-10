@@ -32,6 +32,10 @@ public class UserController {
         return instance;
     }
 
+    public static List<User> getFriends(String userId) {
+        return UserRequestSender.getInstance().getFriends(userId);
+    }
+
     public String register(String email, String password) {
         Future<?> future = executor.submit(() -> {
             token.set(UserRequestSender.getInstance().registerRequestSend(email, password));
@@ -58,9 +62,5 @@ public class UserController {
 
     public void deleteUser(String email, String password) {
         UserStatusManager.getInstance(context).tryRemoveStatus(email + "_token");
-    }
-
-    public static List<User> getFriends(String userId) {
-        return UserRequestSender.getInstance().getFriends(userId);
     }
 }

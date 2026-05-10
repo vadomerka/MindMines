@@ -5,7 +5,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.mindmines.models.game.characters.CharStats;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.interfaces.DBEntity;
 
@@ -34,12 +33,12 @@ public class EquipEntity implements DBEntity {
 
 
     public EquipEntity(@NonNull
-            Integer equipId,
-            String userId,
-            String image,
-            Integer level,
-            String equipStats,
-            SlotType slotType
+                       Integer equipId,
+                       String userId,
+                       String image,
+                       Integer level,
+                       String equipStats,
+                       SlotType slotType
     ) {
         this.equipId = equipId;
         this.userId = userId;

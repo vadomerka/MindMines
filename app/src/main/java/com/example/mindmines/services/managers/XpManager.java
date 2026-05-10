@@ -6,11 +6,8 @@ import com.example.mindmines.models.XpStatus;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.observers.ExpeditionObserver;
 
 import java.time.Duration;
-import java.util.List;
 
 public class XpManager {
     private static final long baseExpForHabit = 10L;
@@ -20,7 +17,9 @@ public class XpManager {
     private static final double maxExpChangeKoef = 1.5;
     private static final int maxLevel = 30;
 
-    public static long getBaseMaxExpChange() { return baseMaxExpChange; }
+    public static long getBaseMaxExpChange() {
+        return baseMaxExpChange;
+    }
 
     public static Long habitToExp(Habit h) {  // XpStatus status,
         // Формула получения опыта - опыт увеличивается пропорционально стрику.
@@ -28,7 +27,9 @@ public class XpManager {
         // Формула получения штрафа - штраф не увеличивается пропорционально,
         // лишь капает каждый раз когда идет пропуск.
         long penaltyExp = baseExpForHabit * h.getPriority() / h.getDifficulty();
-        if (h.getPenaltyNumber() == 0) { penaltyExp = 0L; }
+        if (h.getPenaltyNumber() == 0) {
+            penaltyExp = 0L;
+        }
         Long change = streakExp - penaltyExp;
         Log.d("Debug ExpManager", String.format("streak: %s; penalty: %s", streakExp, penaltyExp));
         return change;  // status.getExperience() +
@@ -63,10 +64,11 @@ public class XpManager {
         while (exp > maxExp) {
             exp -= maxExp;
             status.setExperience(exp);
-            if (level >= maxLevel) { level = maxLevel; }
-            else {
+            if (level >= maxLevel) {
+                level = maxLevel;
+            } else {
                 level++;
-                maxExp = (long)(baseMaxExpChange * level * maxExpChangeKoef);
+                maxExp = (long) (baseMaxExpChange * level * maxExpChangeKoef);
             }
         }
         status.setExperience(exp);

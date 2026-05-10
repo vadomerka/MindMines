@@ -19,6 +19,32 @@ public class DataBackupTimer extends BroadcastReceiver {
     private static final int REQUEST_CODE = 2000;
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
+    private static void saveData(Context context) {
+//        DataSynchronizerManager.getInstance(context).saveToDB();
+    }
+
+    public static void ensureScheduled(Context context) {
+        Log.d(TAG, "ensureScheduled: DataBackupTimer");
+
+        saveData(context);
+
+        Intent intent = new Intent(context, DataBackupTimer.class);
+        intent.setAction(ACTION_CHECK);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context,
+                REQUEST_CODE,
+                intent,
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                        ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_NO_CREATE
+                        : PendingIntent.FLAG_NO_CREATE
+        );
+
+        if (pendingIntent == null) {
+            new DataBackupTimer().scheduleNextCheck(context);
+        }
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!ACTION_CHECK.equals(intent.getAction())) return;
@@ -26,19 +52,15 @@ public class DataBackupTimer extends BroadcastReceiver {
         final PendingResult pendingResult = goAsync();
 
         new Thread(() ->
-            executor.execute(() -> {
-                try {
-                    saveData(context);
-                    scheduleNextCheck(context);
-                } finally {
-                    pendingResult.finish();
-                }
-            }
-        )).start();
-    }
-
-    private static void saveData(Context context) {
-//        DataSynchronizerManager.getInstance(context).saveToDB();
+                executor.execute(() -> {
+                            try {
+                                saveData(context);
+                                scheduleNextCheck(context);
+                            } finally {
+                                pendingResult.finish();
+                            }
+                        }
+                )).start();
     }
 
     private long getNextDayStart() {
@@ -84,27 +106,5 @@ public class DataBackupTimer extends BroadcastReceiver {
                 triggerAt,
                 pendingIntent
         );
-    }
-
-    public static void ensureScheduled(Context context) {
-        Log.d(TAG, "ensureScheduled: DataBackupTimer");
-
-        saveData(context);
-
-        Intent intent = new Intent(context, DataBackupTimer.class);
-        intent.setAction(ACTION_CHECK);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context,
-                REQUEST_CODE,
-                intent,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-                        ? PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_NO_CREATE
-                        : PendingIntent.FLAG_NO_CREATE
-        );
-
-        if (pendingIntent == null) {
-            new DataBackupTimer().scheduleNextCheck(context);
-        }
     }
 }

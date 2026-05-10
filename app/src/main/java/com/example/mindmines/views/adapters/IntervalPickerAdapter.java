@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.habits.HabitInterval;
-import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.services.factories.HabitFactory;
 import com.example.mindmines.views.utils.ViewsUtils;
 import com.github.vikramezhil.wheelpicker.props.OnWheelPickerListener;
@@ -18,24 +17,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class IntervalPickerAdapter {
+    private final Map<String, String[]> labelDict;
+    private final View rootView;
     private Slider numberSlider;
     private WheelPicker unitPicker;
     private String[] currentSliderLabels;
-
-    private final Map<String, String[]> labelDict;
-
-    private final View rootView;
 
     public IntervalPickerAdapter(View rootView) {
         this.rootView = rootView;
 
         labelDict = new HashMap<>();
-        labelDict.put("Минуты", new String[] {"1", "5", "15", "30", "60"});
-        labelDict.put("Часы", new String[] {"1", "3", "6", "8", "24"});
-        labelDict.put("Дни", new String[] {"1", "3", "7", "30"});
+        labelDict.put("Минуты", new String[]{"1", "5", "15", "30", "60"});
+        labelDict.put("Часы", new String[]{"1", "3", "6", "8", "24"});
+        labelDict.put("Дни", new String[]{"1", "3", "7", "30"});
 
         loadDurationSlider();
         loadUnitPicker();
@@ -44,7 +40,7 @@ public class IntervalPickerAdapter {
     private void loadDurationSlider() {
         numberSlider = rootView.findViewById(R.id.interval_number_value);
         numberSlider.setValue(0);
-        setNumberSlider(new String[] {"1", "5", "15", "30", "60"});
+        setNumberSlider(new String[]{"1", "5", "15", "30", "60"});
     }
 
     private void setNumberSlider(String[] arr) {
@@ -66,15 +62,19 @@ public class IntervalPickerAdapter {
             @Override
             public void onItemSelected(int i, @NonNull String s) {
                 String[] labels = labelDict.get(s);
-                if (labels == null) {labels = new String[] {"1", "5", "15", "30", "60"};}
+                if (labels == null) {
+                    labels = new String[]{"1", "5", "15", "30", "60"};
+                }
                 setNumberSlider(labels);
             }
 
             @Override
-            public void onRefreshed(@NonNull ArrayList<String> arrayList, int i, @NonNull String s) {}
+            public void onRefreshed(@NonNull ArrayList<String> arrayList, int i, @NonNull String s) {
+            }
 
             @Override
-            public void onScrolling() {}
+            public void onScrolling() {
+            }
         });
     }
 
@@ -87,7 +87,7 @@ public class IntervalPickerAdapter {
         String[] labels = labelDict.get("Минуты");
 
         int pos;
-        switch(hi.getTimeUnit()) {
+        switch (hi.getTimeUnit()) {
             case MINUTE:
                 pos = 0;
                 labels = labelDict.get("Минуты");

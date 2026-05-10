@@ -18,13 +18,9 @@ import java.util.List;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
     private final List<ExpeditionLocation> locations;
-    private int selectedPosition = RecyclerView.NO_POSITION;
     private final OnLocationClickListener listener;
     private final List<View> holders;
-
-    public interface OnLocationClickListener {
-        void onLocationClick(ExpeditionLocation expeditionLocation, int position);
-    }
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public LocationAdapter(List<ExpeditionLocation> locations, OnLocationClickListener listener) {
         this.locations = locations;
@@ -60,7 +56,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     }
 
     private void resetColors() {
-        for (View v: holders) {
+        for (View v : holders) {
             v.setBackgroundColor(Color.WHITE);
         }
     }
@@ -77,9 +73,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         return null;
     }
 
+    public interface OnLocationClickListener {
+        void onLocationClick(ExpeditionLocation expeditionLocation, int position);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textView;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.location_image);

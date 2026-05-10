@@ -8,7 +8,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.mindmines.db.entities.ChatMessageEntity;
-import com.example.mindmines.db.entities.HabitEntity;
 
 import java.util.List;
 

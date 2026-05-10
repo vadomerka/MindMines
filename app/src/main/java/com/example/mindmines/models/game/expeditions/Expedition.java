@@ -14,6 +14,24 @@ public class Expedition implements RepositoryItem<Integer> {
     private OffsetDateTime finish;
     private boolean isFinished;
 
+    public Expedition(Integer expeditionId,
+                      String userId,
+                      String title,
+                      String type,
+                      Integer level,
+                      OffsetDateTime start,
+                      OffsetDateTime finish,
+                      boolean isFinished) {
+        this.expeditionId = expeditionId;
+        this.userId = userId;
+        this.title = title;
+        this.type = type;
+        this.level = level;
+        this.start = start;
+        this.finish = finish;
+        this.isFinished = isFinished;
+    }
+
     public Integer getId() {
         return expeditionId;
     }
@@ -21,7 +39,6 @@ public class Expedition implements RepositoryItem<Integer> {
     public void setExpeditionId(Integer expeditionId) {
         this.expeditionId = expeditionId;
     }
-
 
     public String getUserId() {
         return userId;
@@ -77,23 +94,5 @@ public class Expedition implements RepositoryItem<Integer> {
 
     public void setFinished(boolean finished) {
         isFinished = finished;
-    }
-
-    public Expedition(Integer expeditionId,
-                      String userId,
-                      String title,
-                      String type,
-                      Integer level,
-                      OffsetDateTime start,
-                      OffsetDateTime finish,
-                      boolean isFinished) {
-        this.expeditionId = expeditionId;
-        this.userId = userId;
-        this.title = title;
-        this.type = type;
-        this.level = level;
-        this.start = start;
-        this.finish = finish;
-        this.isFinished = isFinished;
     }
 }

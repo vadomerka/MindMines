@@ -1,13 +1,9 @@
 package com.example.mindmines.services.repositories.dao;
 
 import com.example.mindmines.db.MindMinesDatabase;
-import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.db.entities.EquipEntity;
-import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.types.Equipment;
-import com.example.mindmines.services.converters.entities.CharConverter;
 import com.example.mindmines.services.converters.entities.EquipConverter;
-import com.example.mindmines.services.observers.CharObserver;
 import com.example.mindmines.services.observers.EquipObserver;
 import com.example.mindmines.services.repositories.LocalDaoRepository;
 
@@ -29,5 +25,7 @@ public class EquipRepository extends LocalDaoRepository<Integer, Equipment, Equi
         array = new ArrayList<>();
     }
 
-    protected Integer defaultId() {return 0;}
+    protected Integer defaultId() {
+        return 0;
+    }
 }

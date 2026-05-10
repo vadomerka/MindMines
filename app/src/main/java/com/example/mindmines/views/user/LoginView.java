@@ -1,7 +1,5 @@
 package com.example.mindmines.views.user;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
@@ -45,7 +45,9 @@ public class LoginView extends AppCompatActivity {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
 
-        if (!checkData()) { return; }
+        if (!checkData()) {
+            return;
+        }
 
         UserController uc = UserController.getInstance(getApplicationContext());
         String token = uc.login(email, password);

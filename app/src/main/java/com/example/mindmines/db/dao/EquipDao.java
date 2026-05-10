@@ -12,7 +12,7 @@ import com.example.mindmines.db.entities.EquipEntity;
 import java.util.List;
 
 @Dao
-public interface EquipDao extends RepDao<EquipEntity>{
+public interface EquipDao extends RepDao<EquipEntity> {
     @Query("SELECT * FROM equipment ORDER BY equipId ASC")
     List<EquipEntity> getAll();
 

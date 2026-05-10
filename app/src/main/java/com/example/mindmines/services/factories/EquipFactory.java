@@ -1,14 +1,11 @@
 package com.example.mindmines.services.factories;
 
-import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.EquipRepository;
 
-import java.util.List;
-
 public class EquipFactory {
-    private EquipRepository rep;
     private static EquipFactory instance;
+    private final EquipRepository rep;
 
     public EquipFactory() {
         this.rep = RepositoryService.getEquipRepository();
