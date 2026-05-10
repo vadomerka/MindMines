@@ -10,7 +10,7 @@ import com.example.mindmines.services.repositories.RepositoryService;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 
-public class ExpeditionFactory implements RepConverter<Integer, Expedition, ExpeditionEntity> {
+public class ExpeditionFactory {
     private final ExpeditionRepository rep;
     private static ExpeditionFactory instance;
 
@@ -39,32 +39,6 @@ public class ExpeditionFactory implements RepConverter<Integer, Expedition, Expe
                 OffsetDateTime.now(),
                 OffsetDateTime.now().plus(duration),
                 false
-        );
-    }
-
-    public Expedition toItem(ExpeditionEntity entity) {
-        return new Expedition(
-                entity.expeditionId,
-                entity.userId,
-                entity.title,
-                entity.type,
-                entity.level,
-                entity.start,
-                entity.finish,
-                entity.isFinished
-        );
-    }
-
-    public ExpeditionEntity toEntity(Expedition ex) {
-        return new ExpeditionEntity(
-                ex.getId(),
-                ex.getUserId(),
-                ex.getTitle(),
-                ex.getType(),
-                ex.getLevel(),
-                ex.getStart(),
-                ex.getFinish(),
-                ex.isFinished()
         );
     }
 }

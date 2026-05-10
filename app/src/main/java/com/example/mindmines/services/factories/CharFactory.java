@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.Random;
 
-public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
+public class CharFactory {
     private final Random rnd = new Random();
     private static final int variation = 5;
     private static final int baseValue = 10;
@@ -75,17 +75,5 @@ public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
         return new Char(rep.getId() + 1, userId, name,
                 new CharStats(atk, defence, speed),
                 new CharStatus(hp, level, maxExperience), new CharEquipment(), image);
-    }
-
-    public Char toItem(CharEntity entity) {
-        Gson g = new Gson();
-        Char ch = g.fromJson(entity.charJson, Char.class);
-        ch.setCharId(entity.charId);
-        return ch;
-    }
-
-    public CharEntity toEntity(Char ch) {
-        Gson g = new Gson();
-        return new CharEntity(ch.getId(), ch.getUserId(), g.toJson(ch));
     }
 }

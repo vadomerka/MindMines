@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SpreadCenterVerticalLayout">
+
+
+    <LinearLayout
+        style="@style/SpreadCenterVerticalLayout">
+        <TextView
+            style="@style/title_text"
+            android:id="@+id/equip_name_text_value"
+            android:text="@string/equip_name_text_value_default_text"
+            />
+        <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/equipment_btn1"
+                app:icon="@drawable/equip1_left_hand"
+                app:iconGravity="top"
+                app:iconSize="@dimen/equipment_icon_size"
+                app:cornerRadius="20dp"
+                style="@style/EquipmentButton"/>
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/equipment_btn2"
+                app:icon="@drawable/equip2_right_hand"
+                app:iconGravity="top"
+                app:iconSize="@dimen/equipment_icon_size"
+                app:cornerRadius="20dp"
+                style="@style/EquipmentButton"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/save_equipment_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/save_equipment_button"
+        android:textSize="18sp"/>
+
+</LinearLayout>

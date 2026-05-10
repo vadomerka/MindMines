@@ -46,8 +46,6 @@ public class ExpeditionStartView extends ExpeditionView {
     private Duration selectedDuration;
     private IntervalPickerAdapter ipAdapter;
 
-
-
     public ExpeditionStartView(Context context, LayoutInflater layoutInflater) {
         super(context, layoutInflater);
     }

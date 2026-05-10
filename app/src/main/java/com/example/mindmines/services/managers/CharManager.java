@@ -1,7 +1,6 @@
 package com.example.mindmines.services.managers;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.characters.CharStatus;
@@ -17,6 +16,7 @@ public class CharManager {
     private static CharManager instance;
     private final CharRepository rep;
     private final CharFactory factory;
+    private final ExpeditionObserver exProxy;
     private final Context context;
 
     private CharManager(Context context) {
@@ -25,7 +25,7 @@ public class CharManager {
 
         this.context = context;
         rep = RepositoryService.getCharRepository();
-        ExpeditionObserver exProxy = upd -> { if (!upd.isEmpty()) gain(upd.get(0)); };
+        exProxy = upd -> { if (!upd.isEmpty()) gain(upd.get(0)); };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
     }
 

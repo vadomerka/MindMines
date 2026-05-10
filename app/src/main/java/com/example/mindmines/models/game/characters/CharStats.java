@@ -37,4 +37,10 @@ public class CharStats implements Serializable {
         this.defence -= other.defence;
         this.speed -= other.speed;
     }
+
+    public void mult(CharStats other) {
+        this.attack *= other.attack;
+        this.defence *= other.defence;
+        this.speed *= other.speed;
+    }
 }

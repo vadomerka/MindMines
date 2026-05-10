@@ -11,6 +11,7 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.mindmines.db.dao.CharDao;
+import com.example.mindmines.db.dao.EquipDao;
 import com.example.mindmines.db.dao.ExpeditionCharCrossRefDao;
 import com.example.mindmines.db.dao.ExpeditionDao;
 import com.example.mindmines.db.dao.HabitDao;
@@ -18,13 +19,17 @@ import com.example.mindmines.db.dao.MessageDao;
 import com.example.mindmines.db.dao.UserStatusDao;
 import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.db.entities.ChatMessageEntity;
+import com.example.mindmines.db.entities.EquipEntity;
 import com.example.mindmines.db.entities.ExpeditionEntity;
 import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
 
-@Database(entities = {HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
-        ExpeditionCharCrossRef.class, ChatMessageEntity.class, UserStatusEntity.class}, version = 10, exportSchema = false)
+@Database(entities = {
+        HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
+        ExpeditionCharCrossRef.class, ChatMessageEntity.class, UserStatusEntity.class,
+        EquipEntity.class
+    }, version = 11, exportSchema = false)
 @TypeConverters(HabitTypeConverter.class)
 public abstract class MindMinesDatabase extends RoomDatabase {
     private static volatile MindMinesDatabase INSTANCE;
@@ -37,6 +42,7 @@ public abstract class MindMinesDatabase extends RoomDatabase {
     public abstract ExpeditionCharCrossRefDao expeditionCharCrossRefDao();
     public abstract MessageDao messageDao();
     public abstract UserStatusDao userStatusDao();
+    public abstract EquipDao equipDao();
 
     public static MindMinesDatabase getInstance(Context context) {
         if (INSTANCE == null) {

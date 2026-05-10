@@ -1,6 +1,7 @@
 package com.example.mindmines.views.game;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.CharEquipment;
+import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseFragment;
 import com.google.android.material.button.MaterialButton;
@@ -50,6 +52,7 @@ public class CharView extends BaseFragment {
         });
 
         loadCharData();
+        loadEquipData();
     }
 
     @Override
@@ -82,15 +85,28 @@ public class CharView extends BaseFragment {
         statTv4.setText(String.valueOf(ch.getStats().getAttack()));
         statTv5.setText(String.valueOf(ch.getStats().getDefence()));
         statTv6.setText(String.valueOf(ch.getStats().getSpeed()));
+    }
 
+    protected void loadEquipData() {
         MaterialButton leftHand = requireActivity().findViewById(R.id.open_equipment_btn1);
         MaterialButton rightHand = requireActivity().findViewById(R.id.open_equipment_btn2);
         MaterialButton bodyArmor = requireActivity().findViewById(R.id.open_equipment_btn3);
         MaterialButton legArmor = requireActivity().findViewById(R.id.open_equipment_btn4);
         CharEquipment chEq = ch.getEquipment();
-        if (chEq.getLeftHand() != null) leftHand.setIcon(requireContext().getDrawable(Integer.parseInt(chEq.getLeftHand().getImage())));
-        if (chEq.getRightHand() != null) rightHand.setIcon(requireContext().getDrawable(Integer.parseInt(chEq.getRightHand().getImage())));
-        if (chEq.getBody() != null) bodyArmor.setIcon(requireContext().getDrawable(Integer.parseInt(chEq.getBody().getImage())));
-        if (chEq.getLegs() != null) legArmor.setIcon(requireContext().getDrawable(Integer.parseInt(chEq.getLegs().getImage())));
+        if (chEq.getLeftHand() != null) leftHand.setIcon(getIcon(chEq.getLeftHand()));
+        if (chEq.getRightHand() != null) rightHand.setIcon(getIcon(chEq.getRightHand()));
+        if (chEq.getBody() != null) bodyArmor.setIcon(getIcon(chEq.getBody()));
+        if (chEq.getLegs() != null) legArmor.setIcon(getIcon(chEq.getLegs()));
+
+        legArmor.setOnClickListener(v -> openShop(chEq.getLeftHand()));
+    }
+
+    public void openShop(Equipment eq) {
+        new ShopView(requireContext(), getLayoutInflater()).startShop(eq);
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private Drawable getIcon(Equipment eq) {
+        return requireContext().getDrawable(Integer.parseInt(eq.getImage()));
     }
 }

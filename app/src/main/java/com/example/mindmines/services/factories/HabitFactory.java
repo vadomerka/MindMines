@@ -12,7 +12,7 @@ import com.example.mindmines.services.repositories.RepositoryService;
 
 import java.time.OffsetDateTime;
 
-public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
+public class HabitFactory {
 
     private final HabitRepository rep;
     private static HabitFactory instance;
@@ -116,37 +116,6 @@ public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
         return res;
     }
 
-    public Habit toItem(HabitEntity e) {
-        return new Habit(
-                e.habitId,
-                e.userId,
-                habitTypeFromString(e.type),
-                e.title,
-                e.description,
-                e.goalCount,
-                e.priority,
-                e.difficulty,
-                e.penaltyNumber,
-                e.streakNumber,
-                e.creationDate,
-                e.lastCompletedAt,
-                e.nextDeadlineAt,
-                createHabitInterval(e.intervalNumber, e.intervalUnit));
-    }
-
-    public HabitType habitTypeFromString(String type) {
-        switch (type.toUpperCase()) {
-            case "GOOD_GOAL_COUNT":
-                return HabitType.GOOD_GOAL_COUNT;
-            case "GOOD_TASKS":
-                return HabitType.GOOD_TASKS;
-            case "GOOD_INTERVAL":
-                return HabitType.GOOD_INTERVAL;
-            default:
-                return HabitType.BAD;
-        }
-    }
-
     public HabitInterval createHabitInterval(Integer num, String unit) {
         return new HabitInterval(num, intervalUnitFromString(unit));
     }
@@ -168,25 +137,5 @@ public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
             default:
                 return HabitTimeUnit.MONTH;
         }
-    }
-
-    public HabitEntity toEntity(Habit h) {
-        return new HabitEntity(
-                h.getId(),
-                h.getUserId(),
-                h.getType().toString(),
-                h.getTitle(),
-                h.getDescription(),
-                h.getGoalCount(),
-                h.getPriority(),
-                h.getDifficulty(),
-                h.getPenaltyNumber(),
-                h.getStreakNumber(),
-                h.getCreationDate(),
-                h.getLastCompletedAt(),
-                h.getNextDeadlineAt(),
-                h.getInterval().getNumber(),
-                h.getInterval().getTimeUnit().toString()
-        );
     }
 }
