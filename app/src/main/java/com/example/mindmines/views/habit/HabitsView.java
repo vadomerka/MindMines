@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mindmines.R;
 import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.observers.HabitObserver;
 import com.example.mindmines.services.observers.UserStatusObserver;
@@ -92,6 +93,13 @@ public class HabitsView extends BaseFragment {
                 card.checkBtn.setTag(h);
                 card.streakTextView.setText(h.getStreakNumber().toString());
                 card.penaltyTextView.setText(h.getPenaltyNumber().toString());
+                if (h.getType() == HabitType.GOOD_GOAL_COUNT) {
+                    card.progressTextView.setVisibility(View.VISIBLE);
+                    card.progressTextView.setText(HabitCurrentCheckerService.normalizedCurr(h)
+                            + " / " + HabitCurrentCheckerService.normalizedGoal(h));
+                } else {
+                    card.progressTextView.setVisibility(View.GONE);
+                }
                 HabitCurrentCheckerService.buttonViewUpdate(card.checkBtn);
             }
         });
