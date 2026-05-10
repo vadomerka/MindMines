@@ -166,13 +166,11 @@ public class PartyView extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-//        stopTimer();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        loadExpedition();
     }
 
     @Override

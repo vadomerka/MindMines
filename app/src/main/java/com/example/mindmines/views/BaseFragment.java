@@ -63,7 +63,7 @@ public abstract class BaseFragment extends Fragment {
     protected void returnBack() {}
 
     @SuppressLint("DefaultLocale")
-    protected void updateUserStatus(List<UserStatus> upd) {
+    public void updateUserStatus(List<UserStatus> upd) {
         requireActivity().runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getInstance(requireContext()).getStatus();
             if (status == null) status = new UserStatus(new AuthManager(requireContext()).getUserId());
