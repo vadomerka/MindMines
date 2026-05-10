@@ -13,6 +13,7 @@ public class EquipConverter implements RepConverter<Integer, Equipment, EquipEnt
                 entity.userId,
                 entity.image,
                 entity.level,
+                entity.price,
                 g.fromJson(entity.equipStats, CharStats.class),
                 entity.slotType
         );
@@ -25,6 +26,7 @@ public class EquipConverter implements RepConverter<Integer, Equipment, EquipEnt
                 ch.getUserId(),
                 ch.getImage(),
                 ch.getLevel(),
+                ch.getPrice(),
                 g.toJson(ch.getEquipStats()),
                 ch.getSlotType()
         );

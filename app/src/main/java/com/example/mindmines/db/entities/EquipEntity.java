@@ -25,6 +25,9 @@ public class EquipEntity implements DBEntity {
     @ColumnInfo(name = "level")
     public Integer level;
 
+    @ColumnInfo(name = "price")
+    public Integer price;
+
     @ColumnInfo(name = "equipStats")
     public String equipStats;
 
@@ -37,6 +40,7 @@ public class EquipEntity implements DBEntity {
                        String userId,
                        String image,
                        Integer level,
+                       Integer price,
                        String equipStats,
                        SlotType slotType
     ) {
@@ -44,6 +48,7 @@ public class EquipEntity implements DBEntity {
         this.userId = userId;
         this.image = image;
         this.level = level;
+        this.price = price;
         this.equipStats = equipStats;
         this.slotType = slotType;
     }

@@ -29,7 +29,7 @@ import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
         HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
         ExpeditionCharCrossRef.class, ChatMessageEntity.class, UserStatusEntity.class,
         EquipEntity.class
-}, version = 11, exportSchema = false)
+}, version = 12, exportSchema = false)
 @TypeConverters(HabitTypeConverter.class)
 public abstract class MindMinesDatabase extends RoomDatabase {
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {

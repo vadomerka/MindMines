@@ -15,13 +15,31 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.CharEquipment;
+import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.game.equipment.types.Equipment;
+import com.example.mindmines.services.observers.CharObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.CharRepository;
 import com.example.mindmines.views.BaseFragment;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.Objects;
+
 public class CharView extends BaseFragment {
     private Char ch;
+    private CharRepository rep;
+    private final CharObserver chProxy = it -> {
+        if (!it.isEmpty()) { updateUserStats(it.get(0)); }
+        loadEquipData();
+    };
+
+    private TextView statTv0;
+    private TextView statTv1;
+    private TextView statTv2;
+    private TextView statTv3;
+    private TextView statTv4;
+    private TextView statTv5;
+    private TextView statTv6;
 
     public CharView() {
         super(R.layout.char_view);
@@ -32,6 +50,8 @@ public class CharView extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         setBackButtonVisible(true);
 
+        rep = RepositoryService.getCharRepository();
+
         Bundle args = getArguments();
         if (args == null) {
             return;
@@ -39,6 +59,31 @@ public class CharView extends BaseFragment {
         int chId = args.getInt("id", 0);
         ch = RepositoryService.getCharRepository().get(chId);
 
+        initUi();
+
+        loadCharData();
+        loadEquipData();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        rep.subscribe(chProxy);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        setBackButtonVisible(false);
+        rep.unsubscribe(chProxy);
+    }
+
+    @Override
+    protected void returnBack() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_charFragment_to_partyFragment);
+    }
+
+    protected void initUi() {
         LinearLayout statsView = requireActivity().findViewById(R.id.char_stats_view);
         LinearLayout equipView = requireActivity().findViewById(R.id.char_equipment_view);
         Button statsViewBtn = requireActivity().findViewById(R.id.char_stats_view_button);
@@ -53,19 +98,13 @@ public class CharView extends BaseFragment {
             equipView.setVisibility(View.GONE);
         });
 
-        loadCharData();
-        loadEquipData();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        setBackButtonVisible(false);
-    }
-
-    @Override
-    protected void returnBack() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_charFragment_to_partyFragment);
+        statTv0 = requireActivity().findViewById(R.id.name_value_view);
+        statTv1 = requireActivity().findViewById(R.id.level_value_view);
+        statTv2 = requireActivity().findViewById(R.id.exp_value_view);
+        statTv3 = requireActivity().findViewById(R.id.exp_until_next_value_view);
+        statTv4 = requireActivity().findViewById(R.id.attack_value_view);
+        statTv5 = requireActivity().findViewById(R.id.defence_value_view);
+        statTv6 = requireActivity().findViewById(R.id.speed_value_view);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -73,14 +112,13 @@ public class CharView extends BaseFragment {
         MaterialButton charBtn = requireActivity().findViewById(R.id.character_portrait_view);
         charBtn.setIcon(requireContext().getDrawable(Integer.parseInt(ch.getImage())));
 
-        TextView statTv0 = requireActivity().findViewById(R.id.name_value_view);
-        TextView statTv1 = requireActivity().findViewById(R.id.level_value_view);
-        TextView statTv2 = requireActivity().findViewById(R.id.exp_value_view);
-        TextView statTv3 = requireActivity().findViewById(R.id.exp_until_next_value_view);
-        TextView statTv4 = requireActivity().findViewById(R.id.attack_value_view);
-        TextView statTv5 = requireActivity().findViewById(R.id.defence_value_view);
-        TextView statTv6 = requireActivity().findViewById(R.id.speed_value_view);
         statTv0.setText(ch.getName());
+        updateUserStats(ch);
+    }
+
+    protected void updateUserStats(Char upd) {
+        if (!Objects.equals(ch.getId(), upd.getId())) return;
+        ch = upd;
         statTv1.setText(String.valueOf(ch.getStatus().getLevel()));
         statTv2.setText(String.valueOf(ch.getStatus().getExperience()));
         statTv3.setText(String.valueOf(ch.getStatus().getMaxExperience()));
@@ -100,11 +138,15 @@ public class CharView extends BaseFragment {
         if (chEq.getBody() != null) bodyArmor.setIcon(getIcon(chEq.getBody()));
         if (chEq.getLegs() != null) legArmor.setIcon(getIcon(chEq.getLegs()));
 
-        legArmor.setOnClickListener(v -> openShop(chEq.getLeftHand()));
+        leftHand.setOnClickListener(v -> openShop(chEq.getLeftHand(), SlotType.LEFT_HAND));
+        rightHand.setOnClickListener(v -> openShop(chEq.getRightHand(), SlotType.RIGHT_HAND));
+        bodyArmor.setOnClickListener(v -> openShop(chEq.getBody(), SlotType.BODY_ARMOR));
+        legArmor.setOnClickListener(v -> openShop(chEq.getLegs(), SlotType.LEGS_ARMOR));
     }
 
-    public void openShop(Equipment eq) {
-        new ShopView(requireContext(), getLayoutInflater()).startShop(eq);
+    public void openShop(Equipment eq, SlotType type) {
+        new ShopView(requireContext(), getLayoutInflater())
+                .startShop(eq, ch, type); // , this::loadEquipData
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

@@ -9,17 +9,20 @@ public class Equipment implements RepositoryItem<Integer> {
     protected String userId;
     protected String image;
     protected Integer level;
+    protected Integer price;
     protected CharStats equipStats;
     protected SlotType slotType;
 
     public Equipment() {
         this.level = 0;
+        this.price = 0;
     }
 
     public Equipment(Integer equipId,
                      String userId,
                      String image,
                      Integer level,
+                     Integer price,
                      CharStats equipStats,
                      SlotType slotType
     ) {
@@ -27,6 +30,7 @@ public class Equipment implements RepositoryItem<Integer> {
         this.userId = userId;
         this.image = image;
         this.level = level;
+        this.price = price;
         this.equipStats = equipStats;
         this.slotType = slotType;
     }
@@ -50,6 +54,14 @@ public class Equipment implements RepositoryItem<Integer> {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public CharStats getEquipStats() {

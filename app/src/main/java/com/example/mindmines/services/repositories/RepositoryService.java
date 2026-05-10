@@ -29,6 +29,7 @@ public class RepositoryService {
         getExpeditionCharRepository().init(context);
         getChatMessageRepository().init(context);
         getUserStatusRepository().init(context);
+        getEquipRepository().init(context);
     }
 
     public static CharRepository getCharRepository() {

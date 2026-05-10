@@ -60,4 +60,10 @@ public class CharStats implements Serializable {
         this.defence *= other.defence;
         this.speed *= other.speed;
     }
+
+    public void mult(float attack, float defence, float speed) {
+        this.attack = (int) (this.attack * attack);
+        this.defence = (int) (this.defence * defence);
+        this.speed = (int) (this.speed * speed);
+    }
 }
