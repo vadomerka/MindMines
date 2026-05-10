@@ -44,6 +44,18 @@ def get_users(session: SessionDep):
     return [x.to_json() for x in session.query(User).all()]
 
 
+@app.get("/users/friends")
+def get_friends(session: SessionDep):
+    users = session.query(User).order_by(User.user_id.asc()).all()
+    return [
+        {
+            "name": user.name,
+            "level": user.level
+        }
+        for user in users
+    ]
+
+
 @app.get("/users/{user_id}")
 def get_user(user_id: int, session: SessionDep):
     # Profile view

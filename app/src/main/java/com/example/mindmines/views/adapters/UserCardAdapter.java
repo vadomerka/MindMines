@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mindmines.R;
-import com.example.mindmines.models.user.User;
+import com.example.mindmines.models.user.UserDTO;
 import com.example.mindmines.views.user.FriendsView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.UserCardViewHolder> {
-    private final List<User> items;
+    private final List<UserDTO> items;
     private final FriendsView activity;
     private final List<UserCardViewHolder> cardViews = new ArrayList<>();
 
-    public UserCardAdapter(List<User> items, FriendsView activity) {
+    public UserCardAdapter(List<UserDTO> items, FriendsView activity) {
         this.items = items;
         this.activity = activity;
     }
@@ -37,7 +37,7 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.UserCa
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(UserCardViewHolder holder, int position) {
-        User dto = items.get(position);
+        UserDTO dto = items.get(position);
 
         int userPos = position;
         holder.userId = userPos;  // dto.userID;

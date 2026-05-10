@@ -2,7 +2,8 @@ package com.example.mindmines.infrastructure;
 
 import android.content.Context;
 
-import com.example.mindmines.models.user.User;
+import com.example.mindmines.models.user.UserDTO;
+import com.example.mindmines.requests.AuthRequestSender;
 import com.example.mindmines.requests.UserRequestSender;
 import com.example.mindmines.services.managers.UserStatusManager;
 
@@ -16,6 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class UserController {
     private static UserController instance;
     private final AtomicReference<String> token;
+    private List<UserDTO> users;
     private final ExecutorService executor;
     private final Context context;
 
@@ -32,13 +34,21 @@ public class UserController {
         return instance;
     }
 
-    public static List<User> getFriends(String userId) {
-        return UserRequestSender.getInstance().getFriends(userId);
+    public List<UserDTO> getFriends(String userId) {
+        Future<?> future = executor.submit(() -> {
+            users = UserRequestSender.getInstance().getFriendsRequestSend(userId);
+        });
+        try {
+            future.get();
+            return users;
+        } catch (ExecutionException | InterruptedException e) {
+            return null;
+        }
     }
 
     public String register(String email, String password) {
         Future<?> future = executor.submit(() -> {
-            token.set(UserRequestSender.getInstance().registerRequestSend(email, password));
+            token.set(AuthRequestSender.getInstance().registerRequestSend(email, password));
         });
         try {
             future.get();
@@ -50,7 +60,7 @@ public class UserController {
 
     public String login(String email, String password) {
         Future<?> future = executor.submit(() -> {
-            token.set(UserRequestSender.getInstance().loginRequestSend(email, password));
+            token.set(AuthRequestSender.getInstance().loginRequestSend(email, password));
         });
         try {
             future.get();
