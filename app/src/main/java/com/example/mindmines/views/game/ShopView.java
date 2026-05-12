@@ -23,8 +23,8 @@ import com.example.mindmines.views.adapters.DialogAdapter;
 import com.google.android.material.button.MaterialButton;
 
 public class ShopView extends DialogAdapter {
-    private Char ch;
     private final EquipManager equipManager;
+    private Char ch;
 
     public ShopView(Context context, LayoutInflater layoutInflater) {
         super(context, layoutInflater);

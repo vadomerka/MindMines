@@ -17,9 +17,9 @@ import java.util.concurrent.atomic.AtomicReference;
 public class UserController {
     private static UserController instance;
     private final AtomicReference<String> token;
-    private List<UserDTO> users;
     private final ExecutorService executor;
     private final Context context;
+    private List<UserDTO> users;
 
     public UserController(Context context) {
         this.token = new AtomicReference<>();

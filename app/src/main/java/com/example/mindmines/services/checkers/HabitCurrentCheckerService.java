@@ -10,6 +10,7 @@ import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.services.managers.UserStatusManager;
 
 import java.time.OffsetDateTime;
+
 public class HabitCurrentCheckerService extends BasicChecker {
     private static boolean isHabitUnchecked(Habit h) {
         if (ALWAYS_CHECKED) {

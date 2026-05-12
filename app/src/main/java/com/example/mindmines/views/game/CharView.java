@@ -28,11 +28,6 @@ import java.util.Objects;
 public class CharView extends BaseFragment {
     private Char ch;
     private CharRepository rep;
-    private final CharObserver chProxy = it -> {
-        if (!it.isEmpty()) { updateUserStats(it.get(0)); }
-        loadEquipData();
-    };
-
     private TextView statTv0;
     private TextView statTv1;
     private TextView statTv2;
@@ -40,6 +35,12 @@ public class CharView extends BaseFragment {
     private TextView statTv4;
     private TextView statTv5;
     private TextView statTv6;
+    private final CharObserver chProxy = it -> {
+        if (!it.isEmpty()) {
+            updateUserStats(it.get(0));
+        }
+        loadEquipData();
+    };
 
     public CharView() {
         super(R.layout.char_view);
