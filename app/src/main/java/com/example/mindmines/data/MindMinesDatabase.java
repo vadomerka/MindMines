@@ -1,4 +1,4 @@
-package com.example.mindmines.db;
+package com.example.mindmines.data;
 
 import android.content.Context;
 
@@ -10,20 +10,21 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.mindmines.db.dao.CharDao;
-import com.example.mindmines.db.dao.EquipDao;
-import com.example.mindmines.db.dao.ExpeditionCharCrossRefDao;
-import com.example.mindmines.db.dao.ExpeditionDao;
-import com.example.mindmines.db.dao.HabitDao;
-import com.example.mindmines.db.dao.MessageDao;
-import com.example.mindmines.db.dao.UserStatusDao;
-import com.example.mindmines.db.entities.CharEntity;
-import com.example.mindmines.db.entities.ChatMessageEntity;
-import com.example.mindmines.db.entities.EquipEntity;
-import com.example.mindmines.db.entities.ExpeditionEntity;
-import com.example.mindmines.db.entities.HabitEntity;
-import com.example.mindmines.db.entities.UserStatusEntity;
-import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
+import com.example.mindmines.data.dao.CharDao;
+import com.example.mindmines.data.dao.EquipDao;
+import com.example.mindmines.data.dao.ExpeditionCharCrossRefDao;
+import com.example.mindmines.data.dao.ExpeditionDao;
+import com.example.mindmines.data.dao.HabitDao;
+import com.example.mindmines.data.dao.MessageDao;
+import com.example.mindmines.data.dao.UserStatusDao;
+import com.example.mindmines.data.entities.CharEntity;
+import com.example.mindmines.data.entities.ChatMessageEntity;
+import com.example.mindmines.data.entities.EquipEntity;
+import com.example.mindmines.data.entities.ExpeditionEntity;
+import com.example.mindmines.data.entities.HabitEntity;
+import com.example.mindmines.data.entities.UserStatusEntity;
+import com.example.mindmines.data.entities.crossref.ExpeditionCharCrossRef;
+import com.example.mindmines.services.converters.HabitTypeConverter;
 
 @Database(entities = {
         HabitEntity.class, CharEntity.class, ExpeditionEntity.class,

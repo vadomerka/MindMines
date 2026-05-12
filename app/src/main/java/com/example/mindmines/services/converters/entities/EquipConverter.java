@@ -1,6 +1,6 @@
 package com.example.mindmines.services.converters.entities;
 
-import com.example.mindmines.db.entities.EquipEntity;
+import com.example.mindmines.data.entities.EquipEntity;
 import com.example.mindmines.models.game.characters.CharStats;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.google.gson.Gson;

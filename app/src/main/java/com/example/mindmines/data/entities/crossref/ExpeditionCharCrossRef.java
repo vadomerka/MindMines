@@ -1,11 +1,11 @@
-package com.example.mindmines.db.entities.crossref;
+package com.example.mindmines.data.entities.crossref;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 
-import com.example.mindmines.db.entities.CharEntity;
-import com.example.mindmines.db.entities.ExpeditionEntity;
+import com.example.mindmines.data.entities.CharEntity;
+import com.example.mindmines.data.entities.ExpeditionEntity;
 
 @Entity(
         tableName = "expedition_char_cross_ref",

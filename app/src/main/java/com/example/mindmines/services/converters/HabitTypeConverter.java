@@ -1,4 +1,4 @@
-package com.example.mindmines.db;
+package com.example.mindmines.services.converters;
 
 import androidx.room.TypeConverter;
 

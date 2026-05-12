@@ -1,4 +1,4 @@
-package com.example.mindmines.db.dao;
+package com.example.mindmines.data.dao;
 
 
 import java.util.List;

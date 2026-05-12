@@ -1,7 +1,7 @@
 package com.example.mindmines.services.repositories.dao;
 
-import com.example.mindmines.db.MindMinesDatabase;
-import com.example.mindmines.db.entities.EquipEntity;
+import com.example.mindmines.data.MindMinesDatabase;
+import com.example.mindmines.data.entities.EquipEntity;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.converters.entities.EquipConverter;
 import com.example.mindmines.services.observers.EquipObserver;

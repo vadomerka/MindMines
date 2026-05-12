@@ -1,4 +1,4 @@
-package com.example.mindmines.db.entities;
+package com.example.mindmines.data.entities;
 
 
 import androidx.annotation.NonNull;

@@ -1,7 +1,7 @@
 package com.example.mindmines.services.repositories.dao;
 
-import com.example.mindmines.db.MindMinesDatabase;
-import com.example.mindmines.db.entities.HabitEntity;
+import com.example.mindmines.data.MindMinesDatabase;
+import com.example.mindmines.data.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;

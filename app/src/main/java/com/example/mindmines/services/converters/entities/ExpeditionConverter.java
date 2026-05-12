@@ -1,6 +1,6 @@
 package com.example.mindmines.services.converters.entities;
 
-import com.example.mindmines.db.entities.ExpeditionEntity;
+import com.example.mindmines.data.entities.ExpeditionEntity;
 import com.example.mindmines.models.game.expeditions.Expedition;
 
 public class ExpeditionConverter implements RepConverter<Integer, Expedition, ExpeditionEntity> {

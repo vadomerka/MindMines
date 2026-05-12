@@ -2,7 +2,7 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
-import com.example.mindmines.db.dao.RepDao;
+import com.example.mindmines.data.dao.RepDao;
 import com.example.mindmines.models.interfaces.DBEntity;
 import com.example.mindmines.models.interfaces.RepositoryItem;
 import com.example.mindmines.services.auth.AuthManager;

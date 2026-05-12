@@ -2,8 +2,8 @@ package com.example.mindmines.services.repositories.dao;
 
 import android.util.Log;
 
-import com.example.mindmines.db.MindMinesDatabase;
-import com.example.mindmines.db.entities.UserStatusEntity;
+import com.example.mindmines.data.MindMinesDatabase;
+import com.example.mindmines.data.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.converters.entities.UserStatusConverter;
 import com.example.mindmines.services.observers.UserStatusObserver;

@@ -1,4 +1,4 @@
-package com.example.mindmines.db.dao;
+package com.example.mindmines.data.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.mindmines.db.entities.HabitEntity;
+import com.example.mindmines.data.entities.HabitEntity;
 
 import java.util.List;
 

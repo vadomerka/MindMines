@@ -1,4 +1,4 @@
-package com.example.mindmines.db.dao;
+package com.example.mindmines.data.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -8,9 +8,9 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.example.mindmines.db.entities.CharEntity;
-import com.example.mindmines.db.entities.ExpeditionEntity;
-import com.example.mindmines.db.entities.crossref.CharWithExpeditions;
+import com.example.mindmines.data.entities.CharEntity;
+import com.example.mindmines.data.entities.ExpeditionEntity;
+import com.example.mindmines.data.entities.crossref.CharWithExpeditions;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.example.mindmines.services.converters.entities;
 
-import com.example.mindmines.db.entities.UserStatusEntity;
+import com.example.mindmines.data.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
 
 public class UserStatusConverter implements RepConverter<String, UserStatus, UserStatusEntity> {

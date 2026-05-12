@@ -1,7 +1,7 @@
 package com.example.mindmines.services.repositories.dao;
 
-import com.example.mindmines.db.MindMinesDatabase;
-import com.example.mindmines.db.entities.ChatMessageEntity;
+import com.example.mindmines.data.MindMinesDatabase;
+import com.example.mindmines.data.entities.ChatMessageEntity;
 import com.example.mindmines.models.chat.ChatMessage;
 import com.example.mindmines.services.converters.entities.ChatMessageConverter;
 import com.example.mindmines.services.observers.ChatMessageObserver;
