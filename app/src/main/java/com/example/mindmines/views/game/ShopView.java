@@ -22,6 +22,8 @@ import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.adapters.DialogAdapter;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.List;
+
 public class ShopView extends DialogAdapter {
     private final EquipManager equipManager;
     private Char ch;
@@ -34,34 +36,49 @@ public class ShopView extends DialogAdapter {
     public void startShop(Equipment eq, Char ch, SlotType type) {
         buildDialog(R.layout.equipment_shop_dialog);
         this.ch = ch;
-        Equipment upgradedEq = loadUI(eq, type);
+        loadUI(eq, type);
 
         AlertDialog dialog = builder.create();
-        Button buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
-        buyEquipmentBtn.setText(String.valueOf(upgradedEq.getPrice()));
-        buyEquipmentBtn.setOnClickListener(v -> buyEquipment(eq, upgradedEq, type));
+
         dialog.show();
     }
 
-    private Equipment loadUI(Equipment eq, SlotType type) {
+    private void loadUI(Equipment eq, SlotType type) {
+        if (eq == null) {
+            eq = equipManager.getDefaultSlot(type);
+        }
+
+        List<Equipment> nextPaths = equipManager.getUpgrades(EquipFactory.getInstance().copyEquipment(eq));
+        if (nextPaths == null) return;
+        if (nextPaths.size() != 1) {
+            loadPathChoice();
+        } else {
+            loadPathUpgrade(eq, nextPaths);
+        }
+    }
+
+    protected void loadPathChoice() {
+
+    }
+
+    protected void loadPathUpgrade(Equipment eq, List<Equipment> nextPaths) {
         MaterialButton currentEqBtn = dialogView.findViewById(R.id.equipment_btn1);
         MaterialButton upgradedEqBtn = dialogView.findViewById(R.id.equipment_btn2);
         ImageView arrowView = dialogView.findViewById(R.id.arrow);
         TextView equipName = dialogView.findViewById(R.id.equip_name_text_value);
 
-        if (eq == null) {
-            eq = equipManager.getDefaultSlot(type);
-        }
+        Equipment upgradedEq = nextPaths.get(0);
+
         currentEqBtn.setIcon(getIcon(eq));
-
         arrowView.setImageResource(R.drawable.ic_arrow_right);
-
         String t = "Улучшить до Lvl " + (eq.getLevel() + 1) + "?";
         equipName.setText(t);
 
-        Equipment newEq = equipManager.upgrade(EquipFactory.getInstance().copyEquipment(eq));
-        upgradedEqBtn.setIcon(getIcon(newEq));
-        return newEq;
+        upgradedEqBtn.setIcon(getIcon(upgradedEq));
+
+        Button buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
+        buyEquipmentBtn.setText(String.valueOf(upgradedEq.getPrice()));
+        buyEquipmentBtn.setOnClickListener(v -> buyEquipment(eq, upgradedEq, eq.getSlotType()));
     }
 
     protected void buyEquipment(Equipment eq, Equipment upgradedEq, SlotType type) {

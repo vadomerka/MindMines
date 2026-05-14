@@ -9,6 +9,9 @@ import com.example.mindmines.services.factories.EquipFactory;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.EquipRepository;
 
+import java.util.Collections;
+import java.util.List;
+
 public class EquipManager {
     private static EquipManager instance;
     private final EquipRepository rep;
@@ -33,9 +36,11 @@ public class EquipManager {
         return EquipFactory.getInstance().generate(userId, type);
     }
 
-    public Equipment upgrade(Equipment eq) {
-        Equipment neq = pm.getNextByPathway(eq);
+    public List<Equipment> getUpgrades(Equipment eq) {
+        List<Equipment> paths = pm.getNextPaths(eq);
+        if (paths == null || paths.size() != 1) return paths;
 
+        Equipment neq = paths.get(0);
         int nLevel = eq.getLevel() + 1;
         neq.setLevel(nLevel);
         eq.getEquipStats().mult(
@@ -44,6 +49,6 @@ public class EquipManager {
                 1f + nLevel / 10f);
         neq.setEquipStats(eq.getEquipStats());
         neq.setPrice(eq.getPrice() + 1);
-        return neq;
+        return Collections.singletonList(neq);
     }
 }

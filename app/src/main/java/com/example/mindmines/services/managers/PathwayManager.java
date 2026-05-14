@@ -11,6 +11,7 @@ import com.example.mindmines.models.game.equipment.types.Sword;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,14 +68,20 @@ public class PathwayManager {
         return pathways.getOrDefault(c, null);
     }
 
-    public Equipment getNextByPathway(Equipment eq) {
+    public List<Equipment> getNextPaths(Equipment eq) {
+        if (eq == null) {
+            return getPathways();
+        }
+        if (eq.getPath() == EquipmentPath.EMPTY) {
+            return getPathways(eq.getSlotType());
+        }
         List<Equipment> path = getPathway(eq);
         for (int i = 0; i < path.size() - 1; i++) {
             if (path.get(i).getImage().equals(eq.getImage())) {
-                return path.get(i + 1);
+                return Collections.singletonList(path.get(i + 1));
             }
         }
-        return path.get(path.size() - 1);
+        return Collections.singletonList(path.get(path.size() - 1));
     }
 
     public List<Equipment> getPathways() {
