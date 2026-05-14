@@ -18,6 +18,7 @@ import com.example.mindmines.R;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.services.managers.ExpeditionManager;
+import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.ExpeditionObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
@@ -112,7 +113,7 @@ public class PartyView extends BaseFragment {
         expBtn = requireView().findViewById(R.id.expedition_view_button);
         if (lExp == null) {
             expBtn.setText("Начать экспедицию");
-            expBtn.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            expBtn.setBackgroundColor(getResources().getColor(R.color.action_main_color, requireContext().getTheme()));
             expBtn.setOnClickListener(v -> exStartView.startExpedition());
             stopTimer();
             return;
@@ -204,13 +205,17 @@ public class PartyView extends BaseFragment {
 
     @Override
     protected void loadDebugTools() {
-        Button deleteBut = requireView().findViewById(R.id.delete_last_expedition_debug_button);
-        deleteBut.setVisibility(View.VISIBLE);
-        deleteBut.setOnClickListener(v ->
+        Button deleteBtn = requireView().findViewById(R.id.delete_last_expedition_debug_button);
+        deleteBtn.setVisibility(View.VISIBLE);
+        deleteBtn.setOnClickListener(v ->
                 ExpeditionManager.removeLast(ExpeditionManager.getLatestUnfinishedExpedition()));
 
-        Button updateBut = requireView().findViewById(R.id.update_last_expedition_debug_button);
-        updateBut.setVisibility(View.VISIBLE);
-        updateBut.setOnClickListener(v -> loadExpedition());
+        Button updateBtn = requireView().findViewById(R.id.update_last_expedition_debug_button);
+        updateBtn.setVisibility(View.VISIBLE);
+        updateBtn.setOnClickListener(v -> loadExpedition());
+
+        Button addCoinsBtn = requireView().findViewById(R.id.add_coins_debug_button);
+        addCoinsBtn.setVisibility(View.VISIBLE);
+        addCoinsBtn.setOnClickListener(v -> UserStatusManager.getInstance(requireContext()).gainCoins(10L));
     }
 }

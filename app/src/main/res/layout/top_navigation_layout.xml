@@ -76,25 +76,31 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/coin_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_dollar"
-                android:contentDescription="@string/coin_icon_description"
-                android:layout_marginEnd="4dp" />
-        </LinearLayout>
+            android:layout_weight="1.25"
+            android:gravity="center"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp">
+                <ImageView
+                    android:id="@+id/coin_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_dollar"
+                    android:contentDescription="@string/coin_icon_description"
+                    android:layout_marginEnd="4dp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/coin_value_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:layout_marginEnd="8dp" />
+            <TextView
+                android:id="@+id/coin_value_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_marginEnd="8dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 

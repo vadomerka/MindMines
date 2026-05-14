@@ -8,7 +8,9 @@
     <LinearLayout
         style="@style/SpreadCenterVerticalLayout">
         <TextView
-            style="@style/title_text"
+            style="@style/header1_text"
+            android:layout_margin="20dp"
+            android:textSize="25sp"
             android:id="@+id/equip_name_text_value"
             android:text="@string/equip_name_text_value_default_text"
             />
@@ -26,7 +28,7 @@
                 android:id="@+id/arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:contentDescription="@string/left_to_right_arrow" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/equipment_btn2"
@@ -39,12 +41,17 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/save_equipment_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/save_equipment_button"
-        android:textSize="18sp"/>
+        android:text="@string/default_number_text"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_dollar"
+        app:iconGravity="textStart"
+        app:iconSize="24dp"
+        app:iconPadding="4dp"
+        app:backgroundTint="@color/action_main_color" />
 
 </LinearLayout>

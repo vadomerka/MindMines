@@ -80,8 +80,12 @@ public class UserStatusManager {
 
     public void gain(Expedition ex) {
         if (!ex.isFinished()) return;
-        UserStatus status = getStatus();
         long coins = XpManager.expeditionToRewards(ex);
+        gainCoins(coins);
+    }
+
+    public void gainCoins(Long coins) {
+        UserStatus status = getStatus();
         status.setCoins(status.getCoins() + coins);
         Log.d("Debug coins", "gain: " + coins);
         updateStatus(status);

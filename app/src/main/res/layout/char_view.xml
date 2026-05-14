@@ -64,5 +64,15 @@
     </LinearLayout>
     <include layout="@layout/char_stats_view_content"/>
     <include layout="@layout/char_equip_view_content"/>
+
+    <LinearLayout
+        style="@style/SpreadCenterVerticalLayout">
+        <Button
+            android:id="@+id/add_char_xp_debug_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/add_char_xp_debug_button_text"/>
+    </LinearLayout>
 </LinearLayout>
 </ScrollView>

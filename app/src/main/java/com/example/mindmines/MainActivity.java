@@ -29,7 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     public static boolean isDebug() {
         return DEBUG;

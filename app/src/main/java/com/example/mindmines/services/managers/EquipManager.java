@@ -34,7 +34,10 @@ public class EquipManager {
     public Equipment upgrade(Equipment eq) {
         int nLevel = eq.getLevel() + 1;
         eq.setLevel(nLevel);
-        eq.getEquipStats().mult(1f + nLevel / 10f, 1f + nLevel / 10f, 1f + nLevel / 10f);
+        eq.getEquipStats().mult(
+                1f + nLevel / 10f,
+                1f + nLevel / 10f,
+                1f + nLevel / 10f);
         eq.setPrice(eq.getPrice() + 1);
         return eq;
     }

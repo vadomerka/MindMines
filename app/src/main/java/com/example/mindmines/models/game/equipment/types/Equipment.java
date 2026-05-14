@@ -14,7 +14,7 @@ public class Equipment implements RepositoryItem<Integer> {
     protected SlotType slotType;
 
     public Equipment() {
-        this.level = 0;
+        this.level = 1;
         this.price = 0;
     }
 

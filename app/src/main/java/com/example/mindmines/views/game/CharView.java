@@ -12,11 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.CharEquipment;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.game.equipment.types.Equipment;
+import com.example.mindmines.services.managers.CharManager;
 import com.example.mindmines.services.observers.CharObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.CharRepository;
@@ -28,6 +30,7 @@ import java.util.Objects;
 public class CharView extends BaseFragment {
     private Char ch;
     private CharRepository rep;
+
     private TextView statTv0;
     private TextView statTv1;
     private TextView statTv2;
@@ -64,6 +67,9 @@ public class CharView extends BaseFragment {
 
         loadCharData();
         loadEquipData();
+        if (MainActivity.isDebug()) {
+            loadDebugTools();
+        }
     }
 
     @Override
@@ -146,12 +152,19 @@ public class CharView extends BaseFragment {
     }
 
     public void openShop(Equipment eq, SlotType type) {
-        new ShopView(requireContext(), getLayoutInflater())
-                .startShop(eq, ch, type); // , this::loadEquipData
+        new ShopView(requireContext(), getLayoutInflater()).startShop(eq, ch, type);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private Drawable getIcon(Equipment eq) {
         return requireContext().getDrawable(Integer.parseInt(eq.getImage()));
+    }
+
+    @Override
+    protected void loadDebugTools() {
+        Button addXPBtn = requireView().findViewById(R.id.add_char_xp_debug_button);
+        addXPBtn.setVisibility(View.VISIBLE);
+        addXPBtn.setOnClickListener(v ->
+                CharManager.getInstance(requireContext()).gain(ch, 10L));
     }
 }

@@ -41,11 +41,15 @@ public class CharManager {
     public void gain(Expedition ex) {
         for (Char ch : rep.getByUser()) {
             long newExp = XpManager.expeditionToCharExp(ch, ex);
-            CharStatus status = ch.getStatus();
-            XpManager.gainLevel(status, newExp);
-            ch.setStatus(status);
-            rep.update(ch);
+            gain(ch, newExp);
         }
+    }
+
+    public void gain(Char ch, Long xp) {
+        CharStatus status = ch.getStatus();
+        XpManager.gainLevel(status, xp);
+        ch.setStatus(status);
+        rep.update(ch);
     }
 
     public void unlockAvailableChars(UserStatus status) {

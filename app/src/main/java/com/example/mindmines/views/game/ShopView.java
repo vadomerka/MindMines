@@ -38,6 +38,7 @@ public class ShopView extends DialogAdapter {
 
         AlertDialog dialog = builder.create();
         Button buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
+        buyEquipmentBtn.setText(String.valueOf(upgradedEq.getPrice()));
         buyEquipmentBtn.setOnClickListener(v -> buyEquipment(eq, upgradedEq, type));
         dialog.show();
     }
