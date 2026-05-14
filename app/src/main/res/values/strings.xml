@@ -74,6 +74,8 @@
     <string name="level_title_view_text">Lvl:</string>
     <string name="save_equipment_button">Купить снаряжение</string>
     <string name="equip_name_text_value_default_text">Название экипировки</string>
+    <string name="shop_select_first_equipment">Выберите экипировку</string>
+    <string name="shop_select_equipment_first_toast">Сначала выберите предмет в списке</string>
     <string name="left_to_right_arrow">left_to_right_arrow</string>
     <string name="add_coins_debug_button_text">Добавить монеты</string>
     <string name="add_char_xp_debug_button_text">Добавить XP</string>

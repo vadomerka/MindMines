@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shop_equipment_item_button"
+    app:iconGravity="top"
+    app:iconSize="@dimen/equipment_icon_size"
+    app:cornerRadius="20dp"
+    app:backgroundTint="@color/white"
+    style="@style/EquipmentButton" />

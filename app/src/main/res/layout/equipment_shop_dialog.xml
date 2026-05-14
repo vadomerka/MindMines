@@ -14,31 +14,49 @@
             android:id="@+id/equip_name_text_value"
             android:text="@string/equip_name_text_value_default_text"
             />
-        <LinearLayout style="@style/SpreadCenterHorizontalLayout">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/equipment_btn1"
-                app:icon="@drawable/eq1_left_hand"
-                app:iconGravity="top"
-                app:iconSize="@dimen/equipment_icon_size"
-                app:cornerRadius="20dp"
-                style="@style/EquipmentButton"/>
+            <LinearLayout
+                android:id="@+id/shop_upgrade_row"
+                style="@style/SpreadCenterHorizontalLayout"
+                android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/left_to_right_arrow" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/equipment_btn1"
+                    app:icon="@drawable/eq1_left_hand"
+                    app:iconGravity="top"
+                    app:iconSize="@dimen/equipment_icon_size"
+                    app:cornerRadius="20dp"
+                    style="@style/EquipmentButton"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/equipment_btn2"
-                app:icon="@drawable/eq2_right_hand"
-                app:iconGravity="top"
-                app:iconSize="@dimen/equipment_icon_size"
-                app:cornerRadius="20dp"
-                style="@style/EquipmentButton"/>
+                <ImageView
+                    android:id="@+id/arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/left_to_right_arrow" />
 
-        </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/equipment_btn2"
+                    app:icon="@drawable/eq2_right_hand"
+                    app:iconGravity="top"
+                    app:iconSize="@dimen/equipment_icon_size"
+                    app:cornerRadius="20dp"
+                    style="@style/EquipmentButton"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/shop_equipment_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/equipment_button_size"
+                android:clipToPadding="false"
+                android:paddingHorizontal="8dp"
+                android:visibility="gone"
+                tools:listitem="@layout/equipment_shop_dialog_item" />
+
+        </FrameLayout>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
