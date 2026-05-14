@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.mindmines.models.game.equipment.EquipmentPath;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.interfaces.DBEntity;
 
@@ -34,6 +35,9 @@ public class EquipEntity implements DBEntity {
     @ColumnInfo(name = "slotType")
     public SlotType slotType;
 
+    @ColumnInfo(name = "equipmentPath")
+    public EquipmentPath equipmentPath;
+
 
     public EquipEntity(@NonNull
                        Integer equipId,
@@ -42,7 +46,8 @@ public class EquipEntity implements DBEntity {
                        Integer level,
                        Integer price,
                        String equipStats,
-                       SlotType slotType
+                       SlotType slotType,
+                       EquipmentPath equipmentPath
     ) {
         this.equipId = equipId;
         this.userId = userId;
@@ -51,5 +56,6 @@ public class EquipEntity implements DBEntity {
         this.price = price;
         this.equipStats = equipStats;
         this.slotType = slotType;
+        this.equipmentPath = equipmentPath;
     }
 }

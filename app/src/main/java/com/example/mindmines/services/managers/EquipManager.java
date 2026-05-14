@@ -12,11 +12,13 @@ import com.example.mindmines.services.repositories.dao.EquipRepository;
 public class EquipManager {
     private static EquipManager instance;
     private final EquipRepository rep;
+    private final PathwayManager pm;
     private final Context context;
 
     public EquipManager(Context context) {
         this.context = context;
         rep = RepositoryService.getEquipRepository();
+        pm = PathwayManager.getInstance();
     }
 
     public static EquipManager getInstance(Context context) {
@@ -32,13 +34,16 @@ public class EquipManager {
     }
 
     public Equipment upgrade(Equipment eq) {
+        Equipment neq = pm.getNextByPathway(eq);
+
         int nLevel = eq.getLevel() + 1;
-        eq.setLevel(nLevel);
+        neq.setLevel(nLevel);
         eq.getEquipStats().mult(
                 1f + nLevel / 10f,
                 1f + nLevel / 10f,
                 1f + nLevel / 10f);
-        eq.setPrice(eq.getPrice() + 1);
-        return eq;
+        neq.setEquipStats(eq.getEquipStats());
+        neq.setPrice(eq.getPrice() + 1);
+        return neq;
     }
 }

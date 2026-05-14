@@ -31,7 +31,7 @@ public class ShopView extends DialogAdapter {
         equipManager = EquipManager.getInstance(context);
     }
 
-    public void startShop(Equipment eq, Char ch, SlotType type) { // , Runnable onEquipmentChanged
+    public void startShop(Equipment eq, Char ch, SlotType type) {
         buildDialog(R.layout.equipment_shop_dialog);
         this.ch = ch;
         Equipment upgradedEq = loadUI(eq, type);

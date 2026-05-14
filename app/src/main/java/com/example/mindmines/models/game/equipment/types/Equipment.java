@@ -1,6 +1,7 @@
 package com.example.mindmines.models.game.equipment.types;
 
 import com.example.mindmines.models.game.characters.CharStats;
+import com.example.mindmines.models.game.equipment.EquipmentPath;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.interfaces.RepositoryItem;
 
@@ -13,9 +14,16 @@ public class Equipment implements RepositoryItem<Integer> {
     protected CharStats equipStats;
     protected SlotType slotType;
 
+    protected EquipmentPath path;
+
     public Equipment() {
         this.level = 1;
         this.price = 0;
+    }
+
+    public Equipment(String image) {
+        super();
+        this.image = image;
     }
 
     public Equipment(Integer equipId,
@@ -24,7 +32,8 @@ public class Equipment implements RepositoryItem<Integer> {
                      Integer level,
                      Integer price,
                      CharStats equipStats,
-                     SlotType slotType
+                     SlotType slotType,
+                     EquipmentPath path
     ) {
         this.equipId = equipId;
         this.userId = userId;
@@ -33,6 +42,7 @@ public class Equipment implements RepositoryItem<Integer> {
         this.price = price;
         this.equipStats = equipStats;
         this.slotType = slotType;
+        this.path = path;
     }
 
 
@@ -76,4 +86,5 @@ public class Equipment implements RepositoryItem<Integer> {
         return slotType;
     }
 
+    public EquipmentPath getPath() { return path; }
 }

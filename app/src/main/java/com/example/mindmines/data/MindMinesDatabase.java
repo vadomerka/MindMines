@@ -30,7 +30,7 @@ import com.example.mindmines.services.converters.HabitTypeConverter;
         HabitEntity.class, CharEntity.class, ExpeditionEntity.class,
         ExpeditionCharCrossRef.class, ChatMessageEntity.class, UserStatusEntity.class,
         EquipEntity.class
-}, version = 13, exportSchema = false)
+}, version = 14, exportSchema = false)
 @TypeConverters(HabitTypeConverter.class)
 public abstract class MindMinesDatabase extends RoomDatabase {
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {

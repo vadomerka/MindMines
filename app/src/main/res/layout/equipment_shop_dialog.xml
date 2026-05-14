@@ -18,7 +18,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/equipment_btn1"
-                app:icon="@drawable/equip1_left_hand"
+                app:icon="@drawable/eq1_left_hand"
                 app:iconGravity="top"
                 app:iconSize="@dimen/equipment_icon_size"
                 app:cornerRadius="20dp"
@@ -32,7 +32,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/equipment_btn2"
-                app:icon="@drawable/equip2_right_hand"
+                app:icon="@drawable/eq2_right_hand"
                 app:iconGravity="top"
                 app:iconSize="@dimen/equipment_icon_size"
                 app:cornerRadius="20dp"

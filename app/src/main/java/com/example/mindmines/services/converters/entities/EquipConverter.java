@@ -15,7 +15,8 @@ public class EquipConverter implements RepConverter<Integer, Equipment, EquipEnt
                 entity.level,
                 entity.price,
                 g.fromJson(entity.equipStats, CharStats.class),
-                entity.slotType
+                entity.slotType,
+                entity.equipmentPath
         );
     }
 
@@ -28,7 +29,8 @@ public class EquipConverter implements RepConverter<Integer, Equipment, EquipEnt
                 ch.getLevel(),
                 ch.getPrice(),
                 g.toJson(ch.getEquipStats()),
-                ch.getSlotType()
+                ch.getSlotType(),
+                ch.getPath()
         );
     }
 }
