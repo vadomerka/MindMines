@@ -5,5 +5,6 @@ public enum EquipmentPath {
     SWORD,
     SHIELD,
     BODY_ARMOR,
-    LEG_ARMOR
+    LEG_ARMOR,
+    STAFF
 }

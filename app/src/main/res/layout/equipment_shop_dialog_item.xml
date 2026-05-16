@@ -5,5 +5,5 @@
     app:iconGravity="top"
     app:iconSize="@dimen/equipment_icon_size"
     app:cornerRadius="20dp"
-    app:backgroundTint="@color/white"
+    app:backgroundTint="@color/purple_background_color"
     style="@style/EquipmentButton" />

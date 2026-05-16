@@ -1,6 +1,5 @@
 package com.example.mindmines.views.adapters;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +18,15 @@ public class ShopEquipChoiceAdapter extends RecyclerView.Adapter<ShopEquipChoice
     private final List<Equipment> options;
     private final OnSelectionChangeListener selectionListener;
     private int selectedPosition = RecyclerView.NO_POSITION;
+    private int selectedColor;
+    private int unselectedColor;
 
-    public ShopEquipChoiceAdapter(List<Equipment> options, OnSelectionChangeListener selectionListener) {
+    public ShopEquipChoiceAdapter(List<Equipment> options, OnSelectionChangeListener selectionListener,
+                                  int selectedColor, int unselectedColor) {
         this.options = options;
         this.selectionListener = selectionListener;
+        this.selectedColor = selectedColor;
+        this.unselectedColor = unselectedColor;
     }
 
     @NonNull
@@ -39,7 +43,7 @@ public class ShopEquipChoiceAdapter extends RecyclerView.Adapter<ShopEquipChoice
         int iconId = Integer.parseInt(equipment.getImage());
         holder.button.setIcon(ContextCompat.getDrawable(holder.itemView.getContext(), iconId));
         boolean selected = selectedPosition == position;
-        holder.button.setBackgroundColor(selected ? Color.GREEN : Color.WHITE);
+        holder.button.setBackgroundColor(selected ? selectedColor : unselectedColor);
 
         holder.button.setOnClickListener(v -> {
             int old = selectedPosition;

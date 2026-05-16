@@ -51,4 +51,17 @@ public class CharEquipment implements Serializable {
     public void setLegs(Equipment legs) {
         this.legs = legs;
     }
+
+    public Equipment getBySlot(SlotType slotType) {
+        switch (slotType) {
+            case LEFT_HAND:
+                return getLeftHand();
+            case BODY_ARMOR:
+                return getBody();
+            case LEGS_ARMOR:
+                return getLegs();
+            default:
+                return getRightHand();
+        }
+    }
 }

@@ -7,6 +7,7 @@ import com.example.mindmines.models.game.equipment.types.BodyArmor;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.models.game.equipment.types.LegArmor;
 import com.example.mindmines.models.game.equipment.types.Shield;
+import com.example.mindmines.models.game.equipment.types.Staff;
 import com.example.mindmines.models.game.equipment.types.Sword;
 
 import java.util.ArrayList;
@@ -44,6 +45,11 @@ public class PathwayManager {
                 new LegArmor(String.valueOf(R.drawable.eq_boots)),
                 new LegArmor(String.valueOf(R.drawable.eq_boots)),
                 new LegArmor(String.valueOf(R.drawable.eq_boots))
+        ));
+        pathways.put(EquipmentPath.STAFF, Arrays.asList(
+                new Staff(String.valueOf(R.drawable.eq_staff1)),
+                new Staff(String.valueOf(R.drawable.eq_staff2)),
+                new Staff(String.valueOf(R.drawable.eq_staff3))
         ));
     }
 

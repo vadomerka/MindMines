@@ -152,7 +152,7 @@ public class CharView extends BaseFragment {
     }
 
     public void openShop(Equipment eq, SlotType type) {
-        new ShopView(requireContext(), getLayoutInflater()).startShop(eq, ch, type);
+        new ShopView(requireContext(), getLayoutInflater(), getResources()).startShop(ch.getId(), type);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

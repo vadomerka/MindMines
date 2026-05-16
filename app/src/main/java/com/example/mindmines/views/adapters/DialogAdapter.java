@@ -20,6 +20,10 @@ public abstract class DialogAdapter {
 
     public void buildDialog(int id) {
         dialogView = layoutInflater.inflate(id, null);
+
         builder.setView(dialogView);
+        builder.setOnDismissListener(dialog -> dismiss());
     }
+
+    protected void dismiss() {}
 }

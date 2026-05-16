@@ -76,4 +76,16 @@ public class CharFactory {
                 new CharStats(atk, defence, speed),
                 new CharStatus(hp, level, maxExperience), new CharEquipment(), image);
     }
+
+    public Char copy(Char ch) {
+        return new Char(
+                ch.getId(),
+                ch.getUserId(),
+                ch.getName(),
+                ch.getStats(),
+                ch.getStatus(),
+                ch.getEquipment(),
+                ch.getImage()
+                );
+    }
 }

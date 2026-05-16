@@ -2,7 +2,9 @@ package com.example.mindmines.views.game;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +23,9 @@ import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.factories.EquipFactory;
 import com.example.mindmines.services.managers.EquipManager;
 import com.example.mindmines.services.managers.UserStatusManager;
+import com.example.mindmines.services.observers.CharObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.CharRepository;
 import com.example.mindmines.views.adapters.DialogAdapter;
 import com.example.mindmines.views.adapters.ShopEquipChoiceAdapter;
 import com.google.android.material.button.MaterialButton;
@@ -31,28 +35,47 @@ import java.util.List;
 public class ShopView extends DialogAdapter {
     private final EquipManager equipManager;
     private Char ch;
+    private Equipment eq;
+    private SlotType type;
     private ShopEquipChoiceAdapter shopChoiceAdapter;
+    private final Resources resources;
+    private CharObserver chProxy;
+    private CharRepository rep;
 
-    public ShopView(Context context, LayoutInflater layoutInflater) {
+    public ShopView(Context context, LayoutInflater layoutInflater, Resources resources) {
         super(context, layoutInflater);
         equipManager = EquipManager.getInstance(context);
+        this.resources = resources;
+        chProxy = upd -> {updateEq(upd); loadUI();};
+
+        rep = RepositoryService.getCharRepository();
     }
 
-    public void startShop(Equipment eq, Char ch, SlotType type) {
+    public void startShop(Integer chId, SlotType type) {
+        rep.subscribe(chProxy);
+
         buildDialog(R.layout.equipment_shop_dialog);
-        this.ch = ch;
-        loadUI(eq, type);
+        this.ch = rep.get(chId);
+        this.type = type;
+        this.eq = ch.getEquipment().getBySlot(type);
+        loadUI();
 
         AlertDialog dialog = builder.create();
-
         dialog.show();
     }
 
-    private void loadUI(Equipment eq, SlotType type) {
+    protected void updateEq(List<Char> upd) {
+        if (upd == null || upd.isEmpty()) return;
+        ch = upd.get(0); // CharFactory.getInstance().copy();
+        eq = ch.getEquipment().getBySlot(type);
+    }
+
+    protected void loadUI() {
         if (eq == null) {
             eq = equipManager.getDefaultSlot(type);
         }
 
+        Log.d("Debug ShopView", "loadUI: " + eq.getLevel());
         List<Equipment> nextPaths = equipManager.getUpgrades(EquipFactory.getInstance().copyEquipment(eq));
         if (nextPaths == null) return;
         if (nextPaths.size() != 1) {
@@ -75,7 +98,9 @@ public class ShopView extends DialogAdapter {
         shopChoiceAdapter = new ShopEquipChoiceAdapter(nextPaths, selected -> {
             MaterialButton buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
             buyEquipmentBtn.setText(String.valueOf(selected.getPrice()));
-        });
+        },
+                resources.getColor(R.color.green, context.getTheme()),
+                resources.getColor(R.color.purple_background_color, context.getTheme()));
         recyclerView.setAdapter(shopChoiceAdapter);
 
         MaterialButton buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
@@ -102,10 +127,11 @@ public class ShopView extends DialogAdapter {
         TextView equipName = dialogView.findViewById(R.id.equip_name_text_value);
 
         Equipment upgradedEq = nextPaths.get(0);
+        Log.d("Debug ShopView", "loadPathUpgrade: " + upgradedEq.getLevel());
 
         currentEqBtn.setIcon(getIcon(eq));
         arrowView.setImageResource(R.drawable.ic_arrow_right);
-        String t = "Улучшить до Lvl " + (eq.getLevel() + 1) + "?";
+        String t = "Улучшить до Lvl " + (upgradedEq.getLevel()) + "?";
         equipName.setText(t);
 
         upgradedEqBtn.setIcon(getIcon(upgradedEq));
@@ -120,7 +146,8 @@ public class ShopView extends DialogAdapter {
 
         ch.unEquip(type);
         ch.equip(upgradedEq);
-        RepositoryService.getCharRepository().update(ch);
+        Log.d("Debug ShopView", "loadPathUpgrade: " + ch.getEquipment().getBySlot(type).getLevel());
+        rep.update(ch);
     }
 
     protected boolean checkAvailable(Equipment upgradedEq) {
@@ -140,5 +167,10 @@ public class ShopView extends DialogAdapter {
     @SuppressLint("UseCompatLoadingForDrawables")
     private Drawable getIcon(Equipment eq) {
         return context.getDrawable(Integer.parseInt(eq.getImage()));
+    }
+
+    @Override
+    protected void dismiss() {
+        rep.unsubscribe(chProxy);
     }
 }
