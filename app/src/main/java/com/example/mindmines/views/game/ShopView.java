@@ -42,10 +42,10 @@ public class ShopView extends DialogAdapter {
     private TextView coinWarningTv;
     private ShopEquipChoiceAdapter shopChoiceAdapter;
     private final Resources resources;
-    private CharObserver chProxy;
-    private CharRepository rep;
-    private CharManager chm;
-    private UserStatusManager usm;
+    private final CharObserver chProxy;
+    private final CharRepository rep;
+    private final CharManager chm;
+    private final UserStatusManager usm;
 
     public ShopView(Context context, LayoutInflater layoutInflater, Resources resources) {
         super(context, layoutInflater);

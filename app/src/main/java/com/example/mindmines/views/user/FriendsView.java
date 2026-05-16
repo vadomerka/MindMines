@@ -2,6 +2,7 @@ package com.example.mindmines.views.user;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,14 +16,22 @@ import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.adapters.UserCardAdapter;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class FriendsView extends BaseFragment {
     private AuthManager auth;
+    private List<UserDTO> friends;
+    private UserCardAdapter listAdapter;
+    private RecyclerView listView;
 
     public FriendsView() {
         super(R.layout.friends_leader_board);
+        friends = new ArrayList<>();
     }
 
     @Override
@@ -31,14 +40,31 @@ public class FriendsView extends BaseFragment {
 
         auth = new AuthManager(requireContext());
 
-        RecyclerView listView = requireActivity().findViewById(R.id.item_list_view);
+        listView = requireActivity().findViewById(R.id.item_list_view);
         listView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        List<UserDTO> itemList = loadFriends();
-        UserCardAdapter listAdapter = new UserCardAdapter(itemList, this);
+        listAdapter = new UserCardAdapter(friends, this);
         listView.setAdapter(listAdapter);
+
+        loadFriends();
     }
 
-    public List<UserDTO> loadFriends() {
-        return UserController.getInstance(requireContext()).getFriends(auth.getUserId());
+    public void updateFriends(List<UserDTO> f) {
+        requireActivity().runOnUiThread(() -> {
+            friends.clear();
+            friends.addAll(f);
+            listAdapter.notifyItemRangeInserted(0, f.size());
+        });
+    }
+
+    public void loadFriends() {
+        UserController.getInstance(requireContext()).getFriends(this, auth.getUserId());
+    }
+
+    public void handleException(Exception ex) {
+        if (ex instanceof IOException) {
+            Toast.makeText(requireContext(), "Произошла ошибка подключения", Toast.LENGTH_SHORT).show();
+        } else if (ex instanceof JSONException) {
+            Toast.makeText(requireContext(), "Произошла ошибка при десериализации запроса", Toast.LENGTH_SHORT).show();
+        }
     }
 }

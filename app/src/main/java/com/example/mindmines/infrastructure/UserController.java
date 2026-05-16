@@ -6,7 +6,11 @@ import com.example.mindmines.models.user.UserDTO;
 import com.example.mindmines.requests.AuthRequestSender;
 import com.example.mindmines.requests.UserRequestSender;
 import com.example.mindmines.services.managers.UserStatusManager;
+import com.example.mindmines.views.user.FriendsView;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -34,16 +38,15 @@ public class UserController {
         return instance;
     }
 
-    public List<UserDTO> getFriends(String userId) {
-        Future<?> future = executor.submit(() -> {
-            users = UserRequestSender.getInstance().getFriendsRequestSend(userId);
+    public void getFriends(FriendsView root, String userId) {
+        executor.submit(() -> {
+            try {
+                users = UserRequestSender.getInstance().getFriendsRequestSend(userId);
+                root.updateFriends(users);
+            } catch (JSONException | IOException ex) {
+                root.handleException(ex);
+            }
         });
-        try {
-            future.get();
-            return users;
-        } catch (ExecutionException | InterruptedException e) {
-            return null;
-        }
     }
 
     public String register(String email, String password) {

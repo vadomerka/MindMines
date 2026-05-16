@@ -33,7 +33,7 @@ public class UserRequestSender {
         return instance;
     }
 
-    public List<UserDTO> getFriendsRequestSend(String userId) {
+    public List<UserDTO> getFriendsRequestSend(String userId) throws JSONException, IOException {
         List<UserDTO> users = new ArrayList<>();
         try {
             initConnection(SERVER_URL + FRIENDS_URL);
@@ -44,8 +44,6 @@ public class UserRequestSender {
             }
             return parseResponse();
 
-        } catch (Exception e) {
-            return users;
         } finally {
             if (connection != null) {
                 connection.disconnect();
