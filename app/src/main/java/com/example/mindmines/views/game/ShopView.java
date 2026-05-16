@@ -111,7 +111,7 @@ public class ShopView extends DialogAdapter {
                 Toast.makeText(context, context.getString(R.string.shop_select_equipment_first_toast), Toast.LENGTH_SHORT).show();
                 return;
             }
-            buyEquipment(eq, picked, eq.getSlotType());
+            buyEquipment(picked, eq.getSlotType());
         });
     }
 
@@ -127,7 +127,6 @@ public class ShopView extends DialogAdapter {
         TextView equipName = dialogView.findViewById(R.id.equip_name_text_value);
 
         Equipment upgradedEq = nextPaths.get(0);
-        Log.d("Debug ShopView", "loadPathUpgrade: " + upgradedEq.getLevel());
 
         currentEqBtn.setIcon(getIcon(eq));
         arrowView.setImageResource(R.drawable.ic_arrow_right);
@@ -138,16 +137,13 @@ public class ShopView extends DialogAdapter {
 
         Button buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
         buyEquipmentBtn.setText(String.valueOf(upgradedEq.getPrice()));
-        buyEquipmentBtn.setOnClickListener(v -> buyEquipment(eq, upgradedEq, eq.getSlotType()));
+        buyEquipmentBtn.setOnClickListener(v -> buyEquipment(upgradedEq, eq.getSlotType()));
     }
 
-    protected void buyEquipment(Equipment eq, Equipment upgradedEq, SlotType type) {
+    protected void buyEquipment(Equipment upgradedEq, SlotType type) {
         if (!checkAvailable(upgradedEq)) return;
 
-        ch.unEquip(type);
-        ch.equip(upgradedEq);
-        Log.d("Debug ShopView", "loadPathUpgrade: " + ch.getEquipment().getBySlot(type).getLevel());
-        rep.update(ch);
+        EquipManager.getInstance(context).buyEquipment(ch, upgradedEq, type);
     }
 
     protected boolean checkAvailable(Equipment upgradedEq) {
@@ -156,8 +152,7 @@ public class ShopView extends DialogAdapter {
                     "Персонаж слишком слаб и не может использовать это снаряжение.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        Long coins = UserStatusManager.getInstance(context).getStatus().getCoins();
-        if (coins < upgradedEq.getPrice()) {
+        if (UserStatusManager.getInstance(context).cantBuyEquipment(upgradedEq)) {
             Toast.makeText(context, "У вас недостаточно монет.", Toast.LENGTH_SHORT).show();
             return false;
         }

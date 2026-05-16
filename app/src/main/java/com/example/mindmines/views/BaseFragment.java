@@ -20,8 +20,10 @@ import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.UserStatusObserver;
+import com.example.mindmines.services.repositories.RepositoryService;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseFragment extends Fragment {
@@ -74,6 +76,19 @@ public abstract class BaseFragment extends Fragment {
             expProgressBar.setProgress(status.getExperience().intValue());
             coinValueView.setText(String.valueOf(status.getCoins()));
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        RepositoryService.getUserStatusRepository().subscribe(usProxy);
+        usProxy.update(new ArrayList<>());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RepositoryService.getUserStatusRepository().unsubscribe(usProxy);
     }
 
     protected void loadDebugTools() {

@@ -16,10 +16,8 @@ import com.example.mindmines.R;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.managers.UserStatusManager;
-import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.views.BaseFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileView extends BaseFragment {
@@ -77,13 +75,10 @@ public class ProfileView extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        RepositoryService.getUserStatusRepository().subscribe(usProxy);
-        usProxy.update(new ArrayList<>());
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        RepositoryService.getUserStatusRepository().unsubscribe(usProxy);
     }
 }

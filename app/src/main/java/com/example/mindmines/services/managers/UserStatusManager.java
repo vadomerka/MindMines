@@ -1,8 +1,8 @@
 package com.example.mindmines.services.managers;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.user.UserStatus;
@@ -87,8 +87,19 @@ public class UserStatusManager {
     public void gainCoins(Long coins) {
         UserStatus status = getStatus();
         status.setCoins(status.getCoins() + coins);
-        Log.d("Debug coins", "gain: " + coins);
         updateStatus(status);
+    }
+
+    public void buyEquipment(Equipment equipment) {
+        UserStatus status = getStatus();
+        if (cantBuyEquipment(equipment)) return;
+        status.setCoins(status.getCoins() - equipment.getPrice());
+        updateStatus(status);
+    }
+
+    public boolean cantBuyEquipment(Equipment equipment) {
+        UserStatus status = getStatus();
+        return status.getCoins() < equipment.getPrice();
     }
 
     public void unlock(UserStatus status) {

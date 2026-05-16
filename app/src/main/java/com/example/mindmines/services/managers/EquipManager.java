@@ -2,6 +2,7 @@ package com.example.mindmines.services.managers;
 
 import android.content.Context;
 
+import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.auth.AuthManager;
@@ -16,12 +17,14 @@ public class EquipManager {
     private static EquipManager instance;
     private final EquipRepository rep;
     private final PathwayManager pm;
+    private final UserStatusManager usm;
     private final Context context;
 
     public EquipManager(Context context) {
         this.context = context;
         rep = RepositoryService.getEquipRepository();
         pm = PathwayManager.getInstance();
+        usm = UserStatusManager.getInstance(context);
     }
 
     public static EquipManager getInstance(Context context) {
@@ -50,5 +53,13 @@ public class EquipManager {
         neq.setEquipStats(eq.getEquipStats());
         neq.setPrice(eq.getPrice() + 1);
         return Collections.singletonList(neq);
+    }
+
+    public void buyEquipment(Char ch, Equipment upgradedEq, SlotType type) {
+        if (usm.cantBuyEquipment(upgradedEq)) return;
+        usm.buyEquipment(upgradedEq);
+        ch.unEquip(type);
+        ch.equip(upgradedEq);
+        RepositoryService.getCharRepository().update(ch);
     }
 }

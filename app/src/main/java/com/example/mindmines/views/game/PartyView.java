@@ -192,15 +192,12 @@ public class PartyView extends BaseFragment {
     public void onStart() {
         super.onStart();
         rep.subscribe(expeditionObserver);
-        RepositoryService.getUserStatusRepository().subscribe(usProxy);
-        usProxy.update(new ArrayList<>());
     }
 
     @Override
     public void onStop() {
         super.onStop();
         rep.unsubscribe(expeditionObserver);
-        RepositoryService.getUserStatusRepository().unsubscribe(usProxy);
     }
 
     @Override
