@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.characters.CharStatus;
+import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.auth.AuthManager;
@@ -61,5 +62,9 @@ public class CharManager {
             rep.add(factory.generateDefault(status.getUserId(), 3));
         if (rep.getByUser().size() == 3 && status.getLevel() >= 10)
             rep.add(factory.generateDefault(status.getUserId(), 4));
+    }
+
+    public boolean cantBuyEquipment(Char ch, Equipment upgradedEq) {
+        return ch.getStatus().getLevel() < upgradedEq.getLevel();
     }
 }

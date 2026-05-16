@@ -79,4 +79,6 @@
     <string name="left_to_right_arrow">left_to_right_arrow</string>
     <string name="add_coins_debug_button_text">Добавить монеты</string>
     <string name="add_char_xp_debug_button_text">Добавить XP</string>
+    <string name="too_low_level_char_warning_text">Персонаж слишком низкого уровня</string>
+    <string name="too_few_coins_userStatus_warning_text">Недостаточно монет</string>
 </resources>

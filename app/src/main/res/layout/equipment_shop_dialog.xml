@@ -59,6 +59,8 @@
         </FrameLayout>
     </LinearLayout>
 
+    <LinearLayout
+        style="@style/SpreadCenterVerticalLayout">
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save_equipment_button"
         android:layout_width="wrap_content"
@@ -71,5 +73,18 @@
         app:iconSize="24dp"
         app:iconPadding="4dp"
         app:backgroundTint="@color/action_main_color" />
+
+        <TextView
+            android:id="@+id/too_low_level_char_warning"
+            style="@style/header1_text"
+            android:text="@string/too_low_level_char_warning_text"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/too_few_coins_userStatus_warning"
+            style="@style/header1_text"
+            android:text="@string/too_few_coins_userStatus_warning_text"
+            android:visibility="gone"/>
+    </LinearLayout>
+
 
 </LinearLayout>

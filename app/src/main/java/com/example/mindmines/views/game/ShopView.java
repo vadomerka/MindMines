@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +20,7 @@ import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.equipment.SlotType;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.services.factories.EquipFactory;
+import com.example.mindmines.services.managers.CharManager;
 import com.example.mindmines.services.managers.EquipManager;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.CharObserver;
@@ -37,10 +37,15 @@ public class ShopView extends DialogAdapter {
     private Char ch;
     private Equipment eq;
     private SlotType type;
+    private MaterialButton buyEquipmentBtn;
+    private TextView levelWarningTv;
+    private TextView coinWarningTv;
     private ShopEquipChoiceAdapter shopChoiceAdapter;
     private final Resources resources;
     private CharObserver chProxy;
     private CharRepository rep;
+    private CharManager chm;
+    private UserStatusManager usm;
 
     public ShopView(Context context, LayoutInflater layoutInflater, Resources resources) {
         super(context, layoutInflater);
@@ -49,6 +54,8 @@ public class ShopView extends DialogAdapter {
         chProxy = upd -> {updateEq(upd); loadUI();};
 
         rep = RepositoryService.getCharRepository();
+        chm = CharManager.getInstance(context);
+        usm = UserStatusManager.getInstance(context);
     }
 
     public void startShop(Integer chId, SlotType type) {
@@ -58,6 +65,12 @@ public class ShopView extends DialogAdapter {
         this.ch = rep.get(chId);
         this.type = type;
         this.eq = ch.getEquipment().getBySlot(type);
+        if (eq != null) Log.d("Debug ShopView", "startShop: " + eq.getLevel());
+
+        buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
+        levelWarningTv = dialogView.findViewById(R.id.too_low_level_char_warning);
+        coinWarningTv = dialogView.findViewById(R.id.too_few_coins_userStatus_warning);
+
         loadUI();
 
         AlertDialog dialog = builder.create();
@@ -103,7 +116,6 @@ public class ShopView extends DialogAdapter {
                 resources.getColor(R.color.purple_background_color, context.getTheme()));
         recyclerView.setAdapter(shopChoiceAdapter);
 
-        MaterialButton buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
         buyEquipmentBtn.setText("—");
         buyEquipmentBtn.setOnClickListener(v -> {
             Equipment picked = shopChoiceAdapter.getSelectedEquipment();
@@ -112,6 +124,7 @@ public class ShopView extends DialogAdapter {
                 return;
             }
             buyEquipment(picked, eq.getSlotType());
+            canBuyUpdate(picked);
         });
     }
 
@@ -135,9 +148,25 @@ public class ShopView extends DialogAdapter {
 
         upgradedEqBtn.setIcon(getIcon(upgradedEq));
 
-        Button buyEquipmentBtn = dialogView.findViewById(R.id.save_equipment_button);
         buyEquipmentBtn.setText(String.valueOf(upgradedEq.getPrice()));
         buyEquipmentBtn.setOnClickListener(v -> buyEquipment(upgradedEq, eq.getSlotType()));
+        canBuyUpdate(upgradedEq);
+    }
+
+    public void canBuyUpdate(Equipment eq) {
+        if (chm.cantBuyEquipment(ch, eq)) {
+            buyEquipmentBtn.setEnabled(false);
+            levelWarningTv.setVisibility(View.VISIBLE);
+            coinWarningTv.setVisibility(View.GONE);
+        } else if (usm.cantBuyEquipment(eq)) {
+            buyEquipmentBtn.setEnabled(false);
+            levelWarningTv.setVisibility(View.GONE);
+            coinWarningTv.setVisibility(View.VISIBLE);
+        } else {
+            buyEquipmentBtn.setEnabled(true);
+            levelWarningTv.setVisibility(View.GONE);
+            coinWarningTv.setVisibility(View.GONE);
+        }
     }
 
     protected void buyEquipment(Equipment upgradedEq, SlotType type) {
@@ -147,12 +176,12 @@ public class ShopView extends DialogAdapter {
     }
 
     protected boolean checkAvailable(Equipment upgradedEq) {
-        if (ch.getStatus().getLevel() < upgradedEq.getLevel()) {
+        if (chm.cantBuyEquipment(ch, upgradedEq)) {
             Toast.makeText(context,
                     "Персонаж слишком слаб и не может использовать это снаряжение.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (UserStatusManager.getInstance(context).cantBuyEquipment(upgradedEq)) {
+        if (usm.cantBuyEquipment(upgradedEq)) {
             Toast.makeText(context, "У вас недостаточно монет.", Toast.LENGTH_SHORT).show();
             return false;
         }
