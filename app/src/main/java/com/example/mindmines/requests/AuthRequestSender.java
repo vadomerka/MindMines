@@ -31,17 +31,17 @@ public class AuthRequestSender {
         return instance;
     }
 
-    public String registerRequestSend(String email, String password) {
-        if (email == null || email.isEmpty()) return null;
+    public String registerRequestSend(String email, String password) throws JSONException, IOException {
+        if (email == null || email.isEmpty()) throw new IllegalArgumentException("Empty email field");
         return sendAuthRequest(SERVER_URL + REGISTER_URL, email, password);
     }
 
-    public String loginRequestSend(String email, String password) {
-        if (email == null || email.isEmpty()) return null;
+    public String loginRequestSend(String email, String password) throws JSONException, IOException {
+        if (email == null || email.isEmpty()) throw new IllegalArgumentException("Empty email field");
         return sendAuthRequest(SERVER_URL + LOGIN_URL, email, password);
     }
 
-    private String sendAuthRequest(String endpoint, String email, String password) {
+    private String sendAuthRequest(String endpoint, String email, String password) throws IOException, JSONException {
         try {
             initConnection(endpoint);
 
@@ -50,8 +50,6 @@ public class AuthRequestSender {
             requestBody.put("password", password);
 
             return parseResponse(requestBody);
-        } catch (Exception e) {
-            return null;
         } finally {
             if (connection != null) {
                 connection.disconnect();

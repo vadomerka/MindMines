@@ -56,8 +56,8 @@ public class UserRequestSender {
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
-        connection.setConnectTimeout(10000);
-        connection.setReadTimeout(10000);
+        connection.setConnectTimeout(3000);
+        connection.setReadTimeout(3000);
     }
 
     private List<UserDTO> parseResponse() throws IOException, JSONException {

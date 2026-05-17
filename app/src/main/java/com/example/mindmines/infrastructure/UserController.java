@@ -7,15 +7,15 @@ import com.example.mindmines.requests.AuthRequestSender;
 import com.example.mindmines.requests.UserRequestSender;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.views.user.FriendsView;
+import com.example.mindmines.views.user.LoginView;
+import com.example.mindmines.views.user.RegistrationView;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class UserController {
@@ -49,28 +49,26 @@ public class UserController {
         });
     }
 
-    public String register(String email, String password) {
-        Future<?> future = executor.submit(() -> {
-            token.set(AuthRequestSender.getInstance().registerRequestSend(email, password));
+    public void register(RegistrationView root, String email, String password) {
+        executor.submit(() -> {
+            try {
+                String token = AuthRequestSender.getInstance().registerRequestSend(email, password);
+                root.handleToken(token);
+            } catch (JSONException | IOException ex) {
+                root.handleException(ex);
+            }
         });
-        try {
-            future.get();
-            return token.get();
-        } catch (ExecutionException | InterruptedException e) {
-            return null;
-        }
     }
 
-    public String login(String email, String password) {
-        Future<?> future = executor.submit(() -> {
-            token.set(AuthRequestSender.getInstance().loginRequestSend(email, password));
+    public void login(LoginView root, String email, String password) {
+        executor.submit(() -> {
+            try {
+                String token = AuthRequestSender.getInstance().loginRequestSend(email, password);
+                root.handleToken(token);
+            } catch (JSONException | IOException ex) {
+                root.handleException(ex);
+            }
         });
-        try {
-            future.get();
-            return token.get();
-        } catch (ExecutionException | InterruptedException e) {
-            return null;
-        }
     }
 
     public void deleteUser(String email, String password) {

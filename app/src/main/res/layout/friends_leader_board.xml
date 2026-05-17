@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    style="@style/SpreadTopVerticalLayout">
 
     <TextView
         android:id="@+id/leader_board_title"
@@ -9,19 +10,19 @@
         android:layout_height="wrap_content"
         android:text="@string/leader_board_title_text"
         style="@style/title_text"
-        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
         android:layout_margin="20dp"/>
 
     <LinearLayout
         android:id="@+id/leader_board_column_names"
-        android:layout_below="@+id/leader_board_title"
         style="@style/UserCardLinearLayout"
         android:layout_height="wrap_content"
         android:padding="0dp">
         <TextView
             android:text="@string/rank_column_name"
             style="@style/UserCardRankValueView"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5"
+            android:layout_width="0dp" />
         <TextView
             android:text="@string/usernames_column_name"
             style="@style/UserCardNameValueView"/>
@@ -34,8 +35,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/leader_board_column_names">
+        android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
 
-</RelativeLayout>
+    <ProgressBar
+        android:id="@+id/loading_indicator"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="visible"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/exception_text_view"
+        style="@style/ErrorMessage"
+        android:visibility="gone"/>
+
+</LinearLayout>

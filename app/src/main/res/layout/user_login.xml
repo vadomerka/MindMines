@@ -76,5 +76,10 @@
             </LinearLayout>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/exception_text_view"
+            style="@style/ErrorMessage"
+            android:visibility="gone"/>
+
     </LinearLayout>
 </LinearLayout>
