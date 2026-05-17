@@ -86,5 +86,7 @@ public class Equipment implements RepositoryItem<Integer> {
         return slotType;
     }
 
-    public EquipmentPath getPath() { return path; }
+    public EquipmentPath getPath() {
+        return path;
+    }
 }

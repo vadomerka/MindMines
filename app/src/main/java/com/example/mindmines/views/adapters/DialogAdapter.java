@@ -25,5 +25,6 @@ public abstract class DialogAdapter {
         builder.setOnDismissListener(dialog -> dismiss());
     }
 
-    protected void dismiss() {}
+    protected void dismiss() {
+    }
 }

@@ -34,6 +34,11 @@ import java.util.List;
 
 public class ShopView extends DialogAdapter {
     private final EquipManager equipManager;
+    private final Resources resources;
+    private final CharObserver chProxy;
+    private final CharRepository rep;
+    private final CharManager chm;
+    private final UserStatusManager usm;
     private Char ch;
     private Equipment eq;
     private SlotType type;
@@ -41,17 +46,15 @@ public class ShopView extends DialogAdapter {
     private TextView levelWarningTv;
     private TextView coinWarningTv;
     private ShopEquipChoiceAdapter shopChoiceAdapter;
-    private final Resources resources;
-    private final CharObserver chProxy;
-    private final CharRepository rep;
-    private final CharManager chm;
-    private final UserStatusManager usm;
 
     public ShopView(Context context, LayoutInflater layoutInflater, Resources resources) {
         super(context, layoutInflater);
         equipManager = EquipManager.getInstance(context);
         this.resources = resources;
-        chProxy = upd -> {updateEq(upd); loadUI();};
+        chProxy = upd -> {
+            updateEq(upd);
+            loadUI();
+        };
 
         rep = RepositoryService.getCharRepository();
         chm = CharManager.getInstance(context);

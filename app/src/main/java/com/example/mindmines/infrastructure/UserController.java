@@ -1,7 +1,9 @@
 package com.example.mindmines.infrastructure;
 
 import android.content.Context;
+import android.content.res.Resources;
 
+import com.example.mindmines.models.exceptions.AlreadyExistsException;
 import com.example.mindmines.models.user.UserDTO;
 import com.example.mindmines.requests.AuthRequestSender;
 import com.example.mindmines.requests.UserRequestSender;
@@ -54,8 +56,10 @@ public class UserController {
             try {
                 String token = AuthRequestSender.getInstance().registerRequestSend(email, password);
                 root.handleToken(token);
-            } catch (JSONException | IOException ex) {
+            } catch (JSONException | IOException | Resources.NotFoundException ex) {
                 root.handleException(ex);
+            } catch (AlreadyExistsException ex) {
+                root.handleAlreadyExists(ex.getMessage());
             }
         });
     }
@@ -65,7 +69,8 @@ public class UserController {
             try {
                 String token = AuthRequestSender.getInstance().loginRequestSend(email, password);
                 root.handleToken(token);
-            } catch (JSONException | IOException ex) {
+            } catch (JSONException | IOException | Resources.NotFoundException |
+                     AlreadyExistsException ex) {
                 root.handleException(ex);
             }
         });

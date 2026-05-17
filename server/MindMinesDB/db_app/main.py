@@ -113,7 +113,7 @@ def register_user(auth_dto: AuthRequest, session: SessionDep):
 
     existing = session.query(User).filter(User.email == auth_dto.email).first()
     if existing is not None:
-        raise HTTPException(status_code=409, detail="Пользователь уже существует")
+        raise HTTPException(status_code=409, detail=generate_user_token(existing.email, existing.password))
 
     user = User(name=auth_dto.email, email=auth_dto.email, password=auth_dto.password)
     session.add(user)

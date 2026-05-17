@@ -1,5 +1,9 @@
 package com.example.mindmines.requests;
 
+import android.content.res.Resources;
+
+import com.example.mindmines.models.exceptions.AlreadyExistsException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,17 +35,19 @@ public class AuthRequestSender {
         return instance;
     }
 
-    public String registerRequestSend(String email, String password) throws JSONException, IOException {
-        if (email == null || email.isEmpty()) throw new IllegalArgumentException("Empty email field");
+    public String registerRequestSend(String email, String password) throws JSONException, IOException, Resources.NotFoundException, AlreadyExistsException {
+        if (email == null || email.isEmpty())
+            throw new IllegalArgumentException("Empty email field");
         return sendAuthRequest(SERVER_URL + REGISTER_URL, email, password);
     }
 
-    public String loginRequestSend(String email, String password) throws JSONException, IOException {
-        if (email == null || email.isEmpty()) throw new IllegalArgumentException("Empty email field");
+    public String loginRequestSend(String email, String password) throws JSONException, IOException, Resources.NotFoundException, AlreadyExistsException {
+        if (email == null || email.isEmpty())
+            throw new IllegalArgumentException("Empty email field");
         return sendAuthRequest(SERVER_URL + LOGIN_URL, email, password);
     }
 
-    private String sendAuthRequest(String endpoint, String email, String password) throws IOException, JSONException {
+    private String sendAuthRequest(String endpoint, String email, String password) throws IOException, JSONException, Resources.NotFoundException, AlreadyExistsException {
         try {
             initConnection(endpoint);
 
@@ -50,6 +56,9 @@ public class AuthRequestSender {
             requestBody.put("password", password);
 
             return parseResponse(requestBody);
+        } catch (JSONException | IOException | Resources.NotFoundException |
+                 AlreadyExistsException ex) {
+            throw ex;
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -68,7 +77,7 @@ public class AuthRequestSender {
         connection.setReadTimeout(10000);
     }
 
-    private String parseResponse(JSONObject requestBody) throws IOException, JSONException {
+    private String parseResponse(JSONObject requestBody) throws IOException, JSONException, Resources.NotFoundException, AlreadyExistsException {
         OutputStream os = connection.getOutputStream();
         os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
         os.close();
@@ -76,6 +85,10 @@ public class AuthRequestSender {
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
             return parseToken(connection);
+        } else if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+            throw new Resources.NotFoundException();
+        } else if (responseCode == HttpURLConnection.HTTP_CONFLICT) {
+            throw new AlreadyExistsException(parseExistingToken(connection));
         }
         return null;
     }
@@ -89,6 +102,18 @@ public class AuthRequestSender {
                 response.append(line);
             }
             return new JSONObject(response.toString()).optString("user_token", null);
+        }
+    }
+
+    private String parseExistingToken(HttpURLConnection connection) throws IOException, JSONException {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(connection.getErrorStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                response.append(line);
+            }
+            return new JSONObject(response.toString()).optString("detail", null);
         }
     }
 }

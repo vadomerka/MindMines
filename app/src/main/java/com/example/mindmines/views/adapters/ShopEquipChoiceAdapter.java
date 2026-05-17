@@ -18,8 +18,8 @@ public class ShopEquipChoiceAdapter extends RecyclerView.Adapter<ShopEquipChoice
     private final List<Equipment> options;
     private final OnSelectionChangeListener selectionListener;
     private int selectedPosition = RecyclerView.NO_POSITION;
-    private int selectedColor;
-    private int unselectedColor;
+    private final int selectedColor;
+    private final int unselectedColor;
 
     public ShopEquipChoiceAdapter(List<Equipment> options, OnSelectionChangeListener selectionListener,
                                   int selectedColor, int unselectedColor) {

@@ -86,6 +86,6 @@ public class CharFactory {
                 ch.getStatus(),
                 ch.getEquipment(),
                 ch.getImage()
-                );
+        );
     }
 }

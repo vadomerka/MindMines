@@ -20,9 +20,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PathwayManager {
-    private final Map<EquipmentPath, List<Equipment>> pathways;
-
     private static PathwayManager instance;
+    private final Map<EquipmentPath, List<Equipment>> pathways;
 
     public PathwayManager() {
         pathways = new HashMap<>();
@@ -92,7 +91,7 @@ public class PathwayManager {
 
     public List<Equipment> getPathways() {
         List<Equipment> res = new ArrayList<>();
-        for (EquipmentPath key: pathways.keySet()) {
+        for (EquipmentPath key : pathways.keySet()) {
             if (Objects.requireNonNull(pathways.get(key)).isEmpty()) continue;
             res.add(Objects.requireNonNull(pathways.get(key)).get(0));
         }

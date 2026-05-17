@@ -2,6 +2,7 @@ package com.example.mindmines.views.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,10 +11,6 @@ import android.widget.Toast;
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-
 public class RegistrationView extends LoginView {
     protected EditText passwordConfirmInput;
     protected String password2;
@@ -21,23 +18,39 @@ public class RegistrationView extends LoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_register);
+    }
+
+    protected int getLayout() {
+        return R.layout.user_register;
     }
 
     @Override
     protected void initUi() {
-        emailInput = findViewById(R.id.login_email_input);
-        passwordInput = findViewById(R.id.login_password_input);
+        initForm();
+        initButtons();
+    }
+
+    @Override
+    protected void initForm() {
+        super.initForm();
         passwordConfirmInput = findViewById(R.id.login_password_confirmation_input);
-        Button loginBtn = findViewById(R.id.register_page_button);
+    }
+
+    @Override
+    protected void initButtons() {
+        Button loginBtn = findViewById(R.id.register_button);
         loginBtn.setOnClickListener(v -> register());
     }
 
-    private void register() {
+    protected void register() {
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
+        loadingIndicator.setVisibility(View.VISIBLE);
+        exceptionView.setVisibility(View.GONE);
 
-        if (!checkData()) { return; }
+        if (!checkData()) {
+            return;
+        }
 
         uc.register(this, email, password);
     }
@@ -59,23 +72,18 @@ public class RegistrationView extends LoginView {
 
     @Override
     public void handleToken(String token) {
-        runOnUiThread(() -> { loadingIndicator.setVisibility(View.GONE); });
-        if (token == null) {
-            showException("Пользователь уже зарегестрирован.");
-            authManager.saveUserData(token, email);
-        } else {
-            authManager.saveNewUserData(token, email);
-            openMain();
-        }
+        Log.d(TAG, "handleToken: ");
+        runOnUiThread(() -> {
+            loadingIndicator.setVisibility(View.GONE);
+        });
+        authManager.saveNewUserData(token, email);
+        openMain();
     }
 
-    @Override
-    public void handleException(Exception ex) {
-        if (ex instanceof IOException) {
-            showException("Произошла ошибка подключения");
-        } else if (ex instanceof JSONException) {
-            showException("Произошла ошибка при десериализации запроса");
-        }
+    public void handleAlreadyExists(String token) {
+        showException("Пользователь уже зарегестрирован.");
+        authManager.saveUserData(token, email);
+        openMain();
     }
 
     @Override

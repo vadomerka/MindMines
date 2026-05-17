@@ -1,14 +1,15 @@
 package com.example.mindmines.views.user;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,10 +34,12 @@ public class LoginView extends AppCompatActivity {
     protected String email;
     protected String password;
 
+    protected String TAG = "Debug register";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_login);
+        setContentView(getLayout());
 
         uc = UserController.getInstance(getApplicationContext());
         authManager = new AuthManager(getApplicationContext());
@@ -44,18 +47,28 @@ public class LoginView extends AppCompatActivity {
         initUi();
     }
 
+    protected int getLayout() {
+        return R.layout.user_login;
+    }
+
     protected void initUi() {
+        initForm();
+        initButtons();
+        initDebugUi();
+    }
+
+    protected void initForm() {
         emailInput = findViewById(R.id.login_email_input);
         passwordInput = findViewById(R.id.login_password_input);
         loadingIndicator = findViewById(R.id.loading_indicator);
         exceptionView = findViewById(R.id.exception_text_view);
+    }
+
+    protected void initButtons() {
         Button loginBtn = findViewById(R.id.login_button);
         loginBtn.setOnClickListener(v -> tryLogIn());
         Button registerBtn = findViewById(R.id.register_page_button);
         registerBtn.setOnClickListener(v -> openRegisterView());
-
-
-        initDebugUi();
     }
 
     protected void initDebugUi() {
@@ -69,6 +82,7 @@ public class LoginView extends AppCompatActivity {
     protected void tryLogIn() {
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
+        loadingIndicator.setVisibility(View.VISIBLE);
         exceptionView.setVisibility(View.GONE);
 
         if (!checkData()) {
@@ -82,14 +96,16 @@ public class LoginView extends AppCompatActivity {
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Форма не заполнена", Toast.LENGTH_SHORT).show();
+            showException("Форма не заполнена");
             return false;
         }
         return true;
     }
 
     public void handleToken(String token) {
-        runOnUiThread(() -> { loadingIndicator.setVisibility(View.GONE); });
+        runOnUiThread(() -> {
+            loadingIndicator.setVisibility(View.GONE);
+        });
         if (token == null) {
             showException("Пользователь не найден.");
         } else {
@@ -99,10 +115,13 @@ public class LoginView extends AppCompatActivity {
     }
 
     public void handleException(Exception ex) {
+        Log.d(TAG, "handleException: ");
         if (ex instanceof IOException) {
-            showException("Произошла ошибка подключения");
+            showException("Не удалось подключиться");
         } else if (ex instanceof JSONException) {
             showException("Произошла ошибка при десериализации запроса");
+        } else if (ex instanceof Resources.NotFoundException) {
+            showException("Пользователь не найден");
         }
     }
 
@@ -120,7 +139,6 @@ public class LoginView extends AppCompatActivity {
         if (authManager.isUserLoggedIn()) {
             openMain();
         }
-        System.out.println("User not logged in!");
     }
 
     protected void openMain() {
