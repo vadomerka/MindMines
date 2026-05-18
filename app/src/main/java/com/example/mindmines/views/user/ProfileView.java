@@ -53,7 +53,7 @@ public class ProfileView extends BaseFragment {
         requireActivity().runOnUiThread(() -> {
             AuthManager auth = new AuthManager(requireContext());
             String email = auth.getEmail();
-            TextView profileTitle = requireActivity().findViewById(R.id.user_info_view);
+            TextView profileTitle = requireActivity().findViewById(R.id.user_token_view);
             profileTitle.setText("Профиль: " + email);
             if (MainActivity.isDebug()) {
                 profileTitle.setText("Почта: " + email + "\n"

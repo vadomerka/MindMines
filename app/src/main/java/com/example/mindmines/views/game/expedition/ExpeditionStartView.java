@@ -160,6 +160,6 @@ public class ExpeditionStartView extends ExpeditionView {
                 expeditionLocation.getImage(),
                 selectedDuration
         );
-        ExpeditionManager.add(result);
+        ExpeditionManager.getInstance(context).add(result);
     }
 }

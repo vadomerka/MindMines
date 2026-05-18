@@ -64,7 +64,7 @@ public class ChatMessagesRequestSender {
         connection.setRequestProperty("Accept", "application/json");
         connection.setDoOutput(true);
         connection.setConnectTimeout(10000);
-        connection.setReadTimeout(10000);
+        connection.setReadTimeout(30000);
     }
 
     private String parseResponse(JSONObject requestBody) throws IOException, JSONException {

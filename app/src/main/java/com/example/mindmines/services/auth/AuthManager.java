@@ -40,7 +40,6 @@ public class AuthManager {
         UserStatusManager usm = UserStatusManager.getInstance(context);
         if (usm.getStatus() == null)
             usm.addStatus(UserStatusFactory.getInstance().create(authToken));
-//        Log.d("Debug register", "saveNewUserData: " + usm.getStatus().getUserId());
     }
 
     public String getAuthToken() {

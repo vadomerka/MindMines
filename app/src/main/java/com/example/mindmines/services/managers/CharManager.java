@@ -8,28 +8,22 @@ import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.factories.CharFactory;
-import com.example.mindmines.services.observers.ExpeditionObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.CharRepository;
 
 import java.util.List;
 
 public class CharManager {
-    private static CharManager instance;
     private final CharRepository rep;
     private final CharFactory factory;
-    private final ExpeditionObserver exProxy;
     private final Context context;
+    private static CharManager instance;
 
     private CharManager(Context context) {
         this.context = context;
 
         factory = CharFactory.getInstance();
         rep = RepositoryService.getCharRepository();
-        exProxy = upd -> {
-            if (!upd.isEmpty()) gain(upd.get(0));
-        };
-        RepositoryService.getExpeditionRepository().subscribe(exProxy);
     }
 
     public static CharManager getInstance(Context context) {

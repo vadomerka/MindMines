@@ -5,7 +5,15 @@
     <TextView
         android:id="@+id/user_info_view"
         style="@style/title_text"
+        android:text="@string/profile_title_text_view_text"/>
+
+    <LinearLayout
+        style="@style/SpreadStartVerticalLayout">
+    <TextView
+        android:id="@+id/user_token_view"
+        style="@style/header1_text"
         android:text="@string/default_hello_world_text"/>
+    </LinearLayout>
 
     <include layout="@layout/exp_status_view_content"/>
 

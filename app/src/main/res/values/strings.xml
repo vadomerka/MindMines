@@ -81,4 +81,11 @@
     <string name="add_char_xp_debug_button_text">Добавить XP</string>
     <string name="too_low_level_char_warning_text">Персонаж слишком низкого уровня</string>
     <string name="too_few_coins_userStatus_warning_text">Недостаточно монет</string>
+    <string name="profile_title_text_view_text">Ваш профиль:</string>
+    <string name="default_timer_time_text">00:00:00</string>
+    <string name="return_button_text">Вернуться</string>
+    <string name="location_title_text_view_text">Название локации</string>
+    <string name="expedition_title_text_view_text">Экспедиция</string>
+    <string name="expedition_location_image_desc">Expedition location</string>
+    <string name="expedition_finishes_in_text_view_text">Завершится через:</string>
 </resources>

@@ -20,7 +20,7 @@
             style="@style/SpreadCenterVerticalLayout">
         <EditText
             android:id="@+id/login_email_input"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/login_email_input_hint"
@@ -30,7 +30,7 @@
 
         <EditText
             android:id="@+id/login_password_input"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/login_password_input_hint"
@@ -40,7 +40,7 @@
 
             <EditText
                 android:id="@+id/login_password_confirmation_input"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/login_password_confirmation_input_hint"

@@ -18,8 +18,8 @@ public class ExpeditionView extends DialogAdapter {
         super(context, layoutInflater);
     }
 
-    public static void debugLogExpeditions() {
-        Expedition ex = ExpeditionManager.getLatestUnfinishedExpedition();
+    public static void debugLogExpeditions(Context context) {
+        Expedition ex = ExpeditionManager.getInstance(context).getLatestUnfinishedExpedition();
         if (ex == null) {
             Log.d("Debug Expeditions", "no unfinishedExpeditions");
             return;

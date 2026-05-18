@@ -82,12 +82,12 @@ public class LoginView extends AppCompatActivity {
     protected void tryLogIn() {
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
-        loadingIndicator.setVisibility(View.VISIBLE);
-        exceptionView.setVisibility(View.GONE);
-
         if (!checkData()) {
             return;
         }
+
+        loadingIndicator.setVisibility(View.VISIBLE);
+        exceptionView.setVisibility(View.GONE);
 
         uc.login(this, email, password);
     }
@@ -107,7 +107,7 @@ public class LoginView extends AppCompatActivity {
             loadingIndicator.setVisibility(View.GONE);
         });
         if (token == null) {
-            showException("Пользователь не найден.");
+            showException("Пользователь с таким логином и паролем не существует.");
         } else {
             authManager.saveUserData(token, email);
             openMain();
@@ -121,7 +121,7 @@ public class LoginView extends AppCompatActivity {
         } else if (ex instanceof JSONException) {
             showException("Произошла ошибка при десериализации запроса");
         } else if (ex instanceof Resources.NotFoundException) {
-            showException("Пользователь не найден");
+            showException("Пользователь с таким логином и паролем не существует.");
         }
     }
 

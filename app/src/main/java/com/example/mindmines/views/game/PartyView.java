@@ -44,9 +44,11 @@ public class PartyView extends BaseFragment {
     private ExpeditionTimerView exView;
     private ExpeditionFinishView exFinishView;
     private final ExpeditionObserver expeditionObserver = upd -> updateExpedition();
+    private final ExpeditionManager exm;
 
     public PartyView() {
         super(R.layout.char_party_view);
+        exm = ExpeditionManager.getInstance(getContext());
     }
 
     @Override
@@ -107,9 +109,9 @@ public class PartyView extends BaseFragment {
     }
 
     private void loadExpedition() {
-        ExpeditionView.debugLogExpeditions();
+        ExpeditionView.debugLogExpeditions(requireContext());
 
-        Expedition lExp = ExpeditionManager.getLatestUnfinishedExpedition();
+        Expedition lExp = exm.getLatestUnfinishedExpedition();
         expBtn = requireView().findViewById(R.id.expedition_view_button);
         if (lExp == null) {
             expBtn.setText("Начать экспедицию");
@@ -122,7 +124,7 @@ public class PartyView extends BaseFragment {
     }
 
     private void reloadExpedition(Expedition lExp) {
-        boolean isEnded = ExpeditionManager.isEnded(lExp);
+        boolean isEnded = exm.isEnded(lExp);
         if (isEnded) {
             expBtn.setText("Собрать награду");
             expBtn.setBackgroundColor(Color.parseColor("#11FF00"));
@@ -204,8 +206,7 @@ public class PartyView extends BaseFragment {
     protected void loadDebugTools() {
         Button deleteBtn = requireView().findViewById(R.id.delete_last_expedition_debug_button);
         deleteBtn.setVisibility(View.VISIBLE);
-        deleteBtn.setOnClickListener(v ->
-                ExpeditionManager.removeLast(ExpeditionManager.getLatestUnfinishedExpedition()));
+        deleteBtn.setOnClickListener(v -> exm.removeLast(exm.getLatestUnfinishedExpedition()));
 
         Button updateBtn = requireView().findViewById(R.id.update_last_expedition_debug_button);
         updateBtn.setVisibility(View.VISIBLE);

@@ -13,6 +13,6 @@ public class ExpeditionFinishView extends ExpeditionView {
     }
 
     public void finishExpedition(Expedition lExp) {
-        ExpeditionManager.finishExp(lExp);
+        ExpeditionManager.getInstance(context).finishExp(lExp);
     }
 }

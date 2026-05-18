@@ -45,12 +45,14 @@ public class RegistrationView extends LoginView {
     protected void register() {
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
-        loadingIndicator.setVisibility(View.VISIBLE);
-        exceptionView.setVisibility(View.GONE);
 
         if (!checkData()) {
             return;
         }
+
+        loadingIndicator.setVisibility(View.VISIBLE);
+        exceptionView.setVisibility(View.GONE);
+
 
         uc.register(this, email, password);
     }
@@ -65,6 +67,10 @@ public class RegistrationView extends LoginView {
             return false;
         } else if (!password.equals(password2)) {
             Toast.makeText(getApplicationContext(), "Пароли не совпадают", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (password.length() < 8) {
+            Toast.makeText(getApplicationContext(),
+                    "Пароль должен быть не менее 8 символов в длину", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
