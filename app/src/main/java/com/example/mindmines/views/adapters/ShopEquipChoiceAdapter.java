@@ -17,9 +17,9 @@ import java.util.List;
 public class ShopEquipChoiceAdapter extends RecyclerView.Adapter<ShopEquipChoiceAdapter.ViewHolder> {
     private final List<Equipment> options;
     private final OnSelectionChangeListener selectionListener;
-    private int selectedPosition = RecyclerView.NO_POSITION;
     private final int selectedColor;
     private final int unselectedColor;
+    private int selectedPosition = RecyclerView.NO_POSITION;
 
     public ShopEquipChoiceAdapter(List<Equipment> options, OnSelectionChangeListener selectionListener,
                                   int selectedColor, int unselectedColor) {

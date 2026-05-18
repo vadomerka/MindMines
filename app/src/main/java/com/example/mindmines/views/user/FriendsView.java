@@ -26,8 +26,8 @@ import java.util.List;
 
 
 public class FriendsView extends BaseFragment {
-    private AuthManager auth;
     private final List<UserDTO> friends;
+    private AuthManager auth;
     private LinearLayout leaderBoardLayout;
     private UserCardAdapter listAdapter;
     private RecyclerView listView;

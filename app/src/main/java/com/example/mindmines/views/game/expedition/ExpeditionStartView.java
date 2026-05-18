@@ -33,9 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpeditionStartView extends ExpeditionView {
-    private LocationAdapter adapter;
     private final Resources resources;
-
+    private LocationAdapter adapter;
     private List<MaterialButton> presetButtons;
     private LinearLayout customDurationLayout;
     private Duration selectedDuration;
@@ -82,7 +81,8 @@ public class ExpeditionStartView extends ExpeditionView {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new LocationAdapter(context, resources, locationList, (location, position) -> {});
+        adapter = new LocationAdapter(context, resources, locationList, (location, position) -> {
+        });
         recyclerView.setAdapter(adapter);
     }
 

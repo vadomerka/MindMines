@@ -26,7 +26,9 @@ public class CharManager {
 
         factory = CharFactory.getInstance();
         rep = RepositoryService.getCharRepository();
-        exProxy = upd -> { if (!upd.isEmpty()) gain(upd.get(0)); };
+        exProxy = upd -> {
+            if (!upd.isEmpty()) gain(upd.get(0));
+        };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
     }
 
@@ -44,6 +46,7 @@ public class CharManager {
     }
 
     public void gain(Expedition ex) {
+        if (!ex.isFinished()) return;
         for (Char ch : rep.getByUser()) {
             long newExp = XpManager.expeditionToCharExp(ch, ex);
             gain(ch, newExp);

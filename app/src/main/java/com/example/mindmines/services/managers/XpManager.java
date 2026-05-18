@@ -1,7 +1,5 @@
 package com.example.mindmines.services.managers;
 
-import android.util.Log;
-
 import com.example.mindmines.models.XpStatus;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.expeditions.Expedition;
@@ -23,16 +21,15 @@ public class XpManager {
 
     public static Long habitToExp(Habit h) {  // XpStatus status,
         // Формула получения опыта - опыт увеличивается пропорционально стрику.
-        long streakExp = baseExpForHabit * h.getStreakNumber() * h.getPriority() * h.getDifficulty();
+        long streakExp = (long) (baseExpForHabit * h.getStreakNumber() *
+                (1 + h.getPriority() / 2f) * (1 + h.getDifficulty() / 2f));
         // Формула получения штрафа - штраф не увеличивается пропорционально,
         // лишь капает каждый раз когда идет пропуск.
         long penaltyExp = baseExpForHabit * h.getPriority() / h.getDifficulty();
         if (h.getPenaltyNumber() == 0) {
             penaltyExp = 0L;
         }
-        Long change = streakExp - penaltyExp;
-        Log.d("Debug ExpManager", String.format("streak: %s; penalty: %s", streakExp, penaltyExp));
-        return change;  // status.getExperience() +
+        return streakExp - penaltyExp;
     }
 
     public static Long expeditionToRewards(Expedition ex) {  // XpStatus status,
@@ -50,7 +47,7 @@ public class XpManager {
         else if (levelDif < 0) res /= Math.abs(levelDif);
 
         Duration d = Duration.between(ex.getStart(), ex.getFinish());
-        return res * (d.getSeconds() / 3600);
+        return baseExpForEx + res * (d.getSeconds() / 3600);
     }
 
     public static void gainLevel(XpStatus status, Long exp) {
@@ -61,7 +58,7 @@ public class XpManager {
             status.setExperience(0L);
             return;
         }
-        while (exp > maxExp) {
+        while (exp >= maxExp) {
             exp -= maxExp;
             status.setExperience(exp);
             if (level >= maxLevel) {

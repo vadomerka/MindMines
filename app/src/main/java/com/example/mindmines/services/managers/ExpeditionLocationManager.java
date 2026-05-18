@@ -5,9 +5,9 @@ import android.content.Context;
 import com.example.mindmines.models.game.expeditions.ExpeditionLocation;
 
 public class ExpeditionLocationManager {
+    private static ExpeditionLocationManager instance;
     private final Context context;
     private final CharManager chm;
-    private static ExpeditionLocationManager instance;
 
     public ExpeditionLocationManager(Context context) {
         this.context = context;
