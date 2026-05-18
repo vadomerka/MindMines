@@ -29,7 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Debug MainActivity";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public static boolean isDebug() {
         return DEBUG;
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             if (topLevelDestinationId == 0) {
                 return;
             }
-            // Обновляем только визуальную подсветку таба, не инициируя новую навигацию.
             bottomNav.getMenu().findItem(topLevelDestinationId).setChecked(true);
         });
     }

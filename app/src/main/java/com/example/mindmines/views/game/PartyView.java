@@ -65,7 +65,7 @@ public class PartyView extends BaseFragment {
     }
 
     private void loadExViews() {
-        exStartView = new ExpeditionStartView(requireContext(), getLayoutInflater());
+        exStartView = new ExpeditionStartView(requireContext(), getResources(), getLayoutInflater());
         exView = new ExpeditionTimerView(requireContext(), getLayoutInflater());
         exFinishView = new ExpeditionFinishView(requireContext(), getLayoutInflater());
     }

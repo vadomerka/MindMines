@@ -7,11 +7,12 @@ import com.example.mindmines.models.game.characters.CharStatus;
 import com.example.mindmines.models.game.equipment.types.Equipment;
 import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.auth.AuthManager;
 import com.example.mindmines.services.factories.CharFactory;
 import com.example.mindmines.services.observers.ExpeditionObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.CharRepository;
+
+import java.util.List;
 
 public class CharManager {
     private static CharManager instance;
@@ -21,14 +22,11 @@ public class CharManager {
     private final Context context;
 
     private CharManager(Context context) {
-        String userId = new AuthManager(context).getUserId();
-        factory = CharFactory.getInstance();
-
         this.context = context;
+
+        factory = CharFactory.getInstance();
         rep = RepositoryService.getCharRepository();
-        exProxy = upd -> {
-            if (!upd.isEmpty()) gain(upd.get(0));
-        };
+        exProxy = upd -> { if (!upd.isEmpty()) gain(upd.get(0)); };
         RepositoryService.getExpeditionRepository().subscribe(exProxy);
     }
 
@@ -37,6 +35,12 @@ public class CharManager {
             instance = new CharManager(context);
         }
         return instance;
+    }
+
+    public Integer getMinLevel() {
+        List<Char> chars = rep.getByUser();
+        if (chars == null || chars.isEmpty()) return 0;
+        return chars.stream().map(it -> it.getStatus().getLevel()).min(Integer::compareTo).get();
     }
 
     public void gain(Expedition ex) {

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/SpreadCenterVerticalLayout">
 
-
     <LinearLayout
         style="@style/SpreadCenterVerticalLayout">
         <TextView
@@ -15,7 +14,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/location_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="400dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/expedition_create_dialog_location_item" />

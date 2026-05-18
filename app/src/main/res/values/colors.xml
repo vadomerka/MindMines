@@ -12,4 +12,6 @@
     <color name="action_main_color">#6200EE</color>
     <color name="inactive_tab_color">#9E9E9E</color>
     <color name="holo_purple">#ffaa66cc</color>
+    <color name="error_message_color">#FB9E9E</color>
+    <color name="info_message_color">#DDDDDD</color>
 </resources>

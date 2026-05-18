@@ -1,6 +1,7 @@
 package com.example.mindmines.views.game.expedition;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -33,14 +34,16 @@ import java.util.List;
 
 public class ExpeditionStartView extends ExpeditionView {
     private LocationAdapter adapter;
+    private final Resources resources;
 
     private List<MaterialButton> presetButtons;
     private LinearLayout customDurationLayout;
     private Duration selectedDuration;
     private IntervalPickerAdapter ipAdapter;
 
-    public ExpeditionStartView(Context context, LayoutInflater layoutInflater) {
+    public ExpeditionStartView(Context context, Resources resources, LayoutInflater layoutInflater) {
         super(context, layoutInflater);
+        this.resources = resources;
     }
 
     public void startExpedition() {
@@ -79,8 +82,7 @@ public class ExpeditionStartView extends ExpeditionView {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new LocationAdapter(locationList, (location, position) -> {
-        });
+        adapter = new LocationAdapter(context, resources, locationList, (location, position) -> {});
         recyclerView.setAdapter(adapter);
     }
 
