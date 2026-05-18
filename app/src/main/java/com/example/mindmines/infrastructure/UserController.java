@@ -76,7 +76,7 @@ public class UserController {
         });
     }
 
-    public void deleteUser(String email, String password) {
-        UserStatusManager.getInstance(context).tryRemoveStatus(email + "_token");
+    public void deleteUser(String token) {
+        UserStatusManager.getInstance(context).tryRemoveStatus(token);
     }
 }
