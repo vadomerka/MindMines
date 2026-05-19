@@ -5,10 +5,19 @@ import com.example.mindmines.models.game.equipment.EquipmentPath;
 import com.example.mindmines.models.game.equipment.SlotType;
 
 public class Sword extends Equipment {
-    public Sword(String image) {
+    public Sword(int level, String image) {
         this.image = image;
-        this.equipStats = new CharStats(10, 0, 0);
+        this.level = level;
+        this.equipStats = getByLevel(level);
         this.slotType = SlotType.RIGHT_HAND;
         path = EquipmentPath.SWORD;
+    }
+
+    protected CharStats getByLevel(int level) {
+        baseEquipStats = new CharStats(10, 0, 0);
+        for (int i = 1; i < level; i++) {
+            baseEquipStats.mult(1.25f, 1, 1);
+        }
+        return baseEquipStats;
     }
 }

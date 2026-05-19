@@ -15,10 +15,12 @@ public class Equipment implements RepositoryItem<Integer> {
     protected SlotType slotType;
 
     protected EquipmentPath path;
+    protected CharStats baseEquipStats;
 
     public Equipment() {
         this.level = 1;
         this.price = 0;
+        baseEquipStats = new CharStats(0, 0, 0);
     }
 
     public Equipment(String image) {

@@ -46,11 +46,13 @@ public class EquipManager {
         Equipment neq = paths.get(0);
         int nLevel = eq.getLevel() + 1;
         neq.setLevel(nLevel);
-        eq.getEquipStats().mult(
-                1f + nLevel / 10f,
-                1f + nLevel / 10f,
-                1f + nLevel / 10f);
-        neq.setEquipStats(eq.getEquipStats());
+        if (nLevel > 3) {
+            neq.getEquipStats().mult(
+                    1f + nLevel / 10f,
+                    1f + nLevel / 10f,
+                    1f + nLevel / 10f);
+        }
+        neq.setEquipStats(neq.getEquipStats());
         neq.setPrice(eq.getPrice() + 1);
         return Collections.singletonList(neq);
     }

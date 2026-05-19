@@ -26,29 +26,29 @@ public class PathwayManager {
     public PathwayManager() {
         pathways = new HashMap<>();
         pathways.put(EquipmentPath.SWORD, Arrays.asList(
-                new Sword(String.valueOf(R.drawable.eq_sword1)),
-                new Sword(String.valueOf(R.drawable.eq_sword2)),
-                new Sword(String.valueOf(R.drawable.eq_sword3))
+                new Sword(1, String.valueOf(R.drawable.eq_sword1)),
+                new Sword(2, String.valueOf(R.drawable.eq_sword2)),
+                new Sword(3, String.valueOf(R.drawable.eq_sword3))
         ));
         pathways.put(EquipmentPath.SHIELD, Arrays.asList(
-                new Shield(String.valueOf(R.drawable.eq_shield1)),
-                new Shield(String.valueOf(R.drawable.eq_shield2)),
-                new Shield(String.valueOf(R.drawable.eq_shield3))
+                new Shield(1, String.valueOf(R.drawable.eq_shield1)),
+                new Shield(2, String.valueOf(R.drawable.eq_shield2)),
+                new Shield(3, String.valueOf(R.drawable.eq_shield3))
         ));
         pathways.put(EquipmentPath.BODY_ARMOR, Arrays.asList(
-                new BodyArmor(String.valueOf(R.drawable.eq_armor1)),
-                new BodyArmor(String.valueOf(R.drawable.eq_armor2)),
-                new BodyArmor(String.valueOf(R.drawable.eq_armor3))
+                new BodyArmor(1, String.valueOf(R.drawable.eq_armor1)),
+                new BodyArmor(2, String.valueOf(R.drawable.eq_armor2)),
+                new BodyArmor(3, String.valueOf(R.drawable.eq_armor3))
         ));
         pathways.put(EquipmentPath.LEG_ARMOR, Arrays.asList(
-                new LegArmor(String.valueOf(R.drawable.eq_boots)),
-                new LegArmor(String.valueOf(R.drawable.eq_boots)),
-                new LegArmor(String.valueOf(R.drawable.eq_boots))
+                new LegArmor(1, String.valueOf(R.drawable.eq_boots)),
+                new LegArmor(2, String.valueOf(R.drawable.eq_boots)),
+                new LegArmor(3, String.valueOf(R.drawable.eq_boots))
         ));
         pathways.put(EquipmentPath.STAFF, Arrays.asList(
-                new Staff(String.valueOf(R.drawable.eq_staff1)),
-                new Staff(String.valueOf(R.drawable.eq_staff2)),
-                new Staff(String.valueOf(R.drawable.eq_staff3))
+                new Staff(1, String.valueOf(R.drawable.eq_staff1)),
+                new Staff(2, String.valueOf(R.drawable.eq_staff2)),
+                new Staff(3, String.valueOf(R.drawable.eq_staff3))
         ));
     }
 

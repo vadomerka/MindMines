@@ -103,7 +103,7 @@ public class Char implements Serializable, RepositoryItem<Integer> {
     }
 
     public void unEquip(SlotType slot) {
-        CharStats subStats = new CharStats();
+        CharStats subStats = new CharStats(0, 0, 0);
         if (slot == SlotType.LEFT_HAND && equipment.getLeftHand() != null) {
             subStats = equipment.getLeftHand().getEquipStats();
             equipment.setLeftHand(null);
