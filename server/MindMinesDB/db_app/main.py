@@ -111,16 +111,18 @@ def register_user(auth_dto: AuthRequest, session: SessionDep):
     if not auth_dto.email:
         raise HTTPException(status_code=400, detail="Email обязателен")
 
-    existing = session.query(User).filter(User.email == auth_dto.email).first()
+    existing = session.query(User).filter(User.email == str(hash(auth_dto.email))).first()
     if existing is not None:
         raise HTTPException(status_code=409, detail=generate_user_token(existing.email, existing.password))
 
-    user = User(name=auth_dto.email, email=auth_dto.email, password=str(hash(auth_dto.password)))
-    session.add(user)
-    session.commit()
-    session.refresh(user)
-
-    return {"user_token": generate_user_token(user.email, user.password)}
+    try:
+        user = User(name=auth_dto.email, email=auth_dto.email, password=str(hash(auth_dto.password)))
+        session.add(user)
+        session.commit()
+        session.refresh(user)
+        return {"user_token": generate_user_token(user.email, user.password)}
+    except Exception:
+        return HTTPException(status_code=409, detail="Логин занят")
 
 
 @app.post("/users/login")
