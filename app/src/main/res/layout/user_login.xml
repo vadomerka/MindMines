@@ -7,7 +7,8 @@
     android:background="@color/white">
 
     <LinearLayout style="@style/SpreadCenterVerticalLayout"
-        android:layout_width="wrap_content">
+        android:layout_width="wrap_content"
+        android:minWidth="350dp">
 
         <TextView
             android:id="@+id/login_header"
@@ -20,7 +21,7 @@
             style="@style/SpreadCenterVerticalLayout">
         <EditText
             android:id="@+id/login_email_input"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/login_email_input_hint"
@@ -30,7 +31,7 @@
 
         <EditText
             android:id="@+id/login_password_input"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/login_password_input_hint"
@@ -51,7 +52,8 @@
                     android:text="@string/login_button_text" />
             </LinearLayout>
 
-            <LinearLayout style="@style/SpreadCenterHorizontalItem">
+            <LinearLayout style="@style/SpreadCenterHorizontalItem"
+                android:gravity="end">
 
                 <Button
                     android:id="@+id/register_page_button"
@@ -75,6 +77,22 @@
                     />
             </LinearLayout>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loading_indicator"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/exception_text_view"
+            style="@style/ErrorMessage"
+            android:visibility="gone"
+            android:textSize="15sp"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -2,9 +2,9 @@ package com.example.mindmines.services.repositories.local;
 
 import android.content.Context;
 
-import com.example.mindmines.db.MindMinesDatabase;
-import com.example.mindmines.db.dao.ExpeditionCharCrossRefDao;
-import com.example.mindmines.db.entities.crossref.ExpeditionCharCrossRef;
+import com.example.mindmines.data.MindMinesDatabase;
+import com.example.mindmines.data.dao.ExpeditionCharCrossRefDao;
+import com.example.mindmines.data.entities.crossref.ExpeditionCharCrossRef;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +20,8 @@ public class ExpeditionCharRepository {
         initArray();
     }
 
-    public void initArray() {}
+    public void initArray() {
+    }
 
     public List<ExpeditionCharCrossRef> getAll() {
         return dao.getAll();

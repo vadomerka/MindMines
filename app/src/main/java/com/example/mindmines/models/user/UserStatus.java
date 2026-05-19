@@ -1,8 +1,8 @@
 package com.example.mindmines.models.user;
 
 import com.example.mindmines.models.XpStatus;
-import com.example.mindmines.services.managers.XpManager;
 import com.example.mindmines.models.interfaces.RepositoryItem;
+import com.example.mindmines.services.managers.XpManager;
 
 public class UserStatus extends XpStatus implements RepositoryItem<String> {
     private String userId;
@@ -29,13 +29,27 @@ public class UserStatus extends XpStatus implements RepositoryItem<String> {
         this.coins = coins;
     }
 
-    public String getId() { return this.userId; }
-    public void setId(String userID) { this.userId = userID; }
+    public String getId() {
+        return this.userId;
+    }
 
-    public String getUserId() { return this.userId; }
-    public void setUserId(String userID) { this.userId = userID; }
+    public void setId(String userID) {
+        this.userId = userID;
+    }
 
-    public Long getCoins() { return this.coins; }
+    public String getUserId() {
+        return this.userId;
+    }
 
-    public void setCoins(Long value) { this.coins = value; }
+    public void setUserId(String userID) {
+        this.userId = userID;
+    }
+
+    public Long getCoins() {
+        return this.coins;
+    }
+
+    public void setCoins(Long value) {
+        this.coins = value;
+    }
 }

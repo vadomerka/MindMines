@@ -48,7 +48,7 @@ public class HabitController {
     public void delete(Integer habitId) {
         try {
             boolean result = HabitRequestSender.delete(habitId);
-            if (result == true) {
+            if (result) {
                 HabitManager.delete(habitId);
             }
         } catch (Exception e) {

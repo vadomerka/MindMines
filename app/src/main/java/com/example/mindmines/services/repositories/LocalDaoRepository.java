@@ -2,7 +2,7 @@ package com.example.mindmines.services.repositories;
 
 import android.content.Context;
 
-import com.example.mindmines.db.dao.RepDao;
+import com.example.mindmines.data.dao.RepDao;
 import com.example.mindmines.models.interfaces.DBEntity;
 import com.example.mindmines.models.interfaces.RepositoryItem;
 import com.example.mindmines.services.auth.AuthManager;
@@ -15,10 +15,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class LocalDaoRepository<TId extends Comparable<TId>,
-                                         T extends RepositoryItem<TId>,
-                                         TEntity extends DBEntity,
-                                         TObserver extends RepositoryObserver<T>>
-            extends LocalObservedRepository<TId, T, TObserver> {
+        T extends RepositoryItem<TId>,
+        TEntity extends DBEntity,
+        TObserver extends RepositoryObserver<T>>
+        extends LocalObservedRepository<TId, T, TObserver> {
 
     protected RepDao<TEntity> dao;
 

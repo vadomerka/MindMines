@@ -1,33 +1,29 @@
 package com.example.mindmines.services.factories;
 
 import com.example.mindmines.R;
-import com.example.mindmines.db.entities.CharEntity;
 import com.example.mindmines.models.game.characters.Char;
 import com.example.mindmines.models.game.characters.CharStats;
 import com.example.mindmines.models.game.characters.CharStatus;
 import com.example.mindmines.models.game.equipment.CharEquipment;
-import com.example.mindmines.models.game.equipment.types.BodyArmor;
+import com.example.mindmines.models.game.equipment.EquipmentPath;
 import com.example.mindmines.models.game.equipment.types.Equipment;
-import com.example.mindmines.models.game.equipment.types.LegArmor;
-import com.example.mindmines.models.game.equipment.types.Shield;
-import com.example.mindmines.models.game.equipment.types.Sword;
-import com.example.mindmines.services.converters.entities.RepConverter;
-import com.example.mindmines.services.repositories.dao.CharRepository;
+import com.example.mindmines.services.managers.PathwayManager;
 import com.example.mindmines.services.repositories.RepositoryService;
-import com.google.gson.Gson;
+import com.example.mindmines.services.repositories.dao.CharRepository;
 
-import java.util.Arrays;
 import java.util.Random;
 
-public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
-    private final Random rnd = new Random();
+public class CharFactory {
     private static final int variation = 5;
     private static final int baseValue = 10;
-    private final CharRepository rep;
     private static CharFactory instance;
+    private final Random rnd = new Random();
+    private final CharRepository rep;
+    private final PathwayManager pm;
 
     public CharFactory() {
         this.rep = RepositoryService.getCharRepository();
+        this.pm = PathwayManager.getInstance();
     }
 
     public static CharFactory getInstance() {
@@ -41,7 +37,8 @@ public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
         switch (defaultInd) {
             case 2:
                 return generate(userId, "Грустный Шахтер", 3, String.valueOf(R.drawable.g3),
-                        new Equipment[]{new Sword(), new LegArmor()});
+                        new Equipment[]{pm.getEquip(EquipmentPath.SWORD, 0),
+                                pm.getEquip(EquipmentPath.LEG_ARMOR)});
             case 3:
                 return generate(userId, "Боец Ученый", 5, String.valueOf(R.drawable.g4),
                         new Equipment[]{});
@@ -50,7 +47,10 @@ public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
                         new Equipment[]{});
             default:
                 return generate(userId, "Бывалый Пират", 1, String.valueOf(R.drawable.g2),
-                        new Equipment[]{new Sword(), new Shield(), new BodyArmor(), new LegArmor()});
+                        new Equipment[]{pm.getEquip(EquipmentPath.SWORD, 0),
+                                pm.getEquip(EquipmentPath.SHIELD, 0),
+                                pm.getEquip(EquipmentPath.BODY_ARMOR, 0),
+                                pm.getEquip(EquipmentPath.LEG_ARMOR, 0)});
         }
     }
 
@@ -77,15 +77,15 @@ public class CharFactory implements RepConverter<Integer, Char, CharEntity> {
                 new CharStatus(hp, level, maxExperience), new CharEquipment(), image);
     }
 
-    public Char toItem(CharEntity entity) {
-        Gson g = new Gson();
-        Char ch = g.fromJson(entity.charJson, Char.class);
-        ch.setCharId(entity.charId);
-        return ch;
-    }
-
-    public CharEntity toEntity(Char ch) {
-        Gson g = new Gson();
-        return new CharEntity(ch.getId(), ch.getUserId(), g.toJson(ch));
+    public Char copy(Char ch) {
+        return new Char(
+                ch.getId(),
+                ch.getUserId(),
+                ch.getName(),
+                ch.getStats(),
+                ch.getStatus(),
+                ch.getEquipment(),
+                ch.getImage()
+        );
     }
 }

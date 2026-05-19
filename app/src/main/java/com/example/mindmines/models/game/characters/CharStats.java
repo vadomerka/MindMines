@@ -19,12 +19,29 @@ public class CharStats implements Serializable {
         this.speed = speed;
     }
 
-    public Integer getAttack() { return attack; }
-    public void setAttack(Integer value) { this.attack = value; }
-    public Integer getDefence() { return defence; }
-    public void setDefence(Integer value) { this.defence = value; }
-    public Integer getSpeed() { return speed; }
-    public void setSpeed(Integer value) { this.speed = value; }
+    public Integer getAttack() {
+        return attack;
+    }
+
+    public void setAttack(Integer value) {
+        this.attack = value;
+    }
+
+    public Integer getDefence() {
+        return defence;
+    }
+
+    public void setDefence(Integer value) {
+        this.defence = value;
+    }
+
+    public Integer getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Integer value) {
+        this.speed = value;
+    }
 
     public void add(CharStats other) {
         this.attack += other.attack;
@@ -36,5 +53,17 @@ public class CharStats implements Serializable {
         this.attack -= other.attack;
         this.defence -= other.defence;
         this.speed -= other.speed;
+    }
+
+    public void mult(CharStats other) {
+        this.attack *= other.attack;
+        this.defence *= other.defence;
+        this.speed *= other.speed;
+    }
+
+    public void mult(float attack, float defence, float speed) {
+        this.attack = (int) (this.attack * attack);
+        this.defence = (int) (this.defence * defence);
+        this.speed = (int) (this.speed * speed);
     }
 }

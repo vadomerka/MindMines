@@ -42,13 +42,17 @@ public class Char implements Serializable, RepositoryItem<Integer> {
         return charId;
     }
 
-    public void setCharId(Integer charId) { this.charId = charId; }
+    public void setCharId(Integer charId) {
+        this.charId = charId;
+    }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserID(String userId) { this.userId = userId; }
+    public void setUserID(String userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;
@@ -99,7 +103,7 @@ public class Char implements Serializable, RepositoryItem<Integer> {
     }
 
     public void unEquip(SlotType slot) {
-        CharStats subStats = new CharStats();
+        CharStats subStats = new CharStats(0, 0, 0);
         if (slot == SlotType.LEFT_HAND && equipment.getLeftHand() != null) {
             subStats = equipment.getLeftHand().getEquipStats();
             equipment.setLeftHand(null);

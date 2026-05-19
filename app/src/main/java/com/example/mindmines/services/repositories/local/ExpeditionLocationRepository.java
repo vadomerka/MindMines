@@ -22,5 +22,7 @@ public class ExpeditionLocationRepository extends LocalRepository<String, Expedi
         return getAll();
     }
 
-    protected String defaultId() {return "id";}
+    protected String defaultId() {
+        return "id";
+    }
 }

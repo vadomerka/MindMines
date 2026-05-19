@@ -22,7 +22,7 @@ public class ChatManager {
     }
 
     public void removeAllMessages() {
-        for (ChatMessage cm: rep.getByUser()) {
+        for (ChatMessage cm : rep.getByUser()) {
             rep.remove(cm);
         }
     }

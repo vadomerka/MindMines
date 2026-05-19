@@ -44,6 +44,18 @@ def get_users(session: SessionDep):
     return [x.to_json() for x in session.query(User).all()]
 
 
+@app.get("/users/friends")
+def get_friends(session: SessionDep):
+    users = session.query(User).order_by(User.user_id.asc()).all()
+    return [
+        {
+            "name": user.name,
+            "level": user.level
+        }
+        for user in users
+    ]
+
+
 @app.get("/users/{user_id}")
 def get_user(user_id: int, session: SessionDep):
     # Profile view
@@ -99,23 +111,25 @@ def register_user(auth_dto: AuthRequest, session: SessionDep):
     if not auth_dto.email:
         raise HTTPException(status_code=400, detail="Email обязателен")
 
-    existing = session.query(User).filter(User.email == auth_dto.email).first()
+    existing = session.query(User).filter(User.email == str(hash(auth_dto.email))).first()
     if existing is not None:
-        raise HTTPException(status_code=409, detail="Пользователь уже существует")
+        raise HTTPException(status_code=409, detail=generate_user_token(existing.email, existing.password))
 
-    user = User(name=auth_dto.email, email=auth_dto.email, password=auth_dto.password)
-    session.add(user)
-    session.commit()
-    session.refresh(user)
-
-    return {"user_token": generate_user_token(user.email, user.password)}
+    try:
+        user = User(name=auth_dto.email, email=auth_dto.email, password=str(hash(auth_dto.password)))
+        session.add(user)
+        session.commit()
+        session.refresh(user)
+        return {"user_token": generate_user_token(user.email, user.password)}
+    except Exception:
+        return HTTPException(status_code=409, detail="Логин занят")
 
 
 @app.post("/users/login")
 def login_user(auth_dto: AuthRequest, session: SessionDep):
     user = (
         session.query(User)
-        .filter(User.email == auth_dto.email, User.password == auth_dto.password)
+        .filter(User.email == auth_dto.email, User.password == str(hash(auth_dto.password)))
         .first()
     )
     if user is None:

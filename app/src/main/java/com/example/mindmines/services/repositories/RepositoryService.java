@@ -4,11 +4,12 @@ import android.content.Context;
 
 import com.example.mindmines.services.repositories.dao.CharRepository;
 import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
-import com.example.mindmines.services.repositories.local.ExpeditionCharRepository;
-import com.example.mindmines.services.repositories.local.ExpeditionLocationRepository;
+import com.example.mindmines.services.repositories.dao.EquipRepository;
 import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
 import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.services.repositories.dao.UserStatusRepository;
+import com.example.mindmines.services.repositories.local.ExpeditionCharRepository;
+import com.example.mindmines.services.repositories.local.ExpeditionLocationRepository;
 
 public class RepositoryService {
     private static CharRepository chRep = null;
@@ -18,6 +19,7 @@ public class RepositoryService {
     private static ExpeditionCharRepository cheRep = null;
     private static ChatMessageRepository mRep = null;
     private static UserStatusRepository usRep = null;
+    private static EquipRepository eqRep = null;
 
     public static void initAll(Context context) {
         getCharRepository().init(context);
@@ -27,6 +29,7 @@ public class RepositoryService {
         getExpeditionCharRepository().init(context);
         getChatMessageRepository().init(context);
         getUserStatusRepository().init(context);
+        getEquipRepository().init(context);
     }
 
     public static CharRepository getCharRepository() {
@@ -62,5 +65,10 @@ public class RepositoryService {
     public static UserStatusRepository getUserStatusRepository() {
         if (usRep == null) usRep = new UserStatusRepository();
         return usRep;
+    }
+
+    public static EquipRepository getEquipRepository() {
+        if (eqRep == null) eqRep = new EquipRepository();
+        return eqRep;
     }
 }

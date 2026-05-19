@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SpreadCenterVerticalLayout">
+
+
+    <LinearLayout
+        style="@style/SpreadCenterVerticalLayout">
+        <TextView
+            style="@style/header1_text"
+            android:layout_margin="20dp"
+            android:textSize="25sp"
+            android:id="@+id/equip_name_text_value"
+            android:text="@string/equip_name_text_value_default_text"
+            />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/shop_upgrade_row"
+                style="@style/SpreadCenterHorizontalLayout"
+                android:visibility="gone">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/equipment_btn1"
+                    app:icon="@drawable/eq1_left_hand"
+                    app:iconGravity="top"
+                    app:iconSize="@dimen/equipment_icon_size"
+                    app:cornerRadius="20dp"
+                    style="@style/EquipmentButton"/>
+
+                <ImageView
+                    android:id="@+id/arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/left_to_right_arrow" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/equipment_btn2"
+                    app:icon="@drawable/eq2_right_hand"
+                    app:iconGravity="top"
+                    app:iconSize="@dimen/equipment_icon_size"
+                    app:cornerRadius="20dp"
+                    style="@style/EquipmentButton"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/shop_equipment_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/equipment_button_size"
+                android:clipToPadding="false"
+                android:paddingHorizontal="8dp"
+                android:visibility="gone"
+                tools:listitem="@layout/equipment_shop_dialog_item" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/SpreadCenterVerticalLayout">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_equipment_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_number_text"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_dollar"
+        app:iconGravity="textStart"
+        app:iconSize="24dp"
+        app:iconPadding="4dp"
+        app:backgroundTint="@color/action_main_color" />
+
+        <TextView
+            android:id="@+id/too_low_level_char_warning"
+            style="@style/header1_text"
+            android:text="@string/too_low_level_char_warning_text"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/too_few_coins_userStatus_warning"
+            style="@style/header1_text"
+            android:text="@string/too_few_coins_userStatus_warning_text"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+
+</LinearLayout>

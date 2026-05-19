@@ -15,9 +15,23 @@ public class ExpeditionLocation implements RepositoryItem<String> {
         this.level = level;
     }
 
-    public String getId() { return id; }
-    public String getUserId() { return id; }  // Репозиторий статичен.
-    public String getName() { return name; }
-    public String getImage() { return image; }
-    public Integer getLevel() { return level; }
+    public String getId() {
+        return id;
+    }
+
+    public String getUserId() {
+        return id;
+    }  // Репозиторий статичен.
+
+    public String getName() {
+        return name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
 }

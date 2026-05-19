@@ -21,6 +21,11 @@ public class CharStatus extends XpStatus implements Serializable {
         this.maxExperience = maxExperience;
     }
 
-    public Integer getHp() { return hp; }
-    public void setHp(Integer value) { this.hp = value; }
+    public Integer getHp() {
+        return hp;
+    }
+
+    public void setHp(Integer value) {
+        this.hp = value;
+    }
 }

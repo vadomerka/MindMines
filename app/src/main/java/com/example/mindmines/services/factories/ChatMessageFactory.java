@@ -1,16 +1,14 @@
 package com.example.mindmines.services.factories;
 
-import com.example.mindmines.db.entities.ChatMessageEntity;
 import com.example.mindmines.models.chat.ChatMessage;
-import com.example.mindmines.services.converters.entities.RepConverter;
-import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.ChatMessageRepository;
 
 import java.time.OffsetDateTime;
 
-public class ChatMessageFactory implements RepConverter<Integer, ChatMessage, ChatMessageEntity> {
-    private final ChatMessageRepository rep;
+public class ChatMessageFactory {
     private static ChatMessageFactory instance;
+    private final ChatMessageRepository rep;
 
     public ChatMessageFactory() {
         this.rep = RepositoryService.getChatMessageRepository();
@@ -37,34 +35,6 @@ public class ChatMessageFactory implements RepConverter<Integer, ChatMessage, Ch
                 body,
                 OffsetDateTime.now(),
                 null
-        );
-    }
-
-    public ChatMessage toItem(ChatMessageEntity entity) {
-
-        return new ChatMessage(
-                entity.messageId,
-                entity.userId,
-                entity.author,
-                entity.type,
-                entity.context,
-                entity.body,
-                entity.creationTime,
-                entity.receivedTime
-        );
-    }
-
-    public ChatMessageEntity toEntity(ChatMessage item) {
-
-        return new ChatMessageEntity(
-                item.getId(),
-                item.getUserId(),
-                item.getAuthor(),
-                item.getType(),
-                item.getContext(),
-                item.getBody(),
-                item.getCreationTime(),
-                item.getReceivedTime()
         );
     }
 }

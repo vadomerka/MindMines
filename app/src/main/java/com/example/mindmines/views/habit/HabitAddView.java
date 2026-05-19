@@ -114,8 +114,11 @@ public class HabitAddView extends BaseFragment {
         ipAdapter = new IntervalPickerAdapter(rootView);
 
         htPicker = rootView.findViewById(R.id.habit_type_value);
-        htPicker.setItems(new ArrayList<String>()
-        {{ add ("Количественная"); add ("Интервальная"); add ("Подзадачи"); }});
+        htPicker.setItems(new ArrayList<String>() {{
+            add("Количественная");
+            add("Интервальная");
+            add("Подзадачи");
+        }});
         LinearLayout countThl = rootView.findViewById(R.id.count_type_habit_layout);
         LinearLayout taskThl = rootView.findViewById(R.id.task_type_habit_layout);
         htPicker.setOnWheelPickerListener(new OnWheelPickerListener() {
@@ -123,8 +126,11 @@ public class HabitAddView extends BaseFragment {
             public void onItemSelected(int i, @NonNull String s) {
                 countThl.setVisibility(View.GONE);
                 taskThl.setVisibility(View.GONE);
-                if (i == 0) { countThl.setVisibility(View.VISIBLE); }
-                else if (i == 2) { taskThl.setVisibility(View.VISIBLE);}
+                if (i == 0) {
+                    countThl.setVisibility(View.VISIBLE);
+                } else if (i == 2) {
+                    taskThl.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -163,15 +169,16 @@ public class HabitAddView extends BaseFragment {
         HabitType hType;
         if (isBadType) hType = HabitType.BAD;
         else {
-            HabitType[] types = new HabitType[] {HabitType.GOOD_GOAL_COUNT, HabitType.GOOD_INTERVAL, HabitType.GOOD_TASKS};
+            HabitType[] types = new HabitType[]{HabitType.GOOD_GOAL_COUNT, HabitType.GOOD_INTERVAL, HabitType.GOOD_TASKS};
             hType = types[htPicker.getCurrentSelectedItemPosition()];
         }
         Integer goalCount = hType == HabitType.GOOD_GOAL_COUNT ? gcPicker.getValue() : 1;
 
         HabitInterval interval = ipAdapter.getHabitInterval();
 
-        return HabitFactory.getInstance().createDTO(userId, title, desc, goalCount, timeAccurate,
-                                      priority, difficulty, hType, interval);
+        return HabitFactory.getInstance().createDTO(userId, title, desc, 0,
+                goalCount, timeAccurate,
+                priority, difficulty, hType, interval);
     }
 
     protected boolean checkDto(HabitDTO dto) {
@@ -179,7 +186,7 @@ public class HabitAddView extends BaseFragment {
             Toast.makeText(requireContext(), "Введите название привычки.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (dto.getType() == HabitType.GOOD_GOAL_COUNT || dto.getType() == HabitType.GOOD_TASKS) {
+        if (dto.getType() == HabitType.GOOD_TASKS) {
             Toast.makeText(requireContext(), "Такой вид привычки в данный момент не поддерживается.", Toast.LENGTH_SHORT).show();
             return false;
         }

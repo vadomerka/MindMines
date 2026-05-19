@@ -16,10 +16,22 @@ public class TimeIntervalService {
         return t.plus(days).plus(hours).plus(minutes);
     }
 
-    public static int getMonths(float df) { return (int) (df / 30f); }
-    public static int getWeeks(float df) { return (int) (df / 7f); }
-    public static int getDays(float df) { return (int) df; }
-    public static int getHours(float df) { return (int) (df * 24); }
+    public static int getMonths(float df) {
+        return (int) (df / 30f);
+    }
+
+    public static int getWeeks(float df) {
+        return (int) (df / 7f);
+    }
+
+    public static int getDays(float df) {
+        return (int) df;
+    }
+
+    public static int getHours(float df) {
+        return (int) (df * 24);
+    }
+
     public static int getMinutes(float df) {
         return (int) (df * 24 * 60);
     }

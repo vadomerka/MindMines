@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.mindmines.infrastructure.UserController;
 import com.example.mindmines.models.user.UserStatus;
 import com.example.mindmines.services.factories.UserStatusFactory;
 import com.example.mindmines.services.managers.UserStatusManager;
@@ -16,6 +17,8 @@ public class AuthManager {
 
     private final SharedPreferences sharedPreferences;
     private final Context context;
+    // UserStatusManager usm - выносить в глобальную переменную нельзя,
+    // иначе будет рекурсия с конструкторами других сервисов
 
     public AuthManager(Context context) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
@@ -28,7 +31,8 @@ public class AuthManager {
                 .putString(KEY_USER_EMAIL, email)
                 .apply();
         UserStatusManager usm = UserStatusManager.getInstance(context);
-        if (usm.getStatus() == null) usm.addStatus(UserStatusFactory.getInstance().create(authToken));
+        if (usm.getStatus() == null)
+            usm.addStatus(UserStatusFactory.getInstance().create(authToken));
     }
 
     public void saveNewUserData(String authToken, String email) {
@@ -37,7 +41,8 @@ public class AuthManager {
                 .putString(KEY_USER_EMAIL, email)
                 .apply();
         UserStatusManager usm = UserStatusManager.getInstance(context);
-        if (usm.getStatus() == null) usm.addStatus(UserStatusFactory.getInstance().create(authToken));
+        UserController.getInstance(context).deleteUser(authToken);
+        usm.addStatus(UserStatusFactory.getInstance().create(authToken));
 //        Log.d("Debug register", "saveNewUserData: " + usm.getStatus().getUserId());
     }
 

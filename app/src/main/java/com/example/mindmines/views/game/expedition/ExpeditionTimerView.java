@@ -2,7 +2,6 @@ package com.example.mindmines.views.game.expedition;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,12 +11,10 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.mindmines.R;
 import com.example.mindmines.models.game.expeditions.Expedition;
-import com.example.mindmines.services.managers.ExpeditionManager;
 import com.example.mindmines.views.utils.ViewsUtils;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.util.List;
 
 public class ExpeditionTimerView extends ExpeditionView {
     private TextView timerText;

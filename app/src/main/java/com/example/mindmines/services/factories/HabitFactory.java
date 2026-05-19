@@ -1,21 +1,19 @@
 package com.example.mindmines.services.factories;
 
-import com.example.mindmines.db.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
-import com.example.mindmines.models.habits.HabitTimeUnit;
 import com.example.mindmines.models.habits.HabitDTO;
-import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.converters.entities.RepConverter;
-import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.models.habits.HabitInterval;
+import com.example.mindmines.models.habits.HabitTimeUnit;
+import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.HabitRepository;
 
 import java.time.OffsetDateTime;
 
-public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
+public class HabitFactory {
 
-    private final HabitRepository rep;
     private static HabitFactory instance;
+    private final HabitRepository rep;
 
     public HabitFactory() {
         this.rep = RepositoryService.getHabitRepository();
@@ -28,12 +26,14 @@ public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
         return instance;
     }
 
-    public HabitDTO createDTO(String userId, String title, String desc, Integer goalCount,
-                                     Boolean timeAccurate, Integer priority, Integer difficulty,
-                                     HabitType hType, HabitInterval interval) {
+    public HabitDTO createDTO(String userId, String title, String desc, Integer currCount,
+                              Integer goalCount,
+                              Boolean timeAccurate, Integer priority, Integer difficulty,
+                              HabitType hType, HabitInterval interval) {
         return new HabitDTO(userId,
                 title,
                 desc,
+                currCount,
                 goalCount,
                 timeAccurate,
                 priority,
@@ -46,6 +46,7 @@ public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
         return new HabitDTO(userId,
                 "Название привычки",
                 "Описание привычки",
+                0,
                 1,
                 true,
                 1,
@@ -61,6 +62,7 @@ public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
                 dto.getType(),
                 dto.getTitle(),
                 dto.getDescription(),
+                dto.getCurrCount(),
                 dto.getGoalCount(),
                 dto.getPriority(),
                 dto.getDifficulty(),
@@ -116,37 +118,6 @@ public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
         return res;
     }
 
-    public Habit toItem(HabitEntity e) {
-        return new Habit(
-                e.habitId,
-                e.userId,
-                habitTypeFromString(e.type),
-                e.title,
-                e.description,
-                e.goalCount,
-                e.priority,
-                e.difficulty,
-                e.penaltyNumber,
-                e.streakNumber,
-                e.creationDate,
-                e.lastCompletedAt,
-                e.nextDeadlineAt,
-                createHabitInterval(e.intervalNumber, e.intervalUnit));
-    }
-
-    public HabitType habitTypeFromString(String type) {
-        switch (type.toUpperCase()) {
-            case "GOOD_GOAL_COUNT":
-                return HabitType.GOOD_GOAL_COUNT;
-            case "GOOD_TASKS":
-                return HabitType.GOOD_TASKS;
-            case "GOOD_INTERVAL":
-                return HabitType.GOOD_INTERVAL;
-            default:
-                return HabitType.BAD;
-        }
-    }
-
     public HabitInterval createHabitInterval(Integer num, String unit) {
         return new HabitInterval(num, intervalUnitFromString(unit));
     }
@@ -168,25 +139,5 @@ public class HabitFactory implements RepConverter<Integer, Habit, HabitEntity> {
             default:
                 return HabitTimeUnit.MONTH;
         }
-    }
-
-    public HabitEntity toEntity(Habit h) {
-        return new HabitEntity(
-                h.getId(),
-                h.getUserId(),
-                h.getType().toString(),
-                h.getTitle(),
-                h.getDescription(),
-                h.getGoalCount(),
-                h.getPriority(),
-                h.getDifficulty(),
-                h.getPenaltyNumber(),
-                h.getStreakNumber(),
-                h.getCreationDate(),
-                h.getLastCompletedAt(),
-                h.getNextDeadlineAt(),
-                h.getInterval().getNumber(),
-                h.getInterval().getTimeUnit().toString()
-        );
     }
 }

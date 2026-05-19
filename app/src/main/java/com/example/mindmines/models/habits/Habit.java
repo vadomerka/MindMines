@@ -5,19 +5,18 @@ import com.example.mindmines.models.interfaces.RepositoryItem;
 import java.time.OffsetDateTime;
 
 public class Habit implements RepositoryItem<Integer> {
-    private Integer habitId;
     private final String userId;
+    private final OffsetDateTime creationDate;
+    private Integer habitId;
     private HabitType type;
-
     private String title;
     private String description;
+    private Integer currCount;
     private Integer goalCount;
     private Integer priority;
     private Integer difficulty;
     private Integer penaltyNumber;
     private Integer streakNumber;
-
-    private final OffsetDateTime creationDate;
     private OffsetDateTime lastCompletedAt;
     private OffsetDateTime nextDeadlineAt;
     private HabitInterval interval;
@@ -29,6 +28,7 @@ public class Habit implements RepositoryItem<Integer> {
 
             String title,
             String description,
+            Integer currCount,
             Integer goalCount,
             Integer priority,
             Integer difficulty,
@@ -46,6 +46,7 @@ public class Habit implements RepositoryItem<Integer> {
 
         this.title = title;
         this.description = description;
+        this.currCount = currCount;
         this.goalCount = goalCount;
         this.priority = priority;
         this.difficulty = difficulty;
@@ -61,24 +62,46 @@ public class Habit implements RepositoryItem<Integer> {
     public Integer getId() {
         return habitId;
     }
-    public void setHabitId(Integer value) { habitId = value; }
+
+    public void setHabitId(Integer value) {
+        habitId = value;
+    }
 
     public String getUserId() {
         return userId;
     }
 
-    public String getTitle() { return title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public HabitType getType() { return type; }
+    public void setTitle(String value) {
+        title = value;
+    }
 
-    public void setType(HabitType value) { type = value; }
+    public HabitType getType() {
+        return type;
+    }
 
+    public void setType(HabitType value) {
+        type = value;
+    }
 
-    public void setTitle(String value) { title = value; }
+    public String getDescription() {
+        return description;
+    }
 
-    public String getDescription() { return description; }
+    public void setDescription(String value) {
+        description = value;
+    }
 
-    public void setDescription(String value) { description = value; }
+    public Integer getCurrCount() {
+        return currCount;
+    }
+
+    public void setCurrCount(Integer value) {
+        currCount = value;
+    }
 
     public Integer getGoalCount() {
         return goalCount;
@@ -88,37 +111,66 @@ public class Habit implements RepositoryItem<Integer> {
         goalCount = value;
     }
 
-    public Integer getPriority() { return priority; }
+    public Integer getPriority() {
+        return priority;
+    }
 
-    public void setPriority(Integer value) { priority = value; }
+    public void setPriority(Integer value) {
+        priority = value;
+    }
 
-    public Integer getDifficulty() { return difficulty; }
+    public Integer getDifficulty() {
+        return difficulty;
+    }
 
-    public void setDifficulty(Integer value) { difficulty = value; }
+    public void setDifficulty(Integer value) {
+        difficulty = value;
+    }
 
-    public Integer getPenaltyNumber() { return penaltyNumber; }
+    public Integer getPenaltyNumber() {
+        return penaltyNumber;
+    }
 
-    public void setPenaltyNumber(Integer value) { penaltyNumber = value; }
+    public void setPenaltyNumber(Integer value) {
+        penaltyNumber = value;
+    }
 
-    public Integer getStreakNumber() { return streakNumber; }
+    public Integer getStreakNumber() {
+        return streakNumber;
+    }
 
-    public void setStreakNumber(Integer value) { streakNumber = value; }
+    public void setStreakNumber(Integer value) {
+        streakNumber = value;
+    }
 
 
+    public OffsetDateTime getCreationDate() {
+        return creationDate;
+    }
 
-    public OffsetDateTime getCreationDate() { return creationDate; }
+    public OffsetDateTime getLastCompletedAt() {
+        return lastCompletedAt;
+    }
 
-    public OffsetDateTime getLastCompletedAt() { return lastCompletedAt; }
+    public void setLastCompletedAt(OffsetDateTime value) {
+        lastCompletedAt = value;
+    }
 
-    public void setLastCompletedAt(OffsetDateTime value) { lastCompletedAt = value; }
+    public OffsetDateTime getNextDeadlineAt() {
+        return nextDeadlineAt;
+    }
 
-    public OffsetDateTime getNextDeadlineAt() { return nextDeadlineAt; }
+    public void setNextDeadlineAt(OffsetDateTime value) {
+        nextDeadlineAt = value;
+    }
 
-    public void setNextDeadlineAt(OffsetDateTime value) { nextDeadlineAt = value; }
+    public HabitInterval getInterval() {
+        return interval;
+    }
 
-    public HabitInterval getInterval() { return interval; }
-
-    public void setInterval(HabitInterval value) { interval = value; }
+    public void setInterval(HabitInterval value) {
+        interval = value;
+    }
 
     public OffsetDateTime getPeriodStart() {
         OffsetDateTime start = nextDeadlineAt;

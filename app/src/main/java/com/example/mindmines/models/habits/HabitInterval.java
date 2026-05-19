@@ -9,7 +9,11 @@ public class HabitInterval {
         this.unit = unit;
     }
 
-    public int getNumber() { return number; }
+    public int getNumber() {
+        return number;
+    }
 
-    public HabitTimeUnit getTimeUnit() { return unit; }
+    public HabitTimeUnit getTimeUnit() {
+        return unit;
+    }
 }

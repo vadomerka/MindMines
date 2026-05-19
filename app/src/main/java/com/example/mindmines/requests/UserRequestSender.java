@@ -1,13 +1,14 @@
 package com.example.mindmines.requests;
 
-import com.example.mindmines.models.user.User;
+import com.example.mindmines.models.user.UserDTO;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -15,17 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRequestSender {
-    private final String SERVER_URL;
-    private final String REGISTER_URL;
-    private final String LOGIN_URL;
-    private HttpURLConnection connection;
-
     private static UserRequestSender instance;
+    private final String SERVER_URL;
+    private final String FRIENDS_URL;
+    private HttpURLConnection connection;
 
     public UserRequestSender() {
         SERVER_URL = ServerProperties.getInstance().SERVER_URL;
-        REGISTER_URL = ServerProperties.getInstance().REGISTER_URL;
-        LOGIN_URL = ServerProperties.getInstance().LOGIN_URL;
+        FRIENDS_URL = ServerProperties.getInstance().FRIENDS_URL;
     }
 
     public static UserRequestSender getInstance() {
@@ -35,36 +33,17 @@ public class UserRequestSender {
         return instance;
     }
 
-    public String registerRequestSend(String email, String password) {
-        if (email == null || email.isEmpty()) return null;
-        return sendAuthRequest(SERVER_URL + REGISTER_URL, email, password);
-    }
-
-    public String loginRequestSend(String email, String password) {
-        if (email == null || email.isEmpty()) return null;
-        return sendAuthRequest(SERVER_URL + LOGIN_URL, email, password);
-    }
-
-    public List<User> getFriends(String userId) {
-        // TODO: заменить на настоящую отправку данных серверу.
-        List<User> arr = new ArrayList<>();
-        arr.add(new User("friend 1", 3));
-        arr.add(new User("friend 2", 2));
-        arr.add(new User("friend 3", 1));
-        return arr;
-    }
-
-    private String sendAuthRequest(String endpoint, String email, String password) {
+    public List<UserDTO> getFriendsRequestSend(String userId) throws JSONException, IOException {
+        List<UserDTO> users = new ArrayList<>();
         try {
-            initConnection(endpoint);
+            initConnection(SERVER_URL + FRIENDS_URL);
 
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("email", email);
-            requestBody.put("password", password);
+            int responseCode = connection.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                return users;
+            }
+            return parseResponse();
 
-            return parseResponse(requestBody);
-        } catch (Exception e) {
-            return null;
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -75,27 +54,14 @@ public class UserRequestSender {
     private void initConnection(String endpoint) throws IOException {
         URL url = new URL(endpoint);
         connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/json");
-        connection.setDoOutput(true);
-        connection.setConnectTimeout(10000);
-        connection.setReadTimeout(10000);
+        connection.setConnectTimeout(3000);
+        connection.setReadTimeout(3000);
     }
 
-    private String parseResponse(JSONObject requestBody) throws IOException, JSONException {
-        OutputStream os = connection.getOutputStream();
-        os.write(requestBody.toString().getBytes(StandardCharsets.UTF_8));
-        os.close();
-
-        int responseCode = connection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            return parseToken(connection);
-        }
-        return null;
-    }
-
-    private String parseToken(HttpURLConnection connection) throws IOException, JSONException {
+    private List<UserDTO> parseResponse() throws IOException, JSONException {
+        List<UserDTO> users = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
             StringBuilder response = new StringBuilder();
@@ -103,7 +69,14 @@ public class UserRequestSender {
             while ((line = br.readLine()) != null) {
                 response.append(line);
             }
-            return new JSONObject(response.toString()).optString("user_token", null);
+            JSONArray usersJson = new JSONArray(response.toString());
+            for (int i = 0; i < usersJson.length(); i++) {
+                JSONObject user = usersJson.getJSONObject(i);
+                String name = user.optString("name", "");
+                int level = user.optInt("level", 0);
+                users.add(new UserDTO(name, level));
+            }
         }
+        return users;
     }
 }

@@ -8,7 +8,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_equipment_btn1"
-            app:icon="@drawable/equip1_left_hand"
+            app:icon="@drawable/eq1_left_hand"
             app:iconGravity="top"
             app:iconSize="@dimen/equipment_icon_size"
             app:cornerRadius="20dp"
@@ -16,7 +16,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_equipment_btn2"
-            app:icon="@drawable/equip2_right_hand"
+            app:icon="@drawable/eq2_right_hand"
             app:iconGravity="top"
             app:iconSize="@dimen/equipment_icon_size"
             app:cornerRadius="20dp"
@@ -28,7 +28,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_equipment_btn3"
-            app:icon="@drawable/equip3_body"
+            app:icon="@drawable/eq3_body"
             app:iconGravity="top"
             app:iconSize="@dimen/equipment_icon_size"
             app:cornerRadius="20dp"
@@ -36,7 +36,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_equipment_btn4"
-            app:icon="@drawable/equip4_legs"
+            app:icon="@drawable/eq4_legs"
             app:iconGravity="top"
             app:iconSize="@dimen/equipment_icon_size"
             app:cornerRadius="20dp"

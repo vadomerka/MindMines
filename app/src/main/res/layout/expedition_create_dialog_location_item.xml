@@ -23,4 +23,13 @@
         android:gravity="center"
         />
 
+    <TextView
+        android:id="@+id/location_requirements"
+        android:text="@string/location_view_text"
+        style="@style/InfoMessage"
+        android:textSize="15sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        />
+
 </LinearLayout>

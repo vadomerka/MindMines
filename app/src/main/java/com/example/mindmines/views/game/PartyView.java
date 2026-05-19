@@ -15,18 +15,18 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
-import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.models.game.characters.Char;
-import com.example.mindmines.services.auth.AuthManager;
+import com.example.mindmines.models.game.expeditions.Expedition;
 import com.example.mindmines.services.managers.ExpeditionManager;
-import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
+import com.example.mindmines.services.managers.UserStatusManager;
+import com.example.mindmines.services.observers.ExpeditionObserver;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.ExpeditionRepository;
 import com.example.mindmines.views.BaseFragment;
 import com.example.mindmines.views.game.expedition.ExpeditionFinishView;
 import com.example.mindmines.views.game.expedition.ExpeditionStartView;
 import com.example.mindmines.views.game.expedition.ExpeditionTimerView;
 import com.example.mindmines.views.game.expedition.ExpeditionView;
-import com.example.mindmines.services.observers.ExpeditionObserver;
 import com.example.mindmines.views.utils.ViewsUtils;
 import com.google.android.material.button.MaterialButton;
 
@@ -44,9 +44,11 @@ public class PartyView extends BaseFragment {
     private ExpeditionTimerView exView;
     private ExpeditionFinishView exFinishView;
     private final ExpeditionObserver expeditionObserver = upd -> updateExpedition();
+    private final ExpeditionManager exm;
 
     public PartyView() {
         super(R.layout.char_party_view);
+        exm = ExpeditionManager.getInstance(getContext());
     }
 
     @Override
@@ -59,11 +61,13 @@ public class PartyView extends BaseFragment {
         loadCharacterButtons();
         loadExpedition();
 
-        if (MainActivity.isDebug()) { loadDebugTools(); }
+        if (MainActivity.isDebug()) {
+            loadDebugTools();
+        }
     }
 
     private void loadExViews() {
-        exStartView = new ExpeditionStartView(requireContext(), getLayoutInflater());
+        exStartView = new ExpeditionStartView(requireContext(), getResources(), getLayoutInflater());
         exView = new ExpeditionTimerView(requireContext(), getLayoutInflater());
         exFinishView = new ExpeditionFinishView(requireContext(), getLayoutInflater());
     }
@@ -74,7 +78,14 @@ public class PartyView extends BaseFragment {
         MaterialButton charBtn2 = requireView().findViewById(R.id.open_character_btn2);
         MaterialButton charBtn3 = requireView().findViewById(R.id.open_character_btn3);
         MaterialButton charBtn4 = requireView().findViewById(R.id.open_character_btn4);
-        List<MaterialButton> btnArr = new ArrayList<MaterialButton>() { {add(charBtn1); add(charBtn2); add(charBtn3); add(charBtn4); }};
+        List<MaterialButton> btnArr = new ArrayList<MaterialButton>() {
+            {
+                add(charBtn1);
+                add(charBtn2);
+                add(charBtn3);
+                add(charBtn4);
+            }
+        };
         List<Char> chars = RepositoryService.getCharRepository().getByUser();
         for (int i = 0; i < chars.size(); i++) {
             int finalI = i;
@@ -91,18 +102,20 @@ public class PartyView extends BaseFragment {
     }
 
     private void updateExpedition() {
-        if (MainActivity.isDebug()) { Log.d("debug Expedition", "updateExpedition: "); }
+        if (MainActivity.isDebug()) {
+            Log.d("debug Expedition", "updateExpedition: ");
+        }
         loadExpedition();
     }
 
     private void loadExpedition() {
-        ExpeditionView.debugLogExpeditions();
+        ExpeditionView.debugLogExpeditions(requireContext());
 
-        Expedition lExp = ExpeditionManager.getLatestUnfinishedExpedition();
+        Expedition lExp = exm.getLatestUnfinishedExpedition();
         expBtn = requireView().findViewById(R.id.expedition_view_button);
         if (lExp == null) {
             expBtn.setText("Начать экспедицию");
-            expBtn.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            expBtn.setBackgroundColor(getResources().getColor(R.color.action_main_color, requireContext().getTheme()));
             expBtn.setOnClickListener(v -> exStartView.startExpedition());
             stopTimer();
             return;
@@ -111,11 +124,13 @@ public class PartyView extends BaseFragment {
     }
 
     private void reloadExpedition(Expedition lExp) {
-        boolean isEnded = ExpeditionManager.isEnded(lExp);
+        boolean isEnded = exm.isEnded(lExp);
         if (isEnded) {
             expBtn.setText("Собрать награду");
             expBtn.setBackgroundColor(Color.parseColor("#11FF00"));
-            if (MainActivity.isDebug()) { Log.d("Debug Expedition", lExp.getTitle() + " " + lExp.isFinished()); }
+            if (MainActivity.isDebug()) {
+                Log.d("Debug Expedition", lExp.getTitle() + " " + lExp.isFinished());
+            }
             expBtn.setOnClickListener(v -> exFinishView.finishExpedition(lExp));
             stopTimer();
         } else {
@@ -154,7 +169,9 @@ public class PartyView extends BaseFragment {
         Duration duration = Duration.between(now, finish);
         if (duration.isNegative() || duration.isZero()) {
             // Экспедиция завершилась, обновим состояние
-            if (MainActivity.isDebug()) { Log.d("debug Expedition", "updateTimerText: "); }
+            if (MainActivity.isDebug()) {
+                Log.d("debug Expedition", "updateTimerText: ");
+            }
             reloadExpedition(expedition);
             return;
         }
@@ -166,39 +183,37 @@ public class PartyView extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-//        stopTimer();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        loadExpedition();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         rep.subscribe(expeditionObserver);
-        RepositoryService.getUserStatusRepository().subscribe(usProxy);
-        usProxy.update(new ArrayList<>());
     }
 
     @Override
     public void onStop() {
         super.onStop();
         rep.unsubscribe(expeditionObserver);
-        RepositoryService.getUserStatusRepository().unsubscribe(usProxy);
     }
 
     @Override
     protected void loadDebugTools() {
-        Button deleteBut = requireView().findViewById(R.id.delete_last_expedition_debug_button);
-        deleteBut.setVisibility(View.VISIBLE);
-        deleteBut.setOnClickListener(v ->
-                ExpeditionManager.removeLast(ExpeditionManager.getLatestUnfinishedExpedition()));
+        Button deleteBtn = requireView().findViewById(R.id.delete_last_expedition_debug_button);
+        deleteBtn.setVisibility(View.VISIBLE);
+        deleteBtn.setOnClickListener(v -> exm.removeLast(exm.getLatestUnfinishedExpedition()));
 
-        Button updateBut = requireView().findViewById(R.id.update_last_expedition_debug_button);
-        updateBut.setVisibility(View.VISIBLE);
-        updateBut.setOnClickListener(v -> loadExpedition());
+        Button updateBtn = requireView().findViewById(R.id.update_last_expedition_debug_button);
+        updateBtn.setVisibility(View.VISIBLE);
+        updateBtn.setOnClickListener(v -> loadExpedition());
+
+        Button addCoinsBtn = requireView().findViewById(R.id.add_coins_debug_button);
+        addCoinsBtn.setVisibility(View.VISIBLE);
+        addCoinsBtn.setOnClickListener(v -> UserStatusManager.getInstance(requireContext()).gainCoins(10L));
     }
 }

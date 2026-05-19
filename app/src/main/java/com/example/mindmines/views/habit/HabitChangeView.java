@@ -7,8 +7,8 @@ import com.example.mindmines.infrastructure.HabitController;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitDTO;
 import com.example.mindmines.models.habits.HabitType;
-import com.example.mindmines.services.repositories.dao.HabitRepository;
 import com.example.mindmines.services.repositories.RepositoryService;
+import com.example.mindmines.services.repositories.dao.HabitRepository;
 
 public class HabitChangeView extends HabitAddView {
     @Override
@@ -45,7 +45,7 @@ public class HabitChangeView extends HabitAddView {
         badThb.setEnabled(!isBadType);
 
         int pos;
-        switch(h.getType()) {
+        switch (h.getType()) {
             case GOOD_GOAL_COUNT:
                 pos = 0;
                 break;

@@ -1,16 +1,23 @@
 package com.example.mindmines.infrastructure;
 
 import android.content.Context;
+import android.content.res.Resources;
 
-import com.example.mindmines.models.user.User;
+import com.example.mindmines.models.exceptions.AlreadyExistsException;
+import com.example.mindmines.models.user.UserDTO;
+import com.example.mindmines.requests.AuthRequestSender;
 import com.example.mindmines.requests.UserRequestSender;
 import com.example.mindmines.services.managers.UserStatusManager;
+import com.example.mindmines.views.user.FriendsView;
+import com.example.mindmines.views.user.LoginView;
+import com.example.mindmines.views.user.RegistrationView;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class UserController {
@@ -18,6 +25,7 @@ public class UserController {
     private final AtomicReference<String> token;
     private final ExecutorService executor;
     private final Context context;
+    private List<UserDTO> users;
 
     public UserController(Context context) {
         this.token = new AtomicReference<>();
@@ -32,35 +40,43 @@ public class UserController {
         return instance;
     }
 
-    public String register(String email, String password) {
-        Future<?> future = executor.submit(() -> {
-            token.set(UserRequestSender.getInstance().registerRequestSend(email, password));
+    public void getFriends(FriendsView root, String userId) {
+        executor.submit(() -> {
+            try {
+                users = UserRequestSender.getInstance().getFriendsRequestSend(userId);
+                root.updateFriends(users);
+            } catch (JSONException | IOException ex) {
+                root.handleException(ex);
+            }
         });
-        try {
-            future.get();
-            return token.get();
-        } catch (ExecutionException | InterruptedException e) {
-            return null;
-        }
     }
 
-    public String login(String email, String password) {
-        Future<?> future = executor.submit(() -> {
-            token.set(UserRequestSender.getInstance().loginRequestSend(email, password));
+    public void register(RegistrationView root, String email, String password) {
+        executor.submit(() -> {
+            try {
+                String token = AuthRequestSender.getInstance().registerRequestSend(email, password);
+                root.handleToken(token);
+            } catch (JSONException | IOException | Resources.NotFoundException ex) {
+                root.handleException(ex);
+            } catch (AlreadyExistsException ex) {
+                root.handleAlreadyExists(ex.getMessage());
+            }
         });
-        try {
-            future.get();
-            return token.get();
-        } catch (ExecutionException | InterruptedException e) {
-            return null;
-        }
     }
 
-    public void deleteUser(String email, String password) {
-        UserStatusManager.getInstance(context).tryRemoveStatus(email + "_token");
+    public void login(LoginView root, String email, String password) {
+        executor.submit(() -> {
+            try {
+                String token = AuthRequestSender.getInstance().loginRequestSend(email, password);
+                root.handleToken(token);
+            } catch (JSONException | IOException | Resources.NotFoundException |
+                     AlreadyExistsException ex) {
+                root.handleException(ex);
+            }
+        });
     }
 
-    public static List<User> getFriends(String userId) {
-        return UserRequestSender.getInstance().getFriends(userId);
+    public void deleteUser(String token) {
+        UserStatusManager.getInstance(context).tryRemoveStatus(token);
     }
 }

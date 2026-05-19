@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mindmines.MainActivity;
 import com.example.mindmines.R;
 import com.example.mindmines.models.habits.Habit;
+import com.example.mindmines.models.habits.HabitType;
 import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.views.habit.HabitsView;
 
@@ -52,12 +53,26 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         holder.changeBtn.setOnClickListener(v -> fragment.openHabitChangeView(h.getId()));
         holder.deleteBtn.setOnClickListener(v -> fragment.deleteHabit(h.getId()));
 
-        if (MainActivity.isDebug()) { holder.debugHolder.setVisibility(View.VISIBLE); }
+        if (MainActivity.isDebug()) {
+            holder.debugHolder.setVisibility(View.VISIBLE);
+        }
         holder.streakTextView.setText(h.getStreakNumber().toString());
         holder.penaltyTextView.setText(h.getPenaltyNumber().toString());
+        bindGoalProgress(holder, h);
 
         HabitCurrentCheckerService.buttonViewUpdate(holder.checkBtn);
         cardViews.add(holder);
+    }
+
+    private void bindGoalProgress(CardViewHolder holder, Habit h) {
+        if (h.getType() == HabitType.GOOD_GOAL_COUNT) {
+            holder.progressTextView.setVisibility(View.VISIBLE);
+            int curr = HabitCurrentCheckerService.normalizedCurr(h);
+            int goal = HabitCurrentCheckerService.normalizedGoal(h);
+            holder.progressTextView.setText(curr + " / " + goal);
+        } else {
+            holder.progressTextView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -70,12 +85,15 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
         return items.size();
     }
 
-    public List<CardViewHolder> getCardViews() { return cardViews; }
+    public List<CardViewHolder> getCardViews() {
+        return cardViews;
+    }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         public int hId = 0;
         public TextView titleTextView;
         public TextView descTextView;
+        public TextView progressTextView;
         public Button deleteBtn;
         public Button changeBtn;
         public Button checkBtn;
@@ -88,6 +106,7 @@ public class HabitCardAdapter extends RecyclerView.Adapter<HabitCardAdapter.Card
 
             titleTextView = itemView.findViewById(R.id.habit_title_card_view);
             descTextView = itemView.findViewById(R.id.habit_desc_card_view);
+            progressTextView = itemView.findViewById(R.id.habit_count_progress_card_view);
             deleteBtn = itemView.findViewById(R.id.habit_card_delete_btn);
             changeBtn = itemView.findViewById(R.id.habit_card_change_btn);
             checkBtn = itemView.findViewById(R.id.habit_card_check_btn);

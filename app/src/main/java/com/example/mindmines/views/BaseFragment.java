@@ -2,7 +2,6 @@ package com.example.mindmines.views;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,16 +20,18 @@ import com.example.mindmines.services.checkers.HabitCurrentCheckerService;
 import com.example.mindmines.services.checkers.HabitSyncCheckerService;
 import com.example.mindmines.services.managers.UserStatusManager;
 import com.example.mindmines.services.observers.UserStatusObserver;
+import com.example.mindmines.services.repositories.RepositoryService;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseFragment extends Fragment {
     protected TextView levelValueView;
     protected ProgressBar expProgressBar;
     protected TextView coinValueView;
-    protected MaterialButton backButton;
     protected final UserStatusObserver usProxy = this::updateUserStatus;
+    protected MaterialButton backButton;
 
     public BaseFragment(int layout) {
         super(layout);
@@ -60,19 +61,34 @@ public abstract class BaseFragment extends Fragment {
         backButton.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
-    protected void returnBack() {}
+    protected void returnBack() {
+    }
 
     @SuppressLint("DefaultLocale")
-    protected void updateUserStatus(List<UserStatus> upd) {
+    public void updateUserStatus(List<UserStatus> upd) {
         requireActivity().runOnUiThread(() -> {
             UserStatus status = UserStatusManager.getInstance(requireContext()).getStatus();
-            if (status == null) status = new UserStatus(new AuthManager(requireContext()).getUserId());
+            if (status == null)
+                status = new UserStatus(new AuthManager(requireContext()).getUserId());
 
             levelValueView.setText(String.valueOf(status.getLevel()));
             expProgressBar.setMax(status.getMaxExperience().intValue());
             expProgressBar.setProgress(status.getExperience().intValue());
             coinValueView.setText(String.valueOf(status.getCoins()));
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        RepositoryService.getUserStatusRepository().subscribe(usProxy);
+        usProxy.update(new ArrayList<>());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RepositoryService.getUserStatusRepository().unsubscribe(usProxy);
     }
 
     protected void loadDebugTools() {

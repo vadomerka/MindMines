@@ -1,7 +1,5 @@
 package com.example.mindmines.requests;
 
-import com.example.mindmines.MainActivity;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,10 +13,10 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class ChatMessagesRequestSender {
-    private HttpURLConnection connection;
+    private static ChatMessagesRequestSender instance;
     private final String SERVER_URL;
     private final String ASSISTANT_API;
-    private static ChatMessagesRequestSender instance;
+    private HttpURLConnection connection;
 
     public ChatMessagesRequestSender() {
         SERVER_URL = ServerProperties.getInstance().SERVER_URL;
@@ -66,7 +64,7 @@ public class ChatMessagesRequestSender {
         connection.setRequestProperty("Accept", "application/json");
         connection.setDoOutput(true);
         connection.setConnectTimeout(10000);
-        connection.setReadTimeout(10000);
+        connection.setReadTimeout(30000);
     }
 
     private String parseResponse(JSONObject requestBody) throws IOException, JSONException {

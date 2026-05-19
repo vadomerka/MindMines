@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingHorizontal="20dp"
@@ -37,6 +37,14 @@
                 style="@style/collapsed_description"
                 android:layout_below="@+id/habit_title_card_view"
                 android:text="@string/default_hello_world_text"/>
+            <TextView
+                android:id="@+id/habit_count_progress_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/habit_desc_card_view"
+                android:text="@string/default_number_text"
+                android:visibility="gone"
+                />
         </RelativeLayout>
 
         <LinearLayout

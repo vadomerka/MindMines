@@ -1,6 +1,6 @@
 package com.example.mindmines.services.converters.entities;
 
-import com.example.mindmines.db.entities.HabitEntity;
+import com.example.mindmines.data.entities.HabitEntity;
 import com.example.mindmines.models.habits.Habit;
 import com.example.mindmines.models.habits.HabitInterval;
 import com.example.mindmines.models.habits.HabitTimeUnit;
@@ -14,6 +14,7 @@ public class HabitConverter implements RepConverter<Integer, Habit, HabitEntity>
                 habitTypeFromString(e.type),
                 e.title,
                 e.description,
+                e.currCount,
                 e.goalCount,
                 e.priority,
                 e.difficulty,
@@ -68,6 +69,7 @@ public class HabitConverter implements RepConverter<Integer, Habit, HabitEntity>
                 h.getType().toString(),
                 h.getTitle(),
                 h.getDescription(),
+                h.getCurrCount(),
                 h.getGoalCount(),
                 h.getPriority(),
                 h.getDifficulty(),

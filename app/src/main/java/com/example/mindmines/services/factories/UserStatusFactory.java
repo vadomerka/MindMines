@@ -1,12 +1,10 @@
 package com.example.mindmines.services.factories;
 
-import com.example.mindmines.db.entities.UserStatusEntity;
 import com.example.mindmines.models.user.UserStatus;
-import com.example.mindmines.services.converters.entities.RepConverter;
 import com.example.mindmines.services.repositories.RepositoryService;
 import com.example.mindmines.services.repositories.dao.UserStatusRepository;
 
-public class UserStatusFactory implements RepConverter<String, UserStatus, UserStatusEntity> {
+public class UserStatusFactory {
     private static UserStatusFactory instance;
 
     public UserStatusFactory() {
@@ -41,26 +39,6 @@ public class UserStatusFactory implements RepConverter<String, UserStatus, UserS
                 experience,
                 maxExperience,
                 coins
-        );
-    }
-
-    public UserStatus toItem(UserStatusEntity entity) {
-        return new UserStatus(
-                entity.userId,
-                entity.level,
-                entity.experience,
-                entity.maxExperience,
-                entity.coins
-        );
-    }
-
-    public UserStatusEntity toEntity(UserStatus ex) {
-        return new UserStatusEntity(
-                ex.getId(),
-                ex.getLevel(),
-                ex.getExperience(),
-                ex.getMaxExperience(),
-                ex.getCoins()
         );
     }
 }

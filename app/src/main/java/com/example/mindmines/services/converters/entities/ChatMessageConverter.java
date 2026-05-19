@@ -1,6 +1,6 @@
 package com.example.mindmines.services.converters.entities;
 
-import com.example.mindmines.db.entities.ChatMessageEntity;
+import com.example.mindmines.data.entities.ChatMessageEntity;
 import com.example.mindmines.models.chat.ChatMessage;
 
 public class ChatMessageConverter implements RepConverter<Integer, ChatMessage, ChatMessageEntity> {
